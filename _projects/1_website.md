@@ -574,11 +574,140 @@ Check the blog in the web browser to ensure it looks how you want it.
 </div>
 
 <br />
-<h3>Deployment<h3>
+<h3>Deployment</h3>
+Generate ssh keys with the email for your GitHub.  Ensure that you enter a strong passphrase.  If a key already exist in the current folder, give it a unique name.
 
+{% raw %}
+```bash
+ubz@ubz-VirtualBox:~/Documents/GitHub/biscottidiskette.github.io$ ssh-keygen -t ed25519 -C "<your_email_here>"
+
+<snip>
+
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again:
+```
+{% endraw %}
+
+<br />
+Switch the repository from using HTTPs to using SSH.
+
+{% raw %}
+```bash
+git remote -v
+git remote set-url origin git@github.com:OWNER/REPOSITORY.git
+git remote -v
+```
+{% endraw %}
+
+<br />
+Use cat to get the public key.  Copy the public key.
+
+{% raw %}
+```bash
+cat <path_to_the_public_key>
+```
+{% endraw %}
+
+<br />
+Click on the avatar in the upper-right corner and click settings.
+
+<div class="col-sm-4 mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/website/settings.png" title="Menu Settings" class="img-fluid rounded z-depth-1" %}
+</div>
+
+<br />
+From the settings menu, navigate to the SSH and GPG keys.  
+<div class="col-sm-4 mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/website/sshlink.png" title="SSH Link" class="img-fluid rounded z-depth-1" %}
+</div>
+
+<br />
+Click on New SSH key.
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/website/newkey.png" title="Create new key" class="img-fluid rounded z-depth-1" %}
+</div>
+
+<br />
+Give it a title.  Choose a key type.  And paste the public key into the box labeled key.  Repeat that for the other key type.  If prompted, confirm your access to GitHub.
+
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/website/keycreatescreen.png" title="The Key Create Screen" class="img-fluid rounded z-depth-1" %}
+</div>
+
+<br />
+Use the package manager to install npm and use npm to install purgecss.
+
+{% raw %}
+```bash
+sudo apt update
+sudo apt install npm
+sudo npm install -g purgecss
+```
+{% endraw %}
+
+<br />
+Navigate into the repo folder.  Stage all of the changes and commit them.
+
+{% raw %}
+```bash
+git add .
+git commit -m "<commit_comment_here>"
+```
+{% endraw %}
+
+<br />  
+Deploy the code to the gh-pages branch.  The deploy command output will let you know it was successful.
+
+{% raw %}
+```bash
+ubz@ubz-VirtualBox:~/Documents/GitHub/biscottidiskette.github.io$ bin/deploy --user
+
+<snip>
+
+Switched to branch 'main'
+Your branch is up to date with 'origin/main'.
+Deployed successfully!
+```
+{% endraw %}
+
+<br />
+From the repository settings, click on Pages.
+
+<div class="col-sm-8 mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/website/reposettings.png" title="The Repo Settings" class="img-fluid rounded z-depth-1" %}
+</div>
+
+<br />
+Ensure that the branch is the gh-pages branch.
+
+<div class="col-sm mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/website/branchselect.png" title="Select the branch" class="img-fluid rounded z-depth-1" %}
+</div>
+
+<br />
+Check the branch. On the right-hand side, you should see deployments.  It will have a yellow circle if it is still deploying.  It will have a green check if it is done.
+
+<div class="col-sm-4 mt-3 mt-md-0">
+    {% include figure.liquid loading="eager" path="assets/img/website/deployment.png" title="Deployment Status" class="img-fluid rounded z-depth-1" %}
+</div>
+
+<br />
+Push the repo back into the main branch.
+
+{% raw %}
+```bash
+git push origin main
+```
+{% endraw %}
+
+<br />
+And with that, you should be good to go.  If not, I will come back and edit this at some later date in time.  Maybe.
 
 <br />
 <h3><u>References:</u></h3>
+Adding a new SSH key to your GitHub account. (n.d.). Retrieved from <a href="">https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account</a><br />
 derek. 2016, June 21. You don't have write permissions for the /var/lib/gems/2.3.0 directory. stackoverflow. <a href="https://stackoverflow.com/questions/37720892/you-dont-have-write-permissions-for-the-var-lib-gems-2-3-0-directory">https://stackoverflow.com/questions/37720892/you-dont-have-write-permissions-for-the-var-lib-gems-2-3-0-directory</a><br />
+Generating a new SSH key and adding it to the ssh-agent. (n.d.). Retrieved from <a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent">https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent</a><br />
+Managing remote repositories. (n.d.). Retrieved from <a href="https://docs.github.com/en/get-started/getting-started-with-git/managing-remote-repositories#switching-remote-urls-from-https-to-ssh">https://docs.github.com/en/get-started/getting-started-with-git/managing-remote-repositories#switching-remote-urls-from-https-to-ssh</a><br />
 Spencer Pao. How To Build A Website | Github Pages | Jekyll | Template. YouTube. <a href="https://www.youtube.com/watch?v=g6AJ9qPPoyc">https://www.youtube.com/watch?v=g6AJ9qPPoyc</a><br />
 Techno Tim.  Meet Jekyll - The Static Site Generator. YouTube. <a href="https://www.youtube.com/watch?v=F8iOU1ci19Q">https://www.youtube.com/watch?v=F8iOU1ci19Q</a>
