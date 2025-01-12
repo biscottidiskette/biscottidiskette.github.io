@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Red Team
+title: Red Teaming Learning Path
 description: Red Teaming Learning Path by TryHackMe.
 img: 
 importance: 4
