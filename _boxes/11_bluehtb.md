@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Blue
+title: HTB Blue
 description: Blue from HackTheBox.
 img: 
 importance: 4
