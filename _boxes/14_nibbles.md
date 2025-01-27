@@ -16,7 +16,7 @@ related_publications: false
 
 <br />
 <h2>Link</h2>
-<a href="https://app.hackthebox.com/Popcorn/Nibbles">Room Link</a>
+<a href="https://app.hackthebox.com/Nibbles">Room Link</a>
 
 <br/>
 <h2>Process</h2>
