@@ -105,7 +105,6 @@ Google distccd v1 to see if there are any exploits for it.
         {% include figure.liquid loading="eager" path="/assets/img/lame/googleit.png" title="Google It" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
-<a href="https://www.google.com/search?q=distccd+v1&sca_esv=c77f5342bf7e367a&source=hp&ei=bziKZ92QKdXT2roP1pGU-AI&iflsig=AL9hbdgAAAAAZ4pGf1lBgISM3dbPg_iJ5ofXEJOqdwg7&ved=0ahUKEwidhJidzfyKAxXVqVYBHdYIBS8Q4dUDCBA&uact=5&oq=distccd+v1&gs_lp=Egdnd3Mtd2l6IgpkaXN0Y2NkIHYxMg4QABiABBiRAhjHAxiKBTIFEAAY7wUyBRAAGO8FMgUQABjvBUipA1AAWABwAHgAkAEAmAHMAaABzAGqAQMyLTG4AQPIAQD4AQL4AQGYAgGgAtEBmAMAkgcDMi0xoAfyAQ&sclient=gws-wiz">Google It</a>
 
 
 <br />
