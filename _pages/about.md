@@ -17,7 +17,7 @@ social: false # includes social icons at the bottom of the page
 
 Ahoy hoy! 
 
-I am a passionate cybersecurity researcher with three years of hands-on experience. My primary focus lies in securing web applications, where I strive to stay ahead of potential threats and protect users' data.
+I am a passionate cybersecurity researcher working since 2021. My primary focus lies in securing web applications, where I strive to stay ahead of potential threats and protect users' data.
 
 But my true passion is reverse engineering. I love the challenge of deconstructing code, understanding its inner workings, and uncovering vulnerabilities that others might miss. This intricate process not only sharpens my skills but also fuels my curiosity and drives me to learn more.
 
