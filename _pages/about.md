@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='#'>HackTheBox</a> | <a href='https://tryhackme.com/r/p/BiscottiDiskette'>TryHackMe</a> | <a href='#'>HackerOne</a> | <a href='#'>BugCrowd</a>
+subtitle: <a href='https://app.hackthebox.eu/profile/biscottidiskette'>HackTheBox</a> | <a href='https://tryhackme.com/r/p/BiscottiDiskette'>TryHackMe</a> | <a href='#'>HackerOne</a> | <a href='#'>BugCrowd</a>
 
 profile:
   align: right
