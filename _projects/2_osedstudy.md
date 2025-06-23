@@ -221,7 +221,15 @@ So, about two years ago, I took the Offensive Security Exploit Developer (OSED).
             &#x274F;&nbsp;&nbsp;Inspect PE headers with PE-bear on calc.exe<br />
             &#x274F;&nbsp;&nbsp;Trace IAT in IDA, locate VirtualAlloc, ExitProcess<br />
         </ul>
-    <li><h5>Phase 2: DEP Bypass + ROP Chains</h5></li>
+    <li><h5>Phase 2: Egghunter</h5></li>
+    <b>Goal: Gain a better understanding of egghunting.</b>
+        <ul>
+            <li>Online Materials</li>
+            &#9989;&nbsp;&nbsp;<a href="https://www.corelan.be/index.php/2009/09/28/writing-egg-hunters-with-buffer-overflows/">Corelan Tutorial: Writing Egghunters</a><br />
+            &#9989;&nbsp;&nbsp;<a href="https://www.fuzzysecurity.com/tutorials/expDev/8.html">FuzzySecurity Stack Smashing 0x08</a><br />
+            &#9989;&nbsp;&nbsp;<a href="https://www.skullsecurity.org/blog/2010/writing-egg-hunters">SkullSecurity Egghunter Explanation</a><br />
+        </ul>
+    <li><h5>Phase 3: DEP Bypass + ROP Chains</h5></li>
     <b>Goal: Bypass DEP using ROP and execute shellcode in allocated memory.</b>
         <ul>
             <li>DEP Mechanics</li>
@@ -236,7 +244,7 @@ So, about two years ago, I took the Offensive Security Exploit Developer (OSED).
             &#x274F;&nbsp;&nbsp;<a href="https://www.pentesteracademy.com/course?id=3">SLAE 32 (SecurityTube Linux Assembly Expert)</a><br />
             &#x274F;&nbsp;&nbsp;<a href="https://www.hick.org/code/skape/papers/">Skape’s Shellcode Paper (Advanced)</a><br />
         </ul>
-    <li><h5>Phase 3: ASLR Identification & Bypass</h5></li>
+    <li><h5>Phase 4: ASLR Identification & Bypass</h5></li>
     <b>Goal: Learn how ASLR affects exploitation and bypass it using loaded modules.</b>
         <ul>
             <li>ASLR Detection</li>
@@ -247,7 +255,7 @@ So, about two years ago, I took the Offensive Security Exploit Developer (OSED).
             &#x274F;&nbsp;&nbsp;Construct ROP chain using non-ASLR binary<br />
             &#x274F;&nbsp;&nbsp;Read: <a href="https://www.corelan.be/index.php/2009/10/18/exploit-writing-tutorial-part-5-bypassing-aslr/">Corelan ASLR Tutorial</a><br />
         </ul>
-    <li><h5>Phase 4: Format String Vulnerability</h5></li>
+    <li><h5>Phase 5: Format String Vulnerability</h5></li>
     <b>Goal: Understand Format String vulnerabilies for ASLR</b>
         <ul>
             <li>General Information</li>
@@ -262,7 +270,7 @@ So, about two years ago, I took the Offensive Security Exploit Developer (OSED).
             &#x274F;&nbsp;&nbsp;<a href="https://www.qualys.com/2021/01/26/cve-2021-3156/heap-overflow-sudo.txt">Partial Pointer Leaks via Uninitialized Strings</a><br />
             &#x274F;&nbsp;&nbsp;<a href="https://ropemporium.com/">ROP Emporium – ‘write4’ or ‘badchars’ challenges</a><br />
         </ul>
-    <li><h5>Phase 5: Payload Encoding & Constraints</h5></li>
+    <li><h5>Phase 6: Payload Encoding & Constraints</h5></li>
     <b>Goal: Build payloads that bypass filtering: badchars, nulls, unicode, etc.</b>
         <ul>
             <li>Badchar Handling</li>
@@ -276,7 +284,7 @@ So, about two years ago, I took the Offensive Security Exploit Developer (OSED).
                     <li>Reference: <a href="https://www.corelan.be/index.php/2010/11/07/exploit-writing-tutorial-part-9-writing-unicode-exploits/">Corelan Part 9: Unicode Exploitation</a></li>
                 </ul>
         </ul>
-    <li><h5>Phase 6: Full Exploit Chains & Practice</h5></li>
+    <li><h5>Phase 7: Full Exploit Chains & Practice</h5></li>
     <b>Goal: Build from fuzzer to shell manually using everything learned.</b>
     <ul>
         <li>Fuzzing and Crash Triaging</li>
