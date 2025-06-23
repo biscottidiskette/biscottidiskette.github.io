@@ -199,101 +199,101 @@ So, about two years ago, I took the Offensive Security Exploit Developer (OSED).
 <br />
 <h3>Check List</h3>
 <ol>
-<li><h5>Pre-Phase: Assembly</h5></li>
-<b>Goal: Get an understanding of Assebmly</b>
-<ul>
-<li>Online Class</li>
-<input type="checkbox" id="chkTcmAss" name="chkTcmAss" value="TcmAss"><label for="chkTcmAss">&nbsp;&nbsp;TCM Security Released a course on Assembly</label><br />
-</ul>
-<li><h5>Phase 0: Foundation & Setup</h5></li>
-<b>Goal: Establish core knowledge of x86, Windows internals, and core tools.</b>
-<ul>
-<li>System & Tools Setup</li>
-<input type="checkbox" id="chkKali" name="chkKali" value="Kali" checked><label for="chkKali">&nbsp;&nbsp;Install Kali or Windows lab VMs (Windows XP, Win7 x86)</label><br />
-<input type="checkbox" id="chkWindbg" name="chkWindbg" value="Windbg" checked><label for="chkWindbg">&nbsp;&nbsp;Install WinDbg Preview from Microsoft Store</label><br />
-<input type="checkbox" id="chkIda" name="chkIda" value="Ida" checked><label for="chkIda">&nbsp;&nbsp;Install IDA Free or Pro</label><br />
-<li>Assembly and OS Basics</li>
-<input type="checkbox" id="chkOst" name="chkOst" value="OST"><label for="chkOst">&nbsp;&nbsp;Complete OpenSecurityTraining’s x86 Assembly Part 1 (<a href="https://opensecuritytraining.info/IntroX86.html">OST link</a>)</label><br />
-<input type="checkbox" id="chkPre1" name="chkPre1" value="PRE1"><label for="chkPre1">&nbsp;&nbsp;Read PRE Chapter 1 (Computer Architecture, Stack, Registers)</label><br />
-<input type="checkbox" id="chkProto1" name="chkProto1" value="Protostar"><label for="chkProto1">&nbsp;&nbsp;Solve 3 exercises from Protostar Stack (stack0–stack2)</label><br />
-<li>PE Format & Memory</li>
-<input type="checkbox" id="chkPe1" name="chkPe1" value="PE1"><label for="chkPe1">&nbsp;&nbsp;Read <a href="https://markpelf.com/1628/pe-format-illustrated-part-1/">Mark Pelf's PE Format Illustrated</a></label><br />
-<input type="checkbox" id="chkPre2" name="chkPre2" value="PRE2"><label for="chkPre2">&nbsp;&nbsp;Inspect PE headers with PE-bear on calc.exe</label><br />
-<input type="checkbox" id="chkPre3" name="chkPre3" value="PRE3"><label for="chkProto1">&nbsp;&nbsp;Trace IAT in IDA, locate VirtualAlloc, ExitProcess</label><br />
-</ul>
-<li><h5>Phase 2: DEP Bypass + ROP Chains</h5></li>
-<b>Goal: Bypass DEP using ROP and execute shellcode in allocated memory.</b>
-<ul>
-<li>DEP Mechanics</li>
-<input type="checkbox" id="chkTestDep" name="chkTestDep" value="TestDep"><label for="chkTestDep">&nbsp;&nbsp;Enable DEP in test app, verify crash with WinDbg: !address, !exploitable</label><br />
-<input type="checkbox" id="chkPre2" name="chkPre2" value="Pre2"><label for="chkPre2">&nbsp;&nbsp;Read: PRE Chapter 2 – Windows Memory Management</label><br />
-<input type="checkbox" id="chkCoreRop" name="chkCoreRop" value="CoreRop"><label for="chkCoreRop">&nbsp;&nbsp;Watch: <a href="https://www.corelan.be/index.php/2010/06/27/exploit-writing-tutorial-part-8-win32-rop-stackpivoting/">Corelan ROP Series Part 1</a></label><br />
-<li>ROP Chains</li>
-<input type="checkbox" id="chkVirtRop" name="chkVirtRop" value="VirtRop"><label for="chkVirtRop">&nbsp;&nbsp;Build a ROP chain to call VirtualAlloc with correct arguments</label><br />
-<input type="checkbox" id="chkLocGadgets" name="chkLocGadgets" value="LocGadgets"><label for="chkLocGadgets">&nbsp;&nbsp;Use ROPgadget or IDA to locate gadgets in non-ASLR DLL</label><br />
-<input type="checkbox" id="chkControlStack" name="chkControlStack" value="ControlStack"><label for="chkControlStack">&nbsp;&nbsp;Validate control of stack after pivot</label><br />
-<input type="checkbox" id="chkTrigShell" name="chkTrigShell" value="TrigShell"><label for="chkTrigShell">&nbsp;&nbsp;Trigger execution of shellcode in newly allocated memory</label><br />
-<input type="checkbox" id="chkRevSlae" name="chkRevSlae" value="RevSlae"><label for="chkRevSlae">&nbsp;&nbsp;<a href="https://www.pentesteracademy.com/course?id=3">SLAE 32 (SecurityTube Linux Assembly Expert)</a></label><br />
-<input type="checkbox" id="chkSkapePaper" name="chkSkapePaper" value="SkapePaper"><label for="chkSkapePaper">&nbsp;&nbsp;<a href="https://www.hick.org/code/skape/papers/">Skape’s Shellcode Paper (Advanced)</a></label><br />
-</ul>
-<li><h5>Phase 3: ASLR Identification & Bypass</h5></li>
-<b>Goal: Learn how ASLR affects exploitation and bypass it using loaded modules.</b>
-<ul>
-<li>ASLR Detection</li>
-<input type="checkbox" id="chkListMods" name="chkListMods" value="ListMods"><label for="chkListMods">&nbsp;&nbsp;Use lm in WinDbg to list loaded modules and addresses</label><br />
-<input type="checkbox" id="chkBearAslr" name="chkBearAslr" value="BearAslr"><label for="chkBearAslr">&nbsp;&nbsp;Use PE-bear to confirm ASLR flag (/DYNAMICBASE)</label><br />
-<li>Partial ASLR Bypass</li>
-<input type="checkbox" id="chkStatMods" name="chkStatMods" value="StatMods"><label for="chkStatMods">&nbsp;&nbsp;Identify static modules (e.g., libeay32.dll) loaded with fixed addresses</label><br />
-<input type="checkbox" id="chkRopAslr" name="chkRopAslr" value="RopAslr"><label for="chkRopAslr">&nbsp;&nbsp;Construct ROP chain using non-ASLR binary</label><br />
-<input type="checkbox" id="chkCoreAslr" name="chkCoreAslr" value="CoreAslr"><label for="chkCoreAslr">&nbsp;&nbsp;Read: <a href="https://www.corelan.be/index.php/2009/10/18/exploit-writing-tutorial-part-5-bypassing-aslr/">Corelan ASLR Tutorial</a></label><br />
-</ul>
-<li><h5>Phase 4: Format String Vulnerability</h5></li>
-<b>Goal: Understand Format String vulnerabilies for ASLR</b>
-<ul>
-<li>General Information</li>
-<input type="checkbox" id="chkArtExploit" name="chkArtExploit" value="ArtExploit"><label for="chkArtExploit">&nbsp;&nbsp;Hacking: The Art of Exploitation, 2nd Edition by Jon Erckson (Chapter on Format Strings)</label><br />
-<input type="checkbox" id="chkAlephOne" name="chkAlephOne" value="AlephOne"><label for="chkAlephOne">&nbsp;&nbsp;<a href="https://insecure.org/stf/format-string.txt">Format String Vulnerabilities – by Aleph One</a></label><br />
-<input type="checkbox" id="chkRpiSec" name="chkRpiSec" value="RpiSec"><label for="chkRpiSec">&nbsp;&nbsp;<a href="https://github.com/RPISEC/MBE">Modern Binary Exploitation (RPISEC)</a></label><br />
-<li>Targeted Tutorials for ASLR Bypass</li>
-<input type="checkbox" id="chkIO" name="chkIO" value="IO"><label for="chkIO">&nbsp;&nbsp;<a href="https://ioactive.com/pdfs/Format-String-Vulnerabilities.pdf">IOActive – Format String to ASLR Bypass</a></label><br />
-<input type="checkbox" id="chkFuzzy" name="chkFuzzy" value="ArtFuzzy"><label for="chkFuzzy">&nbsp;&nbsp;<a href="https://www.fuzzysecurity.com/tutorials/expDev/7.html">FuzzySecurity – Stack Smashing 0x07</a></label><br />
-<input type="checkbox" id="chkHeapExp" name="chkHeapExp" value="HeapExp"><label for="chkHeapExp">&nbsp;&nbsp;<a href="https://sploitfun.wordpress.com/2015/01/28/heap-exploitation-in-detail-part-1/">Heap Exploitation – Info Leak via Format Bug</a></label><br />
-<li>Specific Techniques</li>
-<input type="checkbox" id="chkQualPoint" name="chkQualPoint" value="QualPoint"><label for="chkQualPoint">&nbsp;&nbsp;<a href="https://www.qualys.com/2021/01/26/cve-2021-3156/heap-overflow-sudo.txt">Partial Pointer Leaks via Uninitialized Strings</a></label><br />
-<input type="checkbox" id="chkHeapExp" name="chkHeapExp" value="HeapExp"><label for="chkHeapExp">&nbsp;&nbsp;<a href="https://ropemporium.com/">ROP Emporium – ‘write4’ or ‘badchars’ challenges</a></label><br />
-</ul>
-<li><h5>Phase 5: Payload Encoding & Constraints</h5></li>
-<b>Goal: Build payloads that bypass filtering: badchars, nulls, unicode, etc.</b>
-<ul>
-<li>Badchar Handling</li>
-<input type="checkbox" id="chkBadCharScript" name="chkBadCharScript" value="BadCharScript"><label for="chkBadCharScript">&nbsp;&nbsp;Write badchar detection script using memory dump from WinDbg</label><br />
-<input type="checkbox" id="chkFindBadChar" name="chkFindBadChar" value="FindBadChar"><label for="chkFindBadChar">&nbsp;&nbsp;Confirm which characters break shellcode execution</label><br />
-<li>Encoding & Unicode</li>
-<input type="checkbox" id="chkVenomShik" name="chkVenomShik" value="VenomShik"><label for="chkVenomShik">&nbsp;&nbsp;Use msfvenom -e x86/shikata_ga_nai and test</label><br />
-<input type="checkbox" id="chkEncDec" name="chkEncDec" value="EncDec"><label for="chkEncDec">&nbsp;&nbsp;Write XOR encoder/decoder in Python</label><br />
-<input type="checkbox" id="chkCoreExp" name="chkCoreExp" value="CoreExp"><label for="chkCoreExp">&nbsp;&nbsp;Reproduce Corelan ASCII/Unicode SEH exploit:</label><br />
-<ul>
-<li>Reference: <a href="https://www.corelan.be/index.php/2010/11/07/exploit-writing-tutorial-part-9-writing-unicode-exploits/">Corelan Part 9: Unicode Exploitation</a></li>
-</ul>
-</ul>
-<li><h5>Phase 6: Full Exploit Chains & Practice</h5></li>
-<b>Goal: Build from fuzzer to shell manually using everything learned.</b>
-<ul>
-<li>Fuzzing and Crash Triaging</li>
-<input type="checkbox" id="chkBooFuzz" name="chkBooFuzz" value="BooFuzz"><label for="chkBooFuzz">&nbsp;&nbsp;Write custom boofuzz fuzzer for target app</label><br />
-<input type="checkbox" id="chkAnalyzeCrash" name="chkAnalyzeCrash" value="AnalyzeCrash"><label for="chkAnalyzeCrash">&nbsp;&nbsp;Catch crash in WinDbg, analyze faulting instruction and memory state</label><br />
-<li>End-to-End Exploit</li>
-<input type="checkbox" id="chkPickTwo" name="chkPickTwo" value="PickTwo"><label for="chkPickTwo">&nbsp;&nbsp;Pick 2 vulnerable binaries (e.g., Vulnserver + FreeFloat FTP)</label><br />
-<input type="checkbox" id="chkBuildExploit" name="chkBuildExploit" value="BuildExploit"><label for="chkBuildExploit">&nbsp;&nbsp;Build exploit with:</label><br />
-<ul>
-<li>Fuzzer</li>
-<li>Crash detection</li>
-<li>Offset calculation</li>
-<li>ROP/SEH logic</li>
-<li>Shellcode</li>
-<li>Successful reverse shell</li>
-</ul>
-</ul>
+    <li><h5>Pre-Phase: Assembly</h5></li>
+    <b>Goal: Get an understanding of Assebmly</b>
+        <ul>
+            <li>Online Class</li>
+            &#x274F;&nbsp;&nbsp;TCM Security Released a course on Assembly<br />
+        </ul>
+    <li><h5>Phase 0: Foundation & Setup</h5></li>
+    <b>Goal: Establish core knowledge of x86, Windows internals, and core tools.</b>
+        <ul>
+            <li>System & Tools Setup</li>
+            &#9989;&nbsp;&nbsp;Install Kali or Windows lab VMs (Windows XP, Win7 x86)<br />
+            &#9989;&nbsp;&nbsp;Install WinDbg Preview from Microsoft Store<br />
+            &#9989;&nbsp;&nbsp;Install IDA Free or Pro<br />
+            <li>Assembly and OS Basics</li>
+            &#x274F;&nbsp;&nbsp;Complete OpenSecurityTraining’s x86 Assembly Part 1 (<a href="https://opensecuritytraining.info/IntroX86.html">OST link</a>)<br />
+            &#x274F;&nbsp;&nbsp;Read PRE Chapter 1 (Computer Architecture, Stack, Registers)<br />
+            &#x274F;&nbsp;&nbsp;Solve 3 exercises from Protostar Stack (stack0–stack2)<br />
+            <li>PE Format & Memory</li>
+            &#x274F;&nbsp;&nbsp;Read <a href="https://markpelf.com/1628/pe-format-illustrated-part-1/">Mark Pelf's PE Format Illustrated</a><br />
+            &#x274F;&nbsp;&nbsp;Inspect PE headers with PE-bear on calc.exe<br />
+            &#x274F;&nbsp;&nbsp;Trace IAT in IDA, locate VirtualAlloc, ExitProcess<br />
+        </ul>
+    <li><h5>Phase 2: DEP Bypass + ROP Chains</h5></li>
+    <b>Goal: Bypass DEP using ROP and execute shellcode in allocated memory.</b>
+        <ul>
+            <li>DEP Mechanics</li>
+            &#x274F;&nbsp;&nbsp;Enable DEP in test app, verify crash with WinDbg: !address, !exploitable<br />
+            &#x274F;&nbsp;&nbsp;Read: PRE Chapter 2 – Windows Memory Management<br />
+            &#x274F;&nbsp;&nbsp;Watch: <a href="https://www.corelan.be/index.php/2010/06/27/exploit-writing-tutorial-part-8-win32-rop-stackpivoting/">Corelan ROP Series Part 1</a><br />
+            <li>ROP Chains</li>
+            &#x274F;&nbsp;&nbsp;Build a ROP chain to call VirtualAlloc with correct arguments<br />
+            &#x274F;&nbsp;&nbsp;Use ROPgadget or IDA to locate gadgets in non-ASLR DLL<br />
+            &#x274F;&nbsp;&nbsp;Validate control of stack after pivot<br />
+            &#x274F;&nbsp;&nbsp;Trigger execution of shellcode in newly allocated memory<br />
+            &#x274F;&nbsp;&nbsp;<a href="https://www.pentesteracademy.com/course?id=3">SLAE 32 (SecurityTube Linux Assembly Expert)</a><br />
+            &#x274F;&nbsp;&nbsp;<a href="https://www.hick.org/code/skape/papers/">Skape’s Shellcode Paper (Advanced)</a><br />
+        </ul>
+    <li><h5>Phase 3: ASLR Identification & Bypass</h5></li>
+    <b>Goal: Learn how ASLR affects exploitation and bypass it using loaded modules.</b>
+        <ul>
+            <li>ASLR Detection</li>
+            &#x274F;&nbsp;&nbsp;Use lm in WinDbg to list loaded modules and addresses<br />
+            &#x274F;&nbsp;&nbsp;Use PE-bear to confirm ASLR flag (/DYNAMICBASE)<br />
+            <li>Partial ASLR Bypass</li>
+            &#x274F;&nbsp;&nbsp;Identify static modules (e.g., libeay32.dll) loaded with fixed addresses<br />
+            &#x274F;&nbsp;&nbsp;Construct ROP chain using non-ASLR binary<br />
+            &#x274F;&nbsp;&nbsp;Read: <a href="https://www.corelan.be/index.php/2009/10/18/exploit-writing-tutorial-part-5-bypassing-aslr/">Corelan ASLR Tutorial</a><br />
+        </ul>
+    <li><h5>Phase 4: Format String Vulnerability</h5></li>
+    <b>Goal: Understand Format String vulnerabilies for ASLR</b>
+        <ul>
+            <li>General Information</li>
+            &#x274F;&nbsp;&nbsp;Hacking: The Art of Exploitation, 2nd Edition by Jon Erckson (Chapter on Format Strings)<br />
+            &#x274F;&nbsp;&nbsp;<a href="https://insecure.org/stf/format-string.txt">Format String Vulnerabilities – by Aleph One</a><br />
+            &#x274F;&nbsp;&nbsp;<a href="https://github.com/RPISEC/MBE">Modern Binary Exploitation (RPISEC)</a><br />
+            <li>Targeted Tutorials for ASLR Bypass</li>
+            &#x274F;&nbsp;&nbsp;<a href="https://ioactive.com/pdfs/Format-String-Vulnerabilities.pdf">IOActive – Format String to ASLR Bypass</a><br />
+            &#x274F;&nbsp;&nbsp;<a href="https://www.fuzzysecurity.com/tutorials/expDev/7.html">FuzzySecurity – Stack Smashing 0x07</a><br />
+            &#x274F;&nbsp;&nbsp;<a href="https://sploitfun.wordpress.com/2015/01/28/heap-exploitation-in-detail-part-1/">Heap Exploitation – Info Leak via Format Bug</a><br />
+            <li>Specific Techniques</li>
+            &#x274F;&nbsp;&nbsp;<a href="https://www.qualys.com/2021/01/26/cve-2021-3156/heap-overflow-sudo.txt">Partial Pointer Leaks via Uninitialized Strings</a><br />
+            &#x274F;&nbsp;&nbsp;<a href="https://ropemporium.com/">ROP Emporium – ‘write4’ or ‘badchars’ challenges</a><br />
+        </ul>
+    <li><h5>Phase 5: Payload Encoding & Constraints</h5></li>
+    <b>Goal: Build payloads that bypass filtering: badchars, nulls, unicode, etc.</b>
+        <ul>
+            <li>Badchar Handling</li>
+            &#x274F;&nbsp;&nbsp;Write badchar detection script using memory dump from WinDbg<br />
+            &#x274F;&nbsp;&nbsp;Confirm which characters break shellcode execution<br />
+            <li>Encoding & Unicode</li>
+            &#x274F;&nbsp;&nbsp;Use msfvenom -e x86/shikata_ga_nai and test<br />
+            &#x274F;&nbsp;&nbsp;Write XOR encoder/decoder in Python<br />
+            &#x274F;&nbsp;&nbsp;Reproduce Corelan ASCII/Unicode SEH exploit:<br />
+                <ul>
+                    <li>Reference: <a href="https://www.corelan.be/index.php/2010/11/07/exploit-writing-tutorial-part-9-writing-unicode-exploits/">Corelan Part 9: Unicode Exploitation</a></li>
+                </ul>
+        </ul>
+    <li><h5>Phase 6: Full Exploit Chains & Practice</h5></li>
+    <b>Goal: Build from fuzzer to shell manually using everything learned.</b>
+    <ul>
+        <li>Fuzzing and Crash Triaging</li>
+        &#x274F;&nbsp;&nbsp;Write custom boofuzz fuzzer for target app<br />
+        &#x274F;&nbsp;&nbsp;Catch crash in WinDbg, analyze faulting instruction and memory state<br />
+        <li>End-to-End Exploit</li>
+        &#x274F;&nbsp;&nbsp;Pick 2 vulnerable binaries (e.g., Vulnserver + FreeFloat FTP)<br />
+        &#x274F;&nbsp;&nbsp;Build exploit with:<br />
+            <ul>
+            <li>Fuzzer</li>
+            <li>Crash detection</li>
+            <li>Offset calculation</li>
+            <li>ROP/SEH logic</li>
+            <li>Shellcode</li>
+            <li>Successful reverse shell</li>
+            </ul>
+    </ul>
 </ol>
 
 <br />
