@@ -17,6 +17,9 @@ So, about two years ago, I took the Offensive Security Exploit Developer (OSED).
 
 <br />
 <h2>Process</h2>
+<h3>My GitHub</h3>
+<a href="https://github.com/biscottidiskette/osed">osed</a>
+
 <h3>Resources</h3>
 <ul>
     <li><i>Practical Reverse Engineering</i> by Bruce Dang</li>
