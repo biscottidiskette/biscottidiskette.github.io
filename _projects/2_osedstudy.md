@@ -221,6 +221,18 @@ So, about two years ago, I took the Offensive Security Exploit Developer (OSED).
             &#x274F;&nbsp;&nbsp;Inspect PE headers with PE-bear on calc.exe<br />
             &#x274F;&nbsp;&nbsp;Trace IAT in IDA, locate VirtualAlloc, ExitProcess<br />
         </ul>
+    <li><h5>Phase 1: Basic Exploitation Plus SEH</h5></li>
+    <b>Exploit stack-based and SEH-based buffer overflows.</b>
+        <ul>
+            <li>Vanilla BOF</li>
+            &#x274F;&nbsp;&nbsp;Reproduce vanilla buffer overflow (EIP control)<br />
+            &#x274F;&nbsp;&nbsp;Calculate exact offset with pattern generation<br />
+            &#x274F;&nbsp;&nbsp;Identify bad characters<br />
+            &#x274F;&nbsp;&nbsp;Analyze crashes and stack state in WinDbg<br />
+            <li>SEH</li>
+            &#x274F;&nbsp;&nbsp;Trigger and overwrite SEH structures<br />
+            &#x274F;&nbsp;&nbsp;Use egghunters and SEH-based delivery with shellcode<br />
+        </ul>
     <li><h5>Phase 2: Egghunter</h5></li>
     <b>Goal: Gain a better understanding of egghunting.</b>
         <ul>
