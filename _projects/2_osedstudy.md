@@ -339,7 +339,8 @@ Just getting started.  Not much to report yet.
 <br />
 <h3>Extra</h3>
 <a href="https://github.com/nop-tech/OSED">https://github.com/nop-tech/OSED</a>
-
+<a href="https://github.com/Gabb4r/osed">https://github.com/Gabb4r/osed</a>
+<a href="https://github.com/r0r0x-xx/OSED-Pre">https://github.com/r0r0x-xx/OSED-Pre</a>
 
 <br />
 <h3><u>References:</u></h3>
