@@ -12,13 +12,12 @@ related_publications: false
 So, about two years ago, I took the Offensive Security Exploit Developer (OSED).  I unfortunately failed the exam at that time.  Discouraged, I shelved it at the time.  Well, I was playing with KaliGPT and decided to ask it for help.  I decided to ask for a curriculum and checklist and see what it would develop for me.  I didn't know where to save it to keep me honest so my portolio projects section will have to do.
 
 <br />
-<h2>Link</h2>
+<h2>Links</h2>
 <a href="https://www.offsec.com/courses/exp-301/">OSED</a>
+<a href="https://github.com/biscottidiskette/osed">https://github.com/biscottidiskette/osed</a>
 
 <br />
 <h2>Process</h2>
-<h3>My GitHub</h3>
-<a href="https://github.com/biscottidiskette/osed">osed</a>
 
 <h3>Resources</h3>
 <ul>
