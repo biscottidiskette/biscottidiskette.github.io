@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Grandpa
-description: Grandpa from HackTheBox.
+description:  IIS Webdav public exploit.
 img: 
 importance: 4
 category: HackTheBox

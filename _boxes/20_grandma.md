@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Granny
-description: Granny from HackTheBox.
+description: Abusing PUT Method.
 img: 
 importance: 4
 category: HackTheBox

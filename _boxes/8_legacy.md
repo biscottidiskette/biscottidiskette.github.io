@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Legacy
-description: Legacy from HackTheBox.
+description: SMB exploit - MS08-167.
 img: 
 importance: 4
 category: HackTheBox

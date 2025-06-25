@@ -1,7 +1,7 @@
 ---
 layout: page
 title: BoardLight
-description: BoardLight from HackTheBox.
+description: Default credentials - public exploit.
 img: 
 importance: 4
 category: HackTheBox

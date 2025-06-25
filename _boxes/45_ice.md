@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Ice
-description: Ice from TryHackMe.
+description: Public exploit.
 img: 
 importance: 4
 category: TryHackMe

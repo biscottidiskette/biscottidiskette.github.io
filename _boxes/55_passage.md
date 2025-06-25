@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Passage
-description: Passage from HackTheBox.
+description: CuteNews public exploit.
 img: 
 importance: 3
 category: HackTheBox

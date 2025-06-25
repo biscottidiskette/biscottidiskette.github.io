@@ -1,7 +1,7 @@
 ---
 layout: page
 title: THM Blue
-description: Blue from TryHackMe.
+description: Enternal Blue - MS17-010.
 img: 
 importance: 4
 category: TryHackMe

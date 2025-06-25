@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Mr. Robot
-description: Mr. Robot from TryHackMe.
+description: Exposed dictionary and hydra brute.
 img: 
 importance: 3
 category: TryHackMe

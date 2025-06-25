@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Popcorn
-description: Popcorn from HackTheBox.
+description: Torrent hoster file upload.
 img: 
 importance: 3
 category: HackTheBox

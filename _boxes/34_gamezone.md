@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Game Zone
-description: Game Zone from TryHackMe.
+description: SQLMap hash - SSH.
 img: 
 importance: 4
 category: TryHackMe

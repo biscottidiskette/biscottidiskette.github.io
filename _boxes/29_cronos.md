@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Cronos
-description: Cronos from HackTheBox.
+description: SQLi auth bypass - command injection.
 img: 
 importance: 3
 category: HackTheBox

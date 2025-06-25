@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Irked
-description: Irked from HackTheBox.
+description: UnrealIRCd public exploit.
 img: 
 importance: 4
 category: HackTheBox
@@ -99,7 +99,7 @@ Nmap done: 1 IP address (1 host up) scanned in 9.48 seconds
 {% endraw %}
 
 <br />
-Banner grab for the newly exposed to see if we can try and finger-print them and identify the service.
+Banner grab for the newly exposed service to see if we can try and finger-print them and identify the service.
 
 {% raw %}
 ```sh

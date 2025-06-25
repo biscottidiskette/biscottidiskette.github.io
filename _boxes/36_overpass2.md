@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Overpass 2
-description: Overpass 2 from TryHackMe.
+description: Wireshark expose credentials.
 img: 
 importance: 4
 category: TryHackMe

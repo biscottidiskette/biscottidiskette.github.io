@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Haircut
-description: Haircut from HackTheBox.
+description: Command injection.
 img: 
 importance: 3
 category: HackTheBox

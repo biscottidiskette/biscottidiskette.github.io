@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Colddbox - Easy
-description: Colddbox - Easy from TryHackMe.
+description: Brute-force creds and theme code injection.
 img: 
 importance: 4
 category: TryHackMe

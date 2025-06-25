@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Celestial
-description: Celestial from HackTheBox.
+description: NodeJS deserialization attack.
 img: 
 importance: 3
 category: HackTheBox

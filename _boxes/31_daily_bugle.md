@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Daily Bugle
-description: Daily Bugle from TryHackMe.
+description: Joomla public exploit.
 img: 
 importance: 2
 category: TryHackMe

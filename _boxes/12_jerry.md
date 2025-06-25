@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Jerry
-description: Jerry from HackTheBox.
+description: Default credentials - File Upload.
 img: 
 importance: 4
 category: HackTheBox

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: OpenAdmin
-description: OpenAdmin from HackTheBox.
+description: Ona public exploit.
 img: 
 importance: 4
 category: HackTheBox

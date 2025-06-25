@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Sense
-description: Sense from HackTheBox.
+description: Default creds and know exploit.
 img: 
 importance: 4
 category: HackTheBox

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Pickle Rick
-description: Pickle Rick from TryHackMe.
+description: Exposed authenticated command panel.
 img: 
 importance: 4
 category: TryHackMe

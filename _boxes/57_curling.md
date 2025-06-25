@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Curling
-description: Curling from HackTheBox.
+description: Expose password - Template code injection.
 img: 
 importance: 4
 category: HackTheBox

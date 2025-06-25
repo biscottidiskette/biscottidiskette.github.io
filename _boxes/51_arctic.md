@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Arctic
-description: Arctic from HackTheBox.
+description: CFIDE exploit.
 img: 
 importance: 4
 category: HackTheBox

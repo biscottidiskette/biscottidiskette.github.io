@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Dog
-description: Dog from HackTheBox.
+description: Active box.
 img: 
 importance: 4
 category: HackTheBox

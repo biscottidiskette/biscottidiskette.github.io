@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Steel Mountain
-description: Steel Mountain from TryHackMe.
+description: HttpFileServer 2.3 - public exploit.
 img: 
 importance: 4
 category: TryHackMe

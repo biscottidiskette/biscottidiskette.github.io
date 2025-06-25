@@ -1,7 +1,7 @@
 ---
 layout: page
 title: SolidState
-description: SolidState from HackTheBox.
+description: JAMES smtp exploit.
 img: 
 importance: 3
 category: HackTheBox

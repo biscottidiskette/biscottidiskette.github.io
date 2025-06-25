@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Bashed
-description: Blocky from HackTheBox.
+description: Exposed cli page with rce.
 img: 
 importance: 4
 category: HackTheBox

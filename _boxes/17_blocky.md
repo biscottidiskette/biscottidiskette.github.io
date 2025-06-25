@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Blocky
-description: Blocky from HackTheBox.
+description: Decompile jar for creds.
 img: 
 importance: 4
 category: HackTheBox

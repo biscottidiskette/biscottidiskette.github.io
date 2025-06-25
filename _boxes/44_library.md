@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Library
-description: Library from TryHackMe.
+description: SSH hydra brute-force.
 img: 
 importance: 4
 category: TryHackMe

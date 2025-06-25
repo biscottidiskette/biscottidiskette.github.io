@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Vulnversity
-description: Vulnerability from TryHackMe.
+description: File upload and extension bypass.
 img: 
 importance: 4
 category: TryHackMe

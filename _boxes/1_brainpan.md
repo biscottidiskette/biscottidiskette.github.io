@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Brainpan
-description: Brainpan buffer overflow from TryHackMe.
+description: Buffer overflow.
 img: 
 importance: 2
 category: TryHackMe

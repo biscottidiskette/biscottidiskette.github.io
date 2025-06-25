@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Sau
-description: Sau from HackTheBox.
+description: Server-Side Request Forgery.
 img: 
 importance: 4
 category: HackTheBox

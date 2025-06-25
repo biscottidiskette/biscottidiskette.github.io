@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Love
-description: Love from HackTheBox.
+description: Voting System public exploit.
 img: 
 importance: 4
 category: HackTheBox

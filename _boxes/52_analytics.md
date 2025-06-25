@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Analytics
-description: Analytics from HackTheBox.
+description: Public exploit - Env creds.
 img: 
 importance: 4
 category: HackTheBox

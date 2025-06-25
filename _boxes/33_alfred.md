@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Alfred
-description: Alfred from TryHackMe.
+description: Default creds - exposed script panel.
 img: 
 importance: 4
 category: TryHackMe

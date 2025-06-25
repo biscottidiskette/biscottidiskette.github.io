@@ -1,7 +1,7 @@
 ---
 layout: page
 title: HackPark
-description: HackPark from TryHackMe.
+description: Brute-force creds and file upload.
 img: 
 importance: 3
 category: TryHackMe
@@ -229,7 +229,7 @@ admin:1qaz2wsx
 {% endraw %}
 
 <br />
-You could also use Intruder, if you can't be bothered to do write your own.
+You could also use Intruder, if you can't be bothered to write your own.
 
 <div class="row justify-content-sm-center">
     <div class="col-sm mt-3 mt-md-0">

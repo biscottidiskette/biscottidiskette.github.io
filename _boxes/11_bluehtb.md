@@ -1,7 +1,7 @@
 ---
 layout: page
 title: HTB Blue
-description: Blue from HackTheBox.
+description: Eternal Blue - MS17-010.
 img: 
 importance: 4
 category: HackTheBox

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: GreenHorn
-description: GreenHorn from HackTheBox.
+description: Exposed password hash in repo.
 img: 
 importance: 4
 category: HackTheBox

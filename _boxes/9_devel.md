@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Devel
-description: Devel from HackTheBox.
+description: FTP exploit to webroot.
 img: 
 importance: 4
 category: HackTheBox

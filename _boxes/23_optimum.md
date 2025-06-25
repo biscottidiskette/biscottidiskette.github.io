@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Optimum
-description: Optimum from HackTheBox.
+description: HttpFileServer 2.3 public exploit.
 img: 
 importance: 4
 category: HackTheBox

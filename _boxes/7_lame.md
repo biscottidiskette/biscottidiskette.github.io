@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Lame
-description: Lame from HackTheBox.
+description: Distcc public exploit.
 img: 
 importance: 4
 category: HackTheBox

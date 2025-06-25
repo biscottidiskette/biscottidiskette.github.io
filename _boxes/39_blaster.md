@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Blaster
-description: Blaster from TryHackMe.
+description: Expose credentials and RDP.
 img: 
 importance: 4
 category: TryHackMe

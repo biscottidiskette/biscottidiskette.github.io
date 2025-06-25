@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Remote
-description: Remote from HackTheBox.
+description: Exposed nfs credential - Public exploit.
 img: 
 importance: 4
 category: HackTheBox

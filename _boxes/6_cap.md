@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Cap
-description: Cap from HackTheBox.
+description: IDOR and exposed cleartext creds.
 img: 
 importance: 4
 category: HackTheBox
