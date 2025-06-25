@@ -13,7 +13,7 @@ So, about two years ago, I took the Offensive Security Exploit Developer (OSED).
 
 <br />
 <h2>Links</h2>
-<a href="https://www.offsec.com/courses/exp-301/">OSED</a>
+<a href="https://www.offsec.com/courses/exp-301/">Offsec OSED Link</a><br />
 <a href="https://github.com/biscottidiskette/osed">https://github.com/biscottidiskette/osed</a>
 
 <br />
