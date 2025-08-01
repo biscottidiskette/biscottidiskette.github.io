@@ -25,7 +25,7 @@ To be able to write the buffer overflow, you will need two machines.  One Linux 
 Download a copy of the ISO from the Kali Official Website.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/linuxdownloadpage.png" title="Linux Download Page" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -34,7 +34,7 @@ Download a copy of the ISO from the Kali Official Website.
 This assumes VirtualBox version 7.  Click New at the top of the VirtualBox interface.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/clicknew.png" title="Click New" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -43,7 +43,7 @@ This assumes VirtualBox version 7.  Click New at the top of the VirtualBox inter
 Chose a name for the virtual machine.  Select the Kali ISO that we just downloaded.  Choose Next.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/vbselectiso.png" title="Select ISO" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -52,7 +52,7 @@ Chose a name for the virtual machine.  Select the Kali ISO that we just download
 Choose an appropriate amount of memory and processors for the virtual machine.  Choose Next.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/lxmemory.png" title="Set memory and cpu" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -61,7 +61,7 @@ Choose an appropriate amount of memory and processors for the virtual machine.  
 Set the hard disk space requirements.  Choose Next.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/lxhddspace.png" title="Set HDD space" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -70,7 +70,7 @@ Set the hard disk space requirements.  Choose Next.
 Choose Finish on the summary screen.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/lxchoosefinish.png" title="Choose Finish" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -79,7 +79,7 @@ Choose Finish on the summary screen.
 If the virtual machine doesn't automatically start, start the virtual machine.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/lxstart.png" title="Linux Start" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -88,7 +88,7 @@ If the virtual machine doesn't automatically start, start the virtual machine.
 Choose the Graphical install option.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/lxgraphicalinstall.png" title="Choose Graphical Install" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -97,7 +97,7 @@ Choose the Graphical install option.
 Select the language of your choice.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/lxselectlang.png" title="Select Language" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -106,7 +106,7 @@ Select the language of your choice.
 Choose your location.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/lxchooselocation.png" title="Select Location" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -115,7 +115,7 @@ Choose your location.
 Choose the keyboard layout.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/lxchoosekeyboard.png" title="Select Keyboard Layout" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -124,7 +124,7 @@ Choose the keyboard layout.
 Choose your hostname.  I usually go with a blank domain.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/lxhostname.png" title="Choose your hostname" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -133,7 +133,7 @@ Choose your hostname.  I usually go with a blank domain.
 Come up with your full name and username.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/lxusername.png" title="Choose your username" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -142,7 +142,7 @@ Come up with your full name and username.
 Choose a password, ignore DRY, and repeat the password.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/lxpassword.png" title="Choose your password" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -151,7 +151,7 @@ Choose a password, ignore DRY, and repeat the password.
 Choose your timezone.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/lxtimezone.png" title="Choose your timezone" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -160,7 +160,7 @@ Choose your timezone.
 Choose to use the entire disk.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/lxdevsda.png" title="Choose the SDA disk" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -169,7 +169,7 @@ Choose to use the entire disk.
 Choose to install everything in a single partition.  Choose to finish the partition and save to disk.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/lxsinglepart.png" title="Choose Single Partition" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -178,7 +178,7 @@ Choose to install everything in a single partition.  Choose to finish the partit
 Confirm that you want to save the changes to the disk.  Select 'Yes' radio button.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/lxsavedisk.png" title="Confirm Save Disk" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -187,7 +187,7 @@ Confirm that you want to save the changes to the disk.  Select 'Yes' radio butto
 Select the desktop environment and tools to install.  Wait.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/lxtools.png" title="Select DE and Tools" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -196,7 +196,7 @@ Select the desktop environment and tools to install.  Wait.
 Finally.  The tools has been install to the hard drive.  Now, install GRUB boot loader.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/lxinstallgrub.png" title="Install Grub" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -205,7 +205,7 @@ Finally.  The tools has been install to the hard drive.  Now, install GRUB boot 
 Choose the device to install GRUB to.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/lxchoosedevice.png" title="Choose the hardware device" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -214,7 +214,7 @@ Choose the device to install GRUB to.
 Click continue to reboot the machine.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/lxclickcontinue.png" title="Click Continue" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -262,7 +262,7 @@ Power down the machine.
 Download the Windows 10 installation media tool from the Microsoft download page.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/windownloadpage.png" title="Windows Download Page" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -316,7 +316,7 @@ Choose the file name and save location for the ISO.  Please wait because it will
 Click New at the top of the VirtualBox interface.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/clicknew.png" title="Click New" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -325,7 +325,7 @@ Click New at the top of the VirtualBox interface.
 Chose a name for the virtual machine.  Select the Windows ISO that we just created.  Select Skip unintended installation.  Choose Next.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/vbselectwiniso.png" title="Select ISO" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -334,7 +334,7 @@ Chose a name for the virtual machine.  Select the Windows ISO that we just creat
 Choose an appropriate amount of memory and processors for the virtual machine.  Choose Next.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/lxmemory.png" title="Set memory and cpu" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -343,7 +343,7 @@ Choose an appropriate amount of memory and processors for the virtual machine.  
 Set the hard disk space requirements.  Choose Next.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/lxhddspace.png" title="Set HDD space" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -352,7 +352,7 @@ Set the hard disk space requirements.  Choose Next.
 Click Finish to end the set-up.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/winfinishsetup.png" title="Finish Set-up" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -361,7 +361,7 @@ Click Finish to end the set-up.
 If the virtual machine doesn't automatically start, start the virtual machine.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/winstart.png" title="Windows Start" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -370,7 +370,7 @@ If the virtual machine doesn't automatically start, start the virtual machine.
 Click on the Next button.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/winclickstart.png" title="Click Next" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -379,7 +379,7 @@ Click on the Next button.
 Click on the Install Now button.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/winclickinstall.png" title="Click Install Now" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -388,7 +388,7 @@ Click on the Install Now button.
 Click on 'I don't have a product key.'
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/winproductkey.png" title="No Product Key" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -397,7 +397,7 @@ Click on 'I don't have a product key.'
 Select a version of Windows that matches the 'victim' machine.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/winversionselect.png" title="Version Select" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -406,7 +406,7 @@ Select a version of Windows that matches the 'victim' machine.
 Accept the license terms.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/winacceptterms.png" title="Select Terms" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -415,7 +415,7 @@ Accept the license terms.
 Choose the custom install option.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/wincustominstall.png" title="Select Terms" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -424,7 +424,7 @@ Choose the custom install option.
 Select the new button to create the partitions.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/winclicknew.png" title="Click New" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -433,7 +433,7 @@ Select the new button to create the partitions.
 Click Apply to set the partition size.  Click OK on the resulting pop-up.  Highlight the primary partition and click next.  It will take awhile and restart automatically.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/winclickapply.png" title="Click Apply" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -442,7 +442,7 @@ Click Apply to set the partition size.  Click OK on the resulting pop-up.  Highl
 Select the Region.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/winselectregion.png" title="Select Region" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -451,7 +451,7 @@ Select the Region.
 Select the Keyboard.  Skip the second layout.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/winselectkeyboard.png" title="Select Keyboard" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -460,7 +460,7 @@ Select the Keyboard.  Skip the second layout.
 Select the license agreement...again.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/winseclicense.png" title="Accept license" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -469,7 +469,7 @@ Select the license agreement...again.
 Right-click the two computers in the lower right-hand corner and select Connect Network Adapter to disable the network.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/windisablenetwork.png" title="Disable Network" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -478,7 +478,7 @@ Right-click the two computers in the lower right-hand corner and select Connect 
 Select the Set up for personal use option.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/winpersonaluse.png" title="Select personal use" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -487,7 +487,7 @@ Select the Set up for personal use option.
 Choose the username.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/winchoosename.png" title="Choose Username" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -496,7 +496,7 @@ Choose the username.
 Choose a passowrd.  Click Next.  Re-enter the password.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/winchoosepassword.png" title="Choose Password" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -505,7 +505,7 @@ Choose a passowrd.  Click Next.  Re-enter the password.
 Choose answer for the security questions.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/winanswerquestions.png" title="Answer Questions" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -514,7 +514,7 @@ Choose answer for the security questions.
 Turn off all the tracking type of options.  Select Not Now for the Cortana option.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/winturnoffoptions.png" title="Turn Off Options" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -523,7 +523,7 @@ Turn off all the tracking type of options.  Select Not Now for the Cortana optio
 What for it to finish installing and repeat the network option from above to turn the networking back on.  For the pop-up box click on all the continues and Coninue Without Data until it goes away.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/winclickwodata.png" title="Click Though" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -532,7 +532,7 @@ What for it to finish installing and repeat the network option from above to tur
 Install Google Chrome.  This is optional.  You can use Edge, if you want to.  You can leave other browswers behind.  Because if your browsers don't browse, and if they don't browse, then they are no browser of mine!
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/wininstallchrome.png" title="Install Chrome" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -542,7 +542,7 @@ Install Google Chrome.  This is optional.  You can use Edge, if you want to.  Yo
 Download the Windows SDK installer so we can install WinDBG.  WinDBG is my debugger of choice.  You can use whichever you prefer.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/windbg.png" title="Download Windows SDK" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -552,7 +552,7 @@ Download the Windows SDK installer so we can install WinDBG.  WinDBG is my debug
 Launch the installler.  Choose all of the default options.  When you get to the install options, I usually just install everything.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/wininstallwindbg.png" title="Install WinDBG" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -561,7 +561,7 @@ Launch the installler.  Choose all of the default options.  When you get to the 
 Choose it insert the VirtualBox Guest Additions ISO.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/wininsertadditions.png" title="Insert ISO" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -570,7 +570,7 @@ Choose it insert the VirtualBox Guest Additions ISO.
 Navigate to the ISO we just inserted.  Run the option for x86 since we are on a 32-bit system.  A reboot will be required so just shut down the machine so we can set-up networking.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/winnavtools.png" title="Navigate to Folder" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -582,7 +582,7 @@ Navigate to the ISO we just inserted.  Run the option for x86 since we are on a 
 Click on the hamburger button on top and click on the networking option.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/netclicknetwork.png" title="Click Network" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -591,7 +591,7 @@ Click on the hamburger button on top and click on the networking option.
 Click the Create button to create a Nat Network.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/netclickcreate.png" title="Click Create" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -600,7 +600,7 @@ Click the Create button to create a Nat Network.
 On the NAT Networks, set the server information with IP range that you can differentiate from the normal network.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/netcreatenat.png" title="Create NAT Network" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -609,7 +609,7 @@ On the NAT Networks, set the server information with IP range that you can diffe
 On the Settings screen, set the Linux virtual machine Network to NAT Network and choose the network we just created.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/netsetlinux.png" title="Set Linux Network" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -618,7 +618,7 @@ On the Settings screen, set the Linux virtual machine Network to NAT Network and
 On the Settings screen, set the Windows virtual machine Network to NAT Network and choose the network we just created.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/netsetwindows.png" title="Set Windows Network" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -627,7 +627,7 @@ On the Settings screen, set the Windows virtual machine Network to NAT Network a
 From the Windows machine, ping the Linux machine to make sure that you can connect to it.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/netwintestlinux.png" title="Check Windows Connection" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -636,7 +636,7 @@ From the Windows machine, ping the Linux machine to make sure that you can conne
 On the Windows Security screen, disable all of the firewalls.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/netdisablesecurity.png" title="Disable Firewalls" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -645,7 +645,7 @@ On the Windows Security screen, disable all of the firewalls.
 From the Linux machine, ping the Windows machine to make sure that your connect to it.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/boflab/netlinuxtestwindows.png" title="Check Linux Connection" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
