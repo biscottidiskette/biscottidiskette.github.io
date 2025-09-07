@@ -24,8 +24,12 @@ related_publications: false
 
 <br />
 <h2>Modules</h2>
-<p>Introduction to Python 3, Intro to Assembly Language, Stack-based Buffer Overflows on Linux x86, Stack-Based Buffer Overflows on Windows x86</p>
-
+<ol>
+    <li>Introduction to Python 3</li>
+    <li>Intro to Assembly Language</li>
+    <li>Stack-based Buffer Overflows on Linux x86</li>
+    <li>Stack-Based Buffer Overflows on Windows x86</li>
+</ol>
 
 <br />
 <h2>Learning Objectives</h2>
