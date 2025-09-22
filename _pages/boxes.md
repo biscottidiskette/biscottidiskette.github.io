@@ -9,6 +9,25 @@ display_categories: [HackTheBox, TryHackMe, VulnHub, Sherlocks, CyberDefenders, 
 horizontal: false
 ---
 
+<div class="cert-key mb-4" style="display: flex; gap: 1rem; align-items: center;">
+  <div style="display: flex; align-items: center; gap: 0.3rem;">
+    <span style="display:inline-block;width:20px;height:20px;background-color:rgba(255,255,255,0.3);border:1px solid #000;"></span>
+    <span>Insane</span>
+  </div>
+  <div style="display: flex; align-items: center; gap: 0.3rem;">
+    <span style="display:inline-block;width:20px;height:20px;background-color:rgba(255,0,0,0.3);border:1px solid #000;"></span>
+    <span>Hard</span>
+  </div>
+  <div style="display: flex; align-items: center; gap: 0.3rem;">
+    <span style="display:inline-block;width:20px;height:20px;background-color:rgba(255,255,0,0.3);border:1px solid #000;"></span>
+    <span>Medium</span>
+  </div>
+  <div style="display: flex; align-items: center; gap: 0.3rem;">
+    <span style="display:inline-block;width:20px;height:20px;background-color:rgba(0,148,0,0.3);border:1px solid #000;"></span>
+    <span>Easy</span>
+  </div>
+</div>
+
 <!-- pages/boxes.md -->
 <div class="projects">
     {% if site.enable_project_categories and page.display_categories %}

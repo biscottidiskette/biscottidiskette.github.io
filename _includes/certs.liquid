@@ -1,16 +1,19 @@
 <div class="col">
   <a href="{% if cert.redirect %}{{ cert.redirect }}{% else %}{{ cert.url | relative_url }}{% endif %}">
-    <div class="card h-100 hoverable">
+    <div class="card h-100 hoverable"
+         style="background-color: {% if cert.subcategory == 1 %}rgba(255,0,0,0.1){% elsif cert.subcategory == 2 %}rgba(2,62,138,0.1){% elsif cert.subcategory == 3 %}rgba(255,255,255,0.1){% elsif cert.subcategory == 4 %}rgba(159,239,0,0.1){% else %}transparent{% endif %};">
+
       {% if cert.img %}
         {%
           include figure.liquid
           loading="eager"
           path=cert.img
-          sizes = "250px"
+          sizes="250px"
           alt="cert thumbnail"
           class="card-img-top"
         %}
       {% endif %}
+
       <div class="card-body">
         <h2 class="card-title">{{ cert.title }}</h2>
         <p class="card-text">{{ cert.description }}</p>
@@ -30,6 +33,7 @@
           {% endif %}
         </div>
       </div>
+
     </div>
   </a>
 </div>

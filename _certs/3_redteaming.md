@@ -5,6 +5,7 @@ description: Red Teaming Learning Path by TryHackMe.
 img: 
 importance: 4
 category: badge
+subcategory: 1
 related_publications: false
 ---
 
