@@ -9,6 +9,29 @@ display_categories: [personal work, development, reversing, lab setup, personal]
 horizontal: false
 ---
 
+<div class="cert-key mb-4" style="display: flex; gap: 1rem; align-items: center;">
+  <div style="display: flex; align-items: center; gap: 0.3rem;">
+    <span style="display:inline-block;width:20px;height:20px;background-color:rgba(255,0,0,0.3);border:1px solid #000;"></span>
+    <span>Red Team</span>
+  </div>
+  <div style="display: flex; align-items: center; gap: 0.3rem;">
+    <span style="display:inline-block;width:20px;height:20px;background-color:rgba(2,62,138.3);border:1px solid #000;"></span>
+    <span>Blue Team</span>
+  </div>
+  <div style="display: flex; align-items: center; gap: 0.3rem;">
+    <span style="display:inline-block;width:20px;height:20px;background-color:rgba(0,128,0,0.3);border:1px solid #000;"></span>
+    <span>Infrastructure</span>
+  </div>
+  <div style="display: flex; align-items: center; gap: 0.3rem;">
+    <span style="display:inline-block;width:20px;height:20px;background-color:rgba(218,165,32,0.3);border:1px solid #000;"></span>
+    <span>Research</span>
+  </div>
+  <div style="display: flex; align-items: center; gap: 0.3rem;">
+    <span style="display:inline-block;width:20px;height:20px;background-color:rgba(192,192,192,0.3);border:1px solid #000;"></span>
+    <span>Miscellaneous</span>
+  </div>
+</div>
+
 <!-- pages/projects.md -->
 <div class="projects">
 {% if site.enable_project_categories and page.display_categories %}

@@ -5,6 +5,7 @@ description: Setup a domain for testing purposes.
 img: 
 importance: 2
 category: lab setup
+subcategory: infrastructure
 related_publications: false
 ---
 

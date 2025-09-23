@@ -5,6 +5,7 @@ description: Vanilla Buffer Overflow write-ups.
 img: 
 importance: 2
 category: development
+subcategory: red
 related_publications: false
 ---
 

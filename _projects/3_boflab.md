@@ -5,6 +5,7 @@ description: Setup a lab for buffer overflow.
 img: 
 importance: 2
 category: lab setup
+subcategory: infrastructure
 related_publications: false
 ---
 
