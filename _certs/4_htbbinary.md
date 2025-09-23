@@ -5,7 +5,7 @@ description: Intro to Binary Exploitation by HackTheBox.
 img: 
 importance: 3
 category: badge
-subcategory: 1
+subcategory: red
 related_publications: false
 ---
 

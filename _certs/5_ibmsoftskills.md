@@ -5,7 +5,7 @@ description: People and Soft Skills for Professional and Personal Success by IBM
 img: 
 importance: 4
 category: badge
-subcategory: 3
+subcategory: general
 related_publications: false
 ---
 

@@ -5,7 +5,7 @@ description: Security+ by CompTIA.
 img: 
 importance: 4
 category: certification
-subcategory: 4
+subcategory: foundation
 related_publications: false
 ---
 

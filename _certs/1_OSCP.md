@@ -5,7 +5,7 @@ description: Offensive Security Certified Professional (OSCP) by OffSec.
 img: 
 importance: 3
 category: certification
-subcategory: 1
+subcategory: red
 related_publications: false
 ---
 
