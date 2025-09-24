@@ -1,0 +1,256 @@
+// ==========================
+// Custom SCSS for Biscotti Diskette
+// ==========================
+
+// --------------------------
+// Variables
+// --------------------------
+$primary-color: #ff4500; // Orange-red theme
+$secondary-color: #023e8a; // Blue
+$success-color: #008000; // Green
+$research-color: #daa520; // Goldenrod
+$misc-color: #c0c0c0; // Silver
+$bg-dark: #111;
+$text-dark: #eee;
+$text-light: #333;
+$card-border-radius: 0.5rem;
+$card-hover-scale: 1.05;
+$code-bg: #1e1e1e;
+$code-text: #f8f8f2;
+
+// --------------------------
+// General
+// --------------------------
+body {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.6;
+  background-color: #121212; // default dark
+  color: $text-dark;
+
+  &.light-mode {
+    background-color: #fff;
+    color: $text-light;
+  }
+}
+
+a {
+  color: $primary-color;
+  text-decoration: underline;
+
+  &:hover {
+    color: lighten($primary-color, 10%);
+    text-decoration: none;
+  }
+}
+
+// --------------------------
+// Header / Navbar
+// --------------------------
+.navbar {
+  background-color: #000; 
+  .nav-link {
+    color: $text-dark;
+    &.active {
+      font-weight: 600;
+      border-bottom: 2px solid $primary-color;
+    }
+    &:hover {
+      color: $primary-color;
+    }
+  }
+}
+
+// --------------------------
+// Post Header
+// --------------------------
+.post-header {
+  margin-bottom: 2rem;
+
+  .post-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: $primary-color;
+  }
+
+  .post-description {
+    font-size: 1.1rem;
+    color: $text-dark;
+  }
+}
+
+// --------------------------
+// Projects Page Cards
+// --------------------------
+.projects {
+  .card {
+    border-radius: $card-border-radius;
+    border: 1px solid #333;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+    &.hoverable:hover {
+      transform: scale($card-hover-scale);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    &.red-team {
+      background-color: rgba(255, 0, 0, 0.1);
+    }
+    &.blue-team {
+      background-color: rgba(2, 62, 138, 0.3);
+    }
+    &.infra {
+      background-color: rgba(0, 128, 0, 0.1);
+    }
+    &.research {
+      background-color: rgba(218, 165, 32, 0.3);
+    }
+    &.misc {
+      background-color: rgba(192,192,192,0.1);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: $text-dark;
+    }
+
+    .card-text {
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+  }
+}
+
+// --------------------------
+// Images / Figures
+// --------------------------
+figure {
+  margin: 1.5rem 0;
+
+  img {
+    max-width: 100%;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: transform 0.2s ease;
+    
+    &:hover {
+      transform: scale(1.02);
+    }
+  }
+}
+
+// --------------------------
+// Code Blocks
+// --------------------------
+.language-sh, .language-html, .language-bash, .language-python {
+  background-color: $code-bg !important;
+  color: $code-text !important;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.95rem;
+  overflow-x: auto;
+  line-height: 1.5;
+
+  .highlight {
+    pre {
+      margin: 0;
+      background: none;
+      border-radius: 0.5rem;
+    }
+  }
+}
+
+// --------------------------
+// Headings
+// --------------------------
+h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 2px solid #444;
+  color: $primary-color;
+}
+
+// --------------------------
+// External links / buttons
+// --------------------------
+a[rel*="external"] {
+  color: $secondary-color;
+  font-weight: 500;
+
+  &:hover {
+    color: lighten($secondary-color, 15%);
+  }
+}
+
+// --------------------------
+// Scroll Progress Bar
+// --------------------------
+#progress {
+  width: 100%;
+  height: 5px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: rgba(255,255,255,0.1);
+
+  &::-webkit-progress-bar {
+    background: rgba(255,255,255,0.1);
+  }
+
+  &::-webkit-progress-value {
+    background: $primary-color;
+  }
+}
+
+// --------------------------
+// Back-to-top button
+// --------------------------
+#back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background-color: $primary-color;
+  color: #fff;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  text-align: center;
+  line-height: 3rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  transition: background 0.2s ease;
+
+  &:hover {
+    background-color: lighten($primary-color, 10%);
+  }
+}
+
+// --------------------------
+// Dark Mode Overrides
+// --------------------------
+body.dark-mode {
+  background-color: $bg-dark;
+  color: $text-dark;
+
+  a {
+    color: $primary-color;
+  }
+
+  h2 {
+    border-color: lighten(#444, 15%);
+  }
+
+  .projects .card {
+    border-color: #555;
+    .card-title {
+      color: #eee;
+    }
+    .card-text {
+      color: #ccc;
+    }
+  }
+}
