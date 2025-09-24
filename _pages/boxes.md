@@ -5,7 +5,7 @@ permalink: /boxes/
 description: All of the boxes, Sherlocks, and various other practice.
 nav: true
 nav_order: 2
-display_categories: [HackTheBox, TryHackMe, VulnHub, Sherlocks, CyberDefenders, blueteamlabs.online]
+display_categories: [HackTheBox, TryHackMe, VulnHub, Sherlocks, CyberDefenders]
 horizontal: false
 ---
 

@@ -5,7 +5,7 @@ permalink: /projects/
 description: A growing collection of projects.
 nav: true
 nav_order: 1
-display_categories: [personal work, development, reversing, lab setup, personal]
+display_categories: [development, lab setup, personal]
 horizontal: false
 ---
 

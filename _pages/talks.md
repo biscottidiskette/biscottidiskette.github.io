@@ -3,7 +3,7 @@ layout: page
 title: talks
 permalink: /presentations/
 description: A growing collection of the presentations that I presented.
-nav: true
+nav: false
 nav_order: 6
 display_categories: [2025]
 horizontal: false

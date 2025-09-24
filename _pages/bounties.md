@@ -3,7 +3,7 @@ layout: page
 title: bounties
 permalink: /bounties/
 description: All of my bug bounties that I found.
-nav: true
+nav: false
 nav_order: 4
 display_categories: [HackerOne, BugCrowd, rvd, other]
 horizontal: false

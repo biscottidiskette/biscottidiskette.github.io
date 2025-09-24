@@ -3,7 +3,7 @@ layout: page
 title: cves
 permalink: /cves/
 description: A growing collection of CVEs I earned.
-nav: true
+nav: false
 nav_order: 5
 display_categories: [2025]
 horizontal: false
