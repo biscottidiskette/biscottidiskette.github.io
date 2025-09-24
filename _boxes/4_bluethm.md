@@ -5,6 +5,7 @@ description: Enternal Blue - MS17-010.
 img: 
 importance: 4
 category: TryHackMe
+team: Red Team Labs
 related_publications: false
 ---
 

@@ -4,7 +4,7 @@ title: Portfolio
 description: A description of building this portfolio.
 img: 
 importance: 4
-category: personal
+category: Personal
 subcategory: miscellaneous
 related_publications: false
 ---

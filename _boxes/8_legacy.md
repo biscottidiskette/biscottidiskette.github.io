@@ -5,6 +5,7 @@ description: SMB exploit - MS08-167.
 img: 
 importance: 4
 category: HackTheBox
+team: Red Team Labs
 related_publications: false
 ---
 

@@ -5,6 +5,7 @@ description: Javascript credential stealer and keystroke logger.
 img: 
 importance: 4
 category: CyberDefenders
+team: Blue Team Labs
 related_publications: false
 ---
 

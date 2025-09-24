@@ -5,7 +5,8 @@ permalink: /projects/
 description: A growing collection of projects.
 nav: true
 nav_order: 1
-display_categories: [development, lab setup, personal]
+display_categories: [Development, Lab Setup, Personal]
+subcategories: [red,blue,infrastructure,research,miscellaneous]
 horizontal: false
 ---
 
@@ -34,55 +35,82 @@ horizontal: false
 
 <!-- pages/projects.md -->
 <div class="projects">
-{% if site.enable_project_categories and page.display_categories %}
-  <!-- Display categorized projects -->
   {% for category in page.display_categories %}
-  <a id="{{ category }}" href=".#{{ category }}">
-    <h2 class="category">{{ category }}</h2>
-  </a>
-  {% assign categorized_projects = site.projects | where: "category", category %}
-  {% assign sorted_projects = categorized_projects | sort: "importance" %}
-  <!-- Generate cards for each project -->
-  {% if page.horizontal %}
-  <div class="container">
-    <div class="row row-cols-1 row-cols-md-2">
-    {% for project in sorted_projects %}
-      {% include projects_horizontal.liquid %}
-    {% endfor %}
-    </div>
-  </div>
-  {% else %}
-  <div class="row row-cols-1 row-cols-md-3">
-    {% for project in sorted_projects %}
-      {% include projects.liquid %}
-    {% endfor %}
-  </div>
-  {% endif %}
+    <a id="{{ category | slugify }}" 
+       style="display:block;
+              font-size:1.6rem;
+              font-weight:700;
+              margin-top:2rem;
+              margin-bottom:0.75rem;
+              padding-bottom:0.25rem;
+              border-bottom:2px solid #444;
+              color:#fff;
+              text-decoration:none;">
+      {{ category }}
+    </a>
+
+    {% assign categorized_projects = site.projects | where: "category", category %}
+    {% assign sorted_projects = categorized_projects | sort: "importance" %}
+
+    {% if sorted_projects != empty %}
+      <div class="row row-cols-1 row-cols-md-3">
+        {% for project in sorted_projects %}
+
+          {% case project.subcategory %}
+            {% when "red" %}{% assign bg_color = "rgba(255,0,0,0.1)" %}
+            {% when "blue" %}{% assign bg_color = "rgba(2,62,138,0.1)" %}
+            {% when "infrastructure" %}{% assign bg_color = "rgba(0,128,0,0.1)" %}
+            {% when "research" %}{% assign bg_color = "rgba(218,165,32,0.1)" %}
+            {% when "miscellaneous" %}{% assign bg_color = "rgba(192,192,192,0.1)" %}
+            {% else %}{% assign bg_color = "transparent" %}
+          {% endcase %}
+
+          <div class="col">
+            <a href="{{ project.url | relative_url }}">
+              <div class="card h-100 hoverable"
+                   style="border-radius:0.5rem;
+                          border:1px solid #333;
+                          transition:transform 0.15s ease, box-shadow 0.15s ease;
+                          background-color: {{ bg_color }};">
+
+                {% if project.img %}
+                  {%
+                    include figure.liquid
+                    loading="eager"
+                    path=project.img
+                    sizes="250px"
+                    alt="project thumbnail"
+                    class="card-img-top"
+                  %}
+                {% endif %}
+
+                <div class="card-body">
+                  <h2 class="card-title" style="font-size:1.1rem; color:#fff;">{{ project.title }}</h2>
+                  <p class="card-text" style="font-size:0.9rem; color:#aaa;">{{ project.description }}</p>
+
+                  <div class="row ml-1 mr-1 p-0">
+                    {% if project.github %}
+                      <div class="github-icon">
+                        <div class="icon" data-toggle="tooltip" title="Code Repository">
+                          <a href="{{ project.github }}"><i class="fa-brands fa-github gh-icon"></i></a>
+                        </div>
+                        {% if project.github_stars %}
+                          <span class="stars" data-toggle="tooltip" title="GitHub Stars">
+                            <i class="fa-solid fa-star"></i>
+                            <span id="{{ project.github_stars }}-stars"></span>
+                          </span>
+                        {% endif %}
+                      </div>
+                    {% endif %}
+                  </div>
+
+                </div>
+              </div>
+            </a>
+          </div>
+
+        {% endfor %}
+      </div>
+    {% endif %}
   {% endfor %}
-
-{% else %}
-
-<!-- Display projects without categories -->
-
-{% assign sorted_projects = site.projects | sort: "importance" %}
-
-  <!-- Generate cards for each project -->
-
-{% if page.horizontal %}
-
-  <div class="container">
-    <div class="row row-cols-1 row-cols-md-2">
-    {% for project in sorted_projects %}
-      {% include projects_horizontal.liquid %}
-    {% endfor %}
-    </div>
-  </div>
-  {% else %}
-  <div class="row row-cols-1 row-cols-md-3">
-    {% for project in sorted_projects %}
-      {% include projects.liquid %}
-    {% endfor %}
-  </div>
-  {% endif %}
-{% endif %}
 </div>

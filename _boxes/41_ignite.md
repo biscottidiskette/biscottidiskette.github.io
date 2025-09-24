@@ -5,6 +5,7 @@ description: Fuel CMS public exploit.
 img: 
 importance: 4
 category: TryHackMe
+team: Red Team Labs
 related_publications: false
 ---
 

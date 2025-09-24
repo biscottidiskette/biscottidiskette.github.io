@@ -5,6 +5,7 @@ description: Default creds - exposed script panel.
 img: 
 importance: 4
 category: TryHackMe
+team: Red Team Labs
 related_publications: false
 ---
 

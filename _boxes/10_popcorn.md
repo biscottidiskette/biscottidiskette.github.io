@@ -5,6 +5,7 @@ description: Torrent hoster file upload.
 img: 
 importance: 3
 category: HackTheBox
+team: Red Team Labs
 related_publications: false
 ---
 

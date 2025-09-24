@@ -4,7 +4,7 @@ title: Domain Set-up
 description: Setup a domain for testing purposes.
 img: 
 importance: 2
-category: lab setup
+category: Lab Setup
 subcategory: infrastructure
 related_publications: false
 ---

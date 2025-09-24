@@ -5,6 +5,7 @@ description: Leaked credentials via SMB.
 img: 
 importance: 4
 category: VulnHub
+team: Red Team Labs
 related_publications: false
 ---
 

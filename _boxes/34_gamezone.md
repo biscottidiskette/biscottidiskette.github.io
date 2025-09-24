@@ -5,6 +5,7 @@ description: SQLMap hash - SSH.
 img: 
 importance: 4
 category: TryHackMe
+team: Red Team Labs
 related_publications: false
 ---
 

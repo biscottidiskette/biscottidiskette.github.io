@@ -5,6 +5,7 @@ description: HttpFileServer 2.3 public exploit.
 img: 
 importance: 4
 category: HackTheBox
+team: Red Team Labs
 related_publications: false
 ---
 

@@ -5,6 +5,7 @@ description: NodeJS deserialization attack.
 img: 
 importance: 3
 category: HackTheBox
+team: Red Team Labs
 related_publications: false
 ---
 

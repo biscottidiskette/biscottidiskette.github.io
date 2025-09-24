@@ -6,10 +6,11 @@ description: All of the boxes, Sherlocks, and various other practice.
 nav: true
 nav_order: 2
 display_categories: [HackTheBox, TryHackMe, VulnHub, Sherlocks, CyberDefenders]
-horizontal: false
+teams: [Red Team Labs, Blue Team Labs]
 ---
 
-<div class="cert-key mb-4" style="display: flex; gap: 1rem; align-items: center;">
+<!-- Difficulty Legend -->
+<div class="cert-key mb-4" style="display: flex; gap: 1rem; flex-wrap:wrap; align-items: center;">
   <div style="display: flex; align-items: center; gap: 0.3rem;">
     <span style="display:inline-block;width:20px;height:20px;background-color:rgba(255,255,255,0.3);border:1px solid #000;"></span>
     <span>Insane</span>
@@ -28,51 +29,67 @@ horizontal: false
   </div>
 </div>
 
-<!-- pages/boxes.md -->
 <div class="projects">
-    {% if site.enable_project_categories and page.display_categories %}
-        <!-- Display categorized boxes -->
-        {% for category in page.display_categories %}
-            <a id="{{ category }}" href=".#{{ category }}">
-                <h2 class="category">{{ category }}</h2>
-            </a>
-            {% assign categorized_boxes = site.boxes | where: "category", category %}
-            {% assign sorted_boxes = categorized_boxes | sort: "importance" %}
-            <!-- Generate cards for each boxes -->
-            {% if page.horizontal %}
-                <div class="container">
-                    <div class="row row-cols-1 row-cols-md-2">
-                        {% for box in sorted_boxes %}
-                            {% include boxes_horizontal.liquid %}
-                        {% endfor %}
-                    </div>
+  <!-- Loop through teams -->
+  {% for team in page.teams %}
+    <a id="{{ team | slugify }}" 
+       style="display:block;
+              font-size:1.6rem;
+              font-weight:700;
+              margin-top:2rem;
+              margin-bottom:0.75rem;
+              padding-bottom:0.25rem;
+              border-bottom:2px solid #444;
+              color:#fff;
+              text-decoration:none;">
+      {{ team }}
+    </a>
+
+    <!-- Loop through categories -->
+    {% for category in page.display_categories %}
+      {% assign categorized_boxes = site.boxes 
+          | where: "category", category 
+          | where: "team", team %}
+      {% assign sorted_boxes = categorized_boxes | sort: "importance" %}
+
+      {% if sorted_boxes != empty %}
+        <a id="{{ category | slugify }}" 
+           style="display:block;
+                  font-size:1.2rem;
+                  font-weight:600;
+                  margin-top:1.25rem;
+                  margin-bottom:0.5rem;
+                  padding-left:0.5rem;
+                  color:#bbb;
+                  text-decoration:none;">
+          {{ category }}
+        </a>
+
+        <div class="row row-cols-1 row-cols-md-3">
+          {% for box in sorted_boxes %}
+            <div class="col">
+              <a href="{{ box.url | relative_url }}">
+                <div class="card h-100 hoverable"
+                     style="border-radius:0.5rem;
+                            border:1px solid #333;
+                            transition:transform 0.15s ease, box-shadow 0.15s ease;
+                            {% case box.importance %}
+                              {% when 4 %}background-color:rgba(0,148,0,0.05);
+                              {% when 3 %}background-color:rgba(255,255,0,0.05);
+                              {% when 2 %}background-color:rgba(255,0,0,0.05);
+                              {% when 1 %}background-color:rgba(255,255,255,0.05);
+                              {% else %}background-color:#1c1c1c;
+                            {% endcase %}">
+                  <div class="card-body">
+                    <h2 class="card-title" style="font-size:1.1rem; color:#fff;">{{ box.title }}</h2>
+                    <p class="card-text" style="font-size:0.9rem; color:#aaa;">{{ box.description }}</p>
+                  </div>
                 </div>
-            {% else %}
-                <div class="row row-cols-1 row-cols-md-3">
-                    {% for box in sorted_boxes %}
-                        {% include boxes.liquid %}
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endfor %}
-    {% else %}
-        <!-- Display boxes without categories -->
-        {% assign sorted_boxes = site.boxes | sort: "importance" %}
-        <!-- Generate cards for each project -->
-        {% if page.horizontal %}
-            <div class="container">
-                <div class="row row-cols-1 row-cols-md-2">
-                    {% for box in sorted_boxes %}
-                        {% include boxes_horizontal.liquid %}
-                    {% endfor %}
-                </div>
+              </a>
             </div>
-        {% else %}
-            <div class="row row-cols-1 row-cols-md-3">
-                {% for box in sorted_boxes %}
-                    {% include boxes.liquid %}
-                {% endfor %}
-            </div>
-        {% endif %}
-    {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
 </div>

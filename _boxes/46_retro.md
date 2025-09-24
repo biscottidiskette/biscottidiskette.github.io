@@ -5,6 +5,7 @@ description: Exposed credentials and theme code injection.
 img: 
 importance: 2
 category: TryHackMe
+team: Red Team Labs
 related_publications: false
 ---
 

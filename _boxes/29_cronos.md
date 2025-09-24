@@ -5,6 +5,7 @@ description: SQLi auth bypass - command injection.
 img: 
 importance: 3
 category: HackTheBox
+team: Red Team Labs
 related_publications: false
 ---
 

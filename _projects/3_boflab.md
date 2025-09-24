@@ -4,7 +4,7 @@ title: Buffer Overflow Lab Setup
 description: Setup a lab for buffer overflow.
 img: 
 importance: 2
-category: lab setup
+category: Lab Setup
 subcategory: infrastructure
 related_publications: false
 ---

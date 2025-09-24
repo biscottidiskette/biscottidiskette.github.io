@@ -1,10 +1,11 @@
 ---
 layout: page
 title: Buffer Overflow Prep
-description: Active box.
+description: A series of buffer overflows practice.
 img: 
 importance: 4
 category: TryHackMe
+team: Red Team Labs
 related_publications: false
 ---
 

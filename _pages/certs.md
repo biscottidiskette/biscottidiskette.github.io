@@ -30,45 +30,37 @@ horizontal: false
 
 <!-- pages/certs.md -->
 <div class="projects">
-    {% if site.enable_project_categories and page.display_categories %}
-        {% for category in page.display_categories %}
-            <a id="{{ category }}" href=".#{{ category }}">
-                <h2 class="category">{{ category }}</h2>
-            </a>
-            {% assign categorized_certs = site.certs | where: "category", category %}
-            {% assign sorted_certs = categorized_certs | sort: "importance" %}
-            <!-- Generate cards for each cert -->
-            {% if page.horizontal %}
-                <div class="container">
-                    <div class="row row-cols-1 row-cols-md-2">
-                        {% for cert in sorted_certs %}
-                            {% include certs_horizontal.liquid %}
-                        {% endfor %}
-                    </div>
-                </div>
-            {% else %}
-                <div class="row row-cols-1 row-cols-md-3">
-                    {% for cert in sorted_certs %}
-                        {% include certs.liquid %}
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endfor %}
-    {% else %}
-        {% if page.horizontal %}
-            <div class="container">
-                <div class="row row-cols-1 row-cols-md-2">
-                    {% for cert in sorted_certs %}
-                        {% include certs_horizontal.liquid %}
-                    {% endfor %}
-                </div>
-            </div>
-        {% else %}
-            <div class="row row-cols-1 row-cols-md-3">
-                {% for cert in sorted_certs %}
-                    {% include certs.liquid %}
-                {% endfor %}
-            </div>
-        {% endif %}
+  {% for category in page.display_categories %}
+    <a id="{{ category | slugify }}" 
+       style="display:block;
+              font-size:1.6rem;
+              font-weight:700;
+              margin-top:2rem;
+              margin-bottom:0.75rem;
+              padding-bottom:0.25rem;
+              border-bottom:2px solid #444;
+              color:#fff;
+              text-decoration:none;">
+      {{ category }}
+    </a>
+
+    {% assign categorized_certs = site.certs | where: "category", category %}
+    {% assign sorted_certs = categorized_certs | sort: "importance" %}
+
+    {% if sorted_certs != empty %}
+      {% if page.horizontal %}
+        <div class="row row-cols-1 row-cols-md-2 g-3">
+          {% for cert in sorted_certs %}
+            {% include certs_horizontal.liquid %}
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="row row-cols-1 row-cols-md-3 g-3">
+          {% for cert in sorted_certs %}
+            {% include certs.liquid %}
+          {% endfor %}
+        </div>
+      {% endif %}
     {% endif %}
+  {% endfor %}
 </div>

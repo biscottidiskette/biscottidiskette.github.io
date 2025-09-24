@@ -4,7 +4,7 @@ title: Vanilla Buffer Overflows
 description: Vanilla Buffer Overflow write-ups.
 img: 
 importance: 2
-category: development
+category: Development
 subcategory: red
 related_publications: false
 ---

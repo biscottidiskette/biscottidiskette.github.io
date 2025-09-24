@@ -5,6 +5,7 @@ description: Brute-force creds and file upload.
 img: 
 importance: 3
 category: TryHackMe
+team: Red Team Labs
 related_publications: false
 ---
 

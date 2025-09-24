@@ -5,6 +5,7 @@ description: Stolen creds and password re-use.
 img: 
 importance: 4
 category: HackTheBox
+team: Red Team Labs
 related_publications: false
 ---
 

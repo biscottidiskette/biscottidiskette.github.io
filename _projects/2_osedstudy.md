@@ -4,7 +4,7 @@ title: OSED Study
 description: A study journey for the OSED.
 img: 
 importance: 2
-category: personal
+category: Personal
 subcategory: red
 related_publications: false
 ---

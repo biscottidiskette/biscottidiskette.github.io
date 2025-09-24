@@ -5,6 +5,7 @@ description: CuteNews public exploit.
 img: 
 importance: 3
 category: HackTheBox
+team: Red Team Labs
 related_publications: false
 ---
 
