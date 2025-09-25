@@ -2,13 +2,15 @@
 # Only the main Sass file needs front matter (the dashes are enough)
 ---
 
-/* fallback for editor */
+/* Fallback for editor */
 $max-content-width: 1200px !default;
 
 /* Jekyll override */
 $max-content-width: #{'{{ site.max_width }}'} !default;
 
+// ===========================
 // Import partials
+// ===========================
 @import
   "variables",
   "themes",
@@ -24,8 +26,7 @@ $max-content-width: #{'{{ site.max_width }}'} !default;
   "font-awesome/regular",
   "tabler-icons/tabler-icons.scss",
   "tabler-icons/tabler-icons-filled.scss",
-  "tabler-icons/tabler-icons-outline.scss"
-;
+  "tabler-icons/tabler-icons-outline.scss";
 
 // ===========================
 // Custom Mega Styles
@@ -115,7 +116,7 @@ $max-content-width: #{'{{ site.max_width }}'} !default;
 
   &:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   }
 
   .card-body {
