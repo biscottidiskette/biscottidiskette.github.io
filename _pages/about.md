@@ -29,8 +29,21 @@ social: false # includes social icons at the bottom of the page
       See my practical projects and cybersecurity experiments.
     </p>
   <div class="hero-cta">
-    <a href="/projects/" class="btn btn-primary">Explore Projects</a>
-    <a href="/boxes/" class="btn btn-secondary">View Boxes</a>
+    <a href="/projects/" 
+     class="btn" 
+     style="padding:0.75rem 1.5rem; background:#007bff; color:#fff; border-radius:0.5rem; text-decoration:none; font-weight:600;">
+    Explore Projects
+    </a>
+    <a href="/boxes/" 
+      class="btn" 
+      style="padding:0.75rem 1.5rem; background:#6c757d; color:#fff; border-radius:0.5rem; text-decoration:none; font-weight:600;">
+      View Boxes
+    </a>
+    <a href="#contact" 
+      class="btn" 
+      style="padding:0.75rem 1.5rem; background:#00bfff; color:#000; border-radius:0.5rem; text-decoration:none; font-weight:600;">
+      Contact Me
+    </a>
   </div>
 
   <hr style="margin:2rem 0; border:0; height:1px; background-color:#f5f5f5;" />
