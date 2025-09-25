@@ -39,7 +39,7 @@ social: false # includes social icons at the bottom of the page
       style="padding:0.75rem 1.5rem; background:#6c757d; color:#fff; border-radius:0.5rem; text-decoration:none; font-weight:600;">
       View Boxes
     </a>
-    <a href="#contact" 
+    <a href="/contact/" 
       class="btn" 
       style="padding:0.75rem 1.5rem; background:#00bfff; color:#000; border-radius:0.5rem; text-decoration:none; font-weight:600;">
       Contact Me
