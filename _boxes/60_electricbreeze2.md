@@ -1,7 +1,7 @@
 ---
 layout: page
 title: ElectricBreeze-2
-description: Active Sherlock.
+description: Active challenge – details withheld per TOS
 img: 
 importance: 4
 category: Sherlocks

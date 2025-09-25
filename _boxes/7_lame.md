@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Lame
-description: Distcc public exploit.
+description: Exploited distcc service for remote code execution
 img: 
 importance: 4
 category: HackTheBox

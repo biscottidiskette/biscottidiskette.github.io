@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Cap
-description: IDOR and exposed cleartext creds.
+description: Leveraged IDOR to access cleartext credentials
 img: 
 importance: 4
 category: HackTheBox

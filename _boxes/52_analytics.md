@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Analytics
-description: Public exploit - Env creds.
+description: Escalated privilege via environment variables
 img: 
 importance: 4
 category: HackTheBox

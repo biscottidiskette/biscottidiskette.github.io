@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Knife
-description: Vulnerable PHP version.
+description: Exploited vulnerable PHP version
 img: 
 importance: 4
 category: HackTheBox

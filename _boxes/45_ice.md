@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Ice
-description: Public exploit.
+description: Executed public exploit
 img: 
 importance: 4
 category: TryHackMe

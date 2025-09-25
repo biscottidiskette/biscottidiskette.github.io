@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Buffer Overflow Prep
-description: A series of buffer overflows practice.
+description: Practiced buffer overflow exploitation techniques
 img: 
 importance: 4
 category: TryHackMe

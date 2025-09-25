@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Brainstorm
-description: Buffer overflow.
+description: Wrote buffer overflow exploit
 img: 
 importance: 3
 category: TryHackMe

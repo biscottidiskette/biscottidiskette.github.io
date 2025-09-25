@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Photographer
-description: Leaked credentials via SMB.
+description: Retrieved credentials via SMB
 img: 
 importance: 4
 category: VulnHub

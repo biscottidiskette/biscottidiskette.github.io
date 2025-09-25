@@ -1,7 +1,7 @@
 ---
 layout: page
 title: THM Blue
-description: Enternal Blue - MS17-010.
+description: Gained remote access via MS17-010
 img: 
 importance: 4
 category: TryHackMe

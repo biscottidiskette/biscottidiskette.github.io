@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Corp
-description: Whitelist app bypass.
+description: Bypassed whitelist in application
 img: 
 importance: 4
 category: TryHackMe

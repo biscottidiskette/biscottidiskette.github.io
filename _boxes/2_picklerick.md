@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Pickle Rick
-description: Exposed authenticated command panel.
+description: Discovered exposed default credentials command panel
 img: 
 importance: 4
 category: TryHackMe

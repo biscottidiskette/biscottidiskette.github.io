@@ -1,7 +1,7 @@
 ---
 layout: page
 title: HackPark
-description: Brute-force creds and file upload.
+description: Brute-forced credentials and uploaded file
 img: 
 importance: 3
 category: TryHackMe

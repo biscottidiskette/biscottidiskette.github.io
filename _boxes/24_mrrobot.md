@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Mr. Robot
-description: Exposed dictionary and hydra brute.
+description: Brute-forced credentials using exposed wordlist
 img: 
 importance: 3
 category: TryHackMe

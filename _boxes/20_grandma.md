@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Granny
-description: Abusing PUT Method.
+description: Uploaded web shell via HTTP PUT
 img: 
 importance: 4
 category: HackTheBox

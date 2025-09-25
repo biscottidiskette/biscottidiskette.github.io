@@ -1,0 +1,65 @@
+<!-- _includes/seo.html -->
+
+{%- assign page_title = page.title | default: site.title -%}
+
+{%- if page.description %}
+  {%- assign page_description = page.description -%}
+{%- else %}
+  {%- assign page_description = page.content | strip_html | truncate: 160 -%}
+{%- endif -%}
+
+{%- assign page_url = page.url | absolute_url -%}
+{%- assign page_image = page.og_image | default: "/assets/img/social-preview.png" | absolute_url -%}
+
+<!-- Primary Meta Tags -->
+<title>{{ page_title }}</title>
+<meta name="description" content="{{ page_description }}">
+<meta name="keywords" content="{{ site.keywords | join: ', ' }}">
+<meta name="author" content="{{ site.title }}">
+
+<!-- Google Site Verification -->
+{%- if site.google_site_verification and site.enable_google_verification -%}
+<meta name="google-site-verification" content="{{ site.google_site_verification }}">
+{%- endif -%}
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ page_title }}">
+<meta property="og:description" content="{{ page_description }}">
+<meta property="og:url" content="{{ page_url }}">
+<meta property="og:image" content="{{ page_image }}">
+<meta property="og:site_name" content="{{ site.title }}">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ page_title }}">
+<meta name="twitter:description" content="{{ page_description }}">
+<meta name="twitter:image" content="{{ page_image }}">
+
+<!-- Automatic image alt fallback -->
+{%- for img in page.images %}
+  {%- if img.alt == nil or img.alt == "" %}
+    <meta name="image-alt" content="{{ page_title }}">
+  {%- endif -%}
+{%- endfor -%}
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "{{ site.title }}",
+  "url": "{{ site.url }}",
+  "sameAs": [
+    {% if site.socials.github %}"{{ site.socials.github }}"{% endif %}{% if site.socials.twitter %}, "{{ site.socials.twitter }}"{% endif %}{% if site.socials.linkedin %}, "{{ site.socials.linkedin }}"{% endif %}
+  ],
+  "jobTitle": "Cybersecurity Researcher",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Independent",
+    "url": "{{ site.url }}"
+  },
+  "image": "{{ page_image }}",
+  "description": "{{ page_description }}"
+}
+</script>

@@ -1,12 +1,13 @@
 ---
 layout: page
 title: Brainpan
-description: Buffer overflow.
+description: Wrote buffer overflow exploit for shell
 img: 
 importance: 2
 category: TryHackMe
 team: Red Team Labs
 related_publications: false
+og_image: "/assets/img/brainpan1/logo.png"
 ---
 
 <div class="row justify-content-sm-center">

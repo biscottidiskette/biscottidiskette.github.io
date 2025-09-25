@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Skynet
-description: Expose credentials.
+description: Discovered credentials
 img: 
 importance: 4
 category: TryHackMe

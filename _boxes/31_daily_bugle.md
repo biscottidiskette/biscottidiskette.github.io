@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Daily Bugle
-description: Joomla public exploit.
+description: Exploited Joomla via public vulnerability
 img: 
 importance: 2
 category: TryHackMe

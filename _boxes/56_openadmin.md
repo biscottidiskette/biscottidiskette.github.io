@@ -1,7 +1,7 @@
 ---
 layout: page
 title: OpenAdmin
-description: Ona public exploit.
+description: Exploited Ona public vulnerability
 img: 
 importance: 4
 category: HackTheBox

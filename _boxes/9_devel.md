@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Devel
-description: FTP exploit to webroot.
+description: Uploaded web shell via FTP server
 img: 
 importance: 4
 category: HackTheBox

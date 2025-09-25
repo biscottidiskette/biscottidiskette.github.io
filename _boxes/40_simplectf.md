@@ -1,7 +1,7 @@
 ---
 layout: page
 title: SimpleCTF
-description: CMS public exploit.
+description: Exploited CMS via public vulnerability
 img: 
 importance: 4
 category: TryHackMe

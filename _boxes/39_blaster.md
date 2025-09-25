@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Blaster
-description: Expose credentials and RDP.
+description: Discovered credentials and gained RDP access
 img: 
 importance: 4
 category: TryHackMe

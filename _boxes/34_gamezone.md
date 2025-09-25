@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Game Zone
-description: SQLMap hash - SSH.
+description: Used SQLMap to retrieve hash, gained SSH access
 img: 
 importance: 4
 category: TryHackMe

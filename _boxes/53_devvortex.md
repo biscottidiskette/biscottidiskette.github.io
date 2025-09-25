@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Devvortex
-description: Stolen creds and password re-use.
+description: Exploited stolen credentials via password reuse
 img: 
 importance: 4
 category: HackTheBox

@@ -15,12 +15,32 @@ selected_papers: false # includes a list of papers marked as "selected={true}"
 social: false # includes social icons at the bottom of the page
 ---
 
-Ahoy hoy! 
+<section class="hero">
+  <p class="hero-tagline">
+    Cybersecurity researcher since 2021<br />
+    Skills & Tools: Web Security • CTF • Linux • Python • Networking<br />
+    Exploring Reverse Engineering, Malware Analysis, Exploit Development
+  </p>
 
-I am a passionate cybersecurity researcher working since 2021. My primary focus lies in securing web applications, where I strive to stay ahead of potential threats and protect users' data.
+  <hr style="margin:2rem 0; border:0; height:1px; background-color:#f5f5f5;" />
 
-But my true passion is reverse engineering. I love the challenge of deconstructing code, understanding its inner workings, and uncovering vulnerabilities that others might miss. This intricate process not only sharpens my skills but also fuels my curiosity and drives me to learn more.
+  <h2 style="font-size:2rem; margin-bottom:0.5rem;">Explore My Work</h2>
+    <p style="font-size:1.1rem; color:#666; margin-bottom:1.5rem;">
+      See my practical projects and cybersecurity experiments.
+    </p>
+  <div class="hero-cta">
+    <a href="/projects/" class="btn btn-primary">Explore Projects</a>
+    <a href="/boxes/" class="btn btn-secondary">View Boxes</a>
+  </div>
 
-In addition to my professional work, I enjoy participating in Capture The Flag (CTF) challenges and solving various online boxes to keep my skills sharp and my mind agile. These exercises not only help me stay on top of the latest trends in cybersecurity but also allow me to connect with a vibrant community of like-minded individuals.
+  <hr style="margin:2rem 0; border:0; height:1px; background-color:#f5f5f5;" />
 
-When I'm not diving into the depths of code, you can find me exploring the latest advancements in cybersecurity and contributing to open-source projects. My commitment to continuous learning and growth ensures that I remain at the forefront of this ever-evolving field.
+  <div class="hero-about">
+    <p>
+      I focus on <strong>securing web applications</strong> and am currently <strong>expanding my skills</strong> in reverse engineering to better understand how code works beneath the surface. Through CTFs and online challenges, I keep my skills sharp and stay connected with the cybersecurity community.
+    </p>
+    <p>
+      Beyond that, I explore cutting-edge security trends and <strong>collaborate</strong> with other professionals, continually learning and evolving in this dynamic field.
+    </p>
+  </div>
+</section>

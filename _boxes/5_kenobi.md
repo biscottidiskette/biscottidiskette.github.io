@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Kenobi
-description: Exposed private key via SMB.
+description: Retrieved private key over SMB
 img: 
 importance: 4
 category: TryHackMe

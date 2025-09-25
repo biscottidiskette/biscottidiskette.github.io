@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Retro
-description: Exposed credentials and theme code injection.
+description: Discovered credentials and executed theme code injection
 img: 
 importance: 2
 category: TryHackMe

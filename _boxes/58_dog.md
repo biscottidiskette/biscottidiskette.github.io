@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Dog
-description: Active box.
+description: Active challenge – details withheld per TOS
 img: 
 importance: 4
 category: HackTheBox

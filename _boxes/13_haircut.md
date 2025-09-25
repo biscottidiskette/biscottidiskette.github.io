@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Haircut
-description: Command injection.
+description: Leveraged command injection vulnerability
 img: 
 importance: 3
 category: HackTheBox

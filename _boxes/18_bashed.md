@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Bashed
-description: Exposed cli page with rce.
+description: Discovered exposed CLI page with RCE
 img: 
 importance: 4
 category: HackTheBox

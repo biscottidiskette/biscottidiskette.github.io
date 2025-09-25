@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Passage
-description: CuteNews public exploit.
+description: Exploited CuteNews public vulnerability
 img: 
 importance: 3
 category: HackTheBox

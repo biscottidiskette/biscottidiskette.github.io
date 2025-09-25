@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Arctic
-description: CFIDE exploit.
+description: Exploited CFIDE vulnerability
 img: 
 importance: 4
 category: HackTheBox

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Jerry
-description: Default credentials - File Upload.
+description: Used default credentials to upload file via Tomcat
 img: 
 importance: 4
 category: HackTheBox

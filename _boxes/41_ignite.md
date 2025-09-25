@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Ignite
-description: Fuel CMS public exploit.
+description: Exploited Fuel CMS via public vulnerability
 img: 
 importance: 4
 category: TryHackMe

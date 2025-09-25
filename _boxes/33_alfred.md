@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Alfred
-description: Default creds - exposed script panel.
+description: Discovered exposed script panel via default credentials
 img: 
 importance: 4
 category: TryHackMe

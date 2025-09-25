@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Sau
-description: Server-Side Request Forgery.
+description: Exploited SSRF to access internal resources
 img: 
 importance: 4
 category: HackTheBox

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Love
-description: Voting System public exploit.
+description: Exploited public vulnerability in voting system
 img: 
 importance: 4
 category: HackTheBox

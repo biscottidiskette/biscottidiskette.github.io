@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Optimum
-description: HttpFileServer 2.3 public exploit.
+description: Exploited HFS 2.3 public vulnerability
 img: 
 importance: 4
 category: HackTheBox

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Blocky
-description: Decompile jar for creds.
+description: Decompiled JAR to extract credentials
 img: 
 importance: 4
 category: HackTheBox

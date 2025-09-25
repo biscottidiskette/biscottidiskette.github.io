@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Titanic
-description: LFI to steal credentials.
+description: Exploited LFI to steal credentials
 img: 
 importance: 4
 category: HackTheBox

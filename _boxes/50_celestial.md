@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Celestial
-description: NodeJS deserialization attack.
+description: Exploited NodeJS deserialization vulnerability
 img: 
 importance: 3
 category: HackTheBox

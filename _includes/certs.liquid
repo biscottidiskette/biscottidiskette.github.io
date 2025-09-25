@@ -12,6 +12,7 @@
            border-radius:0.5rem;
            border:1px solid #333;
            transition:transform 0.15s ease, box-shadow 0.15s ease;">
+      
       {% if cert.img %}
         {% include figure.liquid
            loading="eager"
@@ -22,8 +23,8 @@
       {% endif %}
 
       <div class="card-body">
-        <h2 class="card-title">{{ cert.title }}</h2>
-        <p class="card-text">{{ cert.description }}</p>
+        <h2 class="card-title" style="font-size:1.1rem; color:#fff;">{{ cert.title }}</h2>
+        <p class="card-text" style="font-size:0.9rem; color:#aaa;">{{ cert.description }}</p>
       </div>
     </div>
   </a>

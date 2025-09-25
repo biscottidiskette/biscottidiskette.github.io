@@ -1,6 +1,6 @@
 ---
 layout: page
-title: People and Soft Skills for Professional and Personal Success
+title: Soft Skills for Success
 description: People and Soft Skills for Professional and Personal Success by IBM.
 img: 
 importance: 4

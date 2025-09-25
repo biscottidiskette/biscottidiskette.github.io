@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Legacy
-description: SMB exploit - MS08-167.
+description: Exploited SMB vulnerability (MS08-067) for RCE
 img: 
 importance: 4
 category: HackTheBox

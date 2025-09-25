@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Fake GPT Lab
-description: Javascript credential stealer and keystroke logger.
+description: Analyzed JS credential stealer malware
 img: 
 importance: 4
 category: CyberDefenders

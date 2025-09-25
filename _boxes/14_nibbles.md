@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Nibbles
-description: Nibbleblog public exploit.
+description: Exploited Nibbleblog public vulnerability
 img: 
 importance: 4
 category: HackTheBox

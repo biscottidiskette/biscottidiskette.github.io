@@ -1,7 +1,7 @@
 ---
 layout: page
 title: BoardLight
-description: Default credentials - public exploit.
+description: Used default credentials with public exploit
 img: 
 importance: 4
 category: HackTheBox

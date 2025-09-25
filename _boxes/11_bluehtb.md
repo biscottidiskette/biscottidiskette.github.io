@@ -1,7 +1,7 @@
 ---
 layout: page
 title: HTB Blue
-description: Eternal Blue - MS17-010.
+description: Exploited EternalBlue SMB vulnerability (MS17-010)
 img: 
 importance: 4
 category: HackTheBox

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Billing
-description: Command injection HTTP parameter.
+description: Exploited HTTP parameter for command injection
 img: 
 importance: 4
 category: TryHackMe

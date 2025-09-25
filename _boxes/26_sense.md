@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Sense
-description: Default creds and know exploit.
+description: Exploited default credentials via known exploit
 img: 
 importance: 4
 category: HackTheBox

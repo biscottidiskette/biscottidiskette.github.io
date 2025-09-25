@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Grandpa
-description:  IIS Webdav public exploit.
+description:  Abused IIS WebDAV vulnerability to execute code
 img: 
 importance: 4
 category: HackTheBox

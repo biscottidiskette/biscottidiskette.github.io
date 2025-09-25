@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Popcorn
-description: Torrent hoster file upload.
+description: Exploited file upload on torrent host
 img: 
 importance: 3
 category: HackTheBox

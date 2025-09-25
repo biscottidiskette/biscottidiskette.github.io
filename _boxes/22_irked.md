@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Irked
-description: UnrealIRCd public exploit.
+description: Leveraged UnrealIRCd exploit for RCE
 img: 
 importance: 4
 category: HackTheBox

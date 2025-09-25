@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Library
-description: SSH hydra brute-force.
+description: Brute-forced SSH with Hydra
 img: 
 importance: 4
 category: TryHackMe
