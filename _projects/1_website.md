@@ -31,14 +31,14 @@ Navigate to the al-folio repository and click Fork.
 <br />
 For the repository, the name has to be in a specific format.  It has to follow a specific naming convention for GitHub pages.  That is your_user_name.github.io.
 
-{% raw %}
-```
+{% capture names %}
 <your_user_name>.github.io
 
 Ex.
 biscottidiskette.github.io
-```
-{% endraw %}
+{% endcapture %}
+
+{% include codebox.html title="Name Example" content=names %}
 <div class="col-sm-8 mt-3 mt-md-0">
     {% include figure.liquid loading="eager" path="assets/img/website/createrepo.png" title="Create the repo" class="img-fluid rounded z-depth-1" %}
 </div>
@@ -60,8 +60,7 @@ Update the URL and the description.
 <br />
 Now, install the prerequisites, the ruby manager, the ruby build environment.  This install setup is from <a href="https://stackoverflow.com/questions/37720892/you-dont-have-write-permissions-for-the-var-lib-gems-2-3-0-directory">StackOverflow</a>.
 
-{% raw %}
-```bash
+{% capture installprereqs %}
 cd $HOME
 sudo apt update 
 sudo apt install git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libxml2-dev libxslt1-dev libcurl4-openssl-dev libffi-dev
@@ -74,14 +73,17 @@ exec $SHELL
 git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
 echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc
 exec $SHELL
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=installprereqs %}
 
 <br />
 Use the rbenv to get the most recent version of ruby.  Note the version.
 
-{% raw %}
-```bash
+{% capture installrubyenv %}
 ubz@ubz-VirtualBox:~/Documents/GitHub/biscottidiskette.github.io$ rbenv install -l
 3.1.6
 3.2.6
@@ -95,38 +97,51 @@ truffleruby+graalvm-24.1.1
 
 Only latest stable releases for each Ruby implementation are shown.
 Use `rbenv install --list-all' to show all local versions.
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=installrubyenv %}
 
 <br />
 Install the later version of ruby.  Please note, this is building from source so it will take a bit.  Set that version of ruby.  Check the verions of Ruby to ensure that the install completed successfully.
 
-{% raw %}
-```bash
+{% capture viewversions %}
 rbenv install 3.4.1
 rbenv global 3.4.1
 ruby -v
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=viewversions %}
 
 <br />
 Use Ruby's gem to install bundler.
 
-{% raw %}
-```bash
+{% capture installbundler %}
 gem install bundler
 rbenv rehash
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=installbundler %}
 
 <br />
 Install Code or your favourite programming envrionment.
 
-{% raw %}
-```bash
+{% capture installcode %}
 sudo snap install --classic code
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=installcode %}
 
 <br />
 From the Code Dropdown, copy the git https link.
@@ -138,44 +153,56 @@ From the Code Dropdown, copy the git https link.
 <br />
 Clone the repository to your development machine.
 
-{% raw %}
-```bash
+{% capture clonerepo %}
 ubz@ubz-VirtualBox:~$ git clone https://github.com/biscottidiskette/biscottidiskette.github.io.git
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=clonerepo %}
 
 <br />
 Open the code folder structure in Code.
 
-{% raw %}
-```bash
+{% capture opencode %}
 ubz@ubz-VirtualBox:~$ code .
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=opencode %}
 
 <br />
 Change directory in the folder and execute bundle to install the prerequisites.
 
-{% raw %}
-```bash
+{% capture bundleinstall %}
 cd biscottidiskette.github.io/
 bundle
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=bundleinstall %}
 
 <br />
 Use bundle to spin up a local webserver.  You can get the ip and port at the bottom of the output and this can be viewed in the web browser.  Please note that this bundle command can be used whenever you want to test and see changes that were made.  Use Control + C to stop the server.
 
-{% raw %}
-```bash
+{% capture runjekyllserver %}
 ubz@ubz-VirtualBox:~/Documents/GitHub/biscottidiskette.github.io$ bundle exec jekyll serve
 
 <snip>
 
 Server address: http://127.0.0.1:4000
   Server running... press ctrl-c to stop.
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=runjekyllserver %}
 <div class="col-sm mt-3 mt-md-0">
     {% include figure.liquid loading="eager" path="assets/img/website/firstrun.png" title="The Intial Website" class="img-fluid rounded z-depth-1" %}
 </div>
@@ -247,8 +274,7 @@ Create a md file in the _pages folder.  Create a folder under the root folder wi
 <br />
 Update the header of the new page that was just created.
 
-{% raw %}
-```
+{% capture boxesheader %}
 ---
 layout: page
 title: boxes
@@ -259,8 +285,9 @@ nav_order: 2
 display_categories: [HackTheBox, TryHackMe, VulnHub, CTFs]
 horizontal: false
 ---
-```
-{% endraw %}
+{% endcapture %}
+
+{% include codebox.html title="Boxes Page Header" content=boxesheader %}
 
 <ul>
     <li>layout: Indicates the layout of the file.  Collections use page layout.</li>
@@ -308,8 +335,8 @@ Create a test item for the new collection.
 <div class="col-sm-4 mt-3 mt-md-0">
     {% include figure.liquid loading="eager" path="assets/img/website/testitem.png" title="Test Item" class="img-fluid rounded z-depth-1" %}
 </div>
-{% raw %}
-```html
+
+{% capture indboxheader %}
 ---
 layout: page
 title: Brainpan
@@ -319,8 +346,10 @@ importance: 2
 category: TryHackMe
 related_publications: false
 ---
-```
-{% endraw %}
+{% endcapture %}
+
+{% include codebox.html title="Individual Box Header" content=indboxheader %}
+
 <ul>
     <li>layout: Indicates the layout of the file.  Collection Items use page layout.</li>
     <li>title: The tile for the item.</li>
@@ -503,8 +532,8 @@ Create a new item in the _posts folder.  It follow the naming convention: yyyy-m
 <div class="col-sm-4 mt-3 mt-md-0">
     {% include figure.liquid loading="eager" path="assets/img/website/firstblog.png" title="First blog post" class="img-fluid rounded z-depth-1" %}
 </div>
-{% raw %}
-```html
+
+{% capture blogpostheader %}
 ---
 layout: post
 title: First post.
@@ -516,8 +545,10 @@ related_posts: false
 ---
 
 <p>Welcome to my blog.  Feel free to check it out and let me know what you think.</p>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include codebox.html title="Config File Example" content=blogpostheader %}
+
 <ul>
     <li>layout: Indicates the layout of the file.  Blog posts use post layout.</li>
     <li>title: The tile for the post.</li>
@@ -530,30 +561,29 @@ related_posts: false
 <br />
 In the _config.yml file, update the display_tags and display_categories to whatever was done in your posts.
 
-{% raw %}
-```html
+{% capture blogconfig %}
 display_tags: ["portfolio"] # these tags will be displayed on the front page of your blog
 display_categories: ["personal"] # these categories will be displayed on the front page of your blog
-```
-{% endraw %}
+{% endcapture %}
+
+{% include codebox.html title="_config.yml partial" content=blogconfig %}
 
 <br />
 In the same file, update the blog and the blog description.
 
-{% raw %}
-```html
+{% capture blogdesc %}
 blog_name: ScottiSec # blog_name will be displayed in your blog page
 blog_description: My musings about the InfoSec/Cybersecurity space.
 permalink: /blog/:year/:title/
 lsi: false # produce an index for related posts
-```
-{% endraw %}
+{% endcapture %}
+
+{% include codebox.html title="_config.yml partial" content=blogdesc %}
 
 <br />
 Also, delete all of the sample posts to clean up the blog.  Also, also, comment out the external blog posts in the _config.yml file.
 
-{% raw %}
-```html
+{% capture blogexternal %}
 # External sources.
 # If you have blog posts published on medium.com or other external sources,
 # you can display them in your blog by adding a link to the RSS feed.
@@ -564,8 +594,9 @@ Also, delete all of the sample posts to clean up the blog.  Also, also, comment 
 #    posts:
 #      - url: https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/
 #        published_date: 2024-05-14
-```
-{% endraw %}
+{% endcapture %}
+
+{% include codebox.html title="_config.yml partial" content=blogexternal %}
 
 <br />
 Check the blog in the web browser to ensure it looks how you want it.
@@ -578,36 +609,45 @@ Check the blog in the web browser to ensure it looks how you want it.
 <h3>Deployment</h3>
 Generate ssh keys with the email for your GitHub.  Ensure that you enter a strong passphrase.  If a key already exist in the current folder, give it a unique name.
 
-{% raw %}
-```bash
+{% capture sshkeygen %}
 ubz@ubz-VirtualBox:~/Documents/GitHub/biscottidiskette.github.io$ ssh-keygen -t ed25519 -C "<your_email_here>"
 
 <snip>
 
 Enter passphrase (empty for no passphrase): 
 Enter same passphrase again:
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=sshkeygen %}
 
 <br />
 Switch the repository from using HTTPs to using SSH.
 
-{% raw %}
-```bash
+{% capture changetossh %}
 git remote -v
 git remote set-url origin git@github.com:OWNER/REPOSITORY.git
 git remote -v
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=changetossh %}
 
 <br />
 Use cat to get the public key.  Copy the public key.
 
-{% raw %}
-```bash
+{% capture catpublickey %}
 cat <path_to_the_public_key>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=catpublickey %}
 
 <br />
 Click on the avatar in the upper-right corner and click settings.
@@ -638,29 +678,34 @@ Give it a title.  Choose a key type.  And paste the public key into the box labe
 <br />
 Use the package manager to install npm and use npm to install purgecss.
 
-{% raw %}
-```bash
+{% capture installpurgecss %}
 sudo apt update
 sudo apt install npm
 sudo npm install -g purgecss
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=installpurgecss %}
 
 <br />
 Navigate into the repo folder.  Stage all of the changes and commit them.
 
-{% raw %}
-```bash
+{% capture stagecommit %}
 git add .
 git commit -m "<commit_comment_here>"
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=stagecommit %}
 
 <br />  
 Deploy the code to the gh-pages branch.  The deploy command output will let you know it was successful.
 
-{% raw %}
-```bash
+{% capture builddeploy %}
 ubz@ubz-VirtualBox:~/Documents/GitHub/biscottidiskette.github.io$ bin/deploy --user
 
 <snip>
@@ -668,8 +713,12 @@ ubz@ubz-VirtualBox:~/Documents/GitHub/biscottidiskette.github.io$ bin/deploy --u
 Switched to branch 'main'
 Your branch is up to date with 'origin/main'.
 Deployed successfully!
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=builddeploy %}
 
 <br />
 From the repository settings, click on Pages.
@@ -695,11 +744,14 @@ Check the branch. On the right-hand side, you should see deployments.  It will h
 <br />
 Push the repo back into the main branch.
 
-{% raw %}
-```bash
+{% capture pushmain %}
 git push origin main
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=pushmain %}
 
 <br />
 And with that, you should be good to go.  If not, I will come back and edit this at some later date in time.  Maybe.

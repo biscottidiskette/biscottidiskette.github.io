@@ -1,0 +1,11 @@
+<div class="terminal" data-language="{{ include.language }}">
+  <div class="terminal__header{% if include.language == 'browser' %} terminal__header--browser{% endif %}">
+    <span class="terminal__dot terminal__dot--red"></span>
+    <span class="terminal__dot terminal__dot--yellow"></span>
+    <span class="terminal__dot terminal__dot--green"></span>
+    <span class="terminal__title">{{ include.title }}</span>
+  </div>
+  <pre class="terminal__body">
+{{ include.content | escape }}
+  </pre>
+</div>

