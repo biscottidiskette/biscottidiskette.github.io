@@ -4,7 +4,7 @@ title: talks
 permalink: /presentations/
 description: A growing collection of the presentations that I presented.
 nav: false
-nav_order: 6
+nav_order: 9
 display_categories: [2025]
 horizontal: false
 ---

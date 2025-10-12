@@ -4,7 +4,7 @@ permalink: /repositories/
 title: repos
 description: Welcome to my my GitHub.
 nav: true
-nav_order: 8
+nav_order: 5
 ---
 
 {% if site.data.repositories.github_users %}
