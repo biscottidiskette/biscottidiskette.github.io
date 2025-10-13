@@ -3,6 +3,7 @@
             border:1px solid #333;
             transition:transform 0.15s ease, box-shadow 0.15s ease;
             background-color:{% case box.importance %}
+                                {% when 5 %}rgba(178,0,237,0.05)
                                 {% when 4 %}rgba(0,148,0,0.05)
                                 {% when 3 %}rgba(255,255,0,0.05)
                                 {% when 2 %}rgba(255,0,0,0.05)

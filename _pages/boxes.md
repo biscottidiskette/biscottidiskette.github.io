@@ -27,6 +27,10 @@ teams: [Red Team Labs, Blue Team Labs]
     <span style="display:inline-block;width:20px;height:20px;background-color:rgba(0,148,0,0.3);border:1px solid #000;"></span>
     <span>Easy</span>
   </div>
+  <div style="display: flex; align-items: center; gap: 0.3rem;">
+    <span style="display:inline-block;width:20px;height:20px;background-color:rgba(178,0,237,0.3);border:1px solid #000;"></span>
+    <span>Very Easy</span>
+  </div>
 </div>
 
 <div class="projects">
