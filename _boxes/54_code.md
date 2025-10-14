@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Code
-description: Active challenge – details withheld per TOS
+description: Bypassed Python word and import blacklists.
 img: 
 importance: 4
 category: HackTheBox
