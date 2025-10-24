@@ -22,9 +22,6 @@ related_publications: false
 <h2>Process</h2>
 
 <br/>
-<h2>Process</h2>
-
-<br/>
 {Redacted: Active Machine}
 <br />
 
