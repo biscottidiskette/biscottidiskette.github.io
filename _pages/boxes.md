@@ -9,6 +9,100 @@ display_categories: [HackTheBox, TryHackMe, HTB Challenges, VulnHub, Sherlocks, 
 teams: [Red Team Labs, Blue Team Labs]
 ---
 
+<style>
+  /* Responsive counters table */
+  .counters-table {
+    width: 100%;
+    border-spacing: 0.75rem; /* slightly tighter */
+    table-layout: fixed;
+    margin-bottom: 1.5rem; /* space from legend */
+  }
+
+  @media (max-width: 640px) {
+    .counters-table tr {
+      display: block;
+    }
+    .counters-table td {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.75rem;
+      border-right: none;
+    }
+  }
+
+  /* Counter box styling - compact and blended */
+  .counter-box {
+    background-color: rgba(28,28,28,0.9); /* charcoal overlay */
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .counter-title {
+    text-transform: uppercase;
+    font-size: 0.6rem;
+    letter-spacing: 0.05em;
+    color: #9ca3af; /* muted gray */
+    margin-bottom: 0.3rem;
+  }
+
+  .counter-item {
+    display: flex;
+    justify-content: space-between;
+    color: #d1d5db; /* neutral text */
+    margin-bottom: 0.1rem;
+    font-size: 0.875rem;
+  }
+
+  .counter-value {
+    font-weight: 600;
+    color: rgba(255,255,255,0.85);
+  }
+
+  /* Optional subtle separator on desktop */
+  .counters-table td:not(:last-child) {
+    border-right: 1px solid rgba(255,255,255,0.05);
+    padding-right: 0.5rem;
+  }
+</style>
+
+<table class="counters-table">
+  <tr>
+    <!-- Categories -->
+    <td style="vertical-align:top;">
+      <div class="counter-box">
+        <p class="counter-title">Site Statistics</p>
+        <ul>
+          {% for category in page.display_categories %}
+            {% assign count = site.boxes | where: "category", category | size %}
+            <li class="counter-item">
+              <span>{{ category }}</span>
+              <span class="counter-value">{{ count }}</span>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </td>
+
+    <!-- Teams -->
+    <td style="vertical-align:top;">
+      <div class="counter-box">
+        <p class="counter-title">Team Statistics</p>
+        <ul>
+          {% for team in page.teams %}
+            {% assign count = site.boxes | where: "team", team | size %}
+            <li class="counter-item">
+              <span>{{ team }}</span>
+              <span class="counter-value">{{ count }}</span>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </td>
+  </tr>
+</table>
+
 <!-- Difficulty Legend -->
 <div class="cert-key mb-4" style="display: flex; gap: 1rem; flex-wrap:wrap; align-items: center;">
   <div style="display: flex; align-items: center; gap: 0.3rem;">
