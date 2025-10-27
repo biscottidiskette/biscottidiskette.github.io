@@ -25,37 +25,28 @@
         {% endif %}
 
         <div class="{% if tool.img %}col-md-6{% else %}col-md-12{% endif %}">
-          <!-- Title -->
-          <div class="card-header" style="font-weight:700; font-size:1.25rem; border-bottom:1px solid #ccc;">
-            {{ tool.title }}
-          </div>
-
-          <!-- Description -->
           <div class="card-body">
+            <h3 class="card-title">{{ tool.title }}</h3>
             <p class="card-text">{{ tool.description }}</p>
-          </div>
-
-          <!-- Proof / Links -->
-          {% if tool.github or tool.website or tool.internal_proof %}
-            <div class="card-footer" style="border-top:1px solid #ccc; display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <div class="row ml-1 mr-1 p-0">
               {% if tool.github %}
-                <a href="{{ tool.github }}" class="btn btn-outline-dark btn-sm" target="_blank">
-                  <i class="fa-brands fa-github"></i> GitHub
-                  {% if tool.github_stars %}({{ tool.github_stars }}){% endif %}
-                </a>
-              {% endif %}
-              {% if tool.website %}
-                <a href="{{ tool.website }}" class="btn btn-outline-dark btn-sm" target="_blank">Website</a>
-              {% endif %}
-              {% if tool.internal_proof %}
-                {% assign proof_page = site.pages | where: "url", tool.internal_proof | first %}
-                <a href="{{ tool.internal_proof | relative_url }}" class="btn btn-sm"
-                  style="background-color:#007bff;color:#fff;border:none;">
-                  Proof: {% if proof_page %}{{ proof_page.title }}{% else %}Walkthrough{% endif %}
-                </a>
+                <div class="github-icon">
+                  <div class="icon" data-toggle="tooltip" title="Code Repository">
+                    <a href="{{ tool.github }}"><i class="fa-brands fa-github gh-icon"></i></a>
+                  </div>
+                  {% if tool.github_stars %}
+                    <span class="stars" data-toggle="tooltip" title="GitHub Stars">
+                      <i class="fa-solid fa-star"></i>
+                      <span id="{{ tool.github_stars }}-stars"></span>
+                    </span>
+                  {% endif %}
+                </div>
               {% endif %}
             </div>
-          {% endif %}
+          </div>
+        </div>
+      </div>
+
         </div>
       </div>
     </div>
