@@ -67,6 +67,15 @@ teams: [Red Team Labs, Blue Team Labs]
   }
 </style>
 
+Hands-on security challenges completed across offensive and defensive domains. 
+Each challenge includes detailed technical write-ups covering methodology, tooling, 
+and lessons learned.
+
+**Purple Team Approach:** I analyze offensive challenges from an attacker's perspective 
+(exploitation techniques, privilege escalation) and defensive challenges from a 
+responder's perspective (threat hunting, timeline analysis, IOC extraction). 
+This dual focus helps me understand security from both sides.
+
 <table class="counters-table">
   <tr>
     <!-- Categories -->

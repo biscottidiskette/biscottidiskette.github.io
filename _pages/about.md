@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='https://app.hackthebox.eu/profile/biscottidiskette'>HackTheBox</a> | <a href='https://tryhackme.com/r/p/BiscottiDiskette'>TryHackMe</a> | <a href='#'>HackerOne</a> | <a href='#'>BugCrowd</a>
+subtitle: <a href='https://app.hackthebox.eu/profile/biscottidiskette'>HackTheBox</a> | <a href='https://tryhackme.com/r/p/BiscottiDiskette'>TryHackMe</a>
 
 profile:
   align: right
@@ -15,45 +15,32 @@ selected_papers: false # includes a list of papers marked as "selected={true}"
 social: false # includes social icons at the bottom of the page
 ---
 
-<section class="hero">
-  <p class="hero-tagline">
-    Cybersecurity researcher since 2021<br />
-    Skills & Tools: Web Security • CTF • Linux • Python • Networking<br />
-    Exploring Reverse Engineering, Malware Analysis, Exploit Development
-  </p>
+### Purple Team Security Analyst | OSCP-Certified
+#### Former Pentester → Current Blue Team Operations
 
-  <hr style="margin:2rem 0; border:0; height:1px; background-color:#f5f5f5;" />
+I break systems to understand how to defend them.
 
-  <h2 style="font-size:2rem; margin-bottom:0.5rem;">Explore My Work</h2>
-    <p style="font-size:1.1rem; color:#666; margin-bottom:1.5rem;">
-      See my practical projects and cybersecurity experiments.
-    </p>
-  <div class="hero-cta">
-    <a href="/projects/" 
-     class="btn" 
-     style="padding:0.75rem 1.5rem; background:#007bff; color:#fff; border-radius:0.5rem; text-decoration:none; font-weight:600;">
-    Explore Projects
-    </a>
-    <a href="/boxes/" 
-      class="btn" 
-      style="padding:0.75rem 1.5rem; background:#6c757d; color:#fff; border-radius:0.5rem; text-decoration:none; font-weight:600;">
-      View Boxes
-    </a>
-    <a href="/contact/" 
-      class="btn" 
-      style="padding:0.75rem 1.5rem; background:#00bfff; color:#000; border-radius:0.5rem; text-decoration:none; font-weight:600;">
-      Contact Me
-    </a>
-  </div>
+**Experience:**
+- 🔴 **Red Team:** 64 offensive labs | OSCP | Web exploitation
+- 🔵 **Blue Team:** 19 defensive challenges | Threat hunting | Incident response | Malware analysis
+- 🟣 **Purple Team:** Creating and Testing Incident Response Playbook
 
-  <hr style="margin:2rem 0; border:0; height:1px; background-color:#f5f5f5;" />
+**Current Focus:**
+- Blue team operations & incident response
+- TCM Practical Junior Malware Analyst (In Progress)
+- GIAC Certified Incident Handler (GCIH Prep - Exam Q1 2026)
 
-  <div class="hero-about">
-    <p>
-      I focus on <strong>securing web applications</strong> and am currently <strong>expanding my skills</strong> in reverse engineering to better understand how code works beneath the surface. Through CTFs and online challenges, I keep my skills sharp and stay connected with the cybersecurity community.
-    </p>
-    <p>
-      Beyond that, I explore cutting-edge security trends and <strong>collaborate</strong> with other professionals, continually learning and evolving in this dynamic field.
-    </p>
-  </div>
-</section>
+**Skills:** Web Security • CTF • Linux • Python • Networking • SOC Analysis • Malware Analysis <br />
+**Exploring:** Reverse Engineering • Malware Analysis • Incident Response • Exploit Development
+
+[Projects](/projects/) | [View All Labs ({{ site.boxes | size }} Total)](/boxes/) | [Tools](/tools/) | [Certifications](/certifications/) | [Blog](/blog/) | [Contact](/contact/)
+
+---
+
+I focus on securing web applications and am currently expanding my skills in 
+malware analysis and detection engineering. Through offensive challenges (HTB, THM) 
+and defensive scenarios (Sherlocks, CyberDefenders, BTL), I develop a complete 
+understanding of both attack and defense.
+
+My offensive background gives me unique insight into attacker methodology, which 
+I will now apply to building better detections, alert management, and responding to incidents.
