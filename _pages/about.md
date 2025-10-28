@@ -23,15 +23,15 @@ I break systems to understand how to defend them.
 **Experience:**
 - 🔴 **Red Team:** 64 offensive labs | OSCP | Web exploitation
 - 🔵 **Blue Team:** 19 defensive challenges | Threat hunting | Incident response | Malware analysis
-- 🟣 **Purple Team:** Creating and Testing Incident Response Playbook
+- 🟣 **Purple Team:** IR playbook development | Detection rules (coming soon)
 
 **Current Focus:**
 - Blue team operations & incident response
 - TCM Practical Junior Malware Analyst (In Progress)
 - GIAC Certified Incident Handler (GCIH Prep - Exam Q1 2026)
 
-**Skills:** Web Security • CTF • Linux • Python • Networking • SOC Analysis • Malware Analysis <br />
-**Exploring:** Reverse Engineering • Malware Analysis • Incident Response • Exploit Development
+**Skills:** Web Security • CTF • Linux • Python • Networking • SOC Analysis • Incident Response<br />
+**Exploring:** Reverse Engineering • Advanced Malware Analysis • Exploit Development • Detection Engineering
 
 [Projects](/projects/) | [View All Labs ({{ site.boxes | size }} Total)](/boxes/) | [Tools](/tools/) | [Certifications](/certifications/) | [Blog](/blog/) | [Contact](/contact/)
 
@@ -43,4 +43,4 @@ and defensive scenarios (Sherlocks, CyberDefenders, BTL), I develop a complete
 understanding of both attack and defense.
 
 My offensive background gives me unique insight into attacker methodology, which 
-I will now apply to building better detections, alert management, and responding to incidents.
+I will apply to building better detections, alert management, and responding to incidents.
