@@ -6,8 +6,106 @@ description: All the certifications, badges, online courses, books that I have c
 nav: true
 nav_order: 4
 display_categories: [certification, badge, online course, book]
+subcategories: [red, blue, foundational, general]
 horizontal: false
 ---
+
+<!-- Header Blurb -->
+<div style="margin-bottom: 2rem;">
+  <p style="font-size: 1rem; color: #d1d5db; line-height: 1.6;">
+    Professional certifications and continuous learning initiatives spanning offensive security, 
+    defensive operations, and foundational knowledge. Each certification includes context on 
+    skills gained, practical applications, and career impact.
+  </p>
+  <p style="font-size: 0.95rem; color: #9ca3af; margin-top: 0.75rem;">
+    <strong>Current Focus:</strong> Expanding into malware analysis and incident response 
+    (TCM Malware Analysis, GCIH prep) to complement offensive security foundation.
+  </p>
+</div>
+
+<!-- Certification Statistics Counter -->
+<style>
+  .stats-table {
+    width: 100%;
+    border-spacing: 0.75rem;
+    table-layout: fixed;
+    margin-bottom: 1.5rem;
+  }
+  @media (max-width: 640px) {
+    .stats-table tr { display: block; }
+    .stats-table td {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.75rem;
+      border-right: none;
+    }
+  }
+  .stat-box {
+    background-color: rgba(28,28,28,0.9);
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .stat-title {
+    text-transform: uppercase;
+    font-size: 0.6rem;
+    letter-spacing: 0.05em;
+    color: #9ca3af;
+    margin-bottom: 0.3rem;
+  }
+  .stat-item {
+    display: flex;
+    justify-content: space-between;
+    color: #d1d5db;
+    margin-bottom: 0.1rem;
+    font-size: 0.875rem;
+  }
+  .stat-value {
+    font-weight: 600;
+    color: rgba(255,255,255,0.85);
+  }
+  .stats-table td:not(:last-child) {
+    border-right: 1px solid rgba(255,255,255,0.05);
+    padding-right: 0.5rem;
+  }
+</style>
+
+<table class="stats-table">
+  <tr>
+    <!-- Category Statistics -->
+    <td style="vertical-align:top;">
+      <div class="stat-box">
+        <p class="stat-title">Credential Types</p>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+          {% for category in page.display_categories %}
+            {% assign count = site.certs | where: "category", category | size %}
+            <li class="stat-item">
+              <span style="text-transform: capitalize;">{{ category }}</span>
+              <span class="stat-value">{{ count }}</span>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </td>
+    
+    <!-- Focus Area Statistics -->
+    <td style="vertical-align:top;">
+      <div class="stat-box">
+        <p class="stat-title">Focus Areas</p>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+          {% for subcategory in page.subcategories %}
+            {% assign count = site.certs | where: "subcategory", subcategory | size %}
+            <li class="stat-item">
+              <span style="text-transform: capitalize;">{{ subcategory }}</span>
+              <span class="stat-value">{{ count }}</span>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </td>
+  </tr>
+</table>
 
 <div class="cert-key mb-4" style="display: flex; gap: 1rem; align-items: center;">
   <div style="display: flex; align-items: center; gap: 0.3rem;">

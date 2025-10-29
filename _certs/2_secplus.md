@@ -5,7 +5,7 @@ description: CompTIA Security+ (SY0-601/701)
 img:
 importance: 4
 category: certification
-subcategory: foundation
+subcategory: foundational
 related_publications: false
 ---
 
