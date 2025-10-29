@@ -20,10 +20,10 @@ social: false # includes social icons at the bottom of the page
 
 I break systems to understand how to defend them.
 
-**Experience:**
-- 🔴 **Red Team:** 64 offensive labs | OSCP | Web exploitation
-- 🔵 **Blue Team:** 19 defensive challenges | Threat hunting | Incident response | Malware analysis
-- 🟣 **Purple Team:** IR playbook development | Detection rules (coming soon)
+**Experience:**<br /><br />
+🔴 **Red Team:** 64 offensive labs | OSCP | Web exploitation<br /><br />
+🔵 **Blue Team:** 19 defensive challenges | Threat hunting | Incident response | Malware analysis<br /><br />
+🟣 **Purple Team:** IR playbook development | Detection rules (coming soon)<br /><br />
 
 **Current Focus:**
 - Blue team operations & incident response
@@ -33,7 +33,7 @@ I break systems to understand how to defend them.
 **Skills:** Web Security • CTF • Linux • Python • Networking • SOC Analysis • Incident Response<br />
 **Exploring:** Reverse Engineering • Advanced Malware Analysis • Exploit Development • Detection Engineering
 
-[Projects](/projects/) | [View All Labs ({{ site.boxes | size }} Total)](/boxes/) | [Tools](/tools/) | [Certifications](/certifications/) | [Blog](/blog/) | [Contact](/contact/)
+[Projects](/projects/)&nbsp;|&nbsp;[View All Labs ({{ site.boxes | size }} Total)](/boxes/)&nbsp;|&nbsp;[Tools](/tools/)&nbsp;|&nbsp;[Certifications](/certifications/)&nbsp;|&nbsp;[Blog](/blog/)&nbsp;|&nbsp;[Contact](/contact/)
 
 ---
 
@@ -43,4 +43,4 @@ and defensive scenarios (Sherlocks, CyberDefenders, BTL), I develop a complete
 understanding of both attack and defense.
 
 My offensive background gives me unique insight into attacker methodology, which 
-I will apply to building better detections, alert management, and responding to incidents.
+I now apply to building better detections, alert management, and responding to incidents.
