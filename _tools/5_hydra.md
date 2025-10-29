@@ -3,7 +3,7 @@ layout: page
 title: hydra
 description: Performed credential brute-force dictionary attacks.
 img:
-importance: 2
+importance: 1
 category: red
 internal_proof: /boxes/29_cronos/
 related_publications: false
