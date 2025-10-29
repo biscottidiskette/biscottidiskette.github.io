@@ -73,22 +73,22 @@ related_publications: false
 
 <ul>
   <li>Enumerate Directories and Files</li>
-  {% capture versiongrab %}
+  {% capture dirfiles %}
 ffuf -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt -u http://cronos.htb/FUZZ -e .txt,.bak,.html,.php -fw 990
   {% endcapture %}
-  {% include terminal.html language='bash' title='Version grab' content=versiongrab %}
+  {% include terminal.html language='bash' title='Enumerate Directories and Files' content=dirfiles %}
 
   <li>FUZZ before the domain to find subdomains we can explore</li>
-  {% capture fullenum %}
+  {% capture subdomain %}
 ffuf -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt -u http://cronos.htb -H "Host: FUZZ.cronos.htb" -fw 3534
   {% endcapture %}
-  {% include terminal.html language='bash' title='Full enum' content=fullenum %}
+  {% include terminal.html language='bash' title='Enumerate Subdomain' content=subdomain %}
 
   <li>Enumerate HTTP Paramters</li>
-  {% capture nse %}
+  {% capture params %}
 ffuf -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-big.txt -u 'http://planning.htb/contact.php?FUZZ=1' -fw 6
   {% endcapture %}
-  {% include terminal.html language='bash' title='NSE vuln scripts' content=nse %}
+  {% include terminal.html language='bash' title='Enumerate HTTP Parameters' content=params %}
 
 </ul>
 
