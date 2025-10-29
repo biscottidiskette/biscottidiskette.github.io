@@ -44,3 +44,12 @@ understanding of both attack and defense.
 
 My offensive background gives me unique insight into attacker methodology, which 
 I now apply to building better detections, alert management, and responding to incidents.
+
+#### Beyond Security
+
+When I'm not breaking (or defending) systems, I'm training Muay Thai and learning 
+Thai language. The discipline required for both martial arts and language learning 
+translates directly to security work: pattern recognition, iterative improvement, 
+and the patience to work through complex problems.
+
+[Read: Learning Thai and Why It Matters →](/blog/2025/learn-Thai/)

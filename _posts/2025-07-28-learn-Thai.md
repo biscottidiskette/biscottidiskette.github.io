@@ -91,6 +91,23 @@ Plus, it's nice to work on something where:
 - Failure just means I mispronounced a word, not that I failed an engagement.
 
 <br />
+## Direct Security Parallels I've Noticed
+
+**Thai Tones ≈ Network Protocols**  
+Five tones that change meaning entirely. Miss one, the whole sentence breaks. 
+Just like how one wrong flag in a TCP packet breaks the connection.
+
+**Thai Script ≈ Malware Analysis**  
+No spaces between words, vowels can appear before/after/above/below consonants. 
+You have to understand the structure to parse it. Same as understanding assembly 
+without source code.
+
+**Spaced Repetition ≈ Security Fundamentals**  
+Anki flashcards work for Thai vocabulary and security concepts. You can't cram 
+language fluency, and you can't cram security expertise. Both require consistent, 
+repeated exposure over time.
+
+<br />
 ## Takeaway
 
 If you're in cybersecurity and feeling burned out, try learning something completely unrelated. Language, music, art, cooking, whatever.
