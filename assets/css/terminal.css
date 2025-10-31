@@ -155,6 +155,12 @@
   color: #C3E88D;
 }
 
+/* xml */
+.terminal[data-language="xml"] .terminal__body {
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+}
+
 /* Scrollbar styling for all terminals */
 .terminal__body::-webkit-scrollbar {
   height: 8px;
