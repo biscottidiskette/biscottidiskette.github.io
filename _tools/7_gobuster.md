@@ -1,11 +1,11 @@
 ---
 layout: page
 title: gobuster
-description: Discover web directories files and folders.
+description: Discovered web directories files and folders.
 img:
 importance: 3
 category: red
-internal_proof: /boxes/3_vulnversity/
+internal_proof: /boxes/1_brainpan/
 related_publications: false
 ---
 
@@ -40,6 +40,9 @@ related_publications: false
       <td>
         <ul>
           <li><a href="{{ '/boxes/3_vulnversity/' | relative_url }}">THM Vulnversity</a></li>
+        </ul>
+        <ul>
+          <li><a href="{{ '/boxes/1_brainpan/' | relative_url }}">THM Brainpan</a></li>
         </ul>
       </td>
     </tr>

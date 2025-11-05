@@ -3,7 +3,7 @@ layout: page
 title: ffuf
 description: Performed web directory brute-forcing and discovery.
 img:
-importance: 2
+importance: 1
 category: red
 internal_proof: /boxes/29_cronos/
 related_publications: false

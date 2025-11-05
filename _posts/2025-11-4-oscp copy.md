@@ -47,7 +47,7 @@ The attacker ran **SQLMap** to exploit our database.  The first thing they did w
 
 <br />
 **Why it worked**<br />
-Well, I am working **black box testing** here, so I can give you general recommendations related to SQL Injection.  SQL Injection is typically caused by taking untrusted user input and injecting it directly into native queries.  This means that the user, or attacker (in this case), can submit any string, even one that could modify the underlying query.  One fix for this is to use **stored procedures** or **paramterized queries** instead of native queries.  These won't be modified by malformed input.  The next remediation would be **input sanitization**.  Never trust the user supplied input.  The final defense you can implement is some sort of IDS/IPS system that can monitor traffic for attack strings.  The optimal strategy is multiple defense mechanisms just incase one fails.  This is what we call **defense-in-depth**.
+Well, I am working **black box testing** here, so I can give you general recommendations related to SQL Injection.  SQL Injection is typically caused by taking untrusted user input and injecting it directly into native queries.  This means that the user, or attacker (in this case), can submit any string, even one that could modify the underlying query.  One fix for this is to use **stored procedures** or **parameterized queries** instead of native queries.  These won't be modified by malformed input.  The next remediation would be **input sanitization**.  Never trust the user supplied input.  The final defense you can implement is some sort of IDS/IPS system that can monitor traffic for attack strings.  The optimal strategy is multiple defense mechanisms just incase one fails.  This is what we call **defense-in-depth**.
 
 <br />
 **Tools used**
@@ -57,7 +57,7 @@ Well, I am working **black box testing** here, so I can give you general recomme
 
 <br />
 **What the attacker did**<br />
-The attacker that then decided to brute-force our directories looking for more things that they could abuse.  Therefore, they ran **gobuster** with the extension flag to maximize what they were able to find.  Our /admin directory returns a 302 redirect that redirects to /admin/.  This way the attacker now knows about the admin section now exists.  They were able to login to our admin account due to **weak credentials**.  Now, they have admin access to our web application.
+The attacker then decided to brute-force our directories looking for more things that they could abuse.  Therefore, they ran **gobuster** with the extension flag to maximize what they were able to find.  Our /admin directory returns a 302 redirect that redirects to /admin/.  This way the attacker now knows about the admin section now exists.  They were able to login to our admin account due to **weak credentials**.  Now, they have admin access to our web application.
 
 <br />
 **Why it worked**<br />
@@ -185,7 +185,7 @@ Example: Any PHP file found in the uploads directory.  Users shouldn't be upload
 <br />
 ## Reflections
 
-It was funny.  As I was reviewing the .pcap in Wireshark, I was actually visualizing how I would perform the attacks and what the attacker was doing.  Reading the WireShark actually made me excited to try the attack myself.
+It was funny.  As I was reviewing the .pcap in Wireshark, I was actually visualizing how I would perform the attacks and what the attacker was doing.  Reading the Wireshark actually made me excited to try the attack myself.
 
 The best advice that I could give anyone going down this weird, purple road:
 
