@@ -10,7 +10,11 @@ related_publications: false
 ---
 
 <h2>Introduction</h2>
-To be able to write the buffer overflow, you will need two machines.  One Linux machine that will serve as your attack machine.  There will also be a 32-bit Windows 10 machine that will be the victim machine.  You will also need to ensure that the machines sit on the same network so they can communicate with each other.  We will be using VirtualBox from Oracle to serve as our virtualization software.  This will NOT include the installation of VirtualBox.  Please refer to Oracle documentation.
+To be able to write the buffer overflow, you will need two machines.  One Linux machine that will serve as your attack machine.  There will also be a 32-bit Windows 10 machine that will be the victim machine.  You will also need to ensure that the machines sit on the same network so they can communicate with each other.  We will be using VirtualBox from Oracle to serve as our virtualization software.  
+
+**Purpose of this lab:** Hands-on exploit development requires isolated, controlled environments. This lab setup allows safe practice of memory corruption techniques while avoiding contamination of production systems.
+
+This will NOT include the installation of VirtualBox.  Please refer to Oracle documentation.
 
 <br />
 <h2>Links</h2>

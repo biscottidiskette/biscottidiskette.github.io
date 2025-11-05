@@ -10,7 +10,11 @@ related_publications: false
 ---
 
 <h2>Introduction</h2>
-So, I decided to redo my portfolio.  I made the decision to go with GitHub Pages, Jekyll, with the Al-folio.  I had some growing pains getting everything set-up, probably because I could not be bothered to read the documentation.  So, I put this together to document my process of putting it together.  And, maybe it can help someone else who is struggling to get it set-up.
+So, I decided to redo my portfolio.  I made the decision to go with GitHub Pages, Jekyll, with the Al-folio.  I had some growing pains getting everything set-up, probably because I could not be bothered to read the documentation.  
+
+**Why this matters:** Building a professional portfolio site from scratch demonstrates infrastructure skills, troubleshooting ability, and commitment to self-presentation in the security community.
+
+So, I put this together to document my process of putting it together.  And, maybe it can help someone else who is struggling to get it set-up.
 
 <br />
 <h2>Link</h2>

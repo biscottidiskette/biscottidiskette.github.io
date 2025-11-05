@@ -10,7 +10,11 @@ related_publications: false
 ---
 
 <h2>Introduction</h2>
-In preparation for the OSED, you have to start somewhere.  The starting point is always vanilla buffer overflow.  This means no security features like Data Execution Prevention (DEP) or Address Space Layout Randomization (ASLR).  We will focus on just getting the Buffer Overflow to work.  This is my write-ups for at least some of the Buffer Overflows.
+In preparation for the OSED, you have to start somewhere.  The starting point is always vanilla buffer overflow.  
+
+**Foundation for advanced exploitation:** Mastering vanilla buffer overflows (without DEP/ASLR) establishes the baseline understanding needed for bypassing modern protections. Each write-up documents methodology, not just results.
+
+This means no security features like Data Execution Prevention (DEP) or Address Space Layout Randomization (ASLR).  We will focus on just getting the Buffer Overflow to work.  This is my write-ups for at least some of the Buffer Overflows.
 
 <br />
 <h2>Links</h2>

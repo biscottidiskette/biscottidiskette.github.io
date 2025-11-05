@@ -10,7 +10,11 @@ related_publications: false
 ---
 
 <h2>Introduction</h2>
-I recently registered for Certified Red Team Professional (CRTP) course.  To aid in my studies, I decided to set-up a personal domain lab to play and test the different methodologies from the course.  I eventaully plan on adding a SIEM and XDR for purple team adventures.  Maybe expand it out with more machines to simulate something like the PWK lab.  Either way, that will be different posts.  This will just be basic set-up.
+I recently registered for Certified Red Team Professional (CRTP) course.  To aid in my studies, I decided to set-up a personal domain lab to play and test the different methodologies from the course.  
+
+**Why build this lab:** Understanding Active Directory from both attack and defense perspectives requires hands-on infrastructure. This domain setup enables testing offensive techniques (CRTP) while preparing for future defensive capabilities (SIEM/XDR integration).
+
+I eventaully plan on adding a SIEM and XDR for purple team adventures.  Maybe expand it out with more machines to simulate something like the PWK lab.  Either way, that will be different posts.  This will just be basic set-up.
 
 <br />
 <h2>Links</h2>
