@@ -26,12 +26,26 @@ related_publications: false
 ## Introduction
 <p>Develop key people and soft skills to boost professional and personal success. This course covers collaboration, effective communication, problem solving, interpersonal skills, and quality work delivery.</p>
 
+<p>Corporateses translation: People skills are important in every role even technical ones.  You don't get to hide behind your technical expertise and ignore it.</p>
+
 <br />
 ## Why I Took It
 <p>I completed this course to strengthen foundational soft skills essential for teamwork, leadership, and professional growth. These skills complement technical expertise by improving communication, collaboration, and problem-solving effectiveness in professional environments.</p>
 
 <br />
+## Now, Why I Actually Took It
+
+Let's be real: I'm more comfortable breaking buffer overflows than giving presentations. This course was about rounding out professional skills that don't come naturally to technical people.  I needed to improve communicating clearly, presenting confidently, and collaborating effectively (respect for the Oxford comma).
+
+Security work isn't just technical. You have to explain vulnerabilities to non-technical stakeholders, present findings to executives, and work with teams across different skill levels. This course formalized skills I was learning on the job anyway.
+
+**Practical outcome:** I can now explain SQL injection to my grandma (well, almost, at least my mom). Presenting purple team analysis posts is easier. Team collaboration is smoother. Not the flashiest class, but useful.
+
+<br />
 ## Modules
+
+The course covered six modules.  Here's the official breakdown, if you want to know:
+
 <ol>
     <li>Collaborate Effectively for Professional Success.</li>
     <li>Present with Purpose: Create/Deliver Effective Presentations.</li>
@@ -39,53 +53,11 @@ related_publications: false
     <li>Solving Problems with Creative and Critical Thinking.</li>
     <li>Developing Interpersonal Skills.</li>
     <li>People and Soft Skills Assessment.</li>
-</ol>
+</ol> 
 
 <br />
-## Learning Objectives
-
-### Collaborate Effectively for Professional Success
-- Apply collaborative behaviors to help your team develop through the four stages of team development.  
-- Utilize different methods of collaboration to improve teamwork and cooperation.  
-- Recognize barriers to collaboration and identify behaviors that enhance or damage team effectiveness.  
-- Lead or participate effectively in virtual team meetings.  
-
-### Present with Purpose: Create/Deliver Effective Presentations
-- Create presentations that leave a lasting impact on your audience.  
-- Present with confidence to engage participants.  
-- Use storytelling, props, and discussion to enhance delivery.  
-- Manage nerves and handle unexpected problems during presentations.  
-
-### Delivering Quality Work with Agility
-- Deliver high-quality work that reduces effort for stakeholders.  
-- Apply a structured quality work process for clear communication and client focus.  
-- Take ownership of assignments using a five-step quality method.  
-- Work with agility to build trust with clients and colleagues.  
-
-### Solving Problems with Creative and Critical Thinking
-- Utilize critical and creative thinking to address challenges.  
-- Apply a structured five-step problem-solving process.  
-- Analyze problems to identify root causes.  
-- Explore and implement effective solutions.  
-
-### Developing Interpersonal Skills
-- Identify and adapt to different communication styles.  
-- Demonstrate active listening and questioning to enhance understanding.  
-- Recognize conflict response styles and mediate workplace conflicts.  
-- Build and maintain trust to increase influence and professional reputation.  
-
-### People and Soft Skills Assessment
-- Deliver presentations that leave a lasting impact.  
-- Communicate effectively with peers to enhance personal reputation.  
-- Apply active listening and questioning to resolve issues and improve understanding.  
-- Complete tasks efficiently and effectively, contributing to career growth.  
-
-<br />
-## Career/Practical Benefits
-- Improved collaboration and teamwork abilities.  
-- Enhanced communication, presentation, and interpersonal skills.  
-- Stronger problem-solving and decision-making capabilities.  
-- Complements technical expertise with professional “soft skills.”  
+## Related Work
+- [Security+ gave me foundational knowledge to further assist communication](/certs/2_secplus/)
 
 <br />
 ## Tips & Lessons Learned
@@ -98,7 +70,3 @@ related_publications: false
 <br />
 ## Outcome/Status
 - Verification available upon request.
-
-<br />
-## Related Projects/Walkthroughs
-- Coming soon!

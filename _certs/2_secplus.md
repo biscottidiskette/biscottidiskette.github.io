@@ -26,17 +26,22 @@ related_publications: false
 ## Introduction (from Credly)
 <p>Earners of the CompTIA Security+ certification have the knowledge and skills necessary to perform core security functions required of any cybersecurity role. Security+ professionals know how to identify and address potential threats, attacks, and vulnerabilities, and they have established techniques in risk management, threat mitigation, and intrusion detection.</p>
 
+<p>Corporateses translation: HR wants to tick one of their boxes that you know the fundies.</p>
+
 <br />
 ## Why I Took It
-<p>Completed Security+ to meet organizational baseline requirements. It provides foundational cybersecurity knowledge, which complements my focus on hands-on certifications and real-world projects.</p>
+Security+ was an organizational requirement.  They wanted to ensure that everyone in the department has a baseline cert to check "foundational knowledge" box.  Since I already had OSCP, most of the content was review, but it formalized terminology and compliance concepts useful for communicating with non-technical stakeholders.
+
+It's not the most exciting cert, but it is widely recognized and often required for certain roles or contracts.  Another positive is that it speaks HRese.  And I do like ticking Applicant Tracking System (ATS) tickboxes. 
+
+<br />
+## Now, Why I Actually Took It
+Seriously, it was the organization requirement thing.  Plus, I didn't think that it would be to terribly taxing after finishing months of OSCP study.  Wish I had something juicier for you.
 
 <br />
 ## Skills Gained
-- Threats, Attacks, & Vulnerabilities: Malware, Social Engineering, Application & Network Attacks.
-- Architecture & Design: Secure Network Design, Cloud & Virtualization Security, Zero Trust Concepts.  
-- Implementation: IAM, PKI & Cryptography, Endpoint & Mobile Security.  
-- Operations & Incident Response: Monitoring, Incident Handling, Forensics Basics.  
-- Governance, Risk & Compliance: Security Policies, Risk Management, Data Privacy, Business Continuity.  
+
+The big concepts: CIA triad (Confidentiality, Integrity, Availability), preventative vs. detective vs. corrective controls, and endless scenario-based classification exercises.  There was an Attacks chapter that, by their own admission, defined shellcode differently than the offensive security community, which irked me.  Also, drag-and-drop picture-based questions.  That's what stands out.
 
 <br />
 ## Tools & Technologies Used
@@ -50,10 +55,9 @@ related_publications: false
 - Applied concepts in small virtual lab exercises to reinforce theoretical knowledge.  
 
 <br />
-## Career/Practical Benefits
-- Demonstrates baseline cybersecurity knowledge required in compliance contexts.
-- Provides foundational terminology and concepts for more advanced certifications.  
-- Acts as a stepping stone to practical, hands-on security roles.  
+## Related Works
+- [Soft Skills for Success](/certs/5_ibmsoftskills/)
+- [Blue Team Box]({{ '/boxes/61_fakegpt/' | relative_url }})
 
 <br />
 ## Tips & Lessons Learned

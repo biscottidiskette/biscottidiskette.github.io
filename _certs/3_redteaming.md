@@ -24,9 +24,15 @@ related_publications: false
 ## Introduction
 <p>The Red Teaming Learning Path teaches how to emulate an adversary in complex environments. Going beyond standard penetration testing, it focuses on full red team engagements designed to challenge defensive capabilities. After completing the path you will have practical, offensive skills applicable to red team operations and adversary emulation.</p>
 
+<p>Corporateses translation: Going beyond just penetration and learning the engagement from end to end from an environment perspective, not just system.  Neat-o.</p>
+
 <br />
 ## Why I Took It
-<p>I completed this path to build structured, practical red team skills—mapping reconnaissance to weaponization, access, persistence, lateral movement, and exfiltration—so I can evaluate and stress-test defensive controls in realistic scenarios.</p>
+<p>I completed this path to build structured, practical red team skills-mapping reconnaissance to weaponization, access, persistence, lateral movement, and exfiltration—so I can evaluate and stress-test defensive controls in realistic scenarios.</p>
+
+<br />
+## Now, Why I Actually Took It
+<p>I wanted more options on my resume and my penetration testing didn't cover red team since they are two different roles.  So, I took this course to begin to diversify my skillset ot give me more employment options.</p>
 
 <br />
 ## Modules (abridged)
@@ -56,13 +62,24 @@ related_publications: false
 - Credentials Harvesting.
 
 <br />
-## Learning Objectives
-- Use diverse techniques for initial access (phishing, password attacks, service exploits).  
-- Perform thorough enumeration to build an accurate target picture and attack plan.  
-- Implement persistence and lateral movement strategies to maintain and expand access.  
-- Evade common security controls (AV, EDR, logging, sandboxing) with practical techniques.  
-- Understand and exploit Active Directory in enterprise contexts.  
-- Apply OPSEC and C2 fundamentals for realistic adversary emulation.
+## What Actually Mattered
+
+**Favorite modules:**
+- **C2 & OPSEC fundamentals** - Understanding operational security from red team 
+  perspective changed how I approach blue team detection (now I know what 
+  attackers try to hide).
+- **Windows Internals/API Abuse** - This directly feeds into my OSED prep and 
+  understanding how malware operates at a low level.
+- **AD attack chain** - Breaking, enumerating, and persisting in AD environments 
+  is critical for both offense and defense.
+
+**What I learned the hard way**
+- *Living off the land (LOTL) is hard*: Theory vs. practice gap is real.  Labs are one thing but dealing with EDR and modern logging are a different beast.  When you first bring it to the workplace, you are going to get Slack messages from the Blue Team.  A lot.  Like, a real lot.  *Fun Fact:* CrowdStrike detects certuril downloads.  Who knew?
+- *Obfuscating malware is like walking a tightrope*:  You need to obfuscate your malware to complicate analysis and hide malicious WinAPI calls.  But, if you over obfuscate, you trigger the entropy alert.
+
+<br />
+## Related Works
+- [OSED Study](/projects/2_osedstudy/)
 
 <br />
 ## Hands‑On/Labs
@@ -93,8 +110,3 @@ related_publications: false
 <br />
 ## Outcome/Status  
 - Verification available upon request.
-
-<br />
-## Related Projects/Walkthroughs
-- [THM Brainstorm]({{ '/boxes/37_brainstorm/' | relative_url }})
-- [THM Retro]({{ '/boxes/46_retro/' | relative_url }})

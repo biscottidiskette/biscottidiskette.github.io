@@ -24,9 +24,15 @@ related_publications: false
 ## Introduction
 <p>Binary exploitation covers the techniques for understanding and manipulating compiled programs to achieve code execution or other unintended behaviour. This course establishes foundations in computer architecture, assembly language, buffer overflows, and practical exploit scripting.  These are key skills for advanced offensive work and vulnerability research.</p>
 
+<p>Corporateses translation: Stuffing my exploits and shellcode into running memory to take boxes.  Good times to be had for all, except the victim I guess.</p>
+
 <br />
 ## Why I Took It
 <p>I completed this path to build a strong foundation in low-level exploitation techniques (stack overflows, basic ROP concepts, and assembly reasoning) so I could better understand vulnerability mechanics and develop more reliable exploit proof-of-concepts in real-world labs.</p>
+
+<br />
+## Now, Why I Actually Took It
+As a primer to restart my OSED studies.  I am really looking forward to ticking that one of my personal list.  Unfortunately, shelved again since I transitioned to blue team.
 
 <br />
 ## Modules
@@ -38,27 +44,16 @@ related_publications: false
 </ol>
 
 <br />
-## Learning Objectives
+## How This Connects
+This course is why I could actually write those exploits instead of just copying PoCs from GitHub, changing the IP address, and praying they work.
 
-### Introduction to Python 3
-- Learn Python basics useful for exploit scripting and automation.  
-- Automate repetitive tasks and build simple tools to aid exploitation workflows.  
-- Practice data parsing, socket programming, and scripting helper utilities.
+**Next step:** OSED, which builds on these fundamentals with DEP/ASLR bypass, ROP chains, and modern mitigations.  Feel free to check out my OSED study plan once a start that adventure.  [OSED Study](/projects/2_osedstudy/)
 
-### Intro to Assembly Language
-- Understand CPU registers, calling conventions, and the stack.  
-- Read basic x86 assembly to trace program flow and identify vulnerable code paths.  
-- Map compiled binary behaviour back to source-level logic during analysis.
-
-### Stack-based Buffer Overflows (Linux x86)
-- Recognise classic stack-based overflow patterns and vulnerable code.  
-- Craft payloads to overwrite return addresses and achieve code execution.  
-- Practice safe testing techniques and use debugging tools to validate exploits.
-
-### Stack-based Buffer Overflows (Windows x86)
-- Understand Windows calling conventions, DEP, and basic mitigation concepts.  
-- Exploit local and remote buffer overflow vulnerabilities on Windows targets.  
-- Learn initial mitigation bypasses applicable to older/legacy protections.
+<br />
+## Related Work
+- [Vanilla Buffer Overflows](/projects/5_vanillabof/)
+- [OSED Study - In Progress](/projects/2_osedstudy/)
+- [Buffer Overflow Prep](/boxes/60_bofprep/)
 
 <br />
 ## Hands‑On/Labs
@@ -73,12 +68,6 @@ related_publications: false
 - Introduction to mitigation concepts (ASLR, DEP/NX, stack canaries) and early bypass patterns.
 
 <br />
-## Career/Practical Benefits
-- Builds fundamental low-level skills required for exploit development, vulnerability research, and advanced pentesting.  
-- Improves ability to reason about root causes of software bugs and craft reliable PoCs.  
-- Provides a stepping stone to more advanced topics (ROP, kernel exploitation, modern mitigations).
-
-<br />
 ## Tips & Lessons Learned
 - Master the basics (registers, stack, calling conventions) before chasing complex ROP chains.  
 - Use incremental testing.  Small, reproducible steps make exploit development manageable.  
@@ -88,7 +77,3 @@ related_publications: false
 <br />
 ## Outcome/Status  
 - Verification available upon request.
-
-<br />
-## Related Projects/Walkthroughs
-- [Offensive Security Exploit Development (OSED) – In Progress]({{ '/projects/2_osedstudy/' | relative_url }})
