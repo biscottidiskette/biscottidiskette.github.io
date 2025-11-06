@@ -20,92 +20,104 @@ related_publications: false
 <a href="https://nmap.org/" target="_blank" rel="noopener noreferrer">Software Link</a>
 
 <br />
-<h2>Process</h2>
-
-<h3>How you used it</h3>
+## How I used it
 
 <br />
 <table>
   <thead>
     <tr>
       <th>Category</th>
-      <th>Usage</th>
-      <th>Proof</th>
+      <th>What I Run</th>
+      <th>Why I Run It</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td>Service Enumeration</td>
-      <td>Version detection (`-sV`) and script-based checks to identify exploitable services.</td>
-      <td>
-        <ul>
-          <li><a href="{{ '/boxes/55_passage/' | relative_url }}">HTB Passage</a></li>
-        </ul>
-      </td>
+      <td>I grabbed the banner for top ports, the top scripts, and finger-print OS.</td>
+      <td>Checking banner grabbing with script can give us a starting point to continue the attack.</td>
+    </tr>
+    <tr>
+      <td>All Ports</td>
+      <td>Scan all the 65,535 ports with Stealth Scan.</td>
+      <td>Identify services that run on unusual ports.</td>
     </tr>
     <tr>
       <td>Vulnerability Scanning</td>
-      <td>Run focused NSE scripts (`vuln`) to pinpoint likely attack vectors.</td>
-      <td>
-        <ul>
-          <li><a href="{{ '/boxes/11_bluehtb/' | relative_url }}">HTB Blue (found MS17-010)</a></li>
-        </ul>
-      </td>
+      <td>Run the vuln category of NSE scripts to identify vulnerabilities.</td>
+      <td>Identify low hanging fruit vulnerabilities for an easy win.</td>
     </tr>
     <tr>
       <td>UDP Scanning</td>
-      <td>Run udp (`-sU`) to identify UDP ports.</td>
-      <td>
-        <ul>
-          <li><a href="{{ '/boxes/43_billing/' | relative_url }}">THM Billing</a></li>
-        </ul>
-      </td>
+      <td>Run udp scans since it is the other half of TCP.</td>
+      <td>Identify any ports running the UDP protocol.</td>
     </tr>
   </tbody>
 </table>
 
 <br />
-<h3>Commands / Cheatsheet</h3>
-
-<ul>
-  <li>Initial version grab and OS</li>
-  {% capture versiongrab %}
-nmap -sC -sV -A -O -oN nmap 10.0.0.5
-  {% endcapture %}
-  {% include terminal.html language='bash' title='Version grab' content=versiongrab %}
-
-  <li>Scan all port for hidden services</li>
-  {% capture fullenum %}
-nmap -p- -sS -oN nmapfull 10.0.0.5
-  {% endcapture %}
-  {% include terminal.html language='bash' title='Full enum' content=fullenum %}
-
-  <li>Run NSE vuln scripts</li>
-  {% capture nse %}
-nmap --script vuln -oN vulnchk 10.0.0.5
-  {% endcapture %}
-  {% include terminal.html language='bash' title='NSE vuln scripts' content=nse %}
-
-  <li>Run UDP scan</li>
-  {% capture udpscan %}
-nmap -sU -sV -oN nmapudp 10.0.0.5
-  {% endcapture %}
-  {% include terminal.html language='bash' title='UDP' content=udpscan %}
-</ul>
+**Proof**
+- [HTB Passage](/boxes/55_passage/) - Banner grab to identify the services.  Trust but verify.
+- [HTB Blue (found MS17-010)](/boxes/11_bluehtb/) - Run the vuln category of NSE scripts.
+- [THM Billing](/boxes/43_billing/) - Run the UDP scans.
 
 <br />
-<h3>Common mistakes</h3>
-<ul>
-  <li>Not checking for rate limits or IDS/IPS.</li>
-  <li>Assuming `-sV` output is always reliable.</li>
-  <li>Scanning too aggressively on fragile networks (avoid `-p- -T5` on production).</li>
-</ul>
+## Commands I Use Every Box
 
 <br />
-<h3>Tips / Best use cases</h3>
-<ul>
-  <li>Save outputs (`-oA`) and store them with each box for reproducibility and triage. </li>
-  <li>Combine NSE scripts with `--script-args` for targeted checks (e.g., creds or paths).</li>
-  <li>Use timing options (`-T`) and throttling when testing live targets.</li>
-  <li>Always follow up with manual checks and banner grabs.</li>
-</ul>
+**Banner Grabbing, Top Scripts, and Operating System Fingerprinting**
+
+{% capture firstscan %}
+┌──(kali㉿kali)-[~]
+└─$ nmap -sC -sV -A -O -oN nmap <IP>
+{% endcapture %}
+{% include terminal.html language='bash' title='Banner Grab' content=firstscan %}
+
+<br />
+**Stealth scan, all ports**
+
+{% capture secscan %}
+┌──(kali㉿kali)-[~]
+└─$ nmap -sS -p- -oN nmapfull <IP>
+{% endcapture %}
+{% include terminal.html language='bash' title='All Ports' content=secscan %}
+
+<br />
+**All Vulnerability Scripts**
+
+{% capture thirdscan %}
+┌──(kali㉿kali)-[~]
+└─$ nmap --script vuln -oN vulnchk <IP>
+{% endcapture %}
+{% include terminal.html language='bash' title='Vulnerability Scan' content=thirdscan %}
+
+<br />
+**UDP Scanning**
+
+{% capture fourthscan %}
+┌──(kali㉿kali)-[~]
+└─$ nmap -sU -oN nmapudp <IP>
+{% endcapture %}
+{% include terminal.html language='bash' title='UDP Scan' content=fourthscan %}
+
+<br />
+## What I Learned
+
+<br />
+**`-A` is loud**<br />
+Runs OS detection, version detection, script scanning, and traceroute.  Great for CTFs.  Terrible for real pentests (triggers every IDS).  Use targeted scans instead.
+
+<br />
+**UDP scanning takes forever**<br />
+Seriously.  Don't scan all 65535 UDP ports unless you enjoy watching paint dry.  Top 20 ports catches 90% of interesting services.
+
+<br />
+**NSE scripts are hit-or-miss**<br />
+`--script vuln` finds easy wins (MS17-010, EternalBlue) but also throws tons of false positives.  Always manually verify.
+
+<br />
+## When Nmap Let Me Down
+
+[HTB Love](/boxes/56_love/) - Service was on a weird high port that didn't show up in top 1000.  Had to run full `-p-` scan.  Lesson: if you're stuck, scan everything.
+
+[THM Billing](/boxes/43_billing/) - SNMP was running on UDP.  Missed it completely until I ran UDP scan.  Lesson: don't forget UDP exists. Also, SNMP is always interesting when you find it.

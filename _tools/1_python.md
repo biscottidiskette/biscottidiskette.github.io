@@ -20,84 +20,81 @@ related_publications: false
 <a href="https://www.python.org/">Software Link</a>
 
 <br />
-<h2>Process</h2>
+## How I used it
 
-<h3>How you used it</h3>
+Python is my go-to for exploit development and automation. It's cleaner than Bash, more intuitive than C, and has libraries for everything I need right out of the box.  Plus, the `struct` and `socket` modules make writing buffer overflow exploits way easier than trying to reinvent the wheel.
 
 <br />
+**What I use it for**
+
 <table>
   <thead>
     <tr>
       <th>Category</th>
-      <th>Usage</th>
-      <th>Proof</th>
+      <th>What I Built</th>
+      <th>Why Python</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td>Exploit Development</td>
-      <td>Developed and tested multiple buffer overflow exercises (payload crafting, encoding, offsets).</td>
-      <td>
-        <ul>
-          <li><a href="{{ '/boxes/59_bofprep/' | relative_url }}">Buffer Overflow Prep</a></li>
-          <li><a href="{{ '/boxes/1_brainpan/' | relative_url }}">Brainpan</a></li>
-          <li><a href="{{ '/projects/5_vanillabof/' | relative_url }}">Vanilla Projects</a></li>
-        </ul>
-      </td>
+      <td>Buffer overflow scripts (payload crafting, offset calculation, badchar detection).</td>
+      <td>The pack method from the struct library for converting addresses, and the socket library for sending exploits. Way easier to use than C.</td>
     </tr>
     <tr>
       <td>Red Team Tooling</td>
-      <td>Developed password crackers to try passwords for login pages.</td>
-      <td>
-        <ul>
-          <li><a href="{{ '/boxes/57_curling/' | relative_url }}">Curling (password cracker)</a></li>
-        </ul>
-      </td>
+      <td>Password crackers and mutators.</td>
+      <td>Quick iteration on wordlist generation. Faster to prototype than C, good enough performance for CTFs.</td>
     </tr>
     <tr>
-      <td>Red Team Tooling</td>
-      <td>Developed password mutator to develop better password dictionaries for crackers.</td>
-      <td>
-        <ul>
-          <li><a href="{{ '/boxes/57_curling/' | relative_url }}">Curling (mutator)</a></li>
-        </ul>
-      </td>
+      <td>Automation</td>
+      <td>Reconnaissance and enumeration scripts.</td>
+      <td>When I'm tired of typing the same nmap/curl commands 50 times.</td>
     </tr>
   </tbody>
 </table>
 
 <br />
-<h3>Commands / Cheatsheet</h3>
-
-<ul>
-  <li>Simple socket client</li>
-  {% capture socket %}
-  import socket
-  s = socket.create_connection(('127.0.0.1', 9001))
-  s.sendall(b'HELLO\n')
-  resp = s.recv(4096)
-  s.close()
-  {% endcapture %}
-  {% include terminal.html language='python' title='python' content=socket %}
-
-  <li>Pack/unpack integers</li>
-  {% capture getaddress %}
-  from struct import pack, unpack
-  jmpesp = pack('<I', (0xdeadbeef))   # little-endian 32-bit
-  {% endcapture %}
-  {% include terminal.html language='python' title='python' content=getaddress %}
-</ul>
+**Proof:**
+- [Buffer Overflow Prep](/boxes/59_bofprep/) - Full Python exploit chain
+- [Brainpan](/boxes/1_brainpan/) - Custom fuzzer and shellcode delivery
+- [Vanilla BOF Project](/projects/5_vanillabof/) - Complete exploit development series
+- [Curling](/boxes/57_curling/) - Password cracker + mutator combo
 
 <br />
-<h3>Common mistakes</h3>
-<ul>
-  <li>Sending wrong newline format when service expects <code>\r\n</code> vs <code>\n</code>.</li>
-  <li>Not sending bytes through a send function to a socket.</li>
-</ul>
+## Code Snippets I Use Constantly
 
 <br />
-<h3>Tips / Best use cases</h3>
-<ul>
-  <li>Keep small helper scripts in a <code>scripts/</code> folder inside each box repo to show provenance.</li>
-  <li>Use virtualenvs for consistent Python versions when sharing scripts.</li>
-</ul>
+**Socket client (for exploit delivery):**
+
+{% capture socketpy %}
+import socket
+s = socket.create_connection(('127.0.0.1', 9001))
+s.sendall(b'HELLO\n')
+resp = s.recv(4096)
+s.close()
+{% endcapture %}
+{% include terminal.html language='python' title='Socket client' content=socketpy %}
+
+<br />
+**Pack addresses (for ROP/shellcode):**
+
+{% capture packpy %}
+from struct import pack, unpack
+jmp_esp = pack('<I', 0xdeadbeef)  # little-endian 32-bit
+{% endcapture %}
+{% include terminal.html language='python' title='Pack addresses' content=packpy %}
+
+<br />
+## What I Learned the Hard Way
+
+**Bytes vs strings**<br />
+Python 3's bytes/string distinction will bite you if you're not careful. Always send `b'bytes'` through sockets, not `'strings'`.
+
+<br />
+**Indentation Matters**<br />
+Multiple spaces and tab aren't the same even if they look like they "line up".  Seeing how they look like they look like they line up, good luck finding it.  Guarantee you are going to drain both time and sanity trying.  Always pay attention to your spacing because it matters in Python.  Or else, you might end-up a security researcher named after a cookie writing a portfolio blog at 3am.
+
+<br />
+## Why Python?
+It provides for fast prototyping, quick development, and load of libraries that I can use right out of the box.  So, I use Python *most* of the time.  I will always stick to the most appropriate tool for the job.  Language agnostic, I say.  Honorable mention to C.  Good to also learn for exploit development for better understanding the assembly.
