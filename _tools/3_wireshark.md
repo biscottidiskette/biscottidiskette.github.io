@@ -20,7 +20,8 @@ related_publications: false
 <a href="https://www.wireshark.org/" target="_blank" rel="noopener noreferrer">Software Link</a>
 
 <br />
-<h2>Process</h2>
+## How I Use It
+Wireshark is my key weapon for traffic analysis, whether it analyzing traffic live looking for juicy information to steal or pcaps after a breach to figure out what happend.  Wireshark is the first packet sniffer I learned in Grad school and still my default to this day.
 
 <h3>How you used it</h3>
 
@@ -29,77 +30,67 @@ related_publications: false
   <thead>
     <tr>
       <th>Category</th>
-      <th>Usage</th>
-      <th>Proof</th>
+      <th>What I did</th>
+      <th>Why I did it</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td>PCAP Triage</td>
-      <td>Quickly filter and identify suspicious flows, extract files and IoCs from captures.</td>
-      <td>
-        <ul>
-          <li><a href="{{ '/boxes/1_brainpan/' | relative_url }}">THM Overpass2 (Research Attacker TTP)</a></li>
-        </ul>
-      </td>
+      <td>Filter and identify suspicious flows and IoCs from captures.</td>
+      <td>We can use the captures to identify file names and connections to identify IoCs to further our investigations.</td>
+    </tr>
+    <tr>
+      <td>Extract Files</td>
+      <td>Extract files and other artifacts from the traffic.</td>
+      <td>Malicious files can be extracted out of the traffic so we can review theme.</td>
     </tr>
     <tr>
       <td>Protocol Debugging</td>
       <td>Inspect TCP streams, reassemble HTTP traffic, and analyze TLS handshakes for anomalies.</td>
-      <td>
-        <ul>
-          <li><a href="{{ '/boxes/36_overpass2/' | relative_url }}">THM Overpass2 (Follow HTTP Stream)</a></li>
-        </ul>
-      </td>
+      <td>Follow entire TCP and HTTP streams so you can get an idea of the full picture of a conversation.</td>
     </tr>
     <tr>
       <td>IOC Extraction</td>
       <td>Use alongside INETSim to analyze malware traffic.</td>
-      <td>
-        <ul>
-          <li>In Progress...</li>
-        </ul>
-      </td>
+      <td>I run Wireshark on REMNux to get a better idea of what malware is doing when I execute it.</td>
+    </tr>
+    <tr>
+      <td>Steal Goodies</td>
+      <td>Check unencrypted traffic for juicy tidbits like credentials.</td>
+      <td>Protocols like http, ftp, and telnet have historically been cleartext so we can sometimes see credentials and other juicy goodies.</td>
     </tr>
   </tbody>
 </table>
 
 <br />
-<h3>Commands / Cheatsheet</h3>
-
-<ul>
-  <li>Open capture and filter for suspicious traffic</li>
-  {% capture basicfilter %}
-# open file in tshark (CLI)
-tshark -r capture.pcap -Y "http.request or dns or tcp.flags.syn==1"
-  {% endcapture %}
-  {% include terminal.html language='bash' title='Tshark quick filter' content=basicfilter %}
-
-  <li>Export HTTP objects (reassemble)</li>
-  {% capture exporthttp %}
-# extract HTTP objects with tshark
-tshark -r capture.pcap --export-objects "http,./http_extracted"
-  {% endcapture %}
-  {% include terminal.html language='bash' title='Export HTTP objects' content=exporthttp %}
-
-  <li>Follow TCP stream (tshark)</li>
-  {% capture followtcp %}
-tshark -r capture.pcap -qz follow,tcp,streams
-  {% endcapture %}
-  {% include terminal.html language='bash' title='Follow TCP streams' content=followtcp %}
-</ul>
+**Proof**
+- [Webstrike Lab](/boxes/69_webstrike/) - Identify attacker actions from TCP Stream.
+- [Meerkat](/boxes/62_meerkat/) - Identify credentials in the traffic.
+- [Web Investigation Lab](/boxes/85_webinvestigation/) - Investigate a SQL Injection attack from the traffic.
+- [PoisonedCredentials Lab](/boxes/79_poisonedcreds/) - Analyze protocols to piece together attacks.
 
 <br />
-<h3>Common mistakes</h3>
-<ul>
-  <li>Not setting display vs capture filters correctly.</li>
-  <li>Opening very large PCAPs in GUI without indexing or using `tshark` first.</li>
-  <li>Not exporting extracted artifacts in a preserved file format for downstream analysis.</li>
-</ul>
+## Features I Use Most
+
+**Follow TCP Stream** - Right-click packet → Follow → TCP Stream  
+*Why: Reconstruct full conversations, especially for plaintext protocols (HTTP, FTP, Telnet)*
+
+**Export Objects** - File → Export Objects → HTTP  
+*Why: Extract files transferred over HTTP without manual carving*
 
 <br />
-<h3>Tips / Best use cases</h3>
-<ul>
-  <li>Use `tshark` for scripted extraction and automation; use Wireshark GUI for deep exploration and reassembly.</li>
-  <li>Store extracted IoCs in a central repo (YARA, Suricata rules, DNS blocklists) for hunting and detection.</li>
-</ul>
+## What I Learned the Hard Way
+
+<br />
+**Filters are necessary**<br />
+Wireshark just keeps collecting more and more traffic.  Just keeps sniffing.  So, you are trying to do something quick and the conversation quickly get buried in ARP request and other noise.
+
+<br />
+**Sometimes, you really have to drill-down in a request**<br />
+I was trying to get a host name during an attack, it took me way longer than it should have how many expanding sections the frame had and how far I had to drill to see the name.
+
+<br />
+## When [Tool] Let Me Down
+
+[HTB Meerkat](/boxes/62_meerkat/) - I was trying to get a count of password spraying but was struggling to address duplicate attempts to get a unique count.  So, I used tshark to export out and wrote a python parser script to get the count.
