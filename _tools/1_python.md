@@ -55,7 +55,7 @@ Python is my go-to for exploit development and automation. It's cleaner than Bas
 </table>
 
 <br />
-**Proof:**
+**Proof**
 - [Buffer Overflow Prep](/boxes/59_bofprep/) - Full Python exploit chain
 - [Brainpan](/boxes/1_brainpan/) - Custom fuzzer and shellcode delivery
 - [Vanilla BOF Project](/projects/5_vanillabof/) - Complete exploit development series
@@ -97,4 +97,4 @@ Multiple spaces and tab aren't the same even if they look like they "line up".  
 
 <br />
 ## Why Python?
-It provides for fast prototyping, quick development, and load of libraries that I can use right out of the box.  So, I use Python *most* of the time.  I will always stick to the most appropriate tool for the job.  Language agnostic, I say.  Honorable mention to C.  Good to also learn for exploit development for better understanding the assembly.
+It provides for fast prototyping, quick development, and loads of libraries that I can use right out of the box.  So, I use Python *most* of the time.  I will always stick to the most appropriate tool for the job.  Language agnostic, I say.  Honorable mention to C.  Good to also learn for exploit development for better understanding the assembly.

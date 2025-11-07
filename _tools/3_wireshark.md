@@ -21,9 +21,7 @@ related_publications: false
 
 <br />
 ## How I Use It
-Wireshark is my key weapon for traffic analysis, whether it analyzing traffic live looking for juicy information to steal or pcaps after a breach to figure out what happend.  Wireshark is the first packet sniffer I learned in Grad school and still my default to this day.
-
-<h3>How you used it</h3>
+Wireshark is my key weapon for traffic analysis, whether it is analyzing traffic live looking for juicy information to steal or pcaps after a breach to figure out what happend.  Wireshark is the first packet sniffer I learned in Grad school and still my default to this day.
 
 <br />
 <table>
@@ -43,7 +41,7 @@ Wireshark is my key weapon for traffic analysis, whether it analyzing traffic li
     <tr>
       <td>Extract Files</td>
       <td>Extract files and other artifacts from the traffic.</td>
-      <td>Malicious files can be extracted out of the traffic so we can review theme.</td>
+      <td>Malicious files can be extracted out of the traffic so we can review them.</td>
     </tr>
     <tr>
       <td>Protocol Debugging</td>
@@ -84,13 +82,13 @@ Wireshark is my key weapon for traffic analysis, whether it analyzing traffic li
 
 <br />
 **Filters are necessary**<br />
-Wireshark just keeps collecting more and more traffic.  Just keeps sniffing.  So, you are trying to do something quick and the conversation quickly get buried in ARP request and other noise.
+Wireshark just keeps sniffing. The conversation you were watching 30 seconds ago? Buried under 500 ARP requests. Use display filters or drown in noise.
 
 <br />
 **Sometimes, you really have to drill-down in a request**<br />
-I was trying to get a host name during an attack, it took me way longer than it should have how many expanding sections the frame had and how far I had to drill to see the name.
+Finding a hostname once took me embarrassingly long because I didn't realize how many nested sections Wireshark hides data in. Sometimes you have to expand like 5 layers deep to find what you need.
 
 <br />
-## When [Tool] Let Me Down
+## When Wireshark Let Me Down
 
 [HTB Meerkat](/boxes/62_meerkat/) - I was trying to get a count of password spraying but was struggling to address duplicate attempts to get a unique count.  So, I used tshark to export out and wrote a python parser script to get the count.

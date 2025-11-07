@@ -20,77 +20,62 @@ related_publications: false
 <a href="https://github.com/OJ/gobuster" target="_blank" rel="noopener noreferrer">Software Link</a>
 
 <br />
-<h2>Process</h2>
+## How I used it
 
-<h3>How you used it</h3>
+This is the first program that I learned to be able to brute-force files and directories from websites.
 
 <br />
 <table>
   <thead>
     <tr>
       <th>Category</th>
-      <th>Usage</th>
-      <th>Proof</th>
+      <th>What I did</th>
+      <th>Why I did it</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td>Brute-Force Directories</td>
-      <td>Brute-Force directories with medium wordlist.</td>
-      <td>
-        <ul>
-          <li><a href="{{ '/boxes/3_vulnversity/' | relative_url }}">THM Vulnversity</a></li>
-        </ul>
-        <ul>
-          <li><a href="{{ '/boxes/1_brainpan/' | relative_url }}">THM Brainpan</a></li>
-        </ul>
-      </td>
+      <td>Discover hidden directories/files with medium wordlist.</td>
+      <td>Find admin panels, backup files, forgotten endpoints.</td>
+    </tr>
+    <tr>
+      <td>Brute-Force Directories</td>
+      <td>Use `-x` switch to find specific file types.</td>
+      <td>Sometimes the gold is in `.bak` files or hidden `.txt` notes, like dev notes.</td>
     </tr>
   </tbody>
 </table>
 
 <br />
-<h3>Commands / Cheatsheet</h3>
-
-<ul>
-  <li>Directory and File Brute-Force</li>
-  {% capture general %}
-gobuster dir -u https://TARGET -w /path/to/wordlist.txt -o gobuster_dir.txt
-  {% endcapture %}
-  {% include terminal.html language='bash' title='Directory and File Brute-Force' content=general %}
-
-  <li>Brute-Force Usernames with Extension</li>
-  {% capture gobusterext %}
-gobuster dir -u https://TARGET -w /path/to/wordlist.txt -x php,html,txt,js -o gobuster_ext.txt
-  {% endcapture %}
-  {% include terminal.html language='bash' title='Brute-Force Usernames with Extension' content=gobusterext %}
-
-  <li>Vhosts</li>
-  {% capture vhosts %}
-gobuster vhost -u https://example.com -w /path/to/vhosts.txt -o gobuster_vhost.txt
-  {% endcapture %}
-  {% include terminal.html language='bash' title='Vhosts' content=vhosts %}
-
-  <li>DNS Subdomains</li>
-  {% capture subs %}
-gobuster dns -d example.com -w /path/to/subdomains.txt -o gobuster_dns.txt
-  {% endcapture %}
-  {% include terminal.html language='bash' title='Subdomains' content=subs %}
-
-</ul>
+**Proof**
+- [THM Vulnversity](/boxes/3_vulnversity/) - Brute-forced directories.
+- [THM Brainpan](/boxes/1_brainpan/) - Tries to find interesting goodies.
 
 <br />
-<h3>Common mistakes</h3>
-<ul>
-  <li>Using the wrong wordlist.  Sometimes, it takes multiple lists to find the goods.</li>
-  <li>Forgetting to add extension to find the key files that would need the proper extension.</li>
-  <li>Assuming that absence in results means it is not there.</li>
-</ul>
+## Commands I Use Most
 
 <br />
-<h3>Tips / Best use cases</h3>
-<ul>
-  <li>Always get permission to run the tool on the target. </li>
-  <li>Choose your wordlists carefully.  Seclists is a good source. </li>
-  <li>Save the output for future reporting.</li>
-</ul>
+**Find Juicy Files and Directories**
+
+{% capture checkdirs %}
+┌──(sec㉿kali)-[~]
+└─$ gobuster dir -u http://10.10.207.42:3333 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -o gobuster
+{% endcapture %}
+{% include terminal.html language='bash' title='Finding the good stuff' content=checkdirs %}
+
+<br />
+## What I Learned the Hard Way
+
+<br />
+**Choosing the right extension**<br />
+Spent like an hour getting nothing. Finally checked gobuster usage and realized I needed the `-x` flag for extensions. Face, meet palm.
+
+<br />
+**Playing with the wordlists**<br />
+Choose those wordlists carefully. Seclists offers a bunch to play with running.  But if you get stuck, double back and try bigger, better wordlists and maybe you will find what you are looking for.
+
+<br />
+## When gobuster Let Me Down
+
+When I started a box late at night, watching the gobuster results just absolutely crawl.  This is the time that I switched to ffuf.

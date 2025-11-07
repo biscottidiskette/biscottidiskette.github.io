@@ -20,69 +20,73 @@ related_publications: false
 <a href="https://sqlmap.org/" target="_blank" rel="noopener noreferrer">Software Link</a>
 
 <br />
-<h2>Process</h2>
+## How I used it
 
-<h3>How you used it</h3>
+SQLMap answers the SQL injection question fast: Is this parameter vulnerable? If yes, dump everything. It's the lazy (and smart) way to exploit SQL injection without manually crafting payloads.
 
 <br />
 <table>
   <thead>
     <tr>
       <th>Category</th>
-      <th>Usage</th>
-      <th>Proof</th>
+      <th>What I use</th>
+      <th>Why I chose it</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>SQL Injection Database Dump</td>
+      <td>Dump All</td>
+      <td>Dump everything using the all switch.</td>
+      <td>When I don't know what I'm looking for or just want everything fast.  It might be lazy, but it is effective.</td>
+    </tr>
+    <tr>
+      <td>Database Dump</td>
       <td>Dump database via SQL Injection.</td>
-      <td>
-        <ul>
-          <li><a href="{{ '/boxes/34_gamezone/' | relative_url }}">THM GameZone</a></li>
-          <li><a href="{{ '/boxes/56_love/' | relative_url }}">HTB Love</a></li>
-        </ul>
-      </td>
+      <td>Trying to dump the user table to get a user password hash, for cracking purposes.</td>
     </tr>
   </tbody>
 </table>
 
 <br />
-<h3>Commands / Cheatsheet</h3>
-
-<ul>
-  <li>SQLMap Overview</li>
-  {% capture overview %}
-sqlmap -u "http://www.example.com/vuln.php?id=1" --batch
-  {% endcapture %}
-  {% include terminal.html language='bash' title='SQLMap Overview' content=overview %}
-
-  <li>SQLMap Post Request</li>
-  {% capture postrequest %}
-hydra -L fsocity.dic -p admin 10.10.11.55 http-post-form "/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log+In&redirect_to=http%3A%2F%2F10.10.11.55%2Fwp-admin%2F&testcookie=1:Invalid Username"
-  {% endcapture %}
-  {% include terminal.html language='bash' title='Post Requests' content=postrequest %}
-
-  <li>Full Request</li>
-  {% capture fullrequest %}
-sqlmap -r req.txt
-  {% endcapture %}
-  {% include terminal.html language='bash' title='SQLMap with Full Request' content=fullrequest %}
-
-</ul>
+**Proof** 
+- [THM GameZone](/boxes/34_gamezone/) - Dumping the database.
+- [HTB Love](/boxes/56_love/) - Grab everything using the all option.
 
 <br />
-<h3>Common mistakes</h3>
-<ul>
-  <li>Testing the wrong parameter and missing something juicy.</li>
-  <li>Overly aggressive default runs which could corrupt data.</li>
-  <li>Blindly using batch which could run destructive commands.</li>
-</ul>
+## Commands I commonly use
 
 <br />
-<h3>Tips / Best use cases</h3>
-<ul>
-  <li>Manually scope down (database -> table -> columns) and avoid all to retain control of tests run. </li>
-  <li>Always document your findings for reporting purposes. </li>
-  <li>Use proxy to push traffic through Burp and monitor testing requests.</li>
-</ul>
+**Exploit with All Switch**
+
+{% capture allswitch %}
+┌──(kali㉿kali)-[~/Documents/htb/love]
+└─$ sqlmap -r request.txt --batch --level=1 --risk=3 -r request.txt --dbms=mysql -p voter --all
+{% endcapture %}
+{% include terminal.html language='bash' title='Exploit with the All Switch' content=allswitch %}
+
+<br />
+**Dump the Database**
+
+{% capture dumpdb %}
+┌──(kali㉿kali)-[~/Documents/thm/gamezone]
+└─$ sqlmap -r request.txt --dbms=mysql --dump
+{% endcapture %}
+{% include terminal.html language='bash' title='Dump Database' content=dumpdb %}
+
+<br />
+## What I Learned the Hard Way
+
+<br />
+**Choose the right parameter**<br />
+
+Getting no results because I choose the wrong parameter to check.  Ran it three time with the same results before I finally check the `request.txt` file to see my blunder.  Fixed it up and was able to get my plunder (hehe...it rhymed)! w00t w00t!
+
+<br />
+**Used the Wrong Level and Risk**
+
+After struggling to get the results that I want, I had to play with the risk and level switch and the results magically appeared.  Wild, wild stuff.
+
+<br />
+## When sqlmap Let Me Down
+
+Sometimes, the SQL injection is so tricky that it just requires that edge of human ingenuity to craft the right payload.

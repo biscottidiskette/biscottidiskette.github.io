@@ -20,86 +20,86 @@ related_publications: false
 <a href="https://github.com/vanhauser-thc/thc-hydra" target="_blank" rel="noopener noreferrer">Software Link</a>
 
 <br />
-<h2>Process</h2>
+## How I used it
 
-<h3>How you used it</h3>
+Hydra is the tools I use for my password dictionary attacks against all those pesky web app login forms, assuming I don't write my script.  But wait, there is more! It also does other protocols that I don't feel like scripting like ssh.
 
 <br />
 <table>
   <thead>
     <tr>
       <th>Category</th>
-      <th>Usage</th>
-      <th>Proof</th>
+      <th>What I did</th>
+      <th>Why I did it</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td>Brute-Force Password</td>
-      <td>Brute-Force HTTP(s) login passwords.</td>
-      <td>
-        <ul>
-          <li><a href="{{ '/boxes/24_mrrobot/' | relative_url }}">THM Mr. Robot</a></li>
-        </ul>
-      </td>
+      <td>Dictionary attack against login forms.</td>
+      <td>Quick wins from weak passwords.  I like low-hanging fruit.</td>
     </tr>
     <tr>
       <td>Brute-Force Usernames</td>
-      <td>Brute-Force HTTP(S) login usernames.</td>
-      <td>
-        <ul>
-          <li><a href="{{ '/boxes/24_mrrobot/' | relative_url }}">THM Mr. Robot</a></li>
-        </ul>
-      </td>
+      <td>Enumerate valid users on WordPress/forums.</td>
+      <td>Some logins differentiate between "wrong password" vs "unknown user".</td>
     </tr>
     <tr>
       <td>Brute-Force SSH</td>
-      <td>Brute-Force SSH for easy foothold.</td>
-      <td>
-        <ul>
-          <li><a href="{{ '/boxes/44_library/' | relative_url }}">THM Library</a></li>
-        </ul>
-      </td>
+      <td>Target SSH with common credentials.</td>
+      <td>If SSH is open with weak passwords, easiest path to shell.</td>
     </tr>
   </tbody>
 </table>
 
 <br />
-<h3>Commands / Cheatsheet</h3>
-
-<ul>
-  <li>Brute-Force Password</li>
-  {% capture passwords %}
-hydra -l Elliot -P fsocity.dic 10.10.145.112 http-post-form "/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log+In&redirect_to=http%3A%2F%2F10.10.11.55%2Fwp-admin%2F&testcookie=1:The password you entered"
-  {% endcapture %}
-  {% include terminal.html language='bash' title='Brute-Force Password' content=passwords %}
-
-  <li>Brute-Force Usernames</li>
-  {% capture Usernames %}
-hydra -L fsocity.dic -p admin 10.10.11.55 http-post-form "/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log+In&redirect_to=http%3A%2F%2F10.10.11.55%2Fwp-admin%2F&testcookie=1:Invalid Username"
-  {% endcapture %}
-  {% include terminal.html language='bash' title='Brute-Force Usernames' content=Usernames %}
-
-  <li>Brute-Force SSH</li>
-  {% capture ssh %}
-hydra -l meliodas -P /usr/share/wordlists/rockyou.txt -t 4 10.10.11.208 ssh
-  {% endcapture %}
-  {% include terminal.html language='bash' title='Brute-Force SSH' content=ssh %}
-
-</ul>
+**Proof**
+- [THM Hackpark](/boxes/47_hackpark/) - Cracking website admin passwords.
+- [THM Mr. Robot](/boxes/24_mrrobot/) - Brute-forcing Wordpress username.
+- [HTB Dog](/boxes/59_dog/) - Break into the SSH protocol.
 
 <br />
-<h3>Common mistakes</h3>
-<ul>
-  <li>Using the wrong wordlist.  Sometimes, it takes multiple lists to find the goods.</li>
-  <li>Jumping to Brute-Force right away.  Rockyou should be the FIRST thing you try.</li>
-  <li>Failing to checking lockout policy and locking out accounts.</li>
-</ul>
+## Commands I Use Most
 
 <br />
-<h3>Tips / Best use cases</h3>
-<ul>
-  <li>Always get permission to run the tool on the target. </li>
-  <li>Use service specific wordlists.  Consider using a tool like cewl for a custom list. </li>
-  <li>Use the right failure criteria to check.</li>
-</ul>
+**Cracking Passwords**
+
+{% capture crackpass %}
+┌──(kali㉿kali)-[~/Documents/thm/mrrobot]
+└─$ hydra -l Elliot -P fsocity.dic 10.10.145.112 http-post-form "/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log+In&redirect_to=http%3A%2F%2F10.10.11.55%2Fwp-admin%2F&testcookie=1:The password you entered"
+{% endcapture %}
+{% include terminal.html language='bash' title='Crack Passwords' content=crackpass %}
+
+<br />
+**Brute-force Username**
+
+{% capture crackuser %}
+┌──(kali㉿kali)-[~/Documents/thm/mrrobot]
+└─$ hydra -L fsocity.dic -p admin 10.10.11.55 http-post-form "/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log+In&redirect_to=http%3A%2F%2F10.10.11.55%2Fwp-admin%2F&testcookie=1:Invalid Username"
+{% endcapture %}
+{% include terminal.html language='bash' title='Brute-force Username' content=crackuser %}
+
+<br />
+**Break into SSH**
+
+{% capture breakssh %}
+┌──(kali㉿kali)-[~/Documents/htb/dog]
+└─$ hydra -l tiffany -P /usr/share/seclists/Passwords/xato-net-10-million-passwords-10000.txt -t 4 10.10.11.58 ssh
+{% endcapture %}
+{% include terminal.html language='bash' title='Break SSH' content=breakssh %}
+
+<br />
+## What I learned the Hard Way
+
+<br />
+**Wordlist Selection Matters**<br />
+Choose those wordlists carefully. Seclists offers a bunch to play with running.  You can also use CEWL to generate a custom wordlist.
+
+<br />
+**Choose the Right Fail Check**<br />
+Consider what you choose as the fail check.  There have been boxes where I wasted a couple hours because hydra was the right vector but didn't work because it didn't know the right password was right.
+
+<br />
+## When hydra Let Me Down
+
+Brute-force protections are a thing.  Sometimes, five incorrect passwords will get your account locked, or worse IP banned.  Not fun calling your customer to let them know you locked yourself out.  Be mindful when you choose to brute-force.
