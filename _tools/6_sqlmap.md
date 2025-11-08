@@ -53,7 +53,7 @@ SQLMap answers the SQL injection question fast: Is this parameter vulnerable? If
 - [HTB Love](/boxes/56_love/) - Grab everything using the all option.
 
 <br />
-## Commands I commonly use
+## Commands I Use Most
 
 <br />
 **Exploit with All Switch**
@@ -79,7 +79,7 @@ SQLMap answers the SQL injection question fast: Is this parameter vulnerable? If
 <br />
 **Choose the right parameter**<br />
 
-Getting no results because I choose the wrong parameter to check.  Ran it three time with the same results before I finally check the `request.txt` file to see my blunder.  Fixed it up and was able to get my plunder (hehe...it rhymed)! w00t w00t!
+Getting no results because I choose the wrong parameter to check.  Ran it three time with the same results before I finally check the `request.txt` file to see my blunder.  Fixed it and finally got my plunder! Always double-check your request.txt file.
 
 <br />
 **Used the Wrong Level and Risk**
