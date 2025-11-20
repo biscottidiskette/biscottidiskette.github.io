@@ -285,8 +285,8 @@ jekyll-archives:
     tag: "/blog/tag/:name/"
     category: "/blog/category/:name/"
 
-display_tags: ["blue-team","buffer-overflow","career change","exploit-development","incident-response","language learning","learning","muay thai","OSCP","personal growth","portfolio","productivity","PWK","python","red-team","scripting","sql-injection","try harder","web-security"]
-display_categories: ["certification","exploit-development","personal","purple-team"] # these categories will be displayed on the front page of your blog
+display_tags: ["blue-team","buffer-overflow","career","career change","exploit-development","incident-response","interviewing","language learning","learning","muay thai","OSCP","personal growth","portfolio","productivity","PWK","python","red-team","scripting","sql-injection","technical","try harder","web-security"]
+display_categories: ["career","certification","exploit-development","personal","purple-team"] # these categories will be displayed on the front page of your blog
 
 # -----------------------------------------------------------------------------
 # Jekyll Scholar

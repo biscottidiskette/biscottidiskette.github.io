@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Not Technical Enough"
-date: 2025-11-21
+date: 2025-11-20
 description: "Addressing the Not Technical Enough Feedback."
 tags: [career,technical,interviewing,scripting]
 categories: career
