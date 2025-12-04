@@ -111,7 +111,7 @@ horizontal: false
     <span>Red Team</span>
   </div>
   <div style="display: flex; align-items: center; gap: 0.3rem;">
-    <span style="display:inline-block;width:20px;height:20px;background-color:rgba(2,62,138.3);border:1px solid #000;"></span>
+    <span style="display:inline-block;width:20px;height:20px;background-color:rgba(0,0,255,0.3);border:1px solid #000;"></span>
     <span>Blue Team</span>
   </div>
   <div style="display: flex; align-items: center; gap: 0.3rem;">
@@ -151,9 +151,9 @@ horizontal: false
       <div class="row row-cols-1 row-cols-md-3">
         {% for project in sorted_projects %}
 
-          {% case project.subcategory %}
+        {% case project.subcategory %}
             {% when "red" %}{% assign bg_color = "rgba(255,0,0,0.1)" %}
-            {% when "blue" %}{% assign bg_color = "rgba(2,62,138,0.1)" %}
+            {% when "blue" %}{% assign bg_color = "rgba(0,0,255,0.1)" %}
             {% when "infrastructure" %}{% assign bg_color = "rgba(0,128,0,0.1)" %}
             {% when "research" %}{% assign bg_color = "rgba(218,165,32,0.1)" %}
             {% when "miscellaneous" %}{% assign bg_color = "rgba(192,192,192,0.1)" %}
