@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Practical Malware Research Professional (Exam Submitted.  Awaiting results.)
+title: Practical Malware Research Professional
 description: Practical Malware Research Professional (PMRP) by TCM.
 img:
 importance: 3
@@ -19,7 +19,7 @@ related_publications: false
 ## Certification Link/Proof
 <ul>
     <li>Course page: <a href="https://certifications.tcm-sec.com/pmrp/">https://certifications.tcm-sec.com/pmrp/</a></li>
-    <li>Proof: Exam submitted. Awaiting results.</li>
+    <li>Proof: Verification available upon request.</li>
 </ul>
 
 <br />
@@ -58,7 +58,8 @@ The first thing that we had to learn is to set-up a lab so we could work with th
 
 <br />
 ## Related Works
-- Coming Soon!
+- [Malware Analysis Report](/projects/6_malwareanalysis/)
+- [My Malware Analysis Certification Journey](/blog/2025/pmrp/)
 
 <br />
 ## Tips & Lessons Learned
@@ -69,4 +70,4 @@ The first thing that we had to learn is to set-up a lab so we could work with th
 
 <br />
 ## Outcome/Status
-- Exam submitted.  Awaiting results.
+- Verification available upon request.
