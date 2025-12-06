@@ -70,4 +70,8 @@ The first thing that we had to learn is to set-up a lab so we could work with th
 
 <br />
 ## Outcome/Status
-- Verification available upon request.
+<div class="row justify-content-sm-center">
+    <div class="col-sm-4 mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="/assets/img/pmrp/passed.png" title="Passed Status" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
