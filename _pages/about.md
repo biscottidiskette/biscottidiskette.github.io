@@ -15,35 +15,32 @@ selected_papers: false # includes a list of papers marked as "selected={true}"
 social: false # includes social icons at the bottom of the page
 ---
 
-### Purple Team Security Analyst | OSCP-Certified
+### Information Security Professional | PMRP-Certified | OSCP-Certified
 #### Former Pentester → Current Blue Team Operations
 
-I break systems to understand how to defend them.
+Former pentester turned malware analyst. I understand attackers because I was one.
 
-**Experience:**<br /><br />
-🔴 **Red Team:** 64 offensive labs | OSCP | Web exploitation<br /><br />
-🔵 **Blue Team:** 19 defensive challenges | Threat hunting | Incident response | Malware analysis<br /><br />
-🟣 **Purple Team:** IR playbook development | Detection rules (coming soon)<br /><br />
+{% assign offensive_count = site.boxes | where: "team", "Red Team Labs" | size %}
+{% assign defensive_count = site.boxes | where: "team", "Blue Team Labs" | size %}
+
+**Professional Experience:**<br />
+- 4+ years penetration testing & security operations
+- OSCP & PMRP certified (offensive + defensive expertise)
+- Malware analysis research → [Malware Analysis Report](/projects/6_malwareanalysis/)
+- Active practitioner: {{ offensive_count }} offensive labs, {{ defensive_count }} defensive challenges
 
 **Current Focus:**
-- Blue team operations & incident response
-- TCM Practical Junior Malware Analyst (In Progress)
-- GIAC Certified Incident Handler (GCIH Prep - Exam Q1 2026)
+- Malware analysis & incident response operations
+- CISSP preparation (exam target: Q1 2026)
 
-**Skills:** Web Security • CTF • Linux • Python • Networking • SOC Analysis • Incident Response<br />
-**Exploring:** Reverse Engineering • Advanced Malware Analysis • Exploit Development • Detection Engineering
+**Skills:** Malware Analysis • Reverse Engineering • Incident Response • SOC Operations • Python • Linux • Web Security • CTF<br />
+**Exploring:** Advanced Malware Analysis (GREM track) • Exploit Development • Detection Engineering
 
 [Projects](/projects/)&nbsp;|&nbsp;[View All Labs ({{ site.boxes | size }} Total)](/boxes/)&nbsp;|&nbsp;[Tools](/tools/)&nbsp;|&nbsp;[Certifications](/certifications/)&nbsp;|&nbsp;[Blog](/blog/)&nbsp;|&nbsp;[Contact](/contact/)
 
 ---
 
-I focus on securing web applications and am currently expanding my skills in 
-malware analysis and detection engineering. Through offensive challenges (HTB, THM) 
-and defensive scenarios (Sherlocks, CyberDefenders, BTL), I develop a complete 
-understanding of both attack and defense.
-
-My offensive background gives me unique insight into attacker methodology, which 
-I now apply to building better detections, alert management, and responding to incidents.
+I specialize in malware analysis and incident response, applying offensive security expertise to defensive operations. My OSCP background provides attacker-level insight into exploit methodology, while my PMRP certification demonstrates reverse engineering capability for threat detection, hunting, and incident response.
 
 #### Beyond Security
 
