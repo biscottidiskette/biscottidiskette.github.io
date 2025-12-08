@@ -13,13 +13,10 @@ horizontal: false
 <!-- Header Blurb -->
 <div style="margin-bottom: 2rem;">
   <p style="font-size: 1rem; color: #d1d5db; line-height: 1.6;">
-    Professional certifications and continuous learning initiatives spanning offensive security, 
-    defensive operations, and foundational knowledge. Each certification includes context on 
-    skills gained, practical applications, and career impact.
+    Professional certifications spanning offensive security (OSCP), defensive operations (PMRP), and foundational knowledge (Security+). Each certification includes context on skills gained, practical applications, and career impact.
   </p>
   <p style="font-size: 0.95rem; color: #9ca3af; margin-top: 0.75rem;">
-    <strong>Current Focus:</strong> Expanding into malware analysis and incident response 
-    (TCM Malware Analysis, GCIH prep) to complement offensive security foundation.
+    <strong>Current Focus:</strong> CISSP preparation planned to begin post-December 2025, with target exam date Q1 2026.
   </p>
 </div>
 
@@ -109,20 +106,20 @@ horizontal: false
 
 <div class="cert-key mb-4" style="display: flex; gap: 1rem; align-items: center;">
   <div style="display: flex; align-items: center; gap: 0.3rem;">
-    <span style="display:inline-block;width:20px;height:20px;background-color:rgba(0,0,255,0.3);border:1px solid #000;"></span>
-    <span>Blue-Team / Defensive Cybersecurity</span>
+    <span style="display:inline-block;width:20px;height:20px;background-color:rgba(255,0,0,0.3);border:1px solid #000;"></span>
+    <span>Offensive / Red-Team</span>
   </div>
   <div style="display: flex; align-items: center; gap: 0.3rem;">
-    <span style="display:inline-block;width:20px;height:20px;background-color:rgba(255,255,255,0.3);border:1px solid #000;"></span>
-    <span>General / Non-Cyber</span>
+    <span style="display:inline-block;width:20px;height:20px;background-color:rgba(0,0,255,0.3);border:1px solid #000;"></span>
+    <span>Blue-Team / Defensive Cybersecurity</span>
   </div>
   <div style="display: flex; align-items: center; gap: 0.3rem;">
     <span style="display:inline-block;width:20px;height:20px;background-color:rgba(255,255,0,0.3);border:1px solid #000;"></span>
     <span>Foundational Cybersecurity (e.g., Security+)</span>
   </div>
   <div style="display: flex; align-items: center; gap: 0.3rem;">
-    <span style="display:inline-block;width:20px;height:20px;background-color:rgba(255,0,0,0.3);border:1px solid #000;"></span>
-    <span>Offensive / Red-Team</span>
+    <span style="display:inline-block;width:20px;height:20px;background-color:rgba(255,255,255,0.3);border:1px solid #000;"></span>
+    <span>General / Non-Cyber</span>
   </div>
 </div>
 
