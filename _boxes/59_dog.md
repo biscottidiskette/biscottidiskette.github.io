@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Dog
-description: Active challenge – details withheld per TOS
+description: Exploited RCE and exposed credentials.
 img: 
 importance: 4
 category: HackTheBox
