@@ -1,16 +1,11 @@
 {% if site.footer_fixed %}
   <footer class="fixed-bottom" role="contentinfo">
     <div class="container mt-0">
-      &copy; Copyright {{ site.time | date: '%Y' }}
-      {{ site.first_name }}
-      {{ site.middle_name }}
-      {{ site.last_name }}. {{ site.footer_text }}
-      {% if site.impressum_path %}
-        <a href="{{ site.url }}{{ site.baseurl }}{{ site.impressum_path }}">Impressum</a>.
-      {% endif %}
-      {% if site.last_updated %}
-        Last updated: {{ 'now' | date: '%B %d, %Y' }}.
-      {% endif %}
+      &copy; Copyright {{ site.time | date: '%Y' }} &nbsp; {{ site.title }} &nbsp;·&nbsp;
+      <a href="https://github.com/biscottidiskette" target="_blank">GitHub</a> &nbsp;·&nbsp;
+      <a href="https://app.hackthebox.eu/profile/biscottidiskette" target="_blank">HackTheBox</a> &nbsp;·&nbsp;
+      <a href="https://tryhackme.com/r/p/BiscottiDiskette" target="_blank">TryHackMe</a> &nbsp;·&nbsp;
+      <a href="/contact/">Contact</a>
     </div>
   </footer>
 {% else %}
@@ -18,18 +13,12 @@
     {% if site.newsletter.enabled %}
       {% include newsletter.liquid %}
     {% endif %}
-
     <div class="container">
-      &copy; Copyright {{ site.time | date: '%Y' }}
-      {{ site.first_name }}
-      {{ site.middle_name }}
-      {{ site.last_name }}. {{ site.footer_text }}
-      {% if site.impressum_path %}
-        <a href="{{ site.url }}{{ site.baseurl }}{{ site.impressum_path }}">Impressum</a>.
-      {% endif %}
-      {% if site.last_updated %}
-        Last updated: {{ 'now' | date: '%B %d, %Y' }}.
-      {% endif %}
+      &copy; Copyright {{ site.time | date: '%Y' }} {{ site.title }} &nbsp;·&nbsp;
+      <a href="https://github.com/biscottidiskette" target="_blank">GitHub</a> &nbsp;·&nbsp;
+      <a href="https://app.hackthebox.eu/profile/biscottidiskette" target="_blank">HackTheBox</a> &nbsp;·&nbsp;
+      <a href="https://tryhackme.com/r/p/BiscottiDiskette" target="_blank">TryHackMe</a> &nbsp;·&nbsp;
+      <a href="/contact/">Contact</a>
     </div>
   </footer>
 {% endif %}

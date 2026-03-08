@@ -3,7 +3,7 @@ layout: page
 title: tools
 permalink: /tools/
 description: All the tools I use across my projects, labs, and certifications.
-nav: true
+nav: false
 nav_order: 3
 display_categories: [red, blue, malware/re, forensic/ir, automation/scripting, supporting tools]
 horizontal: false

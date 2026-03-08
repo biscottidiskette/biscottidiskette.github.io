@@ -4,7 +4,7 @@ title: certs
 permalink: /certifications/
 description: All the certifications, badges, online courses, books that I have completed.
 nav: true
-nav_order: 4
+nav_order: 3
 display_categories: [certification, badge, online course, book]
 subcategories: [red, blue, foundational, general]
 horizontal: false

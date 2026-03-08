@@ -4,7 +4,7 @@ permalink: /contact/
 title: contact
 description: Feel free to send me a message!. 
 nav: true
-nav_order: 11
+nav_order: 6
 ---
 
 <section class="contact-form" style="max-width:600px; margin:3rem auto; padding:2rem; background:#1a1a1a; border-radius:0.75rem; color:#fff;">
