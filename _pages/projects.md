@@ -133,6 +133,9 @@ horizontal: false
                 {% endif %}
 
                 <div class="card-body">
+                  {% if project.status %}
+                    <span class="status-badge status-{{ project.status }}">{{ project.status }}</span>
+                  {% endif %}
                   <h2 class="card-title" style="font-size:1.1rem; color:#fff;">{{ project.title }}</h2>
                   <p class="card-text" style="font-size:0.9rem; color:#aaa;">{{ project.description }}</p>
 

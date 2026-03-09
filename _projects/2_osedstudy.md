@@ -6,6 +6,7 @@ img:
 importance: 2
 category: Personal
 subcategory: red
+status: paused
 related_publications: false
 ---
 
