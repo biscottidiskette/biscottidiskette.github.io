@@ -975,12 +975,12 @@ progress::-moz-progress-bar {
   position: fixed;
   top: 56px;
   left: 0;
-  height: 5px;
+  height: 2px;
   display: block;
 }
 
 .progress-bar {
-  background-color: var(--global-theme-color);
+  background-color: #00ff88;
   width: 0%;
   display: block;
   height: inherit;
