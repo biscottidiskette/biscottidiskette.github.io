@@ -27,7 +27,7 @@ $code-text: #f8f8f2;
 // General
 // --------------------------
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
   line-height: 1.6;
   background-color: #121212; // default dark
   color: $text-dark;
@@ -46,6 +46,12 @@ a {
     color: lighten($primary-color, 10%);
     text-decoration: none;
   }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
 // --------------------------
@@ -314,4 +320,50 @@ body.dark-mode {
 .stat-value, .counter-value {
   font-weight: 600;
   color: rgba(255,255,255,0.85);
+}
+
+// --------------------------
+// Card whitespace fix
+// --------------------------
+.card.hoverable {
+  .card-body {
+    padding: 0.6rem 0.75rem;
+
+    h2.card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+      padding-bottom: 0.3rem;
+      margin-top: 0;
+      color: #fff;
+    }
+
+    p.card-text {
+      font-size: 0.85rem;
+      color: #ccc;
+      margin-bottom: 0;
+    }
+  }
+}
+
+// --------------------------
+// Remove h2 border inside cards
+// --------------------------
+.card.hoverable .card-body h2.card-title {
+  border-bottom: 1px solid #444 !important;
+  margin-top: 0;
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.5rem;
+}
+
+.card.hoverable {
+  .card-body {
+    padding: 0.85rem 1rem;
+
+    p.card-text {
+      font-size: 0.85rem;
+      color: #ccc;
+      margin-bottom: 0;
+    }
+  }
 }
