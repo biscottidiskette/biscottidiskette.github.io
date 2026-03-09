@@ -20,54 +20,6 @@ horizontal: false
   </p>
 </div>
 
-<!-- Certification Statistics Counter -->
-<style>
-  .stats-table {
-    width: 100%;
-    border-spacing: 0.75rem;
-    table-layout: fixed;
-    margin-bottom: 1.5rem;
-  }
-  @media (max-width: 640px) {
-    .stats-table tr { display: block; }
-    .stats-table td {
-      display: block;
-      width: 100%;
-      margin-bottom: 0.75rem;
-      border-right: none;
-    }
-  }
-  .stat-box {
-    background-color: rgba(28,28,28,0.9);
-    padding: 0.5rem 0.75rem;
-    border-radius: 0.5rem;
-    display: flex;
-    flex-direction: column;
-  }
-  .stat-title {
-    text-transform: uppercase;
-    font-size: 0.6rem;
-    letter-spacing: 0.05em;
-    color: #9ca3af;
-    margin-bottom: 0.3rem;
-  }
-  .stat-item {
-    display: flex;
-    justify-content: space-between;
-    color: #d1d5db;
-    margin-bottom: 0.1rem;
-    font-size: 0.875rem;
-  }
-  .stat-value {
-    font-weight: 600;
-    color: rgba(255,255,255,0.85);
-  }
-  .stats-table td:not(:last-child) {
-    border-right: 1px solid rgba(255,255,255,0.05);
-    padding-right: 0.5rem;
-  }
-</style>
-
 <table class="stats-table">
   <tr>
     <!-- Category Statistics -->
