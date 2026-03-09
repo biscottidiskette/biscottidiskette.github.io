@@ -25,4 +25,13 @@ OSCP and PMRP certified. Currently pursuing CISSP. The labs, projects, and write
 
 When I'm not at the terminal I'm at the gym training Muay Thai or butchering the Thai language.
 
+{% include terminal.html language="bash" title="biscotti@diskette:~" content="cat profile.json
+{
+  \"handle\":       \"Biscotti Diskette\",
+  \"role\":         \"Information Security Engineer\",
+  \"clearance\":    [\"OSCP\", \"PMRP\", \"CISSP (in progress)\"],
+  \"background\":   \"Pentester → Blue Team\",
+  \"current_focus\":\"Security Engineering | Exploit Dev | Malware Analysis\"
+}" %}
+
 [Projects](/projects/)&nbsp;·&nbsp;[Labs](/boxes/)&nbsp;·&nbsp;[Tools](/tools/)&nbsp;·&nbsp;[Certs](/certifications/)&nbsp;·&nbsp;[Blog](/blog/)&nbsp;·&nbsp;[Contact](/contact/)
