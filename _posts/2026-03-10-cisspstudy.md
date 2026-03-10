@@ -29,27 +29,27 @@ The CISSP is aguably the most recognizable certification in cybersecurity indust
 
 <br />
 ## The Situation
-The CISSP is knowledge dense study material with 
+
 
 <br />
 ## The Wall
-The CISSP is knowledge dense study material with 
+
 
 <br />
 ## Distractions
-The CISSP is knowledge dense study material with 
+
 
 <br />
 ## Productive Procrastination
-The CISSP is knowledge dense study material with 
+
 
 <br />
 ## Keeping Focused
-The CISSP is knowledge dense study material with 
+
 
 <br />
 ## Lessoned Learned
-The CISSP is knowledge dense study material with 
+
 
 <br />
 ## Reflections
