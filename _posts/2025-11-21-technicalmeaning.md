@@ -82,9 +82,6 @@ The best advice for people struggling with "Not Technical":
 <br />
 ## Related Work
 
-**Tools Referenced:**
-- *Tool free week!*
-
 **Similar Content:**
 - *Coming soon!*
 

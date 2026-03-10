@@ -203,10 +203,6 @@ The best advice that I could give anyone going down this weird, purple road:
 
 **My Investigation Write-up:** [Web Investigation Lab - Detailed Solution](/boxes/85_webinvestigation/)
 
-**Tools Referenced:**
-- [SQLMap - Automated SQL Injection Tool](/tools/6_sqlmap/)
-- [Gobuster - Directory Enumeration](/tools/7_gobuster/)
-
 **Similar Purple Team Content:**
 - *More purple team analyses coming soon as I continue learning blue team detection strategies.*
 
