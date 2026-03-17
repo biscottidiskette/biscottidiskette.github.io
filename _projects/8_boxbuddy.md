@@ -26,12 +26,17 @@ If you get stuck on HTB box, where do you go for help?  There are always those d
 <br />
 ## The Stack
 
-- SQLite3 database
-- Python backend
-    - SQL Alchemy ORM
-    - FastAPI
-- React front-end
-    - Vite server
+- Storage
+    - **SQLite** - Embedded relational database
+
+- Backend
+    - **Python** - Runtime for server-side code
+    - **SQLAlchemy** - ORM for database interaction
+    - **FastAPI** — Web framework for API endpoints
+
+- Front-end
+    - **React** - UI component library
+    - **Vite** - Development server and build tool
 
 <br />
 ## My Role
