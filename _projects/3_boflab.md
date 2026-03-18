@@ -541,7 +541,7 @@ What for it to finish installing and repeat the network option from above to tur
 </div>
 
 <br />
-Install Google Chrome.  This is optional.  You can use Edge, if you want to.  You can leave other browswers behind.  Because if your browsers don't browse, and if they don't browse, then they are no browser of mine!
+Install Google Chrome.  This is optional.  You can use Edge, if you want to.  You can leave other browsers behind.  Because if your browsers don't browse, and if they don't browse, then they are no browser of mine!
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-8 mt-3 mt-md-0">

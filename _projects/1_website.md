@@ -137,7 +137,7 @@ rbenv rehash
    content=installbundler %}
 
 <br />
-Install Code or your favourite programming envrionment.
+Install Code or your favourite programming envirionment.
 
 {% capture installcode %}
 sudo snap install --classic code

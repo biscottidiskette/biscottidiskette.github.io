@@ -15,7 +15,7 @@ So, once upon a time, I took the Offensive Security Exploit Developer (OSED).  I
 
 **Why I'm returning to this:** OSED represents advanced exploit development skills that complement my OSCP foundation. This structured study plan keeps me accountable and demonstrates methodical approach to complex technical challenges.
 
-Well, I was playing with KaliGPT and decided to ask it for help.  I decided to ask for a curriculum and checklist and see what it would develop for me.  I didn't know where to save it to keep me honest so my portolio projects section will have to do.
+Well, I was playing with KaliGPT and decided to ask it for help.  I decided to ask for a curriculum and checklist and see what it would develop for me.  I didn't know where to save it to keep me honest so my portfolio projects section will have to do.
 
 <br />
 <h2>Links</h2>

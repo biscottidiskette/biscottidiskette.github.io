@@ -23,7 +23,7 @@ related_posts: false
 
 <br />
 ## The Reasoning
-The CISSP is arguably the most recognizable certification in cybersecurity industry.  This means that it could mark a significant milestone for your career.  It shows up frequently in job descriptions, passes ATS filters easily, and signals a experience and managerial mindset that organizations are keen to find.  It is such a **HR-friendly certification** that people outside of cybersecurity and give the nod of acknowledgement at the achievement.  For people considering, the management track, the CISSP can be an expectaction validating you from base grunt to CISO.  For me, the ATS filter benefit was enough for me.  You can't break things if you can't get in the door.  So, of course, I had to try.
+The CISSP is arguably the most recognizable certification in cybersecurity industry.  This means that it could mark a significant milestone for your career.  It shows up frequently in job descriptions, passes ATS filters easily, and signals a experience and managerial mindset that organizations are keen to find.  It is such a **HR-friendly certification** that people outside of cybersecurity and give the nod of acknowledgement at the achievement.  For people considering, the management track, the CISSP can be an expectation validating you from base grunt to CISO.  For me, the ATS filter benefit was enough for me.  You can't break things if you can't get in the door.  So, of course, I had to try.
 
 <br />
 ## The Situation

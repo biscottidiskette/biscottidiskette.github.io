@@ -29,7 +29,7 @@ When I'm not at the terminal I'm at the gym training Muay Thai or butchering the
 {
   \"handle\":       \"Biscotti Diskette\",
   \"role\":         \"Information Security Engineer\",
-  \"clearance\":    [\"OSCP\", \"PMRP\", \"CISSP (in progress)\"],
+  \"clearance\":    [\"OSCP\", \"Sec+\", \"PMRP\", \"CDSA (Awaiting marks)\", \"CISSP (in progress)\"],
   \"background\":   \"Pentester → Blue Team\",
   \"current_focus\":\"Security Engineering | Exploit Dev | Malware Analysis\"
 }" %}
