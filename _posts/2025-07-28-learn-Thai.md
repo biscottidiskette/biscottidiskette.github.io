@@ -22,9 +22,6 @@ related_posts: false
 </ul>
 
 <br />
-# Learning Thai: Language and Discipline Outside of Cybersecurity
-
-<br />
 ## Why Thai?
 
 I've been training Muay Thai for about a year. At some point between getting kicked in the head and learning proper stance, I realized I should probably get more out it if I could meet the coaches in the middle and learn Thai to match their English.  Then, they can yell "jab, jab, teep" in two languages.  Bonus!

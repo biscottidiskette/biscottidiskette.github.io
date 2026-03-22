@@ -19,10 +19,7 @@ related_posts: false
 <ul>
     <li><a href="{{ '/certs/1_OSCP/' | relative_url }}">OSCP</a></li>
     <li><a href="{{ '/projects/1_website/' | relative_url }}">Blog Set-up</a></li>
-<br />
 </ul>
-
-# Not Technical Enough
 
 <br />
 ## The Introduction.

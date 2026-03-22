@@ -23,11 +23,7 @@ related_posts: false
     <li>
         <a href="{{ '/boxes/85_webinvestigation/' | relative_url }}">Solution Write-up</a>
     </li>
-<br />
-
 </ul>
-
-# Purple Team Analysis: Web Investigation Lab
 
 <br />
 ## The Scenario.

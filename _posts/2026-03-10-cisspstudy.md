@@ -18,7 +18,6 @@ related_posts: false
 <h2>Link</h2>
 <ul>
     <li>Coming Soon!</li>
-<br />
 </ul>
 
 <br />
