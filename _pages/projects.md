@@ -5,7 +5,7 @@ permalink: /projects/
 description: A growing collection of projects.
 nav: true
 nav_order: 1
-display_categories: [Development, AI-Assisted Architecture, Lab Setup, Personal]
+display_categories: [Reporting, Operations, Development, AI-Assisted Architecture, Lab Setup, Personal]
 subcategories: [red,blue,infrastructure,research,miscellaneous]
 horizontal: false
 ---
