@@ -5,7 +5,7 @@ description: Created an App that Creates Lessons.
 img: 
 importance: 2
 category: AI-Assisted Architecture
-subcategory: miscellaneous
+subcategory: red
 status: ongoing
 related_publications: false
 ---
