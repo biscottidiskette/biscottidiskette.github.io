@@ -27,8 +27,8 @@ Well then, what is the problem I am going to pretend you asked so I can continue
 ## The Stack
 
 - Storage
-    - **LocalStorage** — Client-side persistence
-    - **JSON pre-seeded** certification dataset
+    - **LocalStorage** - Client-side persistence
+    - **JSON pre-seeded** - certification dataset
 - Backend
     - **Node.js** - Runtime for server-side code
     - **Express.js** - Framework for handling routes and HTTP logic
