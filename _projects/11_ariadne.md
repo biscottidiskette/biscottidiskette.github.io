@@ -48,9 +48,6 @@ MVP: In Progress. The engine runs. The analysis takes shape. Now we find out if 
 ## The Process
 
 <br />
-### Walkthrough
-
-<br />
 #### The Landing Page
 The landing page acts as the investigation command center. Active incidents, open cases, and current workload are surfaced in a single view so priorities can be assessed quickly and work can be triaged without losing context.
 
