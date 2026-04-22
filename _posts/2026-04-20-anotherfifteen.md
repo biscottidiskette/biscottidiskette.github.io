@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Another 15 minutes: Chasing what I couldn't give myself"
+title: "Another 15 minutes: Chasing What I Couldn't Give Myself"
 date: 2026-04-20
 description: "Describing the fleeting feeling surrounding certs and acknowledging the imposter syndrome."
 tags: [certification,imposter-syndrome,mental-health,career,blue-team]
