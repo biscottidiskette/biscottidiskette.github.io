@@ -10,53 +10,106 @@ subcategories: [red,blue,infrastructure,research,miscellaneous]
 horizontal: false
 ---
 
-<div style="margin-bottom: 2rem;">
-  <p style="font-size: 1rem; color: #d1d5db; line-height: 1.6;">
-    Personal projects covering infrastructure setup, tool development, and security research. 
-    Each project includes documentation, lessons learned, and practical applications across 
-    offensive and defensive security domains.
-  </p>
-  <p style="font-size: 0.95rem; color: #9ca3af; margin-top: 0.75rem;">
-    <strong>Purple Team Focus:</strong> Projects span red team tooling, blue team infrastructure, 
-    and bridging offensive techniques with defensive detection capabilities.
-  </p>
-</div>
+<p style="font-size: 1rem; color: #d1d5db; line-height: 1.6; margin-bottom: 1.25rem;">
+  Personal projects spanning red team tooling, blue team infrastructure, and detection 
+  engineering, each with documentation, lessons learned, and practical applications.
+  <strong style="color: #f0f0f0;">Purple team focus:</strong> bridging offensive techniques 
+  with defensive detection capabilities.
+</p>
 
-<table class="stats-table">
-  <tr>
-    <!-- Category Statistics -->
-    <td style="vertical-align:top;">
-      <div class="stat-box">
-        <p class="stat-title">Project Categories</p>
-        <ul style="list-style: none; padding: 0; margin: 0;">
-          {% for category in page.display_categories %}
-            {% assign count = site.projects | where: "category", category | size %}
-            <li class="stat-item">
-              <span>{{ category }}</span>
-              <span class="stat-value">{{ count }}</span>
-            </li>
-          {% endfor %}
-        </ul>
+<style>
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 1.25rem;
+}
+.stat-group {
+  background: rgba(28,28,28,0.9);
+  border-radius: 8px;
+  border: 0.5px solid rgba(255,255,255,0.08);
+  overflow: hidden;
+}
+.stat-group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 7px 12px 6px;
+  border-bottom: 0.5px solid rgba(255,255,255,0.08);
+}
+.stat-group-label {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #888;
+}
+.stat-group-total { font-size: 10px; color: #888; }
+.stat-group-total span { font-weight: 600; color: #4ade80; }
+.stat-row {
+  display: flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-bottom: 0.5px solid rgba(255,255,255,0.08);
+  transition: background 0.15s;
+}
+.stat-row:last-child { border-bottom: none; }
+.stat-row:hover { background: rgba(255,255,255,0.03); }
+.stat-name { font-size: 11px; color: #888; width: 110px; flex-shrink: 0; }
+.stat-bar-wrap {
+  flex: 1;
+  margin: 0 10px;
+  height: 2px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 2px;
+}
+.stat-bar { height: 2px; border-radius: 2px; background: #4ade80; opacity: 0.7; }
+.stat-count { font-size: 11px; font-weight: 500; color: #f0f0f0; min-width: 16px; text-align: right; }
+@media (max-width: 640px) { .stats-grid { grid-template-columns: 1fr; } }
+</style>
+
+{% assign total = site.projects | size %}
+
+<div class="stats-grid" style="margin-bottom: 1.25rem;">
+
+  <!-- By Category -->
+  <div class="stat-group">
+    <div class="stat-group-header">
+      <span class="stat-group-label">By category</span>
+      <span class="stat-group-total">Total <span>{{ total }}</span></span>
+    </div>
+    {% for category in page.display_categories %}
+      {% assign count = site.projects | where: "category", category | size %}
+      {% assign pct = count | times: 100.0 | divided_by: total %}
+      <div class="stat-row">
+        <span class="stat-name">{{ category }}</span>
+        <div class="stat-bar-wrap">
+          <div class="stat-bar" style="width:{{ pct }}%"></div>
+        </div>
+        <span class="stat-count">{{ count }}</span>
       </div>
-    </td>
-    
-    <!-- Subcategory Statistics -->
-    <td style="vertical-align:top;">
-      <div class="stat-box">
-        <p class="stat-title">Focus Areas</p>
-        <ul style="list-style: none; padding: 0; margin: 0;">
-          {% for subcat in page.subcategories %}
-            {% assign count = site.projects | where: "subcategory", subcat | size %}
-            <li class="stat-item">
-              <span style="text-transform: capitalize;">{{ subcat }}</span>
-              <span class="stat-value">{{ count }}</span>
-            </li>
-          {% endfor %}
-        </ul>
+    {% endfor %}
+  </div>
+
+  <!-- By Focus Area -->
+  <div class="stat-group">
+    <div class="stat-group-header">
+      <span class="stat-group-label">By focus area</span>
+      <span class="stat-group-total">Total <span>{{ total }}</span></span>
+    </div>
+    {% for subcat in page.subcategories %}
+      {% assign count = site.projects | where: "subcategory", subcat | size %}
+      {% assign pct = count | times: 100.0 | divided_by: total %}
+      <div class="stat-row">
+        <span class="stat-name" style="text-transform: capitalize;">{{ subcat }}</span>
+        <div class="stat-bar-wrap">
+          <div class="stat-bar" style="width:{{ pct }}%"></div>
+        </div>
+        <span class="stat-count">{{ count }}</span>
       </div>
-    </td>
-  </tr>
-</table>
+    {% endfor %}
+  </div>
+
+</div>
 
 <div class="cert-key mb-4" style="display: flex; gap: 1rem; align-items: center;">
   <div style="display: flex; align-items: center; gap: 0.3rem;">
