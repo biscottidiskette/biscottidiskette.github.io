@@ -4,5 +4,8 @@ github_users:
 repo_description_lines_max: 2
 
 github_repos:
-  - biscottidiskette/biscottidiskette.github.io
+  - biscottidiskette/certmap
+  - biscottidiskette/BugWalk
+  - biscottidiskette/ariadne
+  - biscottidiskette/OSEDTutor
   - biscottidiskette/osed
