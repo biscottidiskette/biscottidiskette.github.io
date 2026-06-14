@@ -6,7 +6,6 @@ img:
 importance: 4
 category: Personal
 subcategory: miscellaneous
-status: active
 related_publications: false
 ---
 

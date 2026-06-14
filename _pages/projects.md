@@ -140,6 +140,154 @@ horizontal: false
 
 <!-- pages/projects.md -->
 <div class="projects">
+
+  {% assign featured_projects = site.projects | where: "featured", true %}
+  {% if featured_projects != empty %}
+
+  <style>
+  .podium {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1fr;
+    gap: 16px;
+    margin-bottom: 2.5rem;
+    align-items: end;
+  }
+  .podium-card {
+    border-radius: 0.5rem;
+    border: 1px solid #333;
+    padding: 1.25rem;
+    text-decoration: none;
+    display: block;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .podium-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  }
+  .podium-card-gold {
+    border-top: 2px solid #4ade80;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  .podium-card-silver { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+  .podium-card-bronze { padding-top: 1rem; padding-bottom: 1rem; }
+  .podium-rank {
+    font-size: 20px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .podium-rank-gold { color: #4ade80; }
+  .podium-rank-silver { color: #9ca3af; }
+  .podium-rank-bronze { color: #92400e; }
+  .podium-title { font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 0.4rem; }
+  .podium-desc { font-size: 0.85rem; color: #aaa; margin-bottom: 0.75rem; line-height: 1.5; }
+  .podium-children { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 0.75rem; }
+  .podium-child-chip {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    border: 1px solid #444;
+    color: #888;
+  }
+  .podium-header {
+    font-size: 24px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #ffffff;
+    margin-bottom: 0.75rem;
+  }
+  @media (max-width: 640px) { .podium { grid-template-columns: 1fr; } }
+  </style>
+
+  {% assign gold   = featured_projects | where: "featured_rank", 1 | first %}
+  {% assign silver = featured_projects | where: "featured_rank", 2 | first %}
+  {% assign bronze = featured_projects | where: "featured_rank", 3 | first %}
+
+  <p class="podium-header">Featured projects</p>
+  <div class="podium">
+
+    {% comment %} Silver — left {% endcomment %}
+    {% if silver %}
+      {% case silver.subcategory %}
+        {% when "red" %}{% assign fc = "rgba(255,0,0,0.15)" %}
+        {% when "blue" %}{% assign fc = "rgba(0,0,255,0.15)" %}
+        {% when "ml" %}{% assign fc = "rgba(218,165,32,0.15)" %}
+        {% when "infrastructure" %}{% assign fc = "rgba(0,128,0,0.15)" %}
+        {% when "demo" %}{% assign fc = "rgba(128,0,255,0.15)" %}
+        {% else %}{% assign fc = "rgba(255,255,255,0.03)" %}
+      {% endcase %}
+      <a href="{{ silver.url | relative_url }}" class="podium-card podium-card-silver" style="background-color:{{ fc }};">
+        <div class="podium-rank podium-rank-silver">▲ Silver</div>
+        <div class="podium-title">{{ silver.title }}</div>
+        <div class="podium-desc">{{ silver.description }}</div>
+        {% if silver.paused %}<span class="status-badge status-paused">paused</span>{% endif %}
+        {% if silver.github %}<a href="{{ silver.github }}" onclick="event.stopPropagation();"><i class="fa-brands fa-github gh-icon"></i></a>{% endif %}
+        {% if silver.children %}
+          <div class="podium-children">
+            {% for child in silver.children %}
+              <span class="podium-child-chip">{{ child }}</span>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </a>
+    {% else %}<div></div>{% endif %}
+
+    {% comment %} Gold — center {% endcomment %}
+    {% if gold %}
+      {% case gold.subcategory %}
+        {% when "red" %}{% assign fc = "rgba(255,0,0,0.15)" %}
+        {% when "blue" %}{% assign fc = "rgba(0,0,255,0.15)" %}
+        {% when "ml" %}{% assign fc = "rgba(218,165,32,0.15)" %}
+        {% when "infrastructure" %}{% assign fc = "rgba(0,128,0,0.15)" %}
+        {% when "demo" %}{% assign fc = "rgba(128,0,255,0.15)" %}
+        {% else %}{% assign fc = "rgba(255,255,255,0.03)" %}
+      {% endcase %}
+      <a href="{{ gold.url | relative_url }}" class="podium-card podium-card-gold" style="background-color:{{ fc }};">
+        <div class="podium-rank podium-rank-gold">★ Gold</div>
+        <div class="podium-title">{{ gold.title }}</div>
+        <div class="podium-desc">{{ gold.description }}</div>
+        {% if gold.paused %}<span class="status-badge status-paused">paused</span>{% endif %}
+        {% if gold.github %}<a href="{{ gold.github }}" onclick="event.stopPropagation();"><i class="fa-brands fa-github gh-icon"></i></a>{% endif %}
+        {% if gold.children %}
+          <div class="podium-children">
+            {% for child in gold.children %}
+              <span class="podium-child-chip">{{ child }}</span>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </a>
+    {% else %}<div></div>{% endif %}
+
+    {% comment %} Bronze — right {% endcomment %}
+    {% if bronze %}
+      {% case bronze.subcategory %}
+        {% when "red" %}{% assign fc = "rgba(255,0,0,0.15)" %}
+        {% when "blue" %}{% assign fc = "rgba(0,0,255,0.15)" %}
+        {% when "ml" %}{% assign fc = "rgba(218,165,32,0.15)" %}
+        {% when "infrastructure" %}{% assign fc = "rgba(0,128,0,0.15)" %}
+        {% when "demo" %}{% assign fc = "rgba(128,0,255,0.15)" %}
+        {% else %}{% assign fc = "rgba(255,255,255,0.03)" %}
+      {% endcase %}
+      <a href="{{ bronze.url | relative_url }}" class="podium-card podium-card-bronze" style="background-color:{{ fc }};">
+        <div class="podium-rank podium-rank-bronze">● Bronze</div>
+        <div class="podium-title">{{ bronze.title }}</div>
+        <div class="podium-desc">{{ bronze.description }}</div>
+        {% if bronze.paused %}<span class="status-badge status-paused">paused</span>{% endif %}
+        {% if bronze.github %}<a href="{{ bronze.github }}" onclick="event.stopPropagation();"><i class="fa-brands fa-github gh-icon"></i></a>{% endif %}
+        {% if bronze.children %}
+          <div class="podium-children">
+            {% for child in bronze.children %}
+              <span class="podium-child-chip">{{ child }}</span>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </a>
+    {% else %}<div></div>{% endif %}
+
+  </div>
+  {% endif %}
+
   {% for category in page.display_categories %}
     {% assign categorized_projects = site.projects | where: "category", category %}
     {% assign sorted_projects = categorized_projects | sort: "importance" %}

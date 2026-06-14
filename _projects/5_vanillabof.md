@@ -6,7 +6,8 @@ img:
 importance: 2
 category: Development
 subcategory: red
-status: ongoing
+featured: true
+featured_rank: 3
 related_publications: false
 ---
 

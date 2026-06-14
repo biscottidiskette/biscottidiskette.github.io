@@ -6,7 +6,6 @@ img:
 importance: 2
 category: AI-Assisted Architecture
 subcategory: miscellaneous
-status: ongoing
 related_publications: false
 ---
 

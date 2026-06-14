@@ -6,7 +6,6 @@ img:
 importance: 2
 category: Lab Setup
 subcategory: infrastructure
-status: completed
 related_publications: false
 ---
 

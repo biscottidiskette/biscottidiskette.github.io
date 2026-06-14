@@ -6,7 +6,8 @@ img:
 importance: 2
 category: AI-Assisted Architecture
 subcategory: red
-status: ongoing
+featured: true
+featured_rank: 1
 related_publications: false
 ---
 
