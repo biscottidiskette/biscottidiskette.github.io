@@ -166,11 +166,17 @@ horizontal: false
   }
   .podium-card-gold {
     border-top: 2px solid #4ade80;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    min-height: 140px;
+    padding: 1rem;
   }
-  .podium-card-silver { padding-top: 1.5rem; padding-bottom: 1.5rem; }
-  .podium-card-bronze { padding-top: 1rem; padding-bottom: 1rem; }
+  .podium-card-silver {
+    min-height: 120px;
+    padding: 1rem;
+  }
+  .podium-card-bronze {
+    min-height: 110px;
+    padding: 1rem;
+  }
   .podium-rank {
     font-size: 20px;
     letter-spacing: 0.15em;
@@ -180,8 +186,8 @@ horizontal: false
   .podium-rank-gold { color: #4ade80; }
   .podium-rank-silver { color: #9ca3af; }
   .podium-rank-bronze { color: #92400e; }
-  .podium-title { font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 0.4rem; }
-  .podium-desc { font-size: 0.85rem; color: #aaa; margin-bottom: 0.75rem; line-height: 1.5; }
+  .podium-title { font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 0.3rem; }
+  .podium-desc { font-size: 0.8rem; color: #aaa; line-height: 1.4; margin-bottom: 0; }
   .podium-children { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 0.75rem; }
   .podium-child-chip {
     font-size: 10px;
