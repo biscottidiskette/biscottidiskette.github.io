@@ -15,7 +15,7 @@ og_image: "/assets/img/brainpan1/logo.png"
         {% include figure.liquid loading="eager" path="/assets/img/brainpan1/logo.png" title="THM Brainpan Logo" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
-
+  
 <h2>Link</h2>
 <a href="https://tryhackme.com/r/room/brainpan">Room Link</a>
 

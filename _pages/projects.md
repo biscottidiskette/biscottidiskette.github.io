@@ -5,8 +5,8 @@ permalink: /projects/
 description: A growing collection of projects.
 nav: true
 nav_order: 1
-display_categories: [Reporting, Operations, Development, AI-Assisted Architecture, Lab Setup, Personal]
-subcategories: [red,blue,infrastructure,research,miscellaneous]
+display_categories: [Demo, Reporting, Operations, Development, Models Trained, AI-Assisted Architecture, Lab Setup, Personal]
+subcategories: [demo,red,blue,ml,infrastructure,miscellaneous]
 horizontal: false
 ---
 
@@ -113,6 +113,10 @@ horizontal: false
 
 <div class="cert-key mb-4" style="display: flex; gap: 1rem; align-items: center;">
   <div style="display: flex; align-items: center; gap: 0.3rem;">
+    <span style="display:inline-block;width:20px;height:20px;background-color:rgba(128,0,255,0.3);border:1px solid #000;"></span>
+    <span>Demo</span>
+  </div>
+  <div style="display: flex; align-items: center; gap: 0.3rem;">
     <span style="display:inline-block;width:20px;height:20px;background-color:rgba(255,0,0,0.3);border:1px solid #000;"></span>
     <span>Red Team</span>
   </div>
@@ -121,12 +125,12 @@ horizontal: false
     <span>Blue Team</span>
   </div>
   <div style="display: flex; align-items: center; gap: 0.3rem;">
-    <span style="display:inline-block;width:20px;height:20px;background-color:rgba(0,128,0,0.3);border:1px solid #000;"></span>
-    <span>Infrastructure</span>
+    <span style="display:inline-block;width:20px;height:20px;background-color:rgba(218,165,32,0.3);border:1px solid #000;"></span>
+    <span>Machine Learning</span>
   </div>
   <div style="display: flex; align-items: center; gap: 0.3rem;">
-    <span style="display:inline-block;width:20px;height:20px;background-color:rgba(218,165,32,0.3);border:1px solid #000;"></span>
-    <span>Research</span>
+    <span style="display:inline-block;width:20px;height:20px;background-color:rgba(0,128,0,0.3);border:1px solid #000;"></span>
+    <span>Infrastructure</span>
   </div>
   <div style="display: flex; align-items: center; gap: 0.3rem;">
     <span style="display:inline-block;width:20px;height:20px;background-color:rgba(192,192,192,0.3);border:1px solid #000;"></span>
@@ -137,7 +141,12 @@ horizontal: false
 <!-- pages/projects.md -->
 <div class="projects">
   {% for category in page.display_categories %}
-    <a id="{{ category | slugify }}" 
+    {% assign categorized_projects = site.projects | where: "category", category %}
+    {% assign sorted_projects = categorized_projects | sort: "importance" %}
+
+    {% if sorted_projects != empty %}
+
+      <a id="{{ category | slugify }}" 
        style="display:block;
               font-size:1.6rem;
               font-weight:700;
@@ -148,20 +157,16 @@ horizontal: false
               color:#fff;
               text-decoration:none;">
       {{ category }}
-    </a>
-
-    {% assign categorized_projects = site.projects | where: "category", category %}
-    {% assign sorted_projects = categorized_projects | sort: "importance" %}
-
-    {% if sorted_projects != empty %}
+      </a>
       <div class="row row-cols-1 row-cols-md-3">
         {% for project in sorted_projects %}
 
         {% case project.subcategory %}
+            {% when "demo" %}{% assign bg_color = "rgba(128,0,255,0.1)" %}
             {% when "red" %}{% assign bg_color = "rgba(255,0,0,0.1)" %}
             {% when "blue" %}{% assign bg_color = "rgba(0,0,255,0.1)" %}
+            {% when "ml" %}{% assign bg_color = "rgba(218,165,32,0.1)" %}
             {% when "infrastructure" %}{% assign bg_color = "rgba(0,128,0,0.1)" %}
-            {% when "research" %}{% assign bg_color = "rgba(218,165,32,0.1)" %}
             {% when "miscellaneous" %}{% assign bg_color = "rgba(192,192,192,0.1)" %}
             {% else %}{% assign bg_color = "transparent" %}
           {% endcase %}

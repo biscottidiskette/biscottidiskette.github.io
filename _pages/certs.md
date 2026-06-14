@@ -132,7 +132,11 @@ horizontal: false
 <!-- pages/certs.md -->
 <div class="projects">
   {% for category in page.display_categories %}
-    <a id="{{ category | slugify }}" 
+    {% assign categorized_certs = site.certs | where: "category", category %}
+    {% assign sorted_certs = categorized_certs | sort: "importance" %}
+
+    {% if sorted_certs != empty %}
+      <a id="{{ category | slugify }}" 
        style="display:block;
               font-size:1.6rem;
               font-weight:700;
@@ -142,13 +146,8 @@ horizontal: false
               border-bottom:2px solid #444;
               color:#fff;
               text-decoration:none;">
-      {{ category }}
-    </a>
-
-    {% assign categorized_certs = site.certs | where: "category", category %}
-    {% assign sorted_certs = categorized_certs | sort: "importance" %}
-
-    {% if sorted_certs != empty %}
+        {{ category }}
+      </a>
       {% if page.horizontal %}
         <div class="row row-cols-1 row-cols-md-2 g-3">
           {% for cert in sorted_certs %}
