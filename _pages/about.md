@@ -34,4 +34,4 @@ When I'm not at the terminal I'm at the gym training Muay Thai or butchering the
   \"current_focus\":\"Security Engineering | Exploit Dev | Malware Analysis\"
 }" %}
 
-[Projects](/projects/)&nbsp;·&nbsp;[Labs](/boxes/)&nbsp;·&nbsp;[Tools](/tools/)&nbsp;·&nbsp;[Certs](/certifications/)&nbsp;·&nbsp;[Blog](/blog/)&nbsp;·&nbsp;[Contact](/contact/)
+[Projects](/projects/)&nbsp;·&nbsp;[Labs](/boxes/)&nbsp;·&nbsp;[Certs](/certifications/)&nbsp;·&nbsp;[Blog](/blog/)&nbsp;·&nbsp;[Contact](/contact/)
