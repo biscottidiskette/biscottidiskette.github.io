@@ -5,8 +5,8 @@ permalink: /boxes/
 description: All of the boxes, Sherlocks, and various other practice.
 nav: true
 nav_order: 2
-display_categories: [HackTheBox, TryHackMe, HTB Challenges, VulnHub, Sherlocks, CyberDefenders, Blue Team Labs]
-teams: [Red Team Labs, Blue Team Labs]
+display_categories: [HackTheBox, TryHackMe, HTB Challenges, Sherlocks, CyberDefenders, Blue Team Labs, Crackmes, pwnable.kr, pwnable.tw]
+teams: [Red Team Labs, Blue Team Labs, Reverse Engineering Labs]
 ---
 
 <p style="font-size: 1rem; color: #d1d5db; line-height: 1.6; margin-bottom: 1.25rem;">
