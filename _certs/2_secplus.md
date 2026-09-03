@@ -26,7 +26,7 @@ related_publications: false
 ## Introduction (from Credly)
 <p>Earners of the CompTIA Security+ certification have the knowledge and skills necessary to perform core security functions required of any cybersecurity role. Security+ professionals know how to identify and address potential threats, attacks, and vulnerabilities, and they have established techniques in risk management, threat mitigation, and intrusion detection.</p>
 
-<p>Corporateses translation: HR wants to tick one of their boxes that you know the fundies.</p>
+<p>Corporatese translation: HR wants to tick one of their boxes that you know the fundies.</p>
 
 <br />
 ## Why I Took It

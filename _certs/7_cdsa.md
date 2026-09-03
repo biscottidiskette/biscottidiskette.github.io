@@ -26,7 +26,7 @@ related_publications: false
 ## Introduction
 <p>The CDSA focuses on the practical side of defensive security: investigating alerts, correlating data across multiple sources, and figuring out what actually matters. It tests your ability to work through logs, identify attacker behavior, and build a coherent picture of an incident under time pressure.</p>
 
-<p>Corporate translation: The SIEM is screaming. Figure out if it’s real, how bad it is, and what to do next.</p>
+<p>Corporatese translation: The SIEM is screaming. Figure out if it’s real, how bad it is, and what to do next.</p>
 
 <br />
 ## Why I Took It

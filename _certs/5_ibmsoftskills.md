@@ -26,7 +26,7 @@ related_publications: false
 ## Introduction
 <p>Develop key people and soft skills to boost professional and personal success. This course covers collaboration, effective communication, problem solving, interpersonal skills, and quality work delivery.</p>
 
-<p>Corporateses translation: People skills are important in every role even technical ones.  You don't get to hide behind your technical expertise and ignore it.</p>
+<p>Corporatese translation: People skills are important in every role even technical ones.  You don't get to hide behind your technical expertise and ignore it.</p>
 
 <br />
 ## Why I Took It

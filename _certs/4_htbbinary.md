@@ -24,7 +24,7 @@ related_publications: false
 ## Introduction
 <p>Binary exploitation covers the techniques for understanding and manipulating compiled programs to achieve code execution or other unintended behaviour. This course establishes foundations in computer architecture, assembly language, buffer overflows, and practical exploit scripting.  These are key skills for advanced offensive work and vulnerability research.</p>
 
-<p>Corporateses translation: Stuffing my exploits and shellcode into running memory to take boxes.  Good times to be had for all, except the victim I guess.</p>
+<p>Corporatese translation: Stuffing my exploits and shellcode into running memory to take boxes.  Good times to be had for all, except the victim I guess.</p>
 
 <br />
 ## Why I Took It

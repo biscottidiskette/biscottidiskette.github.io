@@ -26,7 +26,7 @@ related_publications: false
 ## Introduction
 <p>The PMRP uses all their skills to analyze malware samples, extract indicators of compromise (IoCs), produce YARA rules to detect, and create a professional report to bring it all together.  PMRP holders demonstrate that they can analyze multiple samples in a restricted time-frame.</p>
 
-<p>Corporateses translation: We need to understand what this malware does and how we can detect it on our systems.</p>
+<p>Corporatese translation: We need to understand what this malware does and how we can detect it on our systems.</p>
 
 <br />
 ## Why I Took It

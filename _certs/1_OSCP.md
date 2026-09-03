@@ -24,7 +24,7 @@ related_publications: false
 ## Introduction (from Credly)
 <p>An OSCP has demonstrated the ability to use persistence, creativity, and perceptiveness to identify vulnerabilities and execute organized attacks under tight time constraints.  OSCP holders have also shown they can think outside the box while managing both time and resources</p>
 
-<p>Corporateses translation: Can you hack systems when things don't go as expected under pressure, not just script kiddie exploits.</p>
+<p>Corporatese translation: Can you hack systems when things don't go as expected under pressure, not just script kiddie exploits.</p>
 
 <br />
 ## Why I Took It

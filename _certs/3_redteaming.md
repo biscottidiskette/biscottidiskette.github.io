@@ -24,7 +24,7 @@ related_publications: false
 ## Introduction
 <p>The Red Teaming Learning Path teaches how to emulate an adversary in complex environments. Going beyond standard penetration testing, it focuses on full red team engagements designed to challenge defensive capabilities. After completing the path you will have practical, offensive skills applicable to red team operations and adversary emulation.</p>
 
-<p>Corporateses translation: Going beyond just penetration and learning the engagement from end to end from an environment perspective, not just system.  Neat-o.</p>
+<p>Corporatese translation: Going beyond just penetration and learning the engagement from end to end from an environment perspective, not just system.  Neat-o.</p>
 
 <br />
 ## Why I Took It
