@@ -13,7 +13,7 @@ horizontal: false
 <p style="font-size: 1rem; color: #d1d5db; line-height: 1.6; margin-bottom: 1.25rem;">
   Professional certifications spanning offensive security, defensive operations, and 
   foundational knowledge, each with context on skills gained and practical applications.
-  <strong style="color: #f0f0f0;">Current focus:</strong> COAE preparation - In Progress.
+  <strong style="color: #f0f0f0;">Current focus:</strong> CISSP (In Progress, Expected: Q4 2026).
 </p>
 
 <style>

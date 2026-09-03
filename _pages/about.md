@@ -21,7 +21,7 @@ Ahoy hoy.
 
 Four years breaking into systems professionally will change how you think about defending them. That's the lens I bring to security engineering. Offensive background, defensive execution.
 
-OSCP and PMRP certified. Currently pursuing COAE. The labs, projects, and writeups below speak louder than this page will.
+OSCP, COAE, and PMRP certified. Currently pursuing CISSP. The labs, projects, and writeups below speak louder than this page will.
 
 When I'm not at the terminal I'm at the gym training Muay Thai or butchering the Thai language.
 
@@ -29,7 +29,7 @@ When I'm not at the terminal I'm at the gym training Muay Thai or butchering the
 {
   \"handle\":       \"Biscotti Diskette\",
   \"role\":         \"Information Security Engineer\",
-  \"clearance\":    [\"OSCP\", \"Sec+\", \"PMRP\", \"CDSA\", \"COAE (in progress)\"],
+  \"clearance\":    [\"OSCP\", \"Sec+\", \"PMRP\", \"CDSA\", \"COAE\", \"CISSP (In Progress, Expected: Q4 2026)\"],
   \"background\":   \"Pentester → Blue Team\",
   \"current_focus\":\"Security Engineering | Exploit Dev | Malware Analysis\"
 }" %}
