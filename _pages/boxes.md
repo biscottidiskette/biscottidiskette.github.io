@@ -14,11 +14,37 @@ Hands-on security challenges spanning offensive and defensive domains, each with
 </p>
 
 <style>
+.stats-toggle {
+  margin-bottom: 1.25rem;
+}
+.stats-toggle summary {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: #ccc;
+  cursor: pointer;
+  padding: 10px 14px;
+  list-style: none;
+  background: rgba(28,28,28,0.9);
+  border: 0.5px solid rgba(255,255,255,0.08);
+  border-radius: 6px;
+  display: inline-block;
+}
+.stats-toggle summary:hover {
+  border-color: rgba(255,255,255,0.15);
+}
+.stats-toggle summary::-webkit-details-marker { display: none; }
+.stats-toggle summary::before {
+  content: '▸ ';
+  color: #4ade80;
+}
+.stats-toggle[open] summary::before {
+  content: '▾ ';
+}
 .stats-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
-  margin-bottom: 1.25rem;
+  margin-top: 8px;
 }
 .stat-group {
   background: rgba(28,28,28,0.9);
@@ -65,47 +91,50 @@ Hands-on security challenges spanning offensive and defensive domains, each with
 
 {% assign total = site.boxes | size %}
 
-<div class="stats-grid">
+<details class="stats-toggle">
+  <summary>Lab stats · {{ total }} writeups</summary>
+  <div class="stats-grid">
 
-  <!-- By Platform -->
-  <div class="stat-group">
-    <div class="stat-group-header">
-      <span class="stat-group-label">By platform</span>
-      <span class="stat-group-total">Total <span>{{ total }}</span></span>
-    </div>
-    {% for category in page.display_categories %}
-      {% assign count = site.boxes | where: "category", category | size %}
-      {% assign pct = count | times: 100.0 | divided_by: total %}
-      <div class="stat-row">
-        <span class="stat-name">{{ category }}{% case category %}{% when "HackTheBox" %} · Hacker{% when "TryHackMe" %}{% endcase %}</span>
-        <div class="stat-bar-wrap">
-          <div class="stat-bar" style="width:{{ pct }}%"></div>
-        </div>
-        <span class="stat-count">{{ count }}</span>
+    <!-- By Platform -->
+    <div class="stat-group">
+      <div class="stat-group-header">
+        <span class="stat-group-label">By platform</span>
+        <span class="stat-group-total">Total <span>{{ total }}</span></span>
       </div>
-    {% endfor %}
-  </div>
-
-  <!-- By Team -->
-  <div class="stat-group">
-    <div class="stat-group-header">
-      <span class="stat-group-label">By team</span>
-      <span class="stat-group-total">Total <span>{{ total }}</span></span>
-    </div>
-    {% for team in page.teams %}
-      {% assign count = site.boxes | where: "team", team | size %}
-      {% assign pct = count | times: 100.0 | divided_by: total %}
-      <div class="stat-row">
-        <span class="stat-name">{{ team }}</span>
-        <div class="stat-bar-wrap">
-          <div class="stat-bar" style="width:{{ pct }}%"></div>
+      {% for category in page.display_categories %}
+        {% assign count = site.boxes | where: "category", category | size %}
+        {% assign pct = count | times: 100.0 | divided_by: total %}
+        <div class="stat-row">
+          <span class="stat-name">{{ category }}{% case category %}{% when "HackTheBox" %} · Hacker{% when "TryHackMe" %}{% endcase %}</span>
+          <div class="stat-bar-wrap">
+            <div class="stat-bar" style="width:{{ pct }}%"></div>
+          </div>
+          <span class="stat-count">{{ count }}</span>
         </div>
-        <span class="stat-count">{{ count }}</span>
-      </div>
-    {% endfor %}
-  </div>
+      {% endfor %}
+    </div>
 
-</div>
+    <!-- By Team -->
+    <div class="stat-group">
+      <div class="stat-group-header">
+        <span class="stat-group-label">By team</span>
+        <span class="stat-group-total">Total <span>{{ total }}</span></span>
+      </div>
+      {% for team in page.teams %}
+        {% assign count = site.boxes | where: "team", team | size %}
+        {% assign pct = count | times: 100.0 | divided_by: total %}
+        <div class="stat-row">
+          <span class="stat-name">{{ team }}</span>
+          <div class="stat-bar-wrap">
+            <div class="stat-bar" style="width:{{ pct }}%"></div>
+          </div>
+          <span class="stat-count">{{ count }}</span>
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</details>
 
 <!-- Difficulty Legend -->
 <div class="cert-key mb-4" style="display: flex; gap: 1rem; flex-wrap:wrap; align-items: center;">
