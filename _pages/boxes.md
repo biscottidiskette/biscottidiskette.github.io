@@ -77,7 +77,7 @@ Hands-on security challenges spanning offensive and defensive domains, each with
       {% assign count = site.boxes | where: "category", category | size %}
       {% assign pct = count | times: 100.0 | divided_by: total %}
       <div class="stat-row">
-        <span class="stat-name">{{ category }}</span>
+        <span class="stat-name">{{ category }}{% case category %}{% when "HackTheBox" %} · Hacker{% when "TryHackMe" %}{% endcase %}</span>
         <div class="stat-bar-wrap">
           <div class="stat-bar" style="width:{{ pct }}%"></div>
         </div>
@@ -184,7 +184,7 @@ Hands-on security challenges spanning offensive and defensive domains, each with
                   padding-left:0.5rem;
                   color:#bbb;
                   text-decoration:none;">
-          {{ category }}
+          {{ category }}{% case category %}{% when "HackTheBox" %} · Hacker{% when "TryHackMe" %}{% endcase %}
         </a>
 
         <div class="row row-cols-1 row-cols-md-3">
