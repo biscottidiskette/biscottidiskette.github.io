@@ -1,9 +1,9 @@
 ---
 layout: page
-title: Wander
-description: Active challenge – details withheld per TOS
+title: OpenSecret
+description: Discovered hard-coded secret in source code.
 img: 
-importance: 4
+importance: 5
 category: HTB Challenges
 team: Red Team Labs
 related_publications: false
@@ -11,24 +11,24 @@ related_publications: false
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-4 mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="/assets/img/wander/logo.png" title="HTB Wander" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="/assets/img/opensecret/logo.png" title="HTB OpenSecret" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 
 <h2>Link</h2>
-<a href="https://app.hackthebox.com/challenges/Wander">Room Link</a>
+<a href="https://app.hackthebox.com/challenges/OpenSecret">Room Link</a>
 
 <br/>
 <h2>Process</h2>
 
 <br/>
-{Redacted: Active Machine}
-<br />
+No pun this time.  The flag with in the source code.
 
-<br />
-<h2>Trophy</h2>
 <div class="row justify-content-sm-center">
     <div class="col-sm-8 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/wander/trophy.png" title="Trophy" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="/assets/img/opensecret/source.png" title="Source Code" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
+
+<br />
+See you in the next one!
