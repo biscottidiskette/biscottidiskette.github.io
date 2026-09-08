@@ -1,0 +1,559 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <title>CertMap</title> <meta name="description" content="Develop a CertMap WebApp."> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <meta name="author" content="Biscotti Diskette"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta property="og:type" content="website"> <meta property="og:title" content="CertMap"> <meta property="og:description" content="Develop a CertMap WebApp."> <meta property="og:url" content="https://biscottidiskette.github.io/projects/8_certmap/"> <meta property="og:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <meta property="og:site_name" content="Biscotti Diskette"> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:title" content="CertMap"> <meta name="twitter:description" content="Develop a CertMap WebApp."> <meta name="twitter:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Biscotti Diskette",
+  "url": "https://biscottidiskette.github.io",
+  "sameAs": [
+    
+  ],
+  "jobTitle": "Cybersecurity Researcher",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Independent",
+    "url": "https://biscottidiskette.github.io"
+  },
+  "image": "https://biscottidiskette.github.io/assets/img/social-preview.png",
+  "description": "Develop a CertMap WebApp."
+}
+</script> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta http-equiv="Permissions-Policy" content="interest-cohort=()"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> CertMap | Biscotti Diskette </title> <meta name="author" content="Biscotti Diskette"> <meta name="description" content="Develop a CertMap WebApp."> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/frontpage/Logo3.png?4f879aeff848659581251777fe0ab074"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="stylesheet" href="/assets/css/terminal.css?bebbf314b8406d78caf98717f86a33c1"> <link rel="canonical" href="https://biscottidiskette.github.io/projects/8_certmap/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> <title>CertMap</title> <meta name="description" content="Develop a CertMap WebApp."> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <meta name="author" content="Biscotti Diskette"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta property="og:type" content="website"> <meta property="og:title" content="CertMap"> <meta property="og:description" content="Develop a CertMap WebApp."> <meta property="og:url" content="https://biscottidiskette.github.io/projects/8_certmap/"> <meta property="og:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <meta property="og:site_name" content="Biscotti Diskette"> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:title" content="CertMap"> <meta name="twitter:description" content="Develop a CertMap WebApp."> <meta name="twitter:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Biscotti Diskette",
+  "url": "https://biscottidiskette.github.io",
+  "sameAs": [
+    
+  ],
+  "jobTitle": "Cybersecurity Researcher",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Independent",
+    "url": "https://biscottidiskette.github.io"
+  },
+  "image": "https://biscottidiskette.github.io/assets/img/social-preview.png",
+  "description": "Develop a CertMap WebApp."
+}
+</script> </head> <body class="fixed-top-nav sticky-bottom-footer"> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> Biscotti Diskette </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item active"> <a class="nav-link" href="/projects/">projects <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/boxes/">boxes </a> </li> <li class="nav-item "> <a class="nav-link" href="/certifications/">certs </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repos </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/contact/">contact </a> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">CertMap</h1> <p class="post-description">Develop a CertMap WebApp.</p> </header> <article> <div class="row justify-content-sm-center"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/certmap/logo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="CertMap" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <h2 id="introduction">Introduction</h2> <p>Why, oh why, does the cybersecurity industry have so many certifications. Don’t believe me? Feel free to check out <a href="https://pauljerimy.com/security-certification-roadmap/" rel="external nofollow noopener" target="_blank">Paul Jerimy’s roadmap</a>. It has been said that, in the information security industry, that certifications can serve as a signal of sorts for technical competency, specialization. There are certification across the breadth of domains, vendors, specialties, and specific products. This can be sort of a double-edged sword if you will. Endless opportunity for specialization in just about anything you can think. However, there is one mammoth problem you have to overcome before you can claim expert. And sadly, I am not talking about the loss of endorphin rush getting a physical cert with everything going digital.</p> <p><br></p> <h2 id="the-problem">The Problem</h2> <p>Well then, what is the problem I am going to pretend you asked so I can continue with my write-up. The other edge of that sea of opportunity. There is a lack of utter coherence or guidance through the said sea. At least when you were at University (if you went), you had a guidance counselor to steer you through the program. Here, you have a list of options, an extensive list of options, and a boss telling it is mandatory. Not which one to take but just that you have to ‘upskill.’ It is even worse if you are pre-career trying to break in. You have very few people to talk it through, where we have co-workers at least.</p> <p><br></p> <h2 id="the-stack">The Stack</h2> <ul> <li>Storage <ul> <li> <strong>LocalStorage</strong> - Client-side persistence</li> <li> <strong>JSON pre-seeded</strong> - certification dataset</li> </ul> </li> <li>Backend <ul> <li> <strong>Node.js</strong> - Runtime for server-side code</li> <li> <strong>Express.js</strong> - Framework for handling routes and HTTP logic</li> </ul> </li> <li>Frontend <ul> <li> <strong>React</strong> - UI component library</li> <li> <strong>Vite</strong> - Development server and build tool</li> </ul> </li> </ul> <p><br></p> <h2 id="my-role">My Role</h2> <p>I architected CertMap’s system, defining how the backend, frontend, and AI components interact. I guided the AI in generating the app by crafting precise prompts and reviewing outputs incrementally, feature by feature, to maintain control and understanding of the codebase. I determined what data to persist, what to display, and how to support multiple LLM providers. I also designed the grading criteria and metrics that were important to me for grading to ensure consistency in the grading. Claude AI handles the code generation and suggestions to be helpful, while Groq powers the AI analysis and recommendations, leveraging its generous free tier.</p> <p><br></p> <h2 id="current-status">Current Status</h2> <p>MVP: Refining recommendation algorithms.</p> <p><br></p> <h2 id="the-process">The Process</h2> <p><br></p> <h3 id="walkthrough">Walkthrough</h3> <p><br></p> <h4 id="the-landing-page">The Landing Page</h4> <p>The landing page is a single page and this is where you can build your timeline.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/certmap/landingpage.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Landing Page" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> You can to add a certification to the roadmap. You can also mark the cert that you already have versus plan to get.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/certmap/clickadd.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Add cert" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> There is a fetch box that will allow you to enter an exam and add it to the library. Please note, that this presumes that it is in the Groq training data. Please check it to ensure its accuracy.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/certmap/fetchbox.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Fetch Cert" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> There is a top summary box where you can get the total cost of the outstanding certs and expected timeline to finish.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/certmap/costs.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Cert Costs" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Below the roadmap, there is a full breakdown of the grade against all of the criteria that make up the grading.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/certmap/gradescale.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Grade Scale" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Finally, there is job title suggester so you can paste it directly into your favorite job search engine.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/certmap/jobrecs.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Job Recommendations" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <h3 id="the-code">The Code</h3> <p><br></p> <h4 id="backend">Backend</h4> <p>The first step is to load a JSON file that will serve as our seed certs to be able to hit MVP and have something to test.</p> <div class="terminal" data-language="javascript" id="terminal-seedcerts-js-javascript-12705"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('seedcerts-js-javascript-12705')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('seedcerts-js-javascript-12705')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('seedcerts-js-javascript-12705')" title="Maximize"></button> </div> <span class="terminal__title">seedCerts.js</span> <button class="terminal__copy" onclick="terminalCopy('seedcerts-js-javascript-12705')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-seedcerts-js-javascript-12705">
+
+&lt;snip&gt;
+
+export const seedCerts = [
+  {
+    id: "comptia-sec-plus",
+    name: "Security+",
+    fullName: "CompTIA Security+",
+    vendor: "CompTIA",
+    track: "blue",
+    price: 404,
+    examType: "mcq",
+    ecosystemLocked: false,
+    studyWeeks: 8,
+    market: 88,
+    difficulty: 2,
+    expires: true,
+    renewYears: 3,
+    roles: [
+      "Security Analyst",
+      "SOC Analyst Tier 1",
+      "IT Security Specialist",
+      "Systems Administrator"
+    ],
+    tags: ["blue", "entry-level", "mcq", "vendor-neutral", "baseline"],
+    description: "Industry baseline certification. Widely required as a minimum bar by employers and government/DoD roles. MCQ only, no hands-on component."
+  },
+
+&lt;snip&gt;
+
+</pre> </div> <div class="terminal__overlay" id="overlay-seedcerts-js-javascript-12705" onclick="terminalOverlayClose('seedcerts-js-javascript-12705')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('seedcerts-js-javascript-12705')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('seedcerts-js-javascript-12705')" title="Restore"></button> </div> <span class="terminal__title">seedCerts.js</span> <button class="terminal__copy" onclick="terminalCopyModal('seedcerts-js-javascript-12705')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-seedcerts-js-javascript-12705" data-language="javascript">
+
+&lt;snip&gt;
+
+export const seedCerts = [
+  {
+    id: "comptia-sec-plus",
+    name: "Security+",
+    fullName: "CompTIA Security+",
+    vendor: "CompTIA",
+    track: "blue",
+    price: 404,
+    examType: "mcq",
+    ecosystemLocked: false,
+    studyWeeks: 8,
+    market: 88,
+    difficulty: 2,
+    expires: true,
+    renewYears: 3,
+    roles: [
+      "Security Analyst",
+      "SOC Analyst Tier 1",
+      "IT Security Specialist",
+      "Systems Administrator"
+    ],
+    tags: ["blue", "entry-level", "mcq", "vendor-neutral", "baseline"],
+    description: "Industry baseline certification. Widely required as a minimum bar by employers and government/DoD roles. MCQ only, no hands-on component."
+  },
+
+&lt;snip&gt;
+
+</pre> </div> </div> <p><br> Then, we have to normalize the cert data so we can send it to the LLM so it can read it and analyze. We should also craft the prompt message that clear explain to Groq what we are trying to do.</p> <div class="terminal" data-language="javascript" id="terminal-graderoadmap-js-javascript-151795"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('graderoadmap-js-javascript-151795')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('graderoadmap-js-javascript-151795')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('graderoadmap-js-javascript-151795')" title="Maximize"></button> </div> <span class="terminal__title">gradeRoadmap.js</span> <button class="terminal__copy" onclick="terminalCopy('graderoadmap-js-javascript-151795')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-graderoadmap-js-javascript-151795">
+
+&lt;snip&gt;
+
+  // Build a readable cert summary for the prompt
+  const formatCert = (c) =&gt;
+    `- ${c.name} (${c.vendor}) | Track: ${c.track} | Price: $${c.price} | ` +
+    `Type: ${c.examType} | Difficulty: ${c.difficulty}/5 | ` +
+    `Market: ${c.market}/100 | EcosystemLocked: ${c.ecosystemLocked ?? false} | ` +
+    `Tags: ${c.tags?.join(", ")}`
+
+  const ownedSection = ownedCerts.length &gt; 0
+    ? `OWNED CERTS (already achieved — exclude from cost and timeline, include in coherence):\n${ownedCerts.map(formatCert).join("\n")}`
+    : "OWNED CERTS: None"
+
+  const plannedSection = plannedCerts.length &gt; 0
+    ? `PLANNED CERTS (not yet achieved — include in all scoring):\n${plannedCerts.map(formatCert).join("\n")}`
+    : "PLANNED CERTS: None"
+
+  const messages = [
+    {
+      role: "system",
+      content: `You are a senior cybersecurity career advisor and certification strategist.
+You will be given a certification roadmap split into OWNED certs and PLANNED certs.
+Your job is to grade the overall roadmap and return structured JSON only.
+Return ONLY a valid JSON object — no markdown, no code fences, no explanation.
+
+CRITICAL RULES BEFORE SCORING:
+- You will receive structured data fields for each cert. You MUST use those fields directly. Do not reason from general knowledge when a field provides the answer.
+- examType field values are: "hands-on", "mcq", or "hybrid". Use these exactly.
+- vendor field is the exact vendor name. Count distinct vendor field values to measure concentration.
+- ecosystemLocked field is a boolean. Only certs with ecosystemLocked: true are locked ecosystems.
+- owned field: true = person already holds this cert. false = planned, not yet achieved.
+- All scores are 0-100 where HIGHER is BETTER (100 = best possible outcome for that dimension).
+
+&lt;snip&gt;
+
+</pre> </div> <div class="terminal__overlay" id="overlay-graderoadmap-js-javascript-151795" onclick="terminalOverlayClose('graderoadmap-js-javascript-151795')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('graderoadmap-js-javascript-151795')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('graderoadmap-js-javascript-151795')" title="Restore"></button> </div> <span class="terminal__title">gradeRoadmap.js</span> <button class="terminal__copy" onclick="terminalCopyModal('graderoadmap-js-javascript-151795')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-graderoadmap-js-javascript-151795" data-language="javascript">
+
+&lt;snip&gt;
+
+  // Build a readable cert summary for the prompt
+  const formatCert = (c) =&gt;
+    `- ${c.name} (${c.vendor}) | Track: ${c.track} | Price: $${c.price} | ` +
+    `Type: ${c.examType} | Difficulty: ${c.difficulty}/5 | ` +
+    `Market: ${c.market}/100 | EcosystemLocked: ${c.ecosystemLocked ?? false} | ` +
+    `Tags: ${c.tags?.join(", ")}`
+
+  const ownedSection = ownedCerts.length &gt; 0
+    ? `OWNED CERTS (already achieved — exclude from cost and timeline, include in coherence):\n${ownedCerts.map(formatCert).join("\n")}`
+    : "OWNED CERTS: None"
+
+  const plannedSection = plannedCerts.length &gt; 0
+    ? `PLANNED CERTS (not yet achieved — include in all scoring):\n${plannedCerts.map(formatCert).join("\n")}`
+    : "PLANNED CERTS: None"
+
+  const messages = [
+    {
+      role: "system",
+      content: `You are a senior cybersecurity career advisor and certification strategist.
+You will be given a certification roadmap split into OWNED certs and PLANNED certs.
+Your job is to grade the overall roadmap and return structured JSON only.
+Return ONLY a valid JSON object — no markdown, no code fences, no explanation.
+
+CRITICAL RULES BEFORE SCORING:
+- You will receive structured data fields for each cert. You MUST use those fields directly. Do not reason from general knowledge when a field provides the answer.
+- examType field values are: "hands-on", "mcq", or "hybrid". Use these exactly.
+- vendor field is the exact vendor name. Count distinct vendor field values to measure concentration.
+- ecosystemLocked field is a boolean. Only certs with ecosystemLocked: true are locked ecosystems.
+- owned field: true = person already holds this cert. false = planned, not yet achieved.
+- All scores are 0-100 where HIGHER is BETTER (100 = best possible outcome for that dimension).
+
+&lt;snip&gt;
+
+</pre> </div> </div> <p><br> Then, we are going use the express framework to set-up our middleware server and APIs.</p> <div class="terminal" data-language="javascript" id="terminal-index-js-javascript-8831"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('index-js-javascript-8831')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('index-js-javascript-8831')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('index-js-javascript-8831')" title="Maximize"></button> </div> <span class="terminal__title">index.js</span> <button class="terminal__copy" onclick="terminalCopy('index-js-javascript-8831')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-index-js-javascript-8831">
+
+&lt;snip&gt;
+
+  /// ─── Middleware ───────────────────────────────────────────────────────────────
+
+// In dev, Vite runs separately and proxies /api to us.
+// In production, the built client is served from this same process.
+// CORS is only needed in dev.
+if (!IS_PRODUCTION) {
+  app.use(cors({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
+  }))
+}
+
+app.use(express.json())
+
+// ─── API Routes ───────────────────────────────────────────────────────────────
+
+app.use("/api/fetch-exam", fetchExamRouter)
+app.use("/api/grade-roadmap", gradeRoadmapRouter)
+
+// ─── Health check ─────────────────────────────────────────────────────────────
+
+app.get("/api/health", (req, res) =&gt; {
+  res.json({
+    status: "ok",
+    model: process.env.NODE_ENV ?? "development",
+    timestamp: new Date().toISOString(),
+  })
+})
+
+&lt;snip&gt;
+
+</pre> </div> <div class="terminal__overlay" id="overlay-index-js-javascript-8831" onclick="terminalOverlayClose('index-js-javascript-8831')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('index-js-javascript-8831')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('index-js-javascript-8831')" title="Restore"></button> </div> <span class="terminal__title">index.js</span> <button class="terminal__copy" onclick="terminalCopyModal('index-js-javascript-8831')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-index-js-javascript-8831" data-language="javascript">
+
+&lt;snip&gt;
+
+  /// ─── Middleware ───────────────────────────────────────────────────────────────
+
+// In dev, Vite runs separately and proxies /api to us.
+// In production, the built client is served from this same process.
+// CORS is only needed in dev.
+if (!IS_PRODUCTION) {
+  app.use(cors({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
+  }))
+}
+
+app.use(express.json())
+
+// ─── API Routes ───────────────────────────────────────────────────────────────
+
+app.use("/api/fetch-exam", fetchExamRouter)
+app.use("/api/grade-roadmap", gradeRoadmapRouter)
+
+// ─── Health check ─────────────────────────────────────────────────────────────
+
+app.get("/api/health", (req, res) =&gt; {
+  res.json({
+    status: "ok",
+    model: process.env.NODE_ENV ?? "development",
+    timestamp: new Date().toISOString(),
+  })
+})
+
+&lt;snip&gt;
+
+</pre> </div> </div> <p><br> Start the middleware server to serve the APIs that were just created.</p> <div class="terminal" data-language="javascript" id="terminal-index-js-javascript-8278"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('index-js-javascript-8278')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('index-js-javascript-8278')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('index-js-javascript-8278')" title="Maximize"></button> </div> <span class="terminal__title">index.js</span> <button class="terminal__copy" onclick="terminalCopy('index-js-javascript-8278')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-index-js-javascript-8278">
+
+&lt;snip&gt;
+
+app.listen(PORT, () =&gt; {
+  console.log(`CertMap server running on port ${PORT}`)
+  console.log(`Environment: ${IS_PRODUCTION ? "production" : "development"}`)
+  if (!IS_PRODUCTION) {
+    console.log(`Health check: http://localhost:${PORT}/api/health`)
+  }
+})
+
+&lt;snip&gt;
+
+</pre> </div> <div class="terminal__overlay" id="overlay-index-js-javascript-8278" onclick="terminalOverlayClose('index-js-javascript-8278')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('index-js-javascript-8278')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('index-js-javascript-8278')" title="Restore"></button> </div> <span class="terminal__title">index.js</span> <button class="terminal__copy" onclick="terminalCopyModal('index-js-javascript-8278')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-index-js-javascript-8278" data-language="javascript">
+
+&lt;snip&gt;
+
+app.listen(PORT, () =&gt; {
+  console.log(`CertMap server running on port ${PORT}`)
+  console.log(`Environment: ${IS_PRODUCTION ? "production" : "development"}`)
+  if (!IS_PRODUCTION) {
+    console.log(`Health check: http://localhost:${PORT}/api/health`)
+  }
+})
+
+&lt;snip&gt;
+
+</pre> </div> </div> <p><br></p> <h4 id="frontend">Frontend</h4> <p>Add and remove certs since that is kind of necessary to grading cert.</p> <div class="terminal" data-language="javascript" id="terminal-app-jsx-javascript-7748"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('app-jsx-javascript-7748')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('app-jsx-javascript-7748')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('app-jsx-javascript-7748')" title="Maximize"></button> </div> <span class="terminal__title">App.jsx</span> <button class="terminal__copy" onclick="terminalCopy('app-jsx-javascript-7748')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-app-jsx-javascript-7748">
+
+&lt;snip&gt;
+
+// ── Add cert to roadmap ───────────────────────────────────────────────────
+  function handleAddCert(cert) {
+    if (roadmap.find((c) =&gt; c.id === cert.id)) return
+
+    const updated = [...roadmap, cert]
+    setRoadmap(updated)
+
+    const updatedWithOwned = updated.map((c) =&gt; ({
+      ...c,
+      owned: ownedIds.includes(c.id),
+    }))
+    triggerGrade(updatedWithOwned)
+  }
+
+  // ── Remove cert from roadmap ──────────────────────────────────────────────
+  function handleRemoveCert(certId) {
+    const updated = roadmap.filter((c) =&gt; c.id !== certId)
+    setRoadmap(updated)
+
+    const updatedWithOwned = updated.map((c) =&gt; ({
+      ...c,
+      owned: ownedIds.includes(c.id),
+    }))
+    triggerGrade(updatedWithOwned)
+  }
+
+&lt;snip&gt;
+
+</pre> </div> <div class="terminal__overlay" id="overlay-app-jsx-javascript-7748" onclick="terminalOverlayClose('app-jsx-javascript-7748')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('app-jsx-javascript-7748')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('app-jsx-javascript-7748')" title="Restore"></button> </div> <span class="terminal__title">App.jsx</span> <button class="terminal__copy" onclick="terminalCopyModal('app-jsx-javascript-7748')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-app-jsx-javascript-7748" data-language="javascript">
+
+&lt;snip&gt;
+
+// ── Add cert to roadmap ───────────────────────────────────────────────────
+  function handleAddCert(cert) {
+    if (roadmap.find((c) =&gt; c.id === cert.id)) return
+
+    const updated = [...roadmap, cert]
+    setRoadmap(updated)
+
+    const updatedWithOwned = updated.map((c) =&gt; ({
+      ...c,
+      owned: ownedIds.includes(c.id),
+    }))
+    triggerGrade(updatedWithOwned)
+  }
+
+  // ── Remove cert from roadmap ──────────────────────────────────────────────
+  function handleRemoveCert(certId) {
+    const updated = roadmap.filter((c) =&gt; c.id !== certId)
+    setRoadmap(updated)
+
+    const updatedWithOwned = updated.map((c) =&gt; ({
+      ...c,
+      owned: ownedIds.includes(c.id),
+    }))
+    triggerGrade(updatedWithOwned)
+  }
+
+&lt;snip&gt;
+
+</pre> </div> </div> <p><br> Then, we have to display the roadmap to the user in that center panel.</p> <div class="terminal" data-language="javascript" id="terminal-app-jsx-javascript-71419"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('app-jsx-javascript-71419')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('app-jsx-javascript-71419')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('app-jsx-javascript-71419')" title="Maximize"></button> </div> <span class="terminal__title">App.jsx</span> <button class="terminal__copy" onclick="terminalCopy('app-jsx-javascript-71419')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-app-jsx-javascript-71419">
+
+&lt;snip&gt;
+
+{/* ── Right panel — roadmap + grades ── */}
+        &lt;main className="panel-right"&gt;
+
+          {/* Summary bar */}
+          &lt;SummaryBar
+            roadmap={roadmapWithOwned}
+            timelines={timelines}
+            gradeData={gradeData}
+          /&gt;
+
+          {/* Roadmap */}
+          &lt;div&gt;
+            &lt;div className="section-heading"&gt;Roadmap&lt;/div&gt;
+
+            {roadmap.length === 0 ? (
+              &lt;div className="empty-state" style=&gt;
+                &lt;div className="empty-state__title"&gt;No certs added yet&lt;/div&gt;
+                Select certs from the library on the left to build your roadmap.
+                &lt;br /&gt;
+                Mark certs you already own to exclude them from cost and timeline.
+              &lt;/div&gt;
+            ) : (
+              &lt;div className="flex-col gap-2" style=&gt;
+                {roadmapWithOwned.map((cert, index) =&gt; (
+                  &lt;RoadmapItem
+                    key={cert.id}
+                    cert={cert}
+                    index={index}
+                    timelineWeeks={timelines[cert.id] ?? cert.studyWeeks}
+                    unlockTitle={gradeData?.certUnlocks?.[cert.id] ?? null}
+                    onRemove={handleRemoveCert}
+                    onTimelineChange={handleTimelineChange}
+                    onOwnedToggle={handleOwnedToggle}
+                  /&gt;
+                ))}
+              &lt;/div&gt;
+            )}
+          &lt;/div&gt;
+
+&lt;snip&gt;
+
+</pre> </div> <div class="terminal__overlay" id="overlay-app-jsx-javascript-71419" onclick="terminalOverlayClose('app-jsx-javascript-71419')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('app-jsx-javascript-71419')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('app-jsx-javascript-71419')" title="Restore"></button> </div> <span class="terminal__title">App.jsx</span> <button class="terminal__copy" onclick="terminalCopyModal('app-jsx-javascript-71419')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-app-jsx-javascript-71419" data-language="javascript">
+
+&lt;snip&gt;
+
+{/* ── Right panel — roadmap + grades ── */}
+        &lt;main className="panel-right"&gt;
+
+          {/* Summary bar */}
+          &lt;SummaryBar
+            roadmap={roadmapWithOwned}
+            timelines={timelines}
+            gradeData={gradeData}
+          /&gt;
+
+          {/* Roadmap */}
+          &lt;div&gt;
+            &lt;div className="section-heading"&gt;Roadmap&lt;/div&gt;
+
+            {roadmap.length === 0 ? (
+              &lt;div className="empty-state" style=&gt;
+                &lt;div className="empty-state__title"&gt;No certs added yet&lt;/div&gt;
+                Select certs from the library on the left to build your roadmap.
+                &lt;br /&gt;
+                Mark certs you already own to exclude them from cost and timeline.
+              &lt;/div&gt;
+            ) : (
+              &lt;div className="flex-col gap-2" style=&gt;
+                {roadmapWithOwned.map((cert, index) =&gt; (
+                  &lt;RoadmapItem
+                    key={cert.id}
+                    cert={cert}
+                    index={index}
+                    timelineWeeks={timelines[cert.id] ?? cert.studyWeeks}
+                    unlockTitle={gradeData?.certUnlocks?.[cert.id] ?? null}
+                    onRemove={handleRemoveCert}
+                    onTimelineChange={handleTimelineChange}
+                    onOwnedToggle={handleOwnedToggle}
+                  /&gt;
+                ))}
+              &lt;/div&gt;
+            )}
+          &lt;/div&gt;
+
+&lt;snip&gt;
+
+</pre> </div> </div> <p><br> Create a score panel to display the grades and the ratings against all of our grading criteria.</p> <div class="terminal" data-language="javascript" id="terminal-scorepanel-jsx-javascript-14944"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('scorepanel-jsx-javascript-14944')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('scorepanel-jsx-javascript-14944')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('scorepanel-jsx-javascript-14944')" title="Maximize"></button> </div> <span class="terminal__title">ScorePanel.jsx</span> <button class="terminal__copy" onclick="terminalCopy('scorepanel-jsx-javascript-14944')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-scorepanel-jsx-javascript-14944">
+
+&lt;snip&gt;
+
+&lt;div className="score-panel"&gt;
+
+      {/* Header with grade badge */}
+      &lt;div className="score-panel__header"&gt;
+        &lt;div&gt;
+          &lt;div className="label"&gt;Roadmap Grade&lt;/div&gt;
+          {isCalculating &amp;&amp; (
+            &lt;div className="text-muted text-xs mt-1"&gt;
+              Recalculating...
+            &lt;/div&gt;
+          )}
+          {!isCalculating &amp;&amp; gradeData &amp;&amp; (
+            &lt;div className="text-muted text-xs mt-1"&gt;
+              Based on {gradeData.subscores ? Object.keys(gradeData.subscores).length : 0} dimensions
+            &lt;/div&gt;
+          )}
+        &lt;/div&gt;
+        &lt;GradeBadge grade={gradeData?.grade ?? null} /&gt;
+      &lt;/div&gt;
+
+      {/* Subscore bars */}
+      &lt;div className="score-panel__dims"&gt;
+        {DIMENSIONS.map(({ key, label }) =&gt; (
+          &lt;ScoreDimension
+            key={key}
+            label={label}
+            value={gradeData?.subscores?.[key] ?? 0}
+          /&gt;
+        ))}
+      &lt;/div&gt;
+
+&lt;snip&gt;
+
+</pre> </div> <div class="terminal__overlay" id="overlay-scorepanel-jsx-javascript-14944" onclick="terminalOverlayClose('scorepanel-jsx-javascript-14944')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('scorepanel-jsx-javascript-14944')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('scorepanel-jsx-javascript-14944')" title="Restore"></button> </div> <span class="terminal__title">ScorePanel.jsx</span> <button class="terminal__copy" onclick="terminalCopyModal('scorepanel-jsx-javascript-14944')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-scorepanel-jsx-javascript-14944" data-language="javascript">
+
+&lt;snip&gt;
+
+&lt;div className="score-panel"&gt;
+
+      {/* Header with grade badge */}
+      &lt;div className="score-panel__header"&gt;
+        &lt;div&gt;
+          &lt;div className="label"&gt;Roadmap Grade&lt;/div&gt;
+          {isCalculating &amp;&amp; (
+            &lt;div className="text-muted text-xs mt-1"&gt;
+              Recalculating...
+            &lt;/div&gt;
+          )}
+          {!isCalculating &amp;&amp; gradeData &amp;&amp; (
+            &lt;div className="text-muted text-xs mt-1"&gt;
+              Based on {gradeData.subscores ? Object.keys(gradeData.subscores).length : 0} dimensions
+            &lt;/div&gt;
+          )}
+        &lt;/div&gt;
+        &lt;GradeBadge grade={gradeData?.grade ?? null} /&gt;
+      &lt;/div&gt;
+
+      {/* Subscore bars */}
+      &lt;div className="score-panel__dims"&gt;
+        {DIMENSIONS.map(({ key, label }) =&gt; (
+          &lt;ScoreDimension
+            key={key}
+            label={label}
+            value={gradeData?.subscores?.[key] ?? 0}
+          /&gt;
+        ))}
+      &lt;/div&gt;
+
+&lt;snip&gt;
+
+</pre> </div> </div> <p><br> Then, we need a file that will serve as the main method for the app.</p> <div class="terminal" data-language="javascript" id="terminal-main-jsx-javascript-8292"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('main-jsx-javascript-8292')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('main-jsx-javascript-8292')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('main-jsx-javascript-8292')" title="Maximize"></button> </div> <span class="terminal__title">main.jsx</span> <button class="terminal__copy" onclick="terminalCopy('main-jsx-javascript-8292')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-main-jsx-javascript-8292">
+// main.jsx
+// React entry point. Mounts App into the DOM.
+
+import React from "react"
+import ReactDOM from "react-dom/client"
+import App from "./App"
+import "./styles.css"
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  &lt;React.StrictMode&gt;
+    &lt;App /&gt;
+  &lt;/React.StrictMode&gt;
+)
+</pre> </div> <div class="terminal__overlay" id="overlay-main-jsx-javascript-8292" onclick="terminalOverlayClose('main-jsx-javascript-8292')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('main-jsx-javascript-8292')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('main-jsx-javascript-8292')" title="Restore"></button> </div> <span class="terminal__title">main.jsx</span> <button class="terminal__copy" onclick="terminalCopyModal('main-jsx-javascript-8292')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-main-jsx-javascript-8292" data-language="javascript">
+// main.jsx
+// React entry point. Mounts App into the DOM.
+
+import React from "react"
+import ReactDOM from "react-dom/client"
+import App from "./App"
+import "./styles.css"
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  &lt;React.StrictMode&gt;
+    &lt;App /&gt;
+  &lt;/React.StrictMode&gt;
+)
+</pre> </div> </div> <p><br> And of course, web servers serve index.html as their default page.</p> <div class="terminal" data-language="browser" id="terminal-index-html-browser-10384"> <div class="terminal__header terminal__header--browser"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('index-html-browser-10384')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('index-html-browser-10384')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('index-html-browser-10384')" title="Maximize"></button> </div> <span class="terminal__title">index.html</span> <button class="terminal__copy" onclick="terminalCopy('index-html-browser-10384')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-index-html-browser-10384">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8" /&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+    &lt;meta name="description" content="Cyber certification roadmap planner and grader" /&gt;
+    &lt;title&gt;CertMap&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id="root"&gt;&lt;/div&gt;
+    &lt;script type="module" src="/src/main.jsx"&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre> </div> <div class="terminal__overlay" id="overlay-index-html-browser-10384" onclick="terminalOverlayClose('index-html-browser-10384')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header terminal__header--browser"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('index-html-browser-10384')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('index-html-browser-10384')" title="Restore"></button> </div> <span class="terminal__title">index.html</span> <button class="terminal__copy" onclick="terminalCopyModal('index-html-browser-10384')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-index-html-browser-10384" data-language="browser">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8" /&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+    &lt;meta name="description" content="Cyber certification roadmap planner and grader" /&gt;
+    &lt;title&gt;CertMap&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id="root"&gt;&lt;/div&gt;
+    &lt;script type="module" src="/src/main.jsx"&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre> </div> </div> <p><br> And with that, we can test cert roadmaps until our hearts are content!</p> <div class="row justify-content-sm-center"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/certmap/endlogo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="CertMap" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> </article> </div> </div> <footer class="sticky-bottom mt-5" role="contentinfo"> <div class="container"> © Copyright 2026 Biscotti Diskette  ·  <a href="https://github.com/biscottidiskette" target="_blank" rel="external nofollow noopener">GitHub</a>  ·  <a href="https://app.hackthebox.eu/profile/biscottidiskette" target="_blank" rel="external nofollow noopener">HackTheBox</a>  ·  <a href="https://tryhackme.com/r/p/BiscottiDiskette" target="_blank" rel="external nofollow noopener">TryHackMe</a>  ·  <a href="/contact/">Contact</a> </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?70d799092f862ad98c7876aa47712e20"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-HL7MJBJN7X"></script> <script defer src="/assets/js/google-analytics-setup.js?1c5d3b199be7049d4732e15d2072d0b2"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> <script src="/assets/js/terminal.js?ec2a38fba85ea4751db97d30059cd1c5"></script> </body> </html>

