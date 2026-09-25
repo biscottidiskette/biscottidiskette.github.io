@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Hackemon: Gotta pass them all!"
-date: 2026-10-20
+date: 2026-10-1
 description: "Offensive security training is a new Pokemon game."
 tags: [certification,study,career]
 categories: certification career
