@@ -1,0 +1,633 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <title>Ariadne</title> <meta name="description" content="Created an App for Incident Response Investigation."> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <meta name="author" content="Biscotti Diskette"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta property="og:type" content="website"> <meta property="og:title" content="Ariadne"> <meta property="og:description" content="Created an App for Incident Response Investigation."> <meta property="og:url" content="https://biscottidiskette.github.io/projects/11_ariadne/"> <meta property="og:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <meta property="og:site_name" content="Biscotti Diskette"> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:title" content="Ariadne"> <meta name="twitter:description" content="Created an App for Incident Response Investigation."> <meta name="twitter:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Biscotti Diskette",
+  "url": "https://biscottidiskette.github.io",
+  "sameAs": [
+    
+  ],
+  "jobTitle": "Cybersecurity Researcher",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Independent",
+    "url": "https://biscottidiskette.github.io"
+  },
+  "image": "https://biscottidiskette.github.io/assets/img/social-preview.png",
+  "description": "Created an App for Incident Response Investigation."
+}
+</script> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta http-equiv="Permissions-Policy" content="interest-cohort=()"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Ariadne | Biscotti Diskette </title> <meta name="author" content="Biscotti Diskette"> <meta name="description" content="Created an App for Incident Response Investigation."> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/frontpage/Logo3.png?4f879aeff848659581251777fe0ab074"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="stylesheet" href="/assets/css/terminal.css?bebbf314b8406d78caf98717f86a33c1"> <link rel="canonical" href="https://biscottidiskette.github.io/projects/11_ariadne/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> <title>Ariadne</title> <meta name="description" content="Created an App for Incident Response Investigation."> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <meta name="author" content="Biscotti Diskette"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta property="og:type" content="website"> <meta property="og:title" content="Ariadne"> <meta property="og:description" content="Created an App for Incident Response Investigation."> <meta property="og:url" content="https://biscottidiskette.github.io/projects/11_ariadne/"> <meta property="og:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <meta property="og:site_name" content="Biscotti Diskette"> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:title" content="Ariadne"> <meta name="twitter:description" content="Created an App for Incident Response Investigation."> <meta name="twitter:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Biscotti Diskette",
+  "url": "https://biscottidiskette.github.io",
+  "sameAs": [
+    
+  ],
+  "jobTitle": "Cybersecurity Researcher",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Independent",
+    "url": "https://biscottidiskette.github.io"
+  },
+  "image": "https://biscottidiskette.github.io/assets/img/social-preview.png",
+  "description": "Created an App for Incident Response Investigation."
+}
+</script> </head> <body class="fixed-top-nav sticky-bottom-footer"> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> Biscotti Diskette </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item active"> <a class="nav-link" href="/projects/">projects <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/boxes/">boxes </a> </li> <li class="nav-item "> <a class="nav-link" href="/certifications/">certs </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repos </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/contact/">contact </a> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Ariadne</h1> <p class="post-description">Created an App for Incident Response Investigation.</p> </header> <article> <div class="row justify-content-sm-center"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/ariadne/logo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Ariadne" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <h2 id="introduction">Introduction</h2> <p>Incident response has a different kind of pressure to it. The alerts come in fast, rarely clean, and almost never in isolation. One signal turns into five. Five turns into fifty. Logs, endpoint alerts, memory artifacts, SIEM queries all serve as pieces of a puzzle. And you don’t have the box image. You start pulling threads. Maybe it’s nothing. Maybe it’s everything. Either way, the clock is running. So you pivot between tools, cross-reference outputs, take notes, build timelines in your head, and try to answer the only question that really matters: What actually happened here?</p> <p><br></p> <h2 id="the-problem">The Problem</h2> <p>That is where the work actually begins. The problem is not a lack of visibility. It is fragmentation. Chainsaw output in one place. EVTX logs in another. EDR alerts in a dashboard. SIEM queries somewhere else entirely. Each tool surfaces signal, but none of them assemble the story. So the investigation lives in your head. You correlate events manually, track hypotheses mentally, and rebuild timelines every time you revisit the incident. Context does not persist. It decays. And when context decays, so does confidence. Ariadne came out of that gap: treating every artifact as part of a single investigative thread. Something that can ingest disparate evidence, maintain context over time, and help reconstruct what actually happened without starting over every single time you sit back down.</p> <p><br></p> <h2 id="the-stack">The Stack</h2> <ul> <li>Storage <ul> <li> <strong>SQLite</strong> - Server-side persistence</li> <li> <strong>LLM Model</strong> - Context correlation, artifact review, and investigative summaries</li> </ul> </li> <li>Backend <ul> <li> <strong>SQLAlchemy</strong> - Persistence through ORM and modeling</li> <li> <strong>FastAPI</strong> - Framework for API infrastructure</li> </ul> </li> <li>Frontend <ul> <li> <strong>React</strong> - UI component library</li> <li> <strong>Vite</strong> - Development server and build tool</li> </ul> </li> </ul> <p><br></p> <h2 id="my-role">My Role</h2> <p>I followed the same model as my previous projects. I architected the application end-to-end and handled all engineering decisions. That meant designing the context window management strategy, deciding what gets persisted and how it feeds back into prompts, and mapping the ingestion pipeline across artifact formats. Claude generated the code from the architecture I defined. I drove generation through precise prompt engineering, one feature at a time, and reviewed everything as a repository maintainer before it landed.</p> <p><br></p> <h2 id="current-status">Current Status</h2> <p>MVP: In Progress. The engine runs. The analysis takes shape. Now we find out if it holds under real pressure.</p> <p><br></p> <h2 id="the-process">The Process</h2> <p><br></p> <h4 id="the-landing-page">The Landing Page</h4> <p>The landing page acts as the investigation command center. Active incidents, open cases, and current workload are surfaced in a single view so priorities can be assessed quickly and work can be triaged without losing context.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/ariadne/landingpage.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Landing Page" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <h4 id="individual-investigation">Individual Investigation</h4> <p>Each investigation has a dedicated workspace where evidence, notes, tracked indicators, and prior outputs remain attached to the case. The embedded chat interface allows analysts to query the investigation directly, refine hypotheses, and request targeted analysis.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/ariadne/investigation.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Individual Investigation" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <h4 id="artifact-ingestion">Artifact Ingestion</h4> <p>The ingestion interface accepts pasted artifacts from common incident response workflows. Logs, alerts, extracted strings, query results, and other evidence can be submitted directly into the case where they are normalized and folded into the broader investigation context.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/ariadne/pasteartifacts.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Paste Artifacts" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <h4 id="notes--analyst-context">Notes &amp; Analyst Context</h4> <p>Not every useful signal comes from a parser. Freeform notes allow analysts to preserve reasoning, observations, side-channel findings, and contextual details that would otherwise remain outside the system.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/ariadne/notetaking.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Notetaking" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <h4 id="ioc-tracking">IOC Tracking</h4> <p>Indicators of compromise can be tracked throughout the investigation lifecycle to ensure they remain visible, actionable, and ready for downstream use in blocking, hunting, or detection engineering workflows.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/ariadne/ioc.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="IoC Tracking" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <h4 id="investigation-continuity">Investigation Continuity</h4> <p>Prior findings, generated tasks, hypotheses, and completed actions are persisted back into the case context. This reduces repetitive outputs, preserves momentum between sessions, and allows the investigation to progress cumulatively instead of restarting each time.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/ariadne/steps.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Investigation Steps" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <h3 id="the-code">The Code</h3> <p><br></p> <h4 id="backend">Backend</h4> <p>The database layer initializes SQLite, enables WAL mode for concurrent reads, enforces foreign key integrity, and provisions the full schema on startup. This keeps deployment lightweight while preserving relational structure across incidents, artifacts, notes, IoCs, and generated outputs.</p> <div class="terminal" data-language="python" id="terminal-db-py-python-5788"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('db-py-python-5788')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('db-py-python-5788')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('db-py-python-5788')" title="Maximize"></button> </div> <span class="terminal__title">db.py</span> <button class="terminal__copy" onclick="terminalCopy('db-py-python-5788')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-db-py-python-5788">
+
+&lt;snip&gt;
+
+    conn = sqlite3.connect(DB_PATH)
+
+    conn.row_factory = sqlite3.Row
+    conn.execute("PRAGMA journal_mode=WAL;")
+    conn.execute("PRAGMA foreign_keys=ON;")
+
+    return conn
+
+def init_db() -&gt; None:
+    conn = get_connection()
+
+    try:
+        cursor = conn.cursor()
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS engagements (
+                id          INTEGER PRIMARY KEY AUTOINCREMENT,
+                name        TEXT    NOT NULL,
+                description TEXT,
+                status      TEXT    NOT NULL DEFAULT 'active',
+                lead_id     TEXT,
+                created_at  TEXT    NOT NULL DEFAULT (datetime('now')),
+                updated_at  TEXT    NOT NULL DEFAULT (datetime('now'))
+            );
+        """)
+
+        &lt;snip&gt;
+</pre> </div> <div class="terminal__overlay" id="overlay-db-py-python-5788" onclick="terminalOverlayClose('db-py-python-5788')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('db-py-python-5788')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('db-py-python-5788')" title="Restore"></button> </div> <span class="terminal__title">db.py</span> <button class="terminal__copy" onclick="terminalCopyModal('db-py-python-5788')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-db-py-python-5788" data-language="python">
+
+&lt;snip&gt;
+
+    conn = sqlite3.connect(DB_PATH)
+
+    conn.row_factory = sqlite3.Row
+    conn.execute("PRAGMA journal_mode=WAL;")
+    conn.execute("PRAGMA foreign_keys=ON;")
+
+    return conn
+
+def init_db() -&gt; None:
+    conn = get_connection()
+
+    try:
+        cursor = conn.cursor()
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS engagements (
+                id          INTEGER PRIMARY KEY AUTOINCREMENT,
+                name        TEXT    NOT NULL,
+                description TEXT,
+                status      TEXT    NOT NULL DEFAULT 'active',
+                lead_id     TEXT,
+                created_at  TEXT    NOT NULL DEFAULT (datetime('now')),
+                updated_at  TEXT    NOT NULL DEFAULT (datetime('now'))
+            );
+        """)
+
+        &lt;snip&gt;
+</pre> </div> </div> <p><br> The service layer centralizes CRUD operations and case lifecycle management. Raw SQL was used intentionally for transparency, auditability, and predictable query behavior within a security-focused application.</p> <div class="terminal" data-language="python" id="terminal-database-service-py-python-19876"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('database-service-py-python-19876')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('database-service-py-python-19876')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('database-service-py-python-19876')" title="Maximize"></button> </div> <span class="terminal__title">database_service.py</span> <button class="terminal__copy" onclick="terminalCopy('database-service-py-python-19876')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-database-service-py-python-19876">
+
+&lt;snip&gt;
+
+    def create_engagement(
+        self,
+        name: str,
+        description: Optional[str] = None,
+        status: str = "active",
+        lead_id: Optional[str] = None
+    ) -&gt; dict:
+        conn = get_connection()
+        try:
+            cursor = conn.cursor()
+            cursor.execute("""
+                INSERT INTO engagements (name, description, status, lead_id)
+                VALUES (?, ?, ?, ?)
+            """, (name, description, status, lead_id))
+            conn.commit()
+
+            # Fetch and return the newly created row
+            # cursor.lastrowid gives us the auto-incremented ID
+            row = cursor.execute(
+                "SELECT * FROM engagements WHERE id = ?",
+                (cursor.lastrowid,)
+            ).fetchone()
+            return self._row_to_dict(row)
+
+        finally:
+            conn.close()
+
+        &lt;snip&gt;
+
+</pre> </div> <div class="terminal__overlay" id="overlay-database-service-py-python-19876" onclick="terminalOverlayClose('database-service-py-python-19876')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('database-service-py-python-19876')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('database-service-py-python-19876')" title="Restore"></button> </div> <span class="terminal__title">database_service.py</span> <button class="terminal__copy" onclick="terminalCopyModal('database-service-py-python-19876')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-database-service-py-python-19876" data-language="python">
+
+&lt;snip&gt;
+
+    def create_engagement(
+        self,
+        name: str,
+        description: Optional[str] = None,
+        status: str = "active",
+        lead_id: Optional[str] = None
+    ) -&gt; dict:
+        conn = get_connection()
+        try:
+            cursor = conn.cursor()
+            cursor.execute("""
+                INSERT INTO engagements (name, description, status, lead_id)
+                VALUES (?, ?, ?, ?)
+            """, (name, description, status, lead_id))
+            conn.commit()
+
+            # Fetch and return the newly created row
+            # cursor.lastrowid gives us the auto-incremented ID
+            row = cursor.execute(
+                "SELECT * FROM engagements WHERE id = ?",
+                (cursor.lastrowid,)
+            ).fetchone()
+            return self._row_to_dict(row)
+
+        finally:
+            conn.close()
+
+        &lt;snip&gt;
+
+</pre> </div> </div> <p><br> The LLM integration layer handles model access, token budgeting, and prompt execution. Separate model tiers were used for deeper investigative reasoning versus low-latency extraction tasks.</p> <div class="terminal" data-language="python" id="terminal-groq-py-python-7328"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('groq-py-python-7328')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('groq-py-python-7328')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('groq-py-python-7328')" title="Maximize"></button> </div> <span class="terminal__title">groq.py</span> <button class="terminal__copy" onclick="terminalCopy('groq-py-python-7328')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-groq-py-python-7328">
+
+&lt;snip&gt;
+
+import os
+from groq import Groq
+from dotenv import load_dotenv
+from typing import Optional, Generator
+
+load_dotenv()
+
+MODEL_PRIMARY = "llama-3.3-70b-versatile"
+MODEL_FAST = "llama-3.1-8b-instant"
+DEFAULT_MODEL = MODEL_PRIMARY
+MODEL_CONTEXT_LIMITS = {
+    MODEL_PRIMARY: 28000,
+    MODEL_FAST:    14000,
+}
+
+    &lt;snip&gt;
+
+</pre> </div> <div class="terminal__overlay" id="overlay-groq-py-python-7328" onclick="terminalOverlayClose('groq-py-python-7328')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('groq-py-python-7328')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('groq-py-python-7328')" title="Restore"></button> </div> <span class="terminal__title">groq.py</span> <button class="terminal__copy" onclick="terminalCopyModal('groq-py-python-7328')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-groq-py-python-7328" data-language="python">
+
+&lt;snip&gt;
+
+import os
+from groq import Groq
+from dotenv import load_dotenv
+from typing import Optional, Generator
+
+load_dotenv()
+
+MODEL_PRIMARY = "llama-3.3-70b-versatile"
+MODEL_FAST = "llama-3.1-8b-instant"
+DEFAULT_MODEL = MODEL_PRIMARY
+MODEL_CONTEXT_LIMITS = {
+    MODEL_PRIMARY: 28000,
+    MODEL_FAST:    14000,
+}
+
+    &lt;snip&gt;
+
+</pre> </div> </div> <p><br> The parser layer normalizes heterogeneous evidence sources into structured records, timeline events, and extracted indicators. This allows disparate artifacts to be folded into a consistent investigation context.</p> <div class="terminal" data-language="python" id="terminal-chainsaw-parser-py-python-181494"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('chainsaw-parser-py-python-181494')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('chainsaw-parser-py-python-181494')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('chainsaw-parser-py-python-181494')" title="Maximize"></button> </div> <span class="terminal__title">chainsaw_parser.py</span> <button class="terminal__copy" onclick="terminalCopy('chainsaw-parser-py-python-181494')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-chainsaw-parser-py-python-181494">
+
+&lt;snip&gt;
+
+import json
+from typing import Optional
+from parsers.ioc_parser import extract_iocs
+
+def parse_chainsaw(raw_content: str) -&gt; dict:
+    try:
+        data = json.loads(raw_content)
+    except json.JSONDecodeError as e:
+        return _error_result(f"Invalid JSON: {e}")
+
+    if not isinstance(data, list):
+        if isinstance(data, dict) and 'hits' in data:
+            data = data['hits']
+        else:
+            return _error_result("Expected JSON array of Chainsaw records")
+
+    records = []
+    timeline_events = []
+    all_iocs = []
+
+    for item in data:
+        try:
+            record = _parse_record(item)
+            if record:
+                records.append(record)
+                if record.get('timestamp'):
+                    timeline_events.append({
+                        'event_time':  record['timestamp'],
+                        'event_type':  _map_event_type(record.get('event_id')),
+                        'description': record.get('detection_name') or f"Event ID {record.get('event_id', 'unknown')}",
+                        'host':        record.get('computer'),
+                        'actor':       record.get('subject_user') or record.get('target_user'),
+                        'process':     record.get('process_name'),
+                    })
+                iocs = extract_iocs(json.dumps(item), context=f"Chainsaw event ID {record.get('event_id')}")
+                all_iocs.extend(iocs)
+        except Exception:
+            continue
+
+    &lt;snip&gt;
+</pre> </div> <div class="terminal__overlay" id="overlay-chainsaw-parser-py-python-181494" onclick="terminalOverlayClose('chainsaw-parser-py-python-181494')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('chainsaw-parser-py-python-181494')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('chainsaw-parser-py-python-181494')" title="Restore"></button> </div> <span class="terminal__title">chainsaw_parser.py</span> <button class="terminal__copy" onclick="terminalCopyModal('chainsaw-parser-py-python-181494')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-chainsaw-parser-py-python-181494" data-language="python">
+
+&lt;snip&gt;
+
+import json
+from typing import Optional
+from parsers.ioc_parser import extract_iocs
+
+def parse_chainsaw(raw_content: str) -&gt; dict:
+    try:
+        data = json.loads(raw_content)
+    except json.JSONDecodeError as e:
+        return _error_result(f"Invalid JSON: {e}")
+
+    if not isinstance(data, list):
+        if isinstance(data, dict) and 'hits' in data:
+            data = data['hits']
+        else:
+            return _error_result("Expected JSON array of Chainsaw records")
+
+    records = []
+    timeline_events = []
+    all_iocs = []
+
+    for item in data:
+        try:
+            record = _parse_record(item)
+            if record:
+                records.append(record)
+                if record.get('timestamp'):
+                    timeline_events.append({
+                        'event_time':  record['timestamp'],
+                        'event_type':  _map_event_type(record.get('event_id')),
+                        'description': record.get('detection_name') or f"Event ID {record.get('event_id', 'unknown')}",
+                        'host':        record.get('computer'),
+                        'actor':       record.get('subject_user') or record.get('target_user'),
+                        'process':     record.get('process_name'),
+                    })
+                iocs = extract_iocs(json.dumps(item), context=f"Chainsaw event ID {record.get('event_id')}")
+                all_iocs.extend(iocs)
+        except Exception:
+            continue
+
+    &lt;snip&gt;
+</pre> </div> </div> <p><br> FastAPI exposes the operational API surface for investigations, notes, artifacts, timelines, tracked indicators, and AI-assisted analysis workflows.</p> <div class="terminal" data-language="python" id="terminal-engagements-py-python-14469"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('engagements-py-python-14469')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('engagements-py-python-14469')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('engagements-py-python-14469')" title="Maximize"></button> </div> <span class="terminal__title">engagements.py</span> <button class="terminal__copy" onclick="terminalCopy('engagements-py-python-14469')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-engagements-py-python-14469">
+
+&lt;snip&gt;
+
+from fastapi import APIRouter, HTTPException
+from db.database_service import DatabaseService
+from models.schemas import (
+    EngagementCreate,
+    EngagementUpdate,
+    EngagementResponse,
+)
+
+router = APIRouter(
+    prefix="/engagements",
+    tags=["engagements"],   # Groups these endpoints in /docs
+)
+
+db = DatabaseService()
+
+@router.get("", response_model=list[EngagementResponse])
+async def list_engagements():
+    return db.list_engagements()
+
+
+&lt;snip&gt;
+
+</pre> </div> <div class="terminal__overlay" id="overlay-engagements-py-python-14469" onclick="terminalOverlayClose('engagements-py-python-14469')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('engagements-py-python-14469')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('engagements-py-python-14469')" title="Restore"></button> </div> <span class="terminal__title">engagements.py</span> <button class="terminal__copy" onclick="terminalCopyModal('engagements-py-python-14469')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-engagements-py-python-14469" data-language="python">
+
+&lt;snip&gt;
+
+from fastapi import APIRouter, HTTPException
+from db.database_service import DatabaseService
+from models.schemas import (
+    EngagementCreate,
+    EngagementUpdate,
+    EngagementResponse,
+)
+
+router = APIRouter(
+    prefix="/engagements",
+    tags=["engagements"],   # Groups these endpoints in /docs
+)
+
+db = DatabaseService()
+
+@router.get("", response_model=list[EngagementResponse])
+async def list_engagements():
+    return db.list_engagements()
+
+
+&lt;snip&gt;
+
+</pre> </div> </div> <p><br> The application bootstrap layer initializes persistence, configures middleware, registers route groups, and exposes the full backend service.</p> <div class="terminal" data-language="python" id="terminal-main-py-python-7835"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('main-py-python-7835')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('main-py-python-7835')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('main-py-python-7835')" title="Maximize"></button> </div> <span class="terminal__title">main.py</span> <button class="terminal__copy" onclick="terminalCopy('main-py-python-7835')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-main-py-python-7835">
+
+&lt;snip&gt;
+
+app = FastAPI(
+    title="Ariadne IR Decision Engine",
+    description="LLM-assisted Incident Response platform",
+    version="0.1.0",
+    lifespan=lifespan,
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",   # Vite dev server
+        "http://localhost:3000",   # fallback
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.include_router(artifacts_router, prefix="/api")
+app.include_router(chat_router, prefix="/api")
+app.include_router(engagements_router, prefix="/api")
+app.include_router(iocs_router, prefix="/api")
+app.include_router(notes_router, prefix="/api")
+app.include_router(suggestions_router, prefix="/api")
+app.include_router(timeline_router, prefix="/api")
+app.include_router(playbook_router, prefix="/api")
+
+    &lt;snip&gt;
+
+</pre> </div> <div class="terminal__overlay" id="overlay-main-py-python-7835" onclick="terminalOverlayClose('main-py-python-7835')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('main-py-python-7835')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('main-py-python-7835')" title="Restore"></button> </div> <span class="terminal__title">main.py</span> <button class="terminal__copy" onclick="terminalCopyModal('main-py-python-7835')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-main-py-python-7835" data-language="python">
+
+&lt;snip&gt;
+
+app = FastAPI(
+    title="Ariadne IR Decision Engine",
+    description="LLM-assisted Incident Response platform",
+    version="0.1.0",
+    lifespan=lifespan,
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",   # Vite dev server
+        "http://localhost:3000",   # fallback
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.include_router(artifacts_router, prefix="/api")
+app.include_router(chat_router, prefix="/api")
+app.include_router(engagements_router, prefix="/api")
+app.include_router(iocs_router, prefix="/api")
+app.include_router(notes_router, prefix="/api")
+app.include_router(suggestions_router, prefix="/api")
+app.include_router(timeline_router, prefix="/api")
+app.include_router(playbook_router, prefix="/api")
+
+    &lt;snip&gt;
+
+</pre> </div> </div> <p><br></p> <h4 id="frontend">Frontend</h4> <p>A shared API client provides consistent headers, timeout controls, and interceptor-based error handling for all frontend requests.</p> <div class="terminal" data-language="javascript" id="terminal-client-js-javascript-9397"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('client-js-javascript-9397')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('client-js-javascript-9397')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('client-js-javascript-9397')" title="Maximize"></button> </div> <span class="terminal__title">client.js</span> <button class="terminal__copy" onclick="terminalCopy('client-js-javascript-9397')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-client-js-javascript-9397">
+
+import axios from 'axios'
+
+const api = axios.create({
+  baseURL: '',
+  headers: { 'Content-Type': 'application/json' },
+  timeout: 30000,
+})
+
+// Response interceptor — log errors in development
+api.interceptors.response.use(
+  response =&gt; response,
+  error =&gt; {
+    console.error('[api]', error.response?.status, error.response?.data)
+    return Promise.reject(error)
+  }
+)
+
+export default api
+
+</pre> </div> <div class="terminal__overlay" id="overlay-client-js-javascript-9397" onclick="terminalOverlayClose('client-js-javascript-9397')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('client-js-javascript-9397')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('client-js-javascript-9397')" title="Restore"></button> </div> <span class="terminal__title">client.js</span> <button class="terminal__copy" onclick="terminalCopyModal('client-js-javascript-9397')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-client-js-javascript-9397" data-language="javascript">
+
+import axios from 'axios'
+
+const api = axios.create({
+  baseURL: '',
+  headers: { 'Content-Type': 'application/json' },
+  timeout: 30000,
+})
+
+// Response interceptor — log errors in development
+api.interceptors.response.use(
+  response =&gt; response,
+  error =&gt; {
+    console.error('[api]', error.response?.status, error.response?.data)
+    return Promise.reject(error)
+  }
+)
+
+export default api
+
+</pre> </div> </div> <p><br> The application centers around two primary workflows: the incident queue and the individual case workspace. The queue supports triage and prioritization, while the workspace consolidates investigation activity into a single operating view.</p> <div class="terminal" data-language="javascript" id="terminal-engagementworkspace-jsx-javascript-231433"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('engagementworkspace-jsx-javascript-231433')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('engagementworkspace-jsx-javascript-231433')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('engagementworkspace-jsx-javascript-231433')" title="Maximize"></button> </div> <span class="terminal__title">EngagementWorkspace.jsx</span> <button class="terminal__copy" onclick="terminalCopy('engagementworkspace-jsx-javascript-231433')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-engagementworkspace-jsx-javascript-231433">
+
+
+&lt;snip&gt;
+
+import { useState, useEffect, useRef } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import api from '../api/client'
+
+const STATUS_CONFIG = {
+  active:    { color: 'var(--status-active)',    label: 'ACTIVE' },
+  contained: { color: 'var(--status-contained)', label: 'CONTAINED' },
+  closed:    { color: 'var(--status-closed)',     label: 'CLOSED' },
+  archived:  { color: 'var(--status-archived)',   label: 'ARCHIVED' },
+}
+
+const SUGGESTION_STATUS_COLORS = {
+  pending:     'var(--text-muted)',
+  in_progress: 'var(--accent-blue)',
+  tried:       'var(--accent-orange)',
+  worked:      'var(--accent-green)',
+  failed:      'var(--accent-red)',
+  dismissed:   'var(--text-muted)',
+}
+
+function ChatTab({ engagementId }) {
+  const [input, setInput] = useState('')
+  const [streaming, setStreaming] = useState(false)
+  const [streamingContent, setStreamingContent] = useState('')
+  const messagesEndRef = useRef(null)
+  const queryClient = useQueryClient()
+
+  const { data: messages = [] } = useQuery({
+    queryKey: ['messages', engagementId],
+    queryFn: async () =&gt; (await api.get(`/api/engagements/${engagementId}/messages`)).data,
+  })
+
+  // Scroll to bottom when messages change
+  useEffect(() =&gt; {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages, streamingContent])
+  
+  &lt;snip&gt;
+
+
+</pre> </div> <div class="terminal__overlay" id="overlay-engagementworkspace-jsx-javascript-231433" onclick="terminalOverlayClose('engagementworkspace-jsx-javascript-231433')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('engagementworkspace-jsx-javascript-231433')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('engagementworkspace-jsx-javascript-231433')" title="Restore"></button> </div> <span class="terminal__title">EngagementWorkspace.jsx</span> <button class="terminal__copy" onclick="terminalCopyModal('engagementworkspace-jsx-javascript-231433')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-engagementworkspace-jsx-javascript-231433" data-language="javascript">
+
+
+&lt;snip&gt;
+
+import { useState, useEffect, useRef } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import api from '../api/client'
+
+const STATUS_CONFIG = {
+  active:    { color: 'var(--status-active)',    label: 'ACTIVE' },
+  contained: { color: 'var(--status-contained)', label: 'CONTAINED' },
+  closed:    { color: 'var(--status-closed)',     label: 'CLOSED' },
+  archived:  { color: 'var(--status-archived)',   label: 'ARCHIVED' },
+}
+
+const SUGGESTION_STATUS_COLORS = {
+  pending:     'var(--text-muted)',
+  in_progress: 'var(--accent-blue)',
+  tried:       'var(--accent-orange)',
+  worked:      'var(--accent-green)',
+  failed:      'var(--accent-red)',
+  dismissed:   'var(--text-muted)',
+}
+
+function ChatTab({ engagementId }) {
+  const [input, setInput] = useState('')
+  const [streaming, setStreaming] = useState(false)
+  const [streamingContent, setStreamingContent] = useState('')
+  const messagesEndRef = useRef(null)
+  const queryClient = useQueryClient()
+
+  const { data: messages = [] } = useQuery({
+    queryKey: ['messages', engagementId],
+    queryFn: async () =&gt; (await api.get(`/api/engagements/${engagementId}/messages`)).data,
+  })
+
+  // Scroll to bottom when messages change
+  useEffect(() =&gt; {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages, streamingContent])
+  
+  &lt;snip&gt;
+
+
+</pre> </div> </div> <p><br> Routing separates queue management from deep investigative workspaces while preserving a lightweight single-page application model. Case status indicators were color-coded to improve at-a-glance workload scanning across active investigations.</p> <div class="terminal" data-language="javascript" id="terminal-app-jsx-javascript-7720"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('app-jsx-javascript-7720')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('app-jsx-javascript-7720')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('app-jsx-javascript-7720')" title="Maximize"></button> </div> <span class="terminal__title">App.jsx</span> <button class="terminal__copy" onclick="terminalCopy('app-jsx-javascript-7720')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-app-jsx-javascript-7720">
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import EngagementList from './pages/EngagementList'
+import EngagementWorkspace from './pages/EngagementWorkspace'
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      staleTime: 30000,
+    }
+  }
+})
+
+export default function App() {
+  return (
+    &lt;QueryClientProvider client={queryClient}&gt;
+      &lt;BrowserRouter&gt;
+        &lt;Routes&gt;
+          &lt;Route path="/" element={&lt;EngagementList /&gt;} /&gt;
+          &lt;Route path="/engagement/:id" element={&lt;EngagementWorkspace /&gt;} /&gt;
+        &lt;/Routes&gt;
+      &lt;/BrowserRouter&gt;
+    &lt;/QueryClientProvider&gt;
+  )
+}
+
+</pre> </div> <div class="terminal__overlay" id="overlay-app-jsx-javascript-7720" onclick="terminalOverlayClose('app-jsx-javascript-7720')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('app-jsx-javascript-7720')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('app-jsx-javascript-7720')" title="Restore"></button> </div> <span class="terminal__title">App.jsx</span> <button class="terminal__copy" onclick="terminalCopyModal('app-jsx-javascript-7720')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-app-jsx-javascript-7720" data-language="javascript">
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import EngagementList from './pages/EngagementList'
+import EngagementWorkspace from './pages/EngagementWorkspace'
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      staleTime: 30000,
+    }
+  }
+})
+
+export default function App() {
+  return (
+    &lt;QueryClientProvider client={queryClient}&gt;
+      &lt;BrowserRouter&gt;
+        &lt;Routes&gt;
+          &lt;Route path="/" element={&lt;EngagementList /&gt;} /&gt;
+          &lt;Route path="/engagement/:id" element={&lt;EngagementWorkspace /&gt;} /&gt;
+        &lt;/Routes&gt;
+      &lt;/BrowserRouter&gt;
+    &lt;/QueryClientProvider&gt;
+  )
+}
+
+</pre> </div> </div> <p><br> The frontend entrypoint mounts the React application and loads global styling for the interface.</p> <div class="terminal" data-language="javascript" id="terminal-main-jsx-javascript-8232"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('main-jsx-javascript-8232')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('main-jsx-javascript-8232')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('main-jsx-javascript-8232')" title="Maximize"></button> </div> <span class="terminal__title">main.jsx</span> <button class="terminal__copy" onclick="terminalCopy('main-jsx-javascript-8232')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-main-jsx-javascript-8232">
+
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.jsx'
+
+createRoot(document.getElementById('root')).render(
+  &lt;StrictMode&gt;
+    &lt;App /&gt;
+  &lt;/StrictMode&gt;,
+)
+
+</pre> </div> <div class="terminal__overlay" id="overlay-main-jsx-javascript-8232" onclick="terminalOverlayClose('main-jsx-javascript-8232')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('main-jsx-javascript-8232')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('main-jsx-javascript-8232')" title="Restore"></button> </div> <span class="terminal__title">main.jsx</span> <button class="terminal__copy" onclick="terminalCopyModal('main-jsx-javascript-8232')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-main-jsx-javascript-8232" data-language="javascript">
+
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.jsx'
+
+createRoot(document.getElementById('root')).render(
+  &lt;StrictMode&gt;
+    &lt;App /&gt;
+  &lt;/StrictMode&gt;,
+)
+
+</pre> </div> </div> <p><br> And now we find out where all the loose threads take us.</p> <div class="row justify-content-sm-center"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/ariadne/endlogo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Ariadne" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> </article> </div> </div> <footer class="sticky-bottom mt-5" role="contentinfo"> <div class="container"> © Copyright 2026 Biscotti Diskette  ·  <a href="https://github.com/biscottidiskette" target="_blank" rel="external nofollow noopener">GitHub</a>  ·  <a href="https://app.hackthebox.eu/profile/biscottidiskette" target="_blank" rel="external nofollow noopener">HackTheBox</a>  ·  <a href="https://tryhackme.com/r/p/BiscottiDiskette" target="_blank" rel="external nofollow noopener">TryHackMe</a>  ·  <a href="/contact/">Contact</a> </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?70d799092f862ad98c7876aa47712e20"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-HL7MJBJN7X"></script> <script defer src="/assets/js/google-analytics-setup.js?1c5d3b199be7049d4732e15d2072d0b2"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> <script src="/assets/js/terminal.js?ec2a38fba85ea4751db97d30059cd1c5"></script> </body> </html>

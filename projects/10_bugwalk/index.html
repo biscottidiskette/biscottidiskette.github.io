@@ -1,0 +1,601 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <title>BugWalk</title> <meta name="description" content="Created an App for Bug Bounty Assistance."> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <meta name="author" content="Biscotti Diskette"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta property="og:type" content="website"> <meta property="og:title" content="BugWalk"> <meta property="og:description" content="Created an App for Bug Bounty Assistance."> <meta property="og:url" content="https://biscottidiskette.github.io/projects/10_bugwalk/"> <meta property="og:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <meta property="og:site_name" content="Biscotti Diskette"> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:title" content="BugWalk"> <meta name="twitter:description" content="Created an App for Bug Bounty Assistance."> <meta name="twitter:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Biscotti Diskette",
+  "url": "https://biscottidiskette.github.io",
+  "sameAs": [
+    
+  ],
+  "jobTitle": "Cybersecurity Researcher",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Independent",
+    "url": "https://biscottidiskette.github.io"
+  },
+  "image": "https://biscottidiskette.github.io/assets/img/social-preview.png",
+  "description": "Created an App for Bug Bounty Assistance."
+}
+</script> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta http-equiv="Permissions-Policy" content="interest-cohort=()"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> BugWalk | Biscotti Diskette </title> <meta name="author" content="Biscotti Diskette"> <meta name="description" content="Created an App for Bug Bounty Assistance."> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/frontpage/Logo3.png?4f879aeff848659581251777fe0ab074"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="stylesheet" href="/assets/css/terminal.css?bebbf314b8406d78caf98717f86a33c1"> <link rel="canonical" href="https://biscottidiskette.github.io/projects/10_bugwalk/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> <title>BugWalk</title> <meta name="description" content="Created an App for Bug Bounty Assistance."> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <meta name="author" content="Biscotti Diskette"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta property="og:type" content="website"> <meta property="og:title" content="BugWalk"> <meta property="og:description" content="Created an App for Bug Bounty Assistance."> <meta property="og:url" content="https://biscottidiskette.github.io/projects/10_bugwalk/"> <meta property="og:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <meta property="og:site_name" content="Biscotti Diskette"> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:title" content="BugWalk"> <meta name="twitter:description" content="Created an App for Bug Bounty Assistance."> <meta name="twitter:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Biscotti Diskette",
+  "url": "https://biscottidiskette.github.io",
+  "sameAs": [
+    
+  ],
+  "jobTitle": "Cybersecurity Researcher",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Independent",
+    "url": "https://biscottidiskette.github.io"
+  },
+  "image": "https://biscottidiskette.github.io/assets/img/social-preview.png",
+  "description": "Created an App for Bug Bounty Assistance."
+}
+</script> </head> <body class="fixed-top-nav sticky-bottom-footer"> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> Biscotti Diskette </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item active"> <a class="nav-link" href="/projects/">projects <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/boxes/">boxes </a> </li> <li class="nav-item "> <a class="nav-link" href="/certifications/">certs </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repos </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/contact/">contact </a> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">BugWalk</h1> <p class="post-description">Created an App for Bug Bounty Assistance.</p> </header> <article> <div class="row justify-content-sm-center"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/bugwalk/logo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Bug Walk" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <h2 id="introduction">Introduction</h2> <p>Bug bounty hunting has a rhythm to it. You spin up your scans, kick off a few tools, and settle in to sift through whatever comes back. Maybe it’s late. Maybe you’ve got twenty-five tabs open (in this browser instance, anyway). Maybe you’re convinced there’s something there if you just look at it long enough. The same kind of certainty that if you open the refrigerator enough times, something new will appear. Scroll. Skim. Question your own sanity (and everyone else’s). Take a few notes. Develop half-formed ideas that might lead somewhere or might not. At some point, you stop and ask yourself the same question every time: what do I actually do with all of this?</p> <p><br></p> <h2 id="the-problem">The Problem</h2> <p>That is when it starts to become clear what the work actually is. The problem is not that hunters lack tools. It is that the tools do not talk to each other in any meaningful way. You get your Nmap results over here, your Nuclei findings over there, and your manual notes living somewhere else entirely (hello, CherryTree, my old friend). None of it carries forward into the next decision. So every time you come back to a target, you are not continuing the work. You are reconstructing it. Context lives in your head, and nowhere else. The signal gets buried, intuition fades, and even a short break is enough for everything to degrade just enough that you are starting over again. BugWalk came out of that realization. Treating each piece of data as part of a growing intelligence picture, instead of a disconnected artifact. Something that carries context forward, refines it over time, and turns it into a playbook you can actually act on.</p> <p><br></p> <h2 id="the-stack">The Stack</h2> <ul> <li>Storage <ul> <li> <strong>SQLite</strong> - Server-side persistence</li> <li> <strong>LLM Model</strong> - Playbook generation and artifact review</li> </ul> </li> <li>Backend <ul> <li> <strong>SQLAlchemy</strong> - Persistence through ORM and modeling</li> <li> <strong>FastAPI</strong> - Framework for API infrastructure</li> </ul> </li> <li>Frontend <ul> <li> <strong>React</strong> - UI component library</li> <li> <strong>Vite</strong> - Development server and build tool</li> </ul> </li> </ul> <p><br></p> <h2 id="my-role">My Role</h2> <p>I followed the same approach as my last project. I architected the entire application and handled all engineering decisions. That meant designing the context window management strategy, deciding what gets persisted and how it feeds back into prompts, and mapping the ingestion pipeline for different scan formats. Claude AI generated the code from the architecture I defined. I drove generation through precise prompt engineering, one feature at a time, and reviewed everything as a repository maintainer before it landed.</p> <p><br></p> <h2 id="current-status">Current Status</h2> <p>MVP: In Progress. The engine runs. The playbooks generate. The real test is whether it finds something worth reporting.</p> <p><br></p> <h2 id="the-process">The Process</h2> <p><br></p> <h3 id="walkthrough">Walkthrough</h3> <p><br></p> <h4 id="the-landing-page">The Landing Page</h4> <p>The landing page gives you a view of your active targets. It is the first thing you see, and ideally the last place you have to go before you know what to do next.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/bugwalk/landingpage.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Landing Page" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <h4 id="scan-ingestion">Scan Ingestion</h4> <p>The investigation screen is where you can incorporate your context. You upload Nmap results, Nuclei output, or manual notes and the parser breaks them down and adds them to the target’s history. It gets folded into the prompt on every subsequent request, so the model always knows what has already been seen on this target and what has not.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/bugwalk/ingestion.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Scan Ingestion" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <h4 id="playbook-generation">Playbook Generation</h4> <p>With scans loaded, you generate a playbook. The model has the full picture, every scan, finding, note, and produces a prioritized set of next steps grounded in what is actually in front of you. Not a generic checklist. Not a methodology template. A decision, made from your data.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/bugwalk/playbook.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Playbook" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <h4 id="playbook-tracking">Playbook Tracking</h4> <p>Everything that was suggested in the playbook also gets tracked. This also gets folded into the prompt. This will stop that irritating circle AIs sometimes run into where it keeps suggesting the same thing over and over.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/bugwalk/repeat.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Avoid Repeats" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <h3 id="the-code">The Code</h3> <p><br></p> <h4 id="backend">Backend</h4> <p>The database layer establishes the connection and session lifecycle used across the application.</p> <div class="terminal" data-language="python" id="terminal-database-py-python-11440"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('database-py-python-11440')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('database-py-python-11440')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('database-py-python-11440')" title="Maximize"></button> </div> <span class="terminal__title">database.py</span> <button class="terminal__copy" onclick="terminalCopy('database-py-python-11440')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-database-py-python-11440">
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, DeclarativeBase
+
+DATABASE_URL = "sqlite:///./bugwalk.db"
+
+engine = create_engine(
+    DATABASE_URL,
+    connect_args={"check_same_thread": False}
+)
+
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+class Base(DeclarativeBase):
+    pass
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+</pre> </div> <div class="terminal__overlay" id="overlay-database-py-python-11440" onclick="terminalOverlayClose('database-py-python-11440')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('database-py-python-11440')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('database-py-python-11440')" title="Restore"></button> </div> <span class="terminal__title">database.py</span> <button class="terminal__copy" onclick="terminalCopyModal('database-py-python-11440')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-database-py-python-11440" data-language="python">
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, DeclarativeBase
+
+DATABASE_URL = "sqlite:///./bugwalk.db"
+
+engine = create_engine(
+    DATABASE_URL,
+    connect_args={"check_same_thread": False}
+)
+
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+class Base(DeclarativeBase):
+    pass
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+</pre> </div> </div> <p><br> SQLAlchemy models define how engagement state is persisted. This includes both user input and system-generated artifacts.</p> <div class="terminal" data-language="python" id="terminal-chat-py-python-71225"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('chat-py-python-71225')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('chat-py-python-71225')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('chat-py-python-71225')" title="Maximize"></button> </div> <span class="terminal__title">chat.py</span> <button class="terminal__copy" onclick="terminalCopy('chat-py-python-71225')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-chat-py-python-71225">
+from sqlalchemy import Column, Integer, String, DateTime, Text, ForeignKey
+from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
+from app.core.database import Base
+
+class ChatMessage(Base):
+    __tablename__ = "chat_messages"
+
+    id            = Column(Integer, primary_key=True, index=True)
+    engagement_id = Column(Integer, ForeignKey("engagements.id"), nullable=False)
+    role          = Column(String, nullable=False)   # "user" | "assistant"
+    content       = Column(Text, nullable=False)
+    created_at    = Column(DateTime(timezone=True), server_default=func.now())
+
+    engagement    = relationship("Engagement", back_populates="chat_messages")
+
+
+class SessionBlock(Base):
+    __tablename__ = "session_blocks"
+
+    id              = Column(Integer, primary_key=True, index=True)
+    engagement_id   = Column(Integer, ForeignKey("engagements.id"), nullable=False)
+    suggestion_hash = Column(String, nullable=False)  # fingerprint of the suggestion
+    suggestion_text = Column(Text, nullable=False)    # human readable version
+    created_at      = Column(DateTime(timezone=True), server_default=func.now())
+
+    engagement      = relationship("Engagement", back_populates="session_blocks")
+</pre> </div> <div class="terminal__overlay" id="overlay-chat-py-python-71225" onclick="terminalOverlayClose('chat-py-python-71225')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('chat-py-python-71225')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('chat-py-python-71225')" title="Restore"></button> </div> <span class="terminal__title">chat.py</span> <button class="terminal__copy" onclick="terminalCopyModal('chat-py-python-71225')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-chat-py-python-71225" data-language="python">
+from sqlalchemy import Column, Integer, String, DateTime, Text, ForeignKey
+from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
+from app.core.database import Base
+
+class ChatMessage(Base):
+    __tablename__ = "chat_messages"
+
+    id            = Column(Integer, primary_key=True, index=True)
+    engagement_id = Column(Integer, ForeignKey("engagements.id"), nullable=False)
+    role          = Column(String, nullable=False)   # "user" | "assistant"
+    content       = Column(Text, nullable=False)
+    created_at    = Column(DateTime(timezone=True), server_default=func.now())
+
+    engagement    = relationship("Engagement", back_populates="chat_messages")
+
+
+class SessionBlock(Base):
+    __tablename__ = "session_blocks"
+
+    id              = Column(Integer, primary_key=True, index=True)
+    engagement_id   = Column(Integer, ForeignKey("engagements.id"), nullable=False)
+    suggestion_hash = Column(String, nullable=False)  # fingerprint of the suggestion
+    suggestion_text = Column(Text, nullable=False)    # human readable version
+    created_at      = Column(DateTime(timezone=True), server_default=func.now())
+
+    engagement      = relationship("Engagement", back_populates="session_blocks")
+</pre> </div> </div> <p><br> The API layer exposes the system through FastAPI routes. These endpoints handle request validation, model selection, and route execution into the decision engine.</p> <div class="terminal" data-language="python" id="terminal-chat-py-python-71412"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('chat-py-python-71412')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('chat-py-python-71412')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('chat-py-python-71412')" title="Maximize"></button> </div> <span class="terminal__title">chat.py</span> <button class="terminal__copy" onclick="terminalCopy('chat-py-python-71412')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-chat-py-python-71412">
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
+from typing import List, Optional
+from pydantic import BaseModel
+from app.core.database import get_db
+from app.models.engagement import Engagement
+from app.models.chat import ChatMessage
+from app.services.groq_service import chat, AVAILABLE_MODELS, DEFAULT_MODEL
+
+router = APIRouter()
+
+class ChatRequest(BaseModel):
+    message:   str
+    model_key: Optional[str] = DEFAULT_MODEL
+
+class ChatMessageResponse(BaseModel):
+    id:            int
+    role:          str
+    content:       str
+    created_at:    str
+
+    model_config = {"from_attributes": True}
+
+@router.post("/{engagement_id}/chat")
+def send_message(
+    engagement_id: int,
+    payload: ChatRequest,
+    db: Session = Depends(get_db)
+):
+    engagement = db.query(Engagement).filter(
+        Engagement.id == engagement_id
+    ).first()
+    if not engagement:
+        raise HTTPException(status_code=404, detail="Engagement not found")
+
+    if payload.model_key not in AVAILABLE_MODELS:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Unknown model. Available: {list(AVAILABLE_MODELS.keys())}"
+        )
+
+    result = chat(
+        db=db,
+        engagement_id=engagement_id,
+        engagement_name=engagement.name,
+        user_message=payload.message,
+        model_key=payload.model_key,
+    )
+    return result
+
+    &lt;snip&gt;
+</pre> </div> <div class="terminal__overlay" id="overlay-chat-py-python-71412" onclick="terminalOverlayClose('chat-py-python-71412')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('chat-py-python-71412')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('chat-py-python-71412')" title="Restore"></button> </div> <span class="terminal__title">chat.py</span> <button class="terminal__copy" onclick="terminalCopyModal('chat-py-python-71412')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-chat-py-python-71412" data-language="python">
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
+from typing import List, Optional
+from pydantic import BaseModel
+from app.core.database import get_db
+from app.models.engagement import Engagement
+from app.models.chat import ChatMessage
+from app.services.groq_service import chat, AVAILABLE_MODELS, DEFAULT_MODEL
+
+router = APIRouter()
+
+class ChatRequest(BaseModel):
+    message:   str
+    model_key: Optional[str] = DEFAULT_MODEL
+
+class ChatMessageResponse(BaseModel):
+    id:            int
+    role:          str
+    content:       str
+    created_at:    str
+
+    model_config = {"from_attributes": True}
+
+@router.post("/{engagement_id}/chat")
+def send_message(
+    engagement_id: int,
+    payload: ChatRequest,
+    db: Session = Depends(get_db)
+):
+    engagement = db.query(Engagement).filter(
+        Engagement.id == engagement_id
+    ).first()
+    if not engagement:
+        raise HTTPException(status_code=404, detail="Engagement not found")
+
+    if payload.model_key not in AVAILABLE_MODELS:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Unknown model. Available: {list(AVAILABLE_MODELS.keys())}"
+        )
+
+    result = chat(
+        db=db,
+        engagement_id=engagement_id,
+        engagement_name=engagement.name,
+        user_message=payload.message,
+        model_key=payload.model_key,
+    )
+    return result
+
+    &lt;snip&gt;
+</pre> </div> </div> <p><br> The services layer is where BugWalk’s core logic lives. This is where engagement context is assembled, prompts are constructed, and model interactions are managed. Findings, notes, scope, and prior playbooks are merged into a single prompt that drives decision generation.</p> <div class="terminal" data-language="python" id="terminal-targets-py-python-101507"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('targets-py-python-101507')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('targets-py-python-101507')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('targets-py-python-101507')" title="Maximize"></button> </div> <span class="terminal__title">targets.py</span> <button class="terminal__copy" onclick="terminalCopy('targets-py-python-101507')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-targets-py-python-101507">
+import os
+import hashlib
+from groq import Groq
+from dotenv import load_dotenv
+from typing import List, Dict, Optional
+from sqlalchemy.orm import Session
+from app.models.chat import ChatMessage, SessionBlock
+from app.models.finding import Finding, FindingStatus
+from app.models.scope import ScopeItem
+from app.models.note import Note
+from app.services.decision_helper import build_priority_queue, build_llm_context
+
+load_dotenv()
+
+# ── Model registry — swap here for model switching ────────────────────────────
+AVAILABLE_MODELS = {
+    "groq/llama-3.3-70b":    "llama-3.3-70b-versatile",
+    "groq/llama-3.1-8b":     "llama-3.1-8b-instant",
+    "groq/mixtral-8x7b":     "mixtral-8x7b-32768",
+    "groq/gemma2-9b":        "gemma2-9b-it",
+}
+DEFAULT_MODEL = "groq/llama-3.3-70b"
+
+def _get_client() -&gt; Groq:
+    api_key = os.getenv("GROQ_API_KEY")
+    if not api_key:
+        raise RuntimeError("GROQ_API_KEY not set in environment")
+    return Groq(api_key=api_key)
+
+def _fingerprint(text: str) -&gt; str:
+    """Normalize and hash a suggestion for deduplication."""
+    normalized = " ".join(text.lower().split())[:120]
+    return hashlib.md5(normalized.encode()).hexdigest()[:16]
+
+def _build_system_prompt(
+    engagement_name: str,
+    scope_items: List[ScopeItem],
+    findings: List[Finding],
+    notes: List[Note],
+    session_blocks: List[SessionBlock],
+) -&gt; str:
+    """
+    Assemble the full system prompt from all engagement context.
+    This is the core of BugWalk's intelligence.
+    """
+
+    &lt;snip&gt;
+</pre> </div> <div class="terminal__overlay" id="overlay-targets-py-python-101507" onclick="terminalOverlayClose('targets-py-python-101507')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('targets-py-python-101507')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('targets-py-python-101507')" title="Restore"></button> </div> <span class="terminal__title">targets.py</span> <button class="terminal__copy" onclick="terminalCopyModal('targets-py-python-101507')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-targets-py-python-101507" data-language="python">
+import os
+import hashlib
+from groq import Groq
+from dotenv import load_dotenv
+from typing import List, Dict, Optional
+from sqlalchemy.orm import Session
+from app.models.chat import ChatMessage, SessionBlock
+from app.models.finding import Finding, FindingStatus
+from app.models.scope import ScopeItem
+from app.models.note import Note
+from app.services.decision_helper import build_priority_queue, build_llm_context
+
+load_dotenv()
+
+# ── Model registry — swap here for model switching ────────────────────────────
+AVAILABLE_MODELS = {
+    "groq/llama-3.3-70b":    "llama-3.3-70b-versatile",
+    "groq/llama-3.1-8b":     "llama-3.1-8b-instant",
+    "groq/mixtral-8x7b":     "mixtral-8x7b-32768",
+    "groq/gemma2-9b":        "gemma2-9b-it",
+}
+DEFAULT_MODEL = "groq/llama-3.3-70b"
+
+def _get_client() -&gt; Groq:
+    api_key = os.getenv("GROQ_API_KEY")
+    if not api_key:
+        raise RuntimeError("GROQ_API_KEY not set in environment")
+    return Groq(api_key=api_key)
+
+def _fingerprint(text: str) -&gt; str:
+    """Normalize and hash a suggestion for deduplication."""
+    normalized = " ".join(text.lower().split())[:120]
+    return hashlib.md5(normalized.encode()).hexdigest()[:16]
+
+def _build_system_prompt(
+    engagement_name: str,
+    scope_items: List[ScopeItem],
+    findings: List[Finding],
+    notes: List[Note],
+    session_blocks: List[SessionBlock],
+) -&gt; str:
+    """
+    Assemble the full system prompt from all engagement context.
+    This is the core of BugWalk's intelligence.
+    """
+
+    &lt;snip&gt;
+</pre> </div> </div> <p><br> The main application wires everything together and exposes the full system.</p> <div class="terminal" data-language="python" id="terminal-main-py-python-7891"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('main-py-python-7891')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('main-py-python-7891')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('main-py-python-7891')" title="Maximize"></button> </div> <span class="terminal__title">main.py</span> <button class="terminal__copy" onclick="terminalCopy('main-py-python-7891')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-main-py-python-7891">
+from fastapi import FastAPI
+from app.core.database import engine, Base
+from app.api.routes import health, engagements, scope, decision, findings, notes, chat
+
+app = FastAPI(
+    title="BugWalk",
+    description="AI-powered bug bounty hunting companion",
+    version="0.1.0"
+)
+
+Base.metadata.create_all(bind=engine)
+
+app.include_router(health.router, prefix="/api")
+app.include_router(engagements.router, prefix="/api/engagements", tags=["Engagements"])
+app.include_router(scope.router, prefix="/api/engagements", tags=["Scope"])
+app.include_router(decision.router, prefix="/api/engagements", tags=["Decision"])
+app.include_router(findings.router, prefix="/api/engagements/{engagement_id}/findings", tags=["Findings"])
+app.include_router(notes.router, prefix="/api/engagements/{engagement_id}/notes", tags=["Notes"])
+app.include_router(chat.router, prefix="/api/engagements", tags=["Chat"])
+</pre> </div> <div class="terminal__overlay" id="overlay-main-py-python-7891" onclick="terminalOverlayClose('main-py-python-7891')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('main-py-python-7891')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('main-py-python-7891')" title="Restore"></button> </div> <span class="terminal__title">main.py</span> <button class="terminal__copy" onclick="terminalCopyModal('main-py-python-7891')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-main-py-python-7891" data-language="python">
+from fastapi import FastAPI
+from app.core.database import engine, Base
+from app.api.routes import health, engagements, scope, decision, findings, notes, chat
+
+app = FastAPI(
+    title="BugWalk",
+    description="AI-powered bug bounty hunting companion",
+    version="0.1.0"
+)
+
+Base.metadata.create_all(bind=engine)
+
+app.include_router(health.router, prefix="/api")
+app.include_router(engagements.router, prefix="/api/engagements", tags=["Engagements"])
+app.include_router(scope.router, prefix="/api/engagements", tags=["Scope"])
+app.include_router(decision.router, prefix="/api/engagements", tags=["Decision"])
+app.include_router(findings.router, prefix="/api/engagements/{engagement_id}/findings", tags=["Findings"])
+app.include_router(notes.router, prefix="/api/engagements/{engagement_id}/notes", tags=["Notes"])
+app.include_router(chat.router, prefix="/api/engagements", tags=["Chat"])
+</pre> </div> </div> <p><br></p> <h4 id="frontend">Frontend</h4> <p>The frontend uses axios to create a header and endpoint client for easier API consumption.</p> <div class="terminal" data-language="javascript" id="terminal-client-js-javascript-9153"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('client-js-javascript-9153')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('client-js-javascript-9153')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('client-js-javascript-9153')" title="Maximize"></button> </div> <span class="terminal__title">client.js</span> <button class="terminal__copy" onclick="terminalCopy('client-js-javascript-9153')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-client-js-javascript-9153">
+import axios from 'axios'
+
+const client = axios.create({
+  baseURL: '/api',
+  headers: { 'Content-Type': 'application/json' }
+})
+
+export default client
+</pre> </div> <div class="terminal__overlay" id="overlay-client-js-javascript-9153" onclick="terminalOverlayClose('client-js-javascript-9153')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('client-js-javascript-9153')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('client-js-javascript-9153')" title="Restore"></button> </div> <span class="terminal__title">client.js</span> <button class="terminal__copy" onclick="terminalCopyModal('client-js-javascript-9153')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-client-js-javascript-9153" data-language="javascript">
+import axios from 'axios'
+
+const client = axios.create({
+  baseURL: '/api',
+  headers: { 'Content-Type': 'application/json' }
+})
+
+export default client
+</pre> </div> </div> <p><br> The app has two pages. The landing page demonstrated earlier, and the individual engagement page which serves as your primary workspace.</p> <div class="terminal" data-language="javascript" id="terminal-engagementpage-jsx-javascript-181208"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('engagementpage-jsx-javascript-181208')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('engagementpage-jsx-javascript-181208')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('engagementpage-jsx-javascript-181208')" title="Maximize"></button> </div> <span class="terminal__title">EngagementPage.jsx</span> <button class="terminal__copy" onclick="terminalCopy('engagementpage-jsx-javascript-181208')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-engagementpage-jsx-javascript-181208">
+import { useState, useEffect } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
+import client from '../api/client'
+import ChatTab     from '../components/tabs/ChatTab'
+import FindingsTab from '../components/tabs/FindingsTab'
+import NotesTab    from '../components/tabs/NotesTab'
+import ScopeTab    from '../components/tabs/ScopeTab'
+
+const TABS = ['Chat', 'Findings', 'Notes', 'Scope']
+
+export default function EngagementPage() {
+  const { id }       = useParams()
+  const navigate     = useNavigate()
+  const [engagement, setEngagement] = useState(null)
+  const [activeTab,  setActiveTab]  = useState('Chat')
+  const [loading,    setLoading]    = useState(true)
+  const [error,      setError]      = useState(null)
+
+  useEffect(() =&gt; { fetchEngagement() }, [id])
+
+  async function fetchEngagement() {
+    try {
+      const res = await client.get(`/engagements/${id}`)
+      setEngagement(res.data)
+    } catch (e) {
+      setError('Engagement not found.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  if (loading) return (
+    &lt;div className="page"&gt;
+      &lt;div className="empty-state"&gt;&lt;div className="empty-state-icon"&gt;⏳&lt;/div&gt;&lt;p&gt;Loading...&lt;/p&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  )
+
+  &lt;snip&gt;
+
+</pre> </div> <div class="terminal__overlay" id="overlay-engagementpage-jsx-javascript-181208" onclick="terminalOverlayClose('engagementpage-jsx-javascript-181208')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('engagementpage-jsx-javascript-181208')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('engagementpage-jsx-javascript-181208')" title="Restore"></button> </div> <span class="terminal__title">EngagementPage.jsx</span> <button class="terminal__copy" onclick="terminalCopyModal('engagementpage-jsx-javascript-181208')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-engagementpage-jsx-javascript-181208" data-language="javascript">
+import { useState, useEffect } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
+import client from '../api/client'
+import ChatTab     from '../components/tabs/ChatTab'
+import FindingsTab from '../components/tabs/FindingsTab'
+import NotesTab    from '../components/tabs/NotesTab'
+import ScopeTab    from '../components/tabs/ScopeTab'
+
+const TABS = ['Chat', 'Findings', 'Notes', 'Scope']
+
+export default function EngagementPage() {
+  const { id }       = useParams()
+  const navigate     = useNavigate()
+  const [engagement, setEngagement] = useState(null)
+  const [activeTab,  setActiveTab]  = useState('Chat')
+  const [loading,    setLoading]    = useState(true)
+  const [error,      setError]      = useState(null)
+
+  useEffect(() =&gt; { fetchEngagement() }, [id])
+
+  async function fetchEngagement() {
+    try {
+      const res = await client.get(`/engagements/${id}`)
+      setEngagement(res.data)
+    } catch (e) {
+      setError('Engagement not found.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  if (loading) return (
+    &lt;div className="page"&gt;
+      &lt;div className="empty-state"&gt;&lt;div className="empty-state-icon"&gt;⏳&lt;/div&gt;&lt;p&gt;Loading...&lt;/p&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  )
+
+  &lt;snip&gt;
+
+</pre> </div> </div> <p><br> Each page is composed of focused components. The engagement page, for example, breaks into four tabs: Chat, Findings, Notes, and Scope.</p> <div class="terminal" data-language="javascript" id="terminal-chattab-jsx-javascript-11986"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('chattab-jsx-javascript-11986')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('chattab-jsx-javascript-11986')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('chattab-jsx-javascript-11986')" title="Maximize"></button> </div> <span class="terminal__title">ChatTab.jsx</span> <button class="terminal__copy" onclick="terminalCopy('chattab-jsx-javascript-11986')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-chattab-jsx-javascript-11986">
+import { useState, useEffect, useRef } from 'react'
+import client from '../../api/client'
+import ReactMarkdown from 'react-markdown'
+
+const MODELS = [
+  { key: 'groq/llama-3.3-70b', label: 'Llama 3.3 70B' },
+  { key: 'groq/llama-3.1-8b',  label: 'Llama 3.1 8B (fast)' },
+  { key: 'groq/mixtral-8x7b',  label: 'Mixtral 8x7B' },
+  { key: 'groq/gemma2-9b',     label: 'Gemma2 9B' },
+]
+
+export default function ChatTab({ engagementId }) {
+  const [messages, setMessages] = useState([])
+  const [input,    setInput]    = useState('')
+  const [model,    setModel]    = useState('groq/llama-3.3-70b')
+  const [sending,  setSending]  = useState(false)
+  const bottomRef = useRef(null)
+
+  useEffect(() =&gt; { fetchHistory() }, [engagementId])
+  useEffect(() =&gt; {
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages])
+
+  async function fetchHistory() {
+    const res = await client.get(`/engagements/${engagementId}/chat/history`)
+    setMessages(res.data)
+  }
+
+  &lt;snip&gt;
+
+</pre> </div> <div class="terminal__overlay" id="overlay-chattab-jsx-javascript-11986" onclick="terminalOverlayClose('chattab-jsx-javascript-11986')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('chattab-jsx-javascript-11986')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('chattab-jsx-javascript-11986')" title="Restore"></button> </div> <span class="terminal__title">ChatTab.jsx</span> <button class="terminal__copy" onclick="terminalCopyModal('chattab-jsx-javascript-11986')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-chattab-jsx-javascript-11986" data-language="javascript">
+import { useState, useEffect, useRef } from 'react'
+import client from '../../api/client'
+import ReactMarkdown from 'react-markdown'
+
+const MODELS = [
+  { key: 'groq/llama-3.3-70b', label: 'Llama 3.3 70B' },
+  { key: 'groq/llama-3.1-8b',  label: 'Llama 3.1 8B (fast)' },
+  { key: 'groq/mixtral-8x7b',  label: 'Mixtral 8x7B' },
+  { key: 'groq/gemma2-9b',     label: 'Gemma2 9B' },
+]
+
+export default function ChatTab({ engagementId }) {
+  const [messages, setMessages] = useState([])
+  const [input,    setInput]    = useState('')
+  const [model,    setModel]    = useState('groq/llama-3.3-70b')
+  const [sending,  setSending]  = useState(false)
+  const bottomRef = useRef(null)
+
+  useEffect(() =&gt; { fetchHistory() }, [engagementId])
+  useEffect(() =&gt; {
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages])
+
+  async function fetchHistory() {
+    const res = await client.get(`/engagements/${engagementId}/chat/history`)
+    setMessages(res.data)
+  }
+
+  &lt;snip&gt;
+
+</pre> </div> </div> <p><br> App.jsx wires the two routes together and hands off rendering to each page.</p> <div class="terminal" data-language="javascript" id="terminal-app-jsx-javascript-7491"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('app-jsx-javascript-7491')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('app-jsx-javascript-7491')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('app-jsx-javascript-7491')" title="Maximize"></button> </div> <span class="terminal__title">App.jsx</span> <button class="terminal__copy" onclick="terminalCopy('app-jsx-javascript-7491')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-app-jsx-javascript-7491">
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Navbar from './components/Navbar'
+import LandingPage from './pages/LandingPage'
+import EngagementPage from './pages/EngagementPage'
+
+function App() {
+  return (
+    &lt;BrowserRouter&gt;
+      &lt;Navbar /&gt;
+      &lt;Routes&gt;
+        &lt;Route path="/"                  element={&lt;LandingPage /&gt;} /&gt;
+        &lt;Route path="/engagement/:id"    element={&lt;EngagementPage /&gt;} /&gt;
+      &lt;/Routes&gt;
+    &lt;/BrowserRouter&gt;
+  )
+}
+
+export default App
+</pre> </div> <div class="terminal__overlay" id="overlay-app-jsx-javascript-7491" onclick="terminalOverlayClose('app-jsx-javascript-7491')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('app-jsx-javascript-7491')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('app-jsx-javascript-7491')" title="Restore"></button> </div> <span class="terminal__title">App.jsx</span> <button class="terminal__copy" onclick="terminalCopyModal('app-jsx-javascript-7491')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-app-jsx-javascript-7491" data-language="javascript">
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Navbar from './components/Navbar'
+import LandingPage from './pages/LandingPage'
+import EngagementPage from './pages/EngagementPage'
+
+function App() {
+  return (
+    &lt;BrowserRouter&gt;
+      &lt;Navbar /&gt;
+      &lt;Routes&gt;
+        &lt;Route path="/"                  element={&lt;LandingPage /&gt;} /&gt;
+        &lt;Route path="/engagement/:id"    element={&lt;EngagementPage /&gt;} /&gt;
+      &lt;/Routes&gt;
+    &lt;/BrowserRouter&gt;
+  )
+}
+
+export default App
+</pre> </div> </div> <p><br> Finally, the app gets instantiated inside them main.jsx file.</p> <div class="terminal" data-language="javascript" id="terminal-main-jsx-javascript-8230"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('main-jsx-javascript-8230')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('main-jsx-javascript-8230')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('main-jsx-javascript-8230')" title="Maximize"></button> </div> <span class="terminal__title">main.jsx</span> <button class="terminal__copy" onclick="terminalCopy('main-jsx-javascript-8230')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-main-jsx-javascript-8230">
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.jsx'
+
+createRoot(document.getElementById('root')).render(
+  &lt;StrictMode&gt;
+    &lt;App /&gt;
+  &lt;/StrictMode&gt;,
+)
+</pre> </div> <div class="terminal__overlay" id="overlay-main-jsx-javascript-8230" onclick="terminalOverlayClose('main-jsx-javascript-8230')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('main-jsx-javascript-8230')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('main-jsx-javascript-8230')" title="Restore"></button> </div> <span class="terminal__title">main.jsx</span> <button class="terminal__copy" onclick="terminalCopyModal('main-jsx-javascript-8230')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-main-jsx-javascript-8230" data-language="javascript">
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.jsx'
+
+createRoot(document.getElementById('root')).render(
+  &lt;StrictMode&gt;
+    &lt;App /&gt;
+  &lt;/StrictMode&gt;,
+)
+</pre> </div> </div> <p><br> And now we find out if there was actually something in the refrigerator.</p> <div class="row justify-content-sm-center"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/bugwalk/endlogo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="BugWalk" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> </article> </div> </div> <footer class="sticky-bottom mt-5" role="contentinfo"> <div class="container"> © Copyright 2026 Biscotti Diskette  ·  <a href="https://github.com/biscottidiskette" target="_blank" rel="external nofollow noopener">GitHub</a>  ·  <a href="https://app.hackthebox.eu/profile/biscottidiskette" target="_blank" rel="external nofollow noopener">HackTheBox</a>  ·  <a href="https://tryhackme.com/r/p/BiscottiDiskette" target="_blank" rel="external nofollow noopener">TryHackMe</a>  ·  <a href="/contact/">Contact</a> </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?70d799092f862ad98c7876aa47712e20"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-HL7MJBJN7X"></script> <script defer src="/assets/js/google-analytics-setup.js?1c5d3b199be7049d4732e15d2072d0b2"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> <script src="/assets/js/terminal.js?ec2a38fba85ea4751db97d30059cd1c5"></script> </body> </html>

