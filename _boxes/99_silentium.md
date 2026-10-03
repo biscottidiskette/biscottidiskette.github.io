@@ -248,7 +248,7 @@ Fuzz Faster U Fool for some sweet sub directories.
 
 {% capture ffufsubdomains %}
 ┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium]
-└──╼ [★]$ ffuf -w /usr/share/wordlists/seclists/Discovery/Web-Content/DirBuster-2007_directory-list-2.3-big.txt -u http://silentium.htb/FUZZ -e .html,.txt,.bak -fw 1866
+└──╼ [★]$ ffuf -w /usr/share/wordlists/seclists/Discovery/DNS/dns-Jhaddix.txt -u http://silentium.htb/ -H "Host: FUZZ.silentium.htb" -fw 6
 
         /'___\  /'___\           /'___\       
        /\ \__/ /\ \__/  __  __  /\ \__/       
@@ -261,19 +261,19 @@ Fuzz Faster U Fool for some sweet sub directories.
 ________________________________________________
 
  :: Method           : GET
- :: URL              : http://silentium.htb/FUZZ
- :: Wordlist         : FUZZ: /usr/share/wordlists/seclists/Discovery/Web-Content/DirBuster-2007_directory-list-2.3-big.txt
- :: Extensions       : .html .txt .bak 
+ :: URL              : http://silentium.htb/
+ :: Wordlist         : FUZZ: /usr/share/wordlists/seclists/Discovery/DNS/dns-Jhaddix.txt
+ :: Header           : Host: FUZZ.silentium.htb
  :: Follow redirects : false
  :: Calibration      : false
  :: Timeout          : 10
  :: Threads          : 40
  :: Matcher          : Response status: 200-299,301,302,307,401,403,405,500
- :: Filter           : Response words: 1866
+ :: Filter           : Response words: 6
 ________________________________________________
 
-assets                  [Status: 301, Size: 178, Words: 6, Lines: 8, Duration: 38ms]
-:: Progress: [5095328/5095328] :: Job [1/1] :: 351 req/sec :: Duration: [1:19:19] :: Errors: 0 ::
+staging                 [Status: 200, Size: 3142, Words: 789, Lines: 70, Duration: 33ms]
+:: Progress: [2171687/2171687] :: Job [1/1] :: 803 req/sec :: Duration: [0:20:42] :: Errors: 0 ::
 {% endcapture %}
 {% include terminal.html language='bash' title='bash' content=ffufsubdomains %}
 
@@ -899,7 +899,7 @@ Try registering a new user.
 </div>
 
 <br />
-Auhtenticate as said new user.
+Authenticate as said new user.
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-8 mt-3 mt-md-0">
@@ -908,7 +908,7 @@ Auhtenticate as said new user.
 </div>
 
 <br />
-Add the subdmain to the `/etc/hosts` file.
+Add the subdomain to the `/etc/hosts` file.
 
 {% capture gogshosts %}
 ┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium]
