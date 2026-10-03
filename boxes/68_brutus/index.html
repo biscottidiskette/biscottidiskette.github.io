@@ -1,0 +1,277 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <title>Brutus</title> <meta name="description" content="Analyzed logs and identified brute-force."> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <meta name="author" content="Biscotti Diskette"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta property="og:type" content="website"> <meta property="og:title" content="Brutus"> <meta property="og:description" content="Analyzed logs and identified brute-force."> <meta property="og:url" content="https://biscottidiskette.github.io/boxes/68_brutus/"> <meta property="og:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <meta property="og:site_name" content="Biscotti Diskette"> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:title" content="Brutus"> <meta name="twitter:description" content="Analyzed logs and identified brute-force."> <meta name="twitter:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Biscotti Diskette",
+  "url": "https://biscottidiskette.github.io",
+  "sameAs": [
+    
+  ],
+  "jobTitle": "Cybersecurity Researcher",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Independent",
+    "url": "https://biscottidiskette.github.io"
+  },
+  "image": "https://biscottidiskette.github.io/assets/img/social-preview.png",
+  "description": "Analyzed logs and identified brute-force."
+}
+</script> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta http-equiv="Permissions-Policy" content="interest-cohort=()"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Brutus | Biscotti Diskette </title> <meta name="author" content="Biscotti Diskette"> <meta name="description" content="Analyzed logs and identified brute-force."> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/frontpage/Logo3.png?4f879aeff848659581251777fe0ab074"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="stylesheet" href="/assets/css/terminal.css?bebbf314b8406d78caf98717f86a33c1"> <link rel="canonical" href="https://biscottidiskette.github.io/boxes/68_brutus/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> <title>Brutus</title> <meta name="description" content="Analyzed logs and identified brute-force."> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <meta name="author" content="Biscotti Diskette"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta property="og:type" content="website"> <meta property="og:title" content="Brutus"> <meta property="og:description" content="Analyzed logs and identified brute-force."> <meta property="og:url" content="https://biscottidiskette.github.io/boxes/68_brutus/"> <meta property="og:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <meta property="og:site_name" content="Biscotti Diskette"> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:title" content="Brutus"> <meta name="twitter:description" content="Analyzed logs and identified brute-force."> <meta name="twitter:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Biscotti Diskette",
+  "url": "https://biscottidiskette.github.io",
+  "sameAs": [
+    
+  ],
+  "jobTitle": "Cybersecurity Researcher",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Independent",
+    "url": "https://biscottidiskette.github.io"
+  },
+  "image": "https://biscottidiskette.github.io/assets/img/social-preview.png",
+  "description": "Analyzed logs and identified brute-force."
+}
+</script> </head> <body class="fixed-top-nav sticky-bottom-footer"> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> Biscotti Diskette </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item active"> <a class="nav-link" href="/boxes/">boxes <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/certifications/">certs </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repos </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/contact/">contact </a> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Brutus</h1> <p class="post-description">Analyzed logs and identified brute-force.</p> </header> <article> <div class="row justify-content-sm-center"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/brutus/logo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="HTB Brutus" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <h2>Link</h2> <p><a href="https://app.hackthebox.com/sherlocks/Brutus" rel="external nofollow noopener" target="_blank">Room Link</a></p> <p><br></p> <h2>Process</h2> <p><br> “Et tu, Brute!” We are going to tackle the Brutus Sherlock.</p> <p>The first thing we will look for is the IP address of the attacker.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-41156"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-41156')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-41156')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-41156')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-41156')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-41156">
+&lt;snip&gt;
+
+Mar  6 06:31:01 ip-172-31-35-28 CRON[2313]: pam_unix(cron:session): session closed for user confluence
+Mar  6 06:31:31 ip-172-31-35-28 sshd[2325]: Invalid user admin from 65.2.161.68 port 46380
+Mar  6 06:31:31 ip-172-31-35-28 sshd[2325]: Received disconnect from 65.2.161.68 port 46380:11: Bye Bye [preauth]
+Mar  6 06:31:31 ip-172-31-35-28 sshd[2325]: Disconnected from invalid user admin 65.2.161.68 port 46380 [preauth]
+Mar  6 06:31:31 ip-172-31-35-28 sshd[620]: error: beginning MaxStartups throttling
+Mar  6 06:31:31 ip-172-31-35-28 sshd[620]: drop connection #10 from [65.2.161.68]:46482 on [172.31.35.28]:22 past MaxStartups
+Mar  6 06:31:31 ip-172-31-35-28 sshd[2327]: Invalid user admin from 65.2.161.68 port 46392
+Mar  6 06:31:31 ip-172-31-35-28 sshd[2327]: pam_unix(sshd:auth): check pass; user unknown
+Mar  6 06:31:31 ip-172-31-35-28 sshd[2327]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=65.2.161.68 
+Mar  6 06:31:31 ip-172-31-35-28 sshd[2332]: Invalid user admin from 65.2.161.68 port 46444
+Mar  6 06:31:31 ip-172-31-35-28 sshd[2331]: Invalid user admin from 65.2.161.68 port 46436
+
+&lt;snip&gt;
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-41156" onclick="terminalOverlayClose('bash-bash-41156')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-41156')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-41156')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-41156')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-41156" data-language="bash">
+&lt;snip&gt;
+
+Mar  6 06:31:01 ip-172-31-35-28 CRON[2313]: pam_unix(cron:session): session closed for user confluence
+Mar  6 06:31:31 ip-172-31-35-28 sshd[2325]: Invalid user admin from 65.2.161.68 port 46380
+Mar  6 06:31:31 ip-172-31-35-28 sshd[2325]: Received disconnect from 65.2.161.68 port 46380:11: Bye Bye [preauth]
+Mar  6 06:31:31 ip-172-31-35-28 sshd[2325]: Disconnected from invalid user admin 65.2.161.68 port 46380 [preauth]
+Mar  6 06:31:31 ip-172-31-35-28 sshd[620]: error: beginning MaxStartups throttling
+Mar  6 06:31:31 ip-172-31-35-28 sshd[620]: drop connection #10 from [65.2.161.68]:46482 on [172.31.35.28]:22 past MaxStartups
+Mar  6 06:31:31 ip-172-31-35-28 sshd[2327]: Invalid user admin from 65.2.161.68 port 46392
+Mar  6 06:31:31 ip-172-31-35-28 sshd[2327]: pam_unix(sshd:auth): check pass; user unknown
+Mar  6 06:31:31 ip-172-31-35-28 sshd[2327]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=65.2.161.68 
+Mar  6 06:31:31 ip-172-31-35-28 sshd[2332]: Invalid user admin from 65.2.161.68 port 46444
+Mar  6 06:31:31 ip-172-31-35-28 sshd[2331]: Invalid user admin from 65.2.161.68 port 46436
+
+&lt;snip&gt;
+</pre> </div> </div> <p><br> Identify the successful login of the root when the brute-force was successful.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-41092"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-41092')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-41092')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-41092')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-41092')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-41092">
+&lt;snip&gt;
+
+Mar  6 06:31:39 ip-172-31-35-28 sshd[2399]: Failed password for root from 65.2.161.68 port 46852 ssh2
+Mar  6 06:31:39 ip-172-31-35-28 sshd[2407]: Failed password for root from 65.2.161.68 port 46876 ssh2
+Mar  6 06:31:39 ip-172-31-35-28 sshd[2383]: Received disconnect from 65.2.161.68 port 46722:11: Bye Bye [preauth]
+Mar  6 06:31:39 ip-172-31-35-28 sshd[2383]: Disconnected from invalid user svc_account 65.2.161.68 port 46722 [preauth]
+Mar  6 06:31:39 ip-172-31-35-28 sshd[2384]: Received disconnect from 65.2.161.68 port 46732:11: Bye Bye [preauth]
+Mar  6 06:31:39 ip-172-31-35-28 sshd[2384]: Disconnected from invalid user svc_account 65.2.161.68 port 46732 [preauth]
+Mar  6 06:31:39 ip-172-31-35-28 sshd[2409]: Failed password for root from 65.2.161.68 port 46890 ssh2
+Mar  6 06:31:40 ip-172-31-35-28 sshd[2411]: Accepted password for root from 65.2.161.68 port 34782 ssh2
+Mar  6 06:31:40 ip-172-31-35-28 sshd[2411]: pam_unix(sshd:session): session opened for user root(uid=0) by (uid=0)
+Mar  6 06:31:40 ip-172-31-35-28 systemd-logind[411]: New session 34 of user root.
+
+&lt;snip&gt;
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-41092" onclick="terminalOverlayClose('bash-bash-41092')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-41092')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-41092')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-41092')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-41092" data-language="bash">
+&lt;snip&gt;
+
+Mar  6 06:31:39 ip-172-31-35-28 sshd[2399]: Failed password for root from 65.2.161.68 port 46852 ssh2
+Mar  6 06:31:39 ip-172-31-35-28 sshd[2407]: Failed password for root from 65.2.161.68 port 46876 ssh2
+Mar  6 06:31:39 ip-172-31-35-28 sshd[2383]: Received disconnect from 65.2.161.68 port 46722:11: Bye Bye [preauth]
+Mar  6 06:31:39 ip-172-31-35-28 sshd[2383]: Disconnected from invalid user svc_account 65.2.161.68 port 46722 [preauth]
+Mar  6 06:31:39 ip-172-31-35-28 sshd[2384]: Received disconnect from 65.2.161.68 port 46732:11: Bye Bye [preauth]
+Mar  6 06:31:39 ip-172-31-35-28 sshd[2384]: Disconnected from invalid user svc_account 65.2.161.68 port 46732 [preauth]
+Mar  6 06:31:39 ip-172-31-35-28 sshd[2409]: Failed password for root from 65.2.161.68 port 46890 ssh2
+Mar  6 06:31:40 ip-172-31-35-28 sshd[2411]: Accepted password for root from 65.2.161.68 port 34782 ssh2
+Mar  6 06:31:40 ip-172-31-35-28 sshd[2411]: pam_unix(sshd:session): session opened for user root(uid=0) by (uid=0)
+Mar  6 06:31:40 ip-172-31-35-28 systemd-logind[411]: New session 34 of user root.
+
+&lt;snip&gt;
+</pre> </div> </div> <p><br> Time to move on to analyze the wtmp log. Run the included the python script to analyze wtmp.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-471"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-471')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-471')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-471')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-471')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-471">
+┌──(kali㉿kali)-[~/Desktop/brutus]
+└─$ python3 utmp.py -o outfile wtmp
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-471" onclick="terminalOverlayClose('bash-bash-471')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-471')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-471')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-471')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-471" data-language="bash">
+┌──(kali㉿kali)-[~/Desktop/brutus]
+└─$ python3 utmp.py -o outfile wtmp
+</pre> </div> </div> <p><br> Review the full results of the output.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-43965"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-43965')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-43965')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-43965')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-43965')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-43965">
+"type"  "pid"   "line"  "id"    "user"  "host"  "term"  "exit"  "session"       "sec"   "usec"  "addr"
+"BOOT_TIME"     "0"     "~"     "~~"    "reboot"        "6.2.0-1017-aws"        "0"     "0"     "0"     "2024/01/25 22:12:17"   "804944"        "0.0.0.0"
+"INIT"  "601"   "ttyS0" "tyS0"  ""      ""      "0"     "0"     "601"   "2024/01/25 22:12:31"   "72401" "0.0.0.0"
+"LOGIN" "601"   "ttyS0" "tyS0"  "LOGIN" ""      "0"     "0"     "601"   "2024/01/25 22:12:31"   "72401" "0.0.0.0"
+"INIT"  "618"   "tty1"  "tty1"  ""      ""      "0"     "0"     "618"   "2024/01/25 22:12:31"   "80342" "0.0.0.0"
+"LOGIN" "618"   "tty1"  "tty1"  "LOGIN" ""      "0"     "0"     "618"   "2024/01/25 22:12:31"   "80342" "0.0.0.0"
+"RUN_LVL"       "53"    "~"     "~~"    "runlevel"      "6.2.0-1017-aws"        "0"     "0"     "0"     "2024/01/25 22:12:33"   "792454"        "0.0.0.0"
+"USER"  "1284"  "pts/0" "ts/0"  "ubuntu"        "203.101.190.9" "0"     "0"     "0"     "2024/01/25 22:13:58"   "354674"        "203.101.190.9"
+"DEAD"  "1284"  "pts/0" ""      ""      ""      "0"     "0"     "0"     "2024/01/25 22:15:12"   "956114"        "0.0.0.0"
+"USER"  "1483"  "pts/0" "ts/0"  "root"  "203.101.190.9" "0"     "0"     "0"     "2024/01/25 22:15:40"   "806926"        "203.101.190.9"
+"DEAD"  "1404"  "pts/0" ""      ""      ""      "0"     "0"     "0"     "2024/01/25 23:34:34"   "949753"        "0.0.0.0"
+"USER"  "836798"        "pts/0" "ts/0"  "root"  "203.101.190.9" "0"     "0"     "0"     "2024/02/11 21:33:49"   "408334"        "203.101.190.9"
+"INIT"  "838568"        "ttyS0" "tyS0"  ""      ""      "0"     "0"     "838568"        "2024/02/11 21:39:02"   "172417"        "0.0.0.0"
+"LOGIN" "838568"        "ttyS0" "tyS0"  "LOGIN" ""      "0"     "0"     "838568"        "2024/02/11 21:39:02"   "172417"        "0.0.0.0"
+"USER"  "838962"        "pts/1" "ts/1"  "root"  "203.101.190.9" "0"     "0"     "0"     "2024/02/11 21:41:11"   "700107"        "203.101.190.9"
+"DEAD"  "838896"        "pts/1" ""      ""      ""      "0"     "0"     "0"     "2024/02/11 21:41:46"   "272984"        "0.0.0.0"
+"USER"  "842171"        "pts/1" "ts/1"  "root"  "203.101.190.9" "0"     "0"     "0"     "2024/02/11 21:54:27"   "775434"        "203.101.190.9"
+"DEAD"  "842073"        "pts/1" ""      ""      ""      "0"     "0"     "0"     "2024/02/11 22:08:04"   "769514"        "0.0.0.0"
+"DEAD"  "836694"        "pts/0" ""      ""      ""      "0"     "0"     "0"     "2024/02/11 22:08:04"   "769963"        "0.0.0.0"
+"RUN_LVL"       "0"     "~"     "~~"    "shutdown"      "6.2.0-1017-aws"        "0"     "0"     "0"     "2024/02/11 22:09:18"   "731"   "0.0.0.0"
+"BOOT_TIME"     "0"     "~"     "~~"    "reboot"        "6.2.0-1018-aws"        "0"     "0"     "0"     "2024/03/06 17:17:15"   "744575"        "0.0.0.0"
+"INIT"  "464"   "ttyS0" "tyS0"  ""      ""      "0"     "0"     "464"   "2024/03/06 17:17:27"   "354378"        "0.0.0.0"
+"LOGIN" "464"   "ttyS0" "tyS0"  "LOGIN" ""      "0"     "0"     "464"   "2024/03/06 17:17:27"   "354378"        "0.0.0.0"
+"INIT"  "505"   "tty1"  "tty1"  ""      ""      "0"     "0"     "505"   "2024/03/06 17:17:27"   "469940"        "0.0.0.0"
+"LOGIN" "505"   "tty1"  "tty1"  "LOGIN" ""      "0"     "0"     "505"   "2024/03/06 17:17:27"   "469940"        "0.0.0.0"
+"RUN_LVL"       "53"    "~"     "~~"    "runlevel"      "6.2.0-1018-aws"        "0"     "0"     "0"     "2024/03/06 17:17:29"   "538024"        "0.0.0.0"
+"USER"  "1583"  "pts/0" "ts/0"  "root"  "203.101.190.9" "0"     "0"     "0"     "2024/03/06 17:19:55"   "151913"        "203.101.190.9"
+"USER"  "2549"  "pts/1" "ts/1"  "root"  "65.2.161.68"   "0"     "0"     "0"     "2024/03/06 17:32:45"   "387923"        "65.2.161.68"
+"DEAD"  "2491"  "pts/1" ""      ""      ""      "0"     "0"     "0"     "2024/03/06 17:37:24"   "590579"        "0.0.0.0"
+"USER"  "2667"  "pts/1" "ts/1"  "cyberjunkie"   "65.2.161.68"   "0"     "0"     "0"     "2024/03/06 17:37:35"   "475575"        "65.2.161.68
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-43965" onclick="terminalOverlayClose('bash-bash-43965')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-43965')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-43965')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-43965')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-43965" data-language="bash">
+"type"  "pid"   "line"  "id"    "user"  "host"  "term"  "exit"  "session"       "sec"   "usec"  "addr"
+"BOOT_TIME"     "0"     "~"     "~~"    "reboot"        "6.2.0-1017-aws"        "0"     "0"     "0"     "2024/01/25 22:12:17"   "804944"        "0.0.0.0"
+"INIT"  "601"   "ttyS0" "tyS0"  ""      ""      "0"     "0"     "601"   "2024/01/25 22:12:31"   "72401" "0.0.0.0"
+"LOGIN" "601"   "ttyS0" "tyS0"  "LOGIN" ""      "0"     "0"     "601"   "2024/01/25 22:12:31"   "72401" "0.0.0.0"
+"INIT"  "618"   "tty1"  "tty1"  ""      ""      "0"     "0"     "618"   "2024/01/25 22:12:31"   "80342" "0.0.0.0"
+"LOGIN" "618"   "tty1"  "tty1"  "LOGIN" ""      "0"     "0"     "618"   "2024/01/25 22:12:31"   "80342" "0.0.0.0"
+"RUN_LVL"       "53"    "~"     "~~"    "runlevel"      "6.2.0-1017-aws"        "0"     "0"     "0"     "2024/01/25 22:12:33"   "792454"        "0.0.0.0"
+"USER"  "1284"  "pts/0" "ts/0"  "ubuntu"        "203.101.190.9" "0"     "0"     "0"     "2024/01/25 22:13:58"   "354674"        "203.101.190.9"
+"DEAD"  "1284"  "pts/0" ""      ""      ""      "0"     "0"     "0"     "2024/01/25 22:15:12"   "956114"        "0.0.0.0"
+"USER"  "1483"  "pts/0" "ts/0"  "root"  "203.101.190.9" "0"     "0"     "0"     "2024/01/25 22:15:40"   "806926"        "203.101.190.9"
+"DEAD"  "1404"  "pts/0" ""      ""      ""      "0"     "0"     "0"     "2024/01/25 23:34:34"   "949753"        "0.0.0.0"
+"USER"  "836798"        "pts/0" "ts/0"  "root"  "203.101.190.9" "0"     "0"     "0"     "2024/02/11 21:33:49"   "408334"        "203.101.190.9"
+"INIT"  "838568"        "ttyS0" "tyS0"  ""      ""      "0"     "0"     "838568"        "2024/02/11 21:39:02"   "172417"        "0.0.0.0"
+"LOGIN" "838568"        "ttyS0" "tyS0"  "LOGIN" ""      "0"     "0"     "838568"        "2024/02/11 21:39:02"   "172417"        "0.0.0.0"
+"USER"  "838962"        "pts/1" "ts/1"  "root"  "203.101.190.9" "0"     "0"     "0"     "2024/02/11 21:41:11"   "700107"        "203.101.190.9"
+"DEAD"  "838896"        "pts/1" ""      ""      ""      "0"     "0"     "0"     "2024/02/11 21:41:46"   "272984"        "0.0.0.0"
+"USER"  "842171"        "pts/1" "ts/1"  "root"  "203.101.190.9" "0"     "0"     "0"     "2024/02/11 21:54:27"   "775434"        "203.101.190.9"
+"DEAD"  "842073"        "pts/1" ""      ""      ""      "0"     "0"     "0"     "2024/02/11 22:08:04"   "769514"        "0.0.0.0"
+"DEAD"  "836694"        "pts/0" ""      ""      ""      "0"     "0"     "0"     "2024/02/11 22:08:04"   "769963"        "0.0.0.0"
+"RUN_LVL"       "0"     "~"     "~~"    "shutdown"      "6.2.0-1017-aws"        "0"     "0"     "0"     "2024/02/11 22:09:18"   "731"   "0.0.0.0"
+"BOOT_TIME"     "0"     "~"     "~~"    "reboot"        "6.2.0-1018-aws"        "0"     "0"     "0"     "2024/03/06 17:17:15"   "744575"        "0.0.0.0"
+"INIT"  "464"   "ttyS0" "tyS0"  ""      ""      "0"     "0"     "464"   "2024/03/06 17:17:27"   "354378"        "0.0.0.0"
+"LOGIN" "464"   "ttyS0" "tyS0"  "LOGIN" ""      "0"     "0"     "464"   "2024/03/06 17:17:27"   "354378"        "0.0.0.0"
+"INIT"  "505"   "tty1"  "tty1"  ""      ""      "0"     "0"     "505"   "2024/03/06 17:17:27"   "469940"        "0.0.0.0"
+"LOGIN" "505"   "tty1"  "tty1"  "LOGIN" ""      "0"     "0"     "505"   "2024/03/06 17:17:27"   "469940"        "0.0.0.0"
+"RUN_LVL"       "53"    "~"     "~~"    "runlevel"      "6.2.0-1018-aws"        "0"     "0"     "0"     "2024/03/06 17:17:29"   "538024"        "0.0.0.0"
+"USER"  "1583"  "pts/0" "ts/0"  "root"  "203.101.190.9" "0"     "0"     "0"     "2024/03/06 17:19:55"   "151913"        "203.101.190.9"
+"USER"  "2549"  "pts/1" "ts/1"  "root"  "65.2.161.68"   "0"     "0"     "0"     "2024/03/06 17:32:45"   "387923"        "65.2.161.68"
+"DEAD"  "2491"  "pts/1" ""      ""      ""      "0"     "0"     "0"     "2024/03/06 17:37:24"   "590579"        "0.0.0.0"
+"USER"  "2667"  "pts/1" "ts/1"  "cyberjunkie"   "65.2.161.68"   "0"     "0"     "0"     "2024/03/06 17:37:35"   "475575"        "65.2.161.68
+</pre> </div> </div> <p><br> Find the root “USER” with the IP address and get the time. Convert it to the UTC since the file is in local time.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4409"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4409')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4409')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4409')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4409')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4409">
+&lt;snip&gt;
+
+"USER"  "1583"  "pts/0" "ts/0"  "root"  "203.101.190.9" "0"     "0"     "0"     "2024/03/06 17:19:55"   "151913"        "203.101.190.9"
+"USER"  "2549"  "pts/1" "ts/1"  "root"  "65.2.161.68"   "0"     "0"     "0"     "2024/03/06 17:32:45"   "387923"        "65.2.161.68"
+"DEAD"  "2491"  "pts/1" ""      ""      ""      "0"     "0"     "0"     "2024/03/06 17:37:24"   "590579"        "0.0.0.0"
+
+&lt;snip&gt;
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4409" onclick="terminalOverlayClose('bash-bash-4409')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4409')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4409')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4409')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4409" data-language="bash">
+&lt;snip&gt;
+
+"USER"  "1583"  "pts/0" "ts/0"  "root"  "203.101.190.9" "0"     "0"     "0"     "2024/03/06 17:19:55"   "151913"        "203.101.190.9"
+"USER"  "2549"  "pts/1" "ts/1"  "root"  "65.2.161.68"   "0"     "0"     "0"     "2024/03/06 17:32:45"   "387923"        "65.2.161.68"
+"DEAD"  "2491"  "pts/1" ""      ""      ""      "0"     "0"     "0"     "2024/03/06 17:37:24"   "590579"        "0.0.0.0"
+
+&lt;snip&gt;
+</pre> </div> </div> <p><br> Going back to the log we can nick the session number.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4882"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4882')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4882')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4882')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4882')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4882">
+&lt;snip&gt;
+
+Mar  6 06:32:39 ip-172-31-35-28 sshd[620]: exited MaxStartups throttling after 00:01:08, 21 connections dropped
+Mar  6 06:32:44 ip-172-31-35-28 sshd[2491]: Accepted password for root from 65.2.161.68 port 53184 ssh2
+Mar  6 06:32:44 ip-172-31-35-28 sshd[2491]: pam_unix(sshd:session): session opened for user root(uid=0) by (uid=0)
+Mar  6 06:32:44 ip-172-31-35-28 systemd-logind[411]: New session 37 of user root.
+Mar  6 06:33:01 ip-172-31-35-28 CRON[2561]: pam_unix(cron:session): session opened for user confluence(uid=998) by (uid=0)
+Mar  6 06:33:01 ip-172-31-35-28 CRON[2562]: pam_unix(cron:session): session opened for user confluence(uid=998) by (uid=0)
+Mar  6 06:33:01 ip-172-31-35-28 CRON[2561]: pam_unix(cron:session): session closed for user confluence
+Mar  6 06:33:01 ip-172-31-35-28 CRON[2562]: pam_unix(cron:session): session closed for user confluence
+
+&lt;snip&gt;
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4882" onclick="terminalOverlayClose('bash-bash-4882')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4882')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4882')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4882')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4882" data-language="bash">
+&lt;snip&gt;
+
+Mar  6 06:32:39 ip-172-31-35-28 sshd[620]: exited MaxStartups throttling after 00:01:08, 21 connections dropped
+Mar  6 06:32:44 ip-172-31-35-28 sshd[2491]: Accepted password for root from 65.2.161.68 port 53184 ssh2
+Mar  6 06:32:44 ip-172-31-35-28 sshd[2491]: pam_unix(sshd:session): session opened for user root(uid=0) by (uid=0)
+Mar  6 06:32:44 ip-172-31-35-28 systemd-logind[411]: New session 37 of user root.
+Mar  6 06:33:01 ip-172-31-35-28 CRON[2561]: pam_unix(cron:session): session opened for user confluence(uid=998) by (uid=0)
+Mar  6 06:33:01 ip-172-31-35-28 CRON[2562]: pam_unix(cron:session): session opened for user confluence(uid=998) by (uid=0)
+Mar  6 06:33:01 ip-172-31-35-28 CRON[2561]: pam_unix(cron:session): session closed for user confluence
+Mar  6 06:33:01 ip-172-31-35-28 CRON[2562]: pam_unix(cron:session): session closed for user confluence
+
+&lt;snip&gt;
+</pre> </div> </div> <p><br> We also have to track down any new users that the attacker may have added through the course of the attack.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4641"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4641')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4641')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4641')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4641')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4641">
+&lt;snip&gt;
+
+Mar  6 06:34:18 ip-172-31-35-28 groupadd[2586]: group added to /etc/group: name=cyberjunkie, GID=1002
+Mar  6 06:34:18 ip-172-31-35-28 groupadd[2586]: group added to /etc/gshadow: name=cyberjunkie
+Mar  6 06:34:18 ip-172-31-35-28 groupadd[2586]: new group: name=cyberjunkie, GID=1002
+Mar  6 06:34:18 ip-172-31-35-28 useradd[2592]: new user: name=cyberjunkie, UID=1002, GID=1002, home=/home/cyberjunkie, shell=/bin/bash, from=/dev/pts/1
+Mar  6 06:34:26 ip-172-31-35-28 passwd[2603]: pam_unix(passwd:chauthtok): password changed for cyberjunkie
+Mar  6 06:34:31 ip-172-31-35-28 chfn[2605]: changed user 'cyberjunkie' information
+
+&lt;snip&gt;
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4641" onclick="terminalOverlayClose('bash-bash-4641')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4641')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4641')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4641')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4641" data-language="bash">
+&lt;snip&gt;
+
+Mar  6 06:34:18 ip-172-31-35-28 groupadd[2586]: group added to /etc/group: name=cyberjunkie, GID=1002
+Mar  6 06:34:18 ip-172-31-35-28 groupadd[2586]: group added to /etc/gshadow: name=cyberjunkie
+Mar  6 06:34:18 ip-172-31-35-28 groupadd[2586]: new group: name=cyberjunkie, GID=1002
+Mar  6 06:34:18 ip-172-31-35-28 useradd[2592]: new user: name=cyberjunkie, UID=1002, GID=1002, home=/home/cyberjunkie, shell=/bin/bash, from=/dev/pts/1
+Mar  6 06:34:26 ip-172-31-35-28 passwd[2603]: pam_unix(passwd:chauthtok): password changed for cyberjunkie
+Mar  6 06:34:31 ip-172-31-35-28 chfn[2605]: changed user 'cyberjunkie' information
+
+&lt;snip&gt;
+</pre> </div> </div> <p><br> Next up, we can identify the Technique of adding a local user as a persistence technique in the MITRE framework.</p> <div class="row justify-content-sm-center"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/brutus/mitre.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="MITRE Framework" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><a href="https://attack.mitre.org/techniques/T1136/001/" rel="external nofollow noopener" target="_blank">https://attack.mitre.org/techniques/T1136/001/</a></p> <p><br> Now, we have to find what time the attacker disconnected from user root.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4506"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4506')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4506')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4506')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4506')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4506">
+&lt;snip&gt;
+
+Mar  6 06:37:24 ip-172-31-35-28 sshd[2491]: Received disconnect from 65.2.161.68 port 53184:11: disconnected by user
+Mar  6 06:37:24 ip-172-31-35-28 sshd[2491]: Disconnected from user root 65.2.161.68 port 53184
+Mar  6 06:37:24 ip-172-31-35-28 sshd[2491]: pam_unix(sshd:session): session closed for user root
+Mar  6 06:37:24 ip-172-31-35-28 systemd-logind[411]: Session 37 logged out. Waiting for processes to exit.
+Mar  6 06:37:24 ip-172-31-35-28 systemd-logind[411]: Removed session 37.
+
+&lt;snip&gt;
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4506" onclick="terminalOverlayClose('bash-bash-4506')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4506')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4506')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4506')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4506" data-language="bash">
+&lt;snip&gt;
+
+Mar  6 06:37:24 ip-172-31-35-28 sshd[2491]: Received disconnect from 65.2.161.68 port 53184:11: disconnected by user
+Mar  6 06:37:24 ip-172-31-35-28 sshd[2491]: Disconnected from user root 65.2.161.68 port 53184
+Mar  6 06:37:24 ip-172-31-35-28 sshd[2491]: pam_unix(sshd:session): session closed for user root
+Mar  6 06:37:24 ip-172-31-35-28 systemd-logind[411]: Session 37 logged out. Waiting for processes to exit.
+Mar  6 06:37:24 ip-172-31-35-28 systemd-logind[411]: Removed session 37.
+
+&lt;snip&gt;
+</pre> </div> </div> <p><br> Our final task is to find the curl command that download the (potentially) malicious script.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4752"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4752')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4752')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4752')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4752')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4752">
+&lt;snip&gt;
+
+Mar  6 06:39:01 ip-172-31-35-28 CRON[2765]: pam_unix(cron:session): session closed for user confluence
+Mar  6 06:39:01 ip-172-31-35-28 CRON[2764]: pam_unix(cron:session): session closed for user confluence
+Mar  6 06:39:38 ip-172-31-35-28 sudo: cyberjunkie : TTY=pts/1 ; PWD=/home/cyberjunkie ; USER=root ; COMMAND=/usr/bin/curl https://raw.githubusercontent.com/montysecurity/linper/main/linper.sh
+Mar  6 06:39:38 ip-172-31-35-28 sudo: pam_unix(sudo:session): session opened for user root(uid=0) by cyberjunkie(uid=1002)
+Mar  6 06:39:39 ip-172-31-35-28 sudo: pam_unix(sudo:session): session closed for user root
+Mar  6 06:40:01 ip-172-31-35-28 CRON[2783]: pam_unix(cron:session): session opened for user confluence(uid=998) by (uid=0)
+
+&lt;snip&gt;
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4752" onclick="terminalOverlayClose('bash-bash-4752')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4752')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4752')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4752')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4752" data-language="bash">
+&lt;snip&gt;
+
+Mar  6 06:39:01 ip-172-31-35-28 CRON[2765]: pam_unix(cron:session): session closed for user confluence
+Mar  6 06:39:01 ip-172-31-35-28 CRON[2764]: pam_unix(cron:session): session closed for user confluence
+Mar  6 06:39:38 ip-172-31-35-28 sudo: cyberjunkie : TTY=pts/1 ; PWD=/home/cyberjunkie ; USER=root ; COMMAND=/usr/bin/curl https://raw.githubusercontent.com/montysecurity/linper/main/linper.sh
+Mar  6 06:39:38 ip-172-31-35-28 sudo: pam_unix(sudo:session): session opened for user root(uid=0) by cyberjunkie(uid=1002)
+Mar  6 06:39:39 ip-172-31-35-28 sudo: pam_unix(sudo:session): session closed for user root
+Mar  6 06:40:01 ip-172-31-35-28 CRON[2783]: pam_unix(cron:session): session opened for user confluence(uid=998) by (uid=0)
+
+&lt;snip&gt;
+</pre> </div> </div> <p><br> And with that, we tackle the Brutus box. Time to take on the next one!</p> </article> </div> </div> <footer class="sticky-bottom mt-5" role="contentinfo"> <div class="container"> © Copyright 2026 Biscotti Diskette  ·  <a href="https://github.com/biscottidiskette" target="_blank" rel="external nofollow noopener">GitHub</a>  ·  <a href="https://app.hackthebox.eu/profile/biscottidiskette" target="_blank" rel="external nofollow noopener">HackTheBox</a>  ·  <a href="https://tryhackme.com/r/p/BiscottiDiskette" target="_blank" rel="external nofollow noopener">TryHackMe</a>  ·  <a href="/contact/">Contact</a> </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?70d799092f862ad98c7876aa47712e20"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-HL7MJBJN7X"></script> <script defer src="/assets/js/google-analytics-setup.js?1c5d3b199be7049d4732e15d2072d0b2"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> <script src="/assets/js/terminal.js?ec2a38fba85ea4751db97d30059cd1c5"></script> </body> </html>

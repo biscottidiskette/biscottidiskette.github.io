@@ -1,0 +1,537 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <title>OSEDTutor</title> <meta name="description" content="Created an App that Creates Lessons."> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <meta name="author" content="Biscotti Diskette"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta property="og:type" content="website"> <meta property="og:title" content="OSEDTutor"> <meta property="og:description" content="Created an App that Creates Lessons."> <meta property="og:url" content="https://biscottidiskette.github.io/projects/9_osedtutor/"> <meta property="og:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <meta property="og:site_name" content="Biscotti Diskette"> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:title" content="OSEDTutor"> <meta name="twitter:description" content="Created an App that Creates Lessons."> <meta name="twitter:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Biscotti Diskette",
+  "url": "https://biscottidiskette.github.io",
+  "sameAs": [
+    
+  ],
+  "jobTitle": "Cybersecurity Researcher",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Independent",
+    "url": "https://biscottidiskette.github.io"
+  },
+  "image": "https://biscottidiskette.github.io/assets/img/social-preview.png",
+  "description": "Created an App that Creates Lessons."
+}
+</script> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta http-equiv="Permissions-Policy" content="interest-cohort=()"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> OSEDTutor | Biscotti Diskette </title> <meta name="author" content="Biscotti Diskette"> <meta name="description" content="Created an App that Creates Lessons."> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/frontpage/Logo3.png?4f879aeff848659581251777fe0ab074"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="stylesheet" href="/assets/css/terminal.css?bebbf314b8406d78caf98717f86a33c1"> <link rel="canonical" href="https://biscottidiskette.github.io/projects/9_osedtutor/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> <title>OSEDTutor</title> <meta name="description" content="Created an App that Creates Lessons."> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <meta name="author" content="Biscotti Diskette"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta property="og:type" content="website"> <meta property="og:title" content="OSEDTutor"> <meta property="og:description" content="Created an App that Creates Lessons."> <meta property="og:url" content="https://biscottidiskette.github.io/projects/9_osedtutor/"> <meta property="og:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <meta property="og:site_name" content="Biscotti Diskette"> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:title" content="OSEDTutor"> <meta name="twitter:description" content="Created an App that Creates Lessons."> <meta name="twitter:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Biscotti Diskette",
+  "url": "https://biscottidiskette.github.io",
+  "sameAs": [
+    
+  ],
+  "jobTitle": "Cybersecurity Researcher",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Independent",
+    "url": "https://biscottidiskette.github.io"
+  },
+  "image": "https://biscottidiskette.github.io/assets/img/social-preview.png",
+  "description": "Created an App that Creates Lessons."
+}
+</script> </head> <body class="fixed-top-nav sticky-bottom-footer"> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> Biscotti Diskette </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item active"> <a class="nav-link" href="/projects/">projects <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/boxes/">boxes </a> </li> <li class="nav-item "> <a class="nav-link" href="/certifications/">certs </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repos </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/contact/">contact </a> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">OSEDTutor</h1> <p class="post-description">Created an App that Creates Lessons.</p> </header> <article> <div class="row justify-content-sm-center"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/osedtutor/logo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="OSEDTutor" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <h2 id="introduction">Introduction</h2> <p>So, you have decided that you wanted to play career campaign on hard mode. I support this decision. To see this through, you decided to register for the Offensive Security Exploit Developer (OSED) certification. It sits in the upper tier of offensive security certs and it definitely follows the OffSec tradition of punishing memorizers and forcing you to <code class="language-plaintext highlighter-rouge">Try Harder</code>. We are talking Windows exploit development, custom shellcode (goodbye, msfvenom), and bypassing defenses. It is not a “watched a YouTube video once” kind of certification. It is the kind where I truly learned what embrace the suck truly meant. Given this, I needed a game plan.</p> <p><br></p> <h2 id="the-problem">The Problem</h2> <p>Then, the realization hit you of what you actually signed up for. It begins with being introduced to new tools so you can learn a new programming language. However, the new language is more like a different culture with its registers and stack management. There are so many sources out there to sort through after you get through the class PDF. Corelan, FuzzySecurity, OST2, and GuidedHacking just to name a few that you can wade through. So, I decided that the world can get another one. One that can understand the context of learning and guide you specifically, create specific assignments, and grade said assignments to really accelerate your learning with personalization.</p> <p><br></p> <h2 id="the-stack">The Stack</h2> <ul> <li>Storage <ul> <li> <strong>SQLite</strong> - Server-side persistence</li> <li> <strong>Two LLM Models</strong> - Lesson generation and assignment review</li> </ul> </li> <li>Backend <ul> <li> <strong>Aiosqlite</strong> - Connection library for SQLite</li> <li> <strong>FastAPI</strong> - Framework for API infrastructure</li> </ul> </li> <li>Frontend <ul> <li> <strong>React</strong> - UI component library</li> <li> <strong>Vite</strong> - Development server and build tool</li> </ul> </li> </ul> <p><br></p> <h2 id="my-role">My Role</h2> <p>Similar to the last project, I architected the entire application, though this one was significantly more complicated. That meant determining the roles of the two different LLM models and mapping out what would need to get persisted to improve response quality. Claude AI generated the code based on the architecture I provided. I guided the generation through precise prompt engineering, requesting features one by one. This allowed me to review the code as a repository maintainer before commits to ensure cohesion of the product.</p> <p><br></p> <h2 id="current-status">Current Status</h2> <p>MVP: Testing. Let’s call a spade a spade, I won’t call it done until I pass.</p> <p><br></p> <h2 id="the-process">The Process</h2> <p><br></p> <h3 id="walkthrough">Walkthrough</h3> <p><br></p> <h4 id="the-landing-page">The Landing Page</h4> <p>The landing page is a where you can see the learning objective for the OSED, as well as, a summary, of your learning progress to date.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/osedtutor/landingpage.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Landing Page" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <h4 id="augmentation">Augmentation</h4> <p>There is an opportunity to upload html and PDFs that will then get parsed. The parsing will get added to the lesson creation prompt to improve the quality of the lessons.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/osedtutor/augmentation.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Augmentation" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <h4 id="lessons">Lessons</h4> <p>You can click on a domain from the left-hand menu to enter the specific learning domain. From the upper right-hand lesson plan, you can select a specific lesson to load the lesson.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/osedtutor/lesson.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Lesson" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <h4 id="assignments">Assignments</h4> <p>At the bottom, there is a section that generates an assignment for the student to complete. You can paste in the code and have it graded and receive feedback.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/osedtutor/assignment.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Assignments" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <h4 id="chat-help">Chat Help</h4> <p>There is also a chat in the lower left-hand corner where you can ask any questions that you might have about the lesson or the assignment.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/osedtutor/chatbox.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Chat Box" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br></p> <h3 id="the-code">The Code</h3> <p><br></p> <h4 id="backend">Backend</h4> <p>The first step is to generate a service to connect to the SQLit database the will serve as the persistence mechanism.</p> <div class="terminal" data-language="python" id="terminal-sqlite-py-python-91823"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('sqlite-py-python-91823')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('sqlite-py-python-91823')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('sqlite-py-python-91823')" title="Maximize"></button> </div> <span class="terminal__title">sqlite.py</span> <button class="terminal__copy" onclick="terminalCopy('sqlite-py-python-91823')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-sqlite-py-python-91823">
+import aiosqlite
+import os
+from app.services.db.base import DatabaseService
+
+DOMAINS = [
+    {
+        "name": "WinDbg and x86 Architecture",
+        "description": "x86 memory model, CPU registers, WinDbg usage, breakpoints, and memory manipulation.",
+        "sort_order": 1,
+        "lessons": [
+            ("Introduction to x86 Architecture", 1),
+            ("Introduction to Windows Debugger", 2),
+            ("Accessing and Manipulating Memory from WinDbg", 3),
+            ("Controlling Program Execution in WinDbg", 4),
+            ("Additional WinDbg Features", 5),
+        ]
+    },
+
+&lt;snip&gt;
+
+class SQLiteService(DatabaseService):
+
+    def __init__(self):
+        self.db_path = os.getenv("DATABASE_URL", "./osed_tutor.db")
+        self._conn: aiosqlite.Connection | None = None
+
+    async def connect(self) -&gt; None:
+        self._conn = await aiosqlite.connect(self.db_path)
+        self._conn.row_factory = aiosqlite.Row
+        await self._conn.execute("PRAGMA journal_mode=WAL")
+        await self._conn.execute("PRAGMA foreign_keys=ON")
+        await self._run_migrations()
+
+    async def disconnect(self) -&gt; None:
+        if self._conn:
+            await self._conn.close()
+
+    async def execute(self, query: str, params: tuple = ()) -&gt; aiosqlite.Cursor:
+        cursor = await self._conn.execute(query, params)
+        await self._conn.commit()
+        return cursor
+
+    async def fetchone(self, query: str, params: tuple = ()) -&gt; dict | None:
+        cursor = await self._conn.execute(query, params)
+        row = await cursor.fetchone()
+        return dict(row) if row else None
+
+    async def fetchall(self, query: str, params: tuple = ()) -&gt; list[dict]:
+        cursor = await self._conn.execute(query, params)
+        rows = await cursor.fetchall()
+        return [dict(r) for r in rows]
+
+&lt;snip&gt;
+
+</pre> </div> <div class="terminal__overlay" id="overlay-sqlite-py-python-91823" onclick="terminalOverlayClose('sqlite-py-python-91823')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('sqlite-py-python-91823')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('sqlite-py-python-91823')" title="Restore"></button> </div> <span class="terminal__title">sqlite.py</span> <button class="terminal__copy" onclick="terminalCopyModal('sqlite-py-python-91823')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-sqlite-py-python-91823" data-language="python">
+import aiosqlite
+import os
+from app.services.db.base import DatabaseService
+
+DOMAINS = [
+    {
+        "name": "WinDbg and x86 Architecture",
+        "description": "x86 memory model, CPU registers, WinDbg usage, breakpoints, and memory manipulation.",
+        "sort_order": 1,
+        "lessons": [
+            ("Introduction to x86 Architecture", 1),
+            ("Introduction to Windows Debugger", 2),
+            ("Accessing and Manipulating Memory from WinDbg", 3),
+            ("Controlling Program Execution in WinDbg", 4),
+            ("Additional WinDbg Features", 5),
+        ]
+    },
+
+&lt;snip&gt;
+
+class SQLiteService(DatabaseService):
+
+    def __init__(self):
+        self.db_path = os.getenv("DATABASE_URL", "./osed_tutor.db")
+        self._conn: aiosqlite.Connection | None = None
+
+    async def connect(self) -&gt; None:
+        self._conn = await aiosqlite.connect(self.db_path)
+        self._conn.row_factory = aiosqlite.Row
+        await self._conn.execute("PRAGMA journal_mode=WAL")
+        await self._conn.execute("PRAGMA foreign_keys=ON")
+        await self._run_migrations()
+
+    async def disconnect(self) -&gt; None:
+        if self._conn:
+            await self._conn.close()
+
+    async def execute(self, query: str, params: tuple = ()) -&gt; aiosqlite.Cursor:
+        cursor = await self._conn.execute(query, params)
+        await self._conn.commit()
+        return cursor
+
+    async def fetchone(self, query: str, params: tuple = ()) -&gt; dict | None:
+        cursor = await self._conn.execute(query, params)
+        row = await cursor.fetchone()
+        return dict(row) if row else None
+
+    async def fetchall(self, query: str, params: tuple = ()) -&gt; list[dict]:
+        cursor = await self._conn.execute(query, params)
+        rows = await cursor.fetchall()
+        return [dict(r) for r in rows]
+
+&lt;snip&gt;
+
+</pre> </div> </div> <p><br> Pydantic library is used to created the models for the database objects.</p> <div class="terminal" data-language="python" id="terminal-chat-py-python-7316"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('chat-py-python-7316')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('chat-py-python-7316')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('chat-py-python-7316')" title="Maximize"></button> </div> <span class="terminal__title">chat.py</span> <button class="terminal__copy" onclick="terminalCopy('chat-py-python-7316')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-chat-py-python-7316">
+from pydantic import BaseModel
+from datetime import datetime
+
+
+class ChatMessage(BaseModel):
+    role:       str
+    content:    str
+    created_at: datetime | None = None
+
+
+class ChatRequest(BaseModel):
+    message: str
+
+
+class ChatHistoryResponse(BaseModel):
+    session_id: int
+    messages:   list[ChatMessage]
+</pre> </div> <div class="terminal__overlay" id="overlay-chat-py-python-7316" onclick="terminalOverlayClose('chat-py-python-7316')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('chat-py-python-7316')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('chat-py-python-7316')" title="Restore"></button> </div> <span class="terminal__title">chat.py</span> <button class="terminal__copy" onclick="terminalCopyModal('chat-py-python-7316')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-chat-py-python-7316" data-language="python">
+from pydantic import BaseModel
+from datetime import datetime
+
+
+class ChatMessage(BaseModel):
+    role:       str
+    content:    str
+    created_at: datetime | None = None
+
+
+class ChatRequest(BaseModel):
+    message: str
+
+
+class ChatHistoryResponse(BaseModel):
+    session_id: int
+    messages:   list[ChatMessage]
+</pre> </div> </div> <p><br> The database functionality then gets rolled-up into the services layer. This allows for de-coupling to allow for switching the database out with massive refactors.</p> <div class="terminal" data-language="python" id="terminal-chat-controller-py-python-18649"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('chat-controller-py-python-18649')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('chat-controller-py-python-18649')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('chat-controller-py-python-18649')" title="Maximize"></button> </div> <span class="terminal__title">chat_controller.py</span> <button class="terminal__copy" onclick="terminalCopy('chat-controller-py-python-18649')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-chat-controller-py-python-18649">
+from fastapi import HTTPException
+from app.services.db.base import DatabaseService
+from app.services.llm.base import LLMService
+from app.prompts.chat import build_chat_system_prompt
+from app.models.chat import ChatHistoryResponse, ChatMessage
+from typing import AsyncIterator
+
+
+async def _get_or_create_session(lesson_id: int, db: DatabaseService) -&gt; int:
+    row = await db.fetchone(
+        "SELECT id FROM chat_sessions WHERE lesson_id = ?", (lesson_id,)
+    )
+    if row:
+        return row["id"]
+    cursor = await db.execute(
+        "INSERT INTO chat_sessions (lesson_id) VALUES (?)", (lesson_id,)
+    )
+    return cursor.lastrowid
+
+&lt;snip&gt;
+
+</pre> </div> <div class="terminal__overlay" id="overlay-chat-controller-py-python-18649" onclick="terminalOverlayClose('chat-controller-py-python-18649')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('chat-controller-py-python-18649')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('chat-controller-py-python-18649')" title="Restore"></button> </div> <span class="terminal__title">chat_controller.py</span> <button class="terminal__copy" onclick="terminalCopyModal('chat-controller-py-python-18649')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-chat-controller-py-python-18649" data-language="python">
+from fastapi import HTTPException
+from app.services.db.base import DatabaseService
+from app.services.llm.base import LLMService
+from app.prompts.chat import build_chat_system_prompt
+from app.models.chat import ChatHistoryResponse, ChatMessage
+from typing import AsyncIterator
+
+
+async def _get_or_create_session(lesson_id: int, db: DatabaseService) -&gt; int:
+    row = await db.fetchone(
+        "SELECT id FROM chat_sessions WHERE lesson_id = ?", (lesson_id,)
+    )
+    if row:
+        return row["id"]
+    cursor = await db.execute(
+        "INSERT INTO chat_sessions (lesson_id) VALUES (?)", (lesson_id,)
+    )
+    return cursor.lastrowid
+
+&lt;snip&gt;
+
+</pre> </div> </div> <p><br> FastAPI is then used to create and serve the API endpoints so it can be consumed by the frontend.</p> <div class="terminal" data-language="python" id="terminal-lessons-py-python-10595"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('lessons-py-python-10595')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('lessons-py-python-10595')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('lessons-py-python-10595')" title="Maximize"></button> </div> <span class="terminal__title">lessons.py</span> <button class="terminal__copy" onclick="terminalCopy('lessons-py-python-10595')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-lessons-py-python-10595">
+from fastapi import APIRouter, Request
+from fastapi.responses import StreamingResponse
+from app.controllers.lesson_controller import (
+    list_lessons, get_lesson,
+    generate_lesson_content, save_lesson_content,
+)
+from app.models.lesson import LessonGenerateRequest
+from app.services.llm.factory import get_llm_service
+
+router = APIRouter()
+llm = get_llm_service()
+
+
+def db(request: Request):
+    return request.app.state.db
+
+
+@router.get("/domains/{domain_id}/lessons")
+async def get_lessons(domain_id: int, request: Request):
+    return await list_lessons(domain_id, db(request))
+
+&lt;snip&gt;
+
+</pre> </div> <div class="terminal__overlay" id="overlay-lessons-py-python-10595" onclick="terminalOverlayClose('lessons-py-python-10595')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('lessons-py-python-10595')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('lessons-py-python-10595')" title="Restore"></button> </div> <span class="terminal__title">lessons.py</span> <button class="terminal__copy" onclick="terminalCopyModal('lessons-py-python-10595')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-lessons-py-python-10595" data-language="python">
+from fastapi import APIRouter, Request
+from fastapi.responses import StreamingResponse
+from app.controllers.lesson_controller import (
+    list_lessons, get_lesson,
+    generate_lesson_content, save_lesson_content,
+)
+from app.models.lesson import LessonGenerateRequest
+from app.services.llm.factory import get_llm_service
+
+router = APIRouter()
+llm = get_llm_service()
+
+
+def db(request: Request):
+    return request.app.state.db
+
+
+@router.get("/domains/{domain_id}/lessons")
+async def get_lessons(domain_id: int, request: Request):
+    return await list_lessons(domain_id, db(request))
+
+&lt;snip&gt;
+
+</pre> </div> </div> <p><br> And then the main file serves up the entire system.</p> <div class="terminal" data-language="python" id="terminal-main-py-python-7601"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('main-py-python-7601')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('main-py-python-7601')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('main-py-python-7601')" title="Maximize"></button> </div> <span class="terminal__title">main.py</span> <button class="terminal__copy" onclick="terminalCopy('main-py-python-7601')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-main-py-python-7601">
+from contextlib import asynccontextmanager
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+from app.services.db.factory import get_db_service
+from app.api import health, domains, lessons, assignments, chat, ingest, dashboard
+
+db = get_db_service()
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await db.connect()
+    app.state.db = db
+    yield
+    await db.disconnect()
+
+
+app = FastAPI(
+    title="OSED Tutor API",
+    version=os.getenv("APP_VERSION", "0.1.0"),
+    lifespan=lifespan,
+)
+
+&lt;snip&gt;
+
+</pre> </div> <div class="terminal__overlay" id="overlay-main-py-python-7601" onclick="terminalOverlayClose('main-py-python-7601')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('main-py-python-7601')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('main-py-python-7601')" title="Restore"></button> </div> <span class="terminal__title">main.py</span> <button class="terminal__copy" onclick="terminalCopyModal('main-py-python-7601')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-main-py-python-7601" data-language="python">
+from contextlib import asynccontextmanager
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+from app.services.db.factory import get_db_service
+from app.api import health, domains, lessons, assignments, chat, ingest, dashboard
+
+db = get_db_service()
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await db.connect()
+    app.state.db = db
+    yield
+    await db.disconnect()
+
+
+app = FastAPI(
+    title="OSED Tutor API",
+    version=os.getenv("APP_VERSION", "0.1.0"),
+    lifespan=lifespan,
+)
+
+&lt;snip&gt;
+
+</pre> </div> </div> <p><br></p> <h4 id="frontend">Frontend</h4> <p>The frontend first consumes the APIs from the backend.</p> <div class="terminal" data-language="javascript" id="terminal-chat-js-javascript-7621"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('chat-js-javascript-7621')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('chat-js-javascript-7621')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('chat-js-javascript-7621')" title="Maximize"></button> </div> <span class="terminal__title">chat.js</span> <button class="terminal__copy" onclick="terminalCopy('chat-js-javascript-7621')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-chat-js-javascript-7621">
+const API_BASE = import.meta.env.VITE_API_URL ?? 'http://localhost:8000'
+
+export async function getChatHistory(lessonId) {
+  const res = await fetch(`${API_BASE}/api/lessons/${lessonId}/chat`)
+  if (!res.ok) throw new Error('Failed to fetch chat history')
+  return res.json()
+}
+
+export async function sendChatMessage(lessonId, message) {
+  const res = await fetch(`${API_BASE}/api/lessons/${lessonId}/chat`, {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify({ message }),
+  })
+  if (!res.ok) throw new Error('Failed to send message')
+  return res.body.getReader()
+}
+</pre> </div> <div class="terminal__overlay" id="overlay-chat-js-javascript-7621" onclick="terminalOverlayClose('chat-js-javascript-7621')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('chat-js-javascript-7621')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('chat-js-javascript-7621')" title="Restore"></button> </div> <span class="terminal__title">chat.js</span> <button class="terminal__copy" onclick="terminalCopyModal('chat-js-javascript-7621')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-chat-js-javascript-7621" data-language="javascript">
+const API_BASE = import.meta.env.VITE_API_URL ?? 'http://localhost:8000'
+
+export async function getChatHistory(lessonId) {
+  const res = await fetch(`${API_BASE}/api/lessons/${lessonId}/chat`)
+  if (!res.ok) throw new Error('Failed to fetch chat history')
+  return res.json()
+}
+
+export async function sendChatMessage(lessonId, message) {
+  const res = await fetch(`${API_BASE}/api/lessons/${lessonId}/chat`, {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify({ message }),
+  })
+  if (!res.ok) throw new Error('Failed to send message')
+  return res.body.getReader()
+}
+</pre> </div> </div> <p><br> There are also components that create the individual UI section that will get blended into the UI architecture.</p> <div class="terminal" data-language="javascript" id="terminal-chat-js-javascript-7826"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('chat-js-javascript-7826')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('chat-js-javascript-7826')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('chat-js-javascript-7826')" title="Maximize"></button> </div> <span class="terminal__title">chat.js</span> <button class="terminal__copy" onclick="terminalCopy('chat-js-javascript-7826')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-chat-js-javascript-7826">
+import { useState, useEffect, useRef } from 'react'
+import ReactMarkdown from 'react-markdown'
+import { getChatHistory, sendChatMessage } from '../api/chat'
+
+export default function ChatPanel({ lesson }) {
+  const [messages,  setMessages]  = useState([])
+  const [input,     setInput]     = useState('')
+  const [streaming, setStreaming] = useState(false)
+  const [error,     setError]     = useState(null)
+  const bottomRef                 = useRef(null)
+  const inputRef                  = useRef(null)
+
+  // Load history when lesson changes
+  useEffect(() =&gt; {
+    if (!lesson?.id || !lesson?.content) return
+    setMessages([])
+    setInput('')
+    setError(null)
+
+    getChatHistory(lesson.id)
+      .then(data =&gt; setMessages(data.messages ?? []))
+      .catch(err =&gt; setError(err.message))
+  }, [lesson?.id])
+
+  &lt;snip&gt;
+</pre> </div> <div class="terminal__overlay" id="overlay-chat-js-javascript-7826" onclick="terminalOverlayClose('chat-js-javascript-7826')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('chat-js-javascript-7826')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('chat-js-javascript-7826')" title="Restore"></button> </div> <span class="terminal__title">chat.js</span> <button class="terminal__copy" onclick="terminalCopyModal('chat-js-javascript-7826')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-chat-js-javascript-7826" data-language="javascript">
+import { useState, useEffect, useRef } from 'react'
+import ReactMarkdown from 'react-markdown'
+import { getChatHistory, sendChatMessage } from '../api/chat'
+
+export default function ChatPanel({ lesson }) {
+  const [messages,  setMessages]  = useState([])
+  const [input,     setInput]     = useState('')
+  const [streaming, setStreaming] = useState(false)
+  const [error,     setError]     = useState(null)
+  const bottomRef                 = useRef(null)
+  const inputRef                  = useRef(null)
+
+  // Load history when lesson changes
+  useEffect(() =&gt; {
+    if (!lesson?.id || !lesson?.content) return
+    setMessages([])
+    setInput('')
+    setError(null)
+
+    getChatHistory(lesson.id)
+      .then(data =&gt; setMessages(data.messages ?? []))
+      .catch(err =&gt; setError(err.message))
+  }, [lesson?.id])
+
+  &lt;snip&gt;
+</pre> </div> </div> <p><br> Then, there is an App.jsx which kind of instantiates the entire project.</p> <div class="terminal" data-language="javascript" id="terminal-app-jsx-javascript-7957"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('app-jsx-javascript-7957')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('app-jsx-javascript-7957')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('app-jsx-javascript-7957')" title="Maximize"></button> </div> <span class="terminal__title">App.jsx</span> <button class="terminal__copy" onclick="terminalCopy('app-jsx-javascript-7957')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-app-jsx-javascript-7957">
+import { useState, useEffect } from 'react'
+import Navbar from './components/Navbar'
+import Sidebar from './components/Sidebar'
+import Dashboard from './components/Dashboard'
+import LessonPanel from './components/LessonPanel'
+import IngestPanel from './components/IngestPanel'
+import { getDomains } from './api/domains'
+
+export default function App() {
+  const [domains, setDomains]           = useState([])
+  const [activeDomain, setActiveDomain] = useState(null)
+  const [activeLesson,  setActiveLesson]  = useState(null)
+  const [view,          setView]          = useState('dashboard')
+  const [loading, setLoading]           = useState(true)
+  const [error, setError]               = useState(null)
+
+  useEffect(() =&gt; {
+    getDomains()
+      .then(setDomains)
+      .catch(err =&gt; setError(err.message))
+      .finally(() =&gt; setLoading(false))
+  }, [])
+
+  function handleDomainCreated(domain) {
+    setDomains(prev =&gt; [...prev, domain])
+  }
+
+  &lt;snip&gt;
+</pre> </div> <div class="terminal__overlay" id="overlay-app-jsx-javascript-7957" onclick="terminalOverlayClose('app-jsx-javascript-7957')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('app-jsx-javascript-7957')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('app-jsx-javascript-7957')" title="Restore"></button> </div> <span class="terminal__title">App.jsx</span> <button class="terminal__copy" onclick="terminalCopyModal('app-jsx-javascript-7957')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-app-jsx-javascript-7957" data-language="javascript">
+import { useState, useEffect } from 'react'
+import Navbar from './components/Navbar'
+import Sidebar from './components/Sidebar'
+import Dashboard from './components/Dashboard'
+import LessonPanel from './components/LessonPanel'
+import IngestPanel from './components/IngestPanel'
+import { getDomains } from './api/domains'
+
+export default function App() {
+  const [domains, setDomains]           = useState([])
+  const [activeDomain, setActiveDomain] = useState(null)
+  const [activeLesson,  setActiveLesson]  = useState(null)
+  const [view,          setView]          = useState('dashboard')
+  const [loading, setLoading]           = useState(true)
+  const [error, setError]               = useState(null)
+
+  useEffect(() =&gt; {
+    getDomains()
+      .then(setDomains)
+      .catch(err =&gt; setError(err.message))
+      .finally(() =&gt; setLoading(false))
+  }, [])
+
+  function handleDomainCreated(domain) {
+    setDomains(prev =&gt; [...prev, domain])
+  }
+
+  &lt;snip&gt;
+</pre> </div> </div> <p><br> The main.jsx is the equivalent of the main method in a compiled language.</p> <div class="terminal" data-language="javascript" id="terminal-main-jsx-javascript-8230"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('main-jsx-javascript-8230')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('main-jsx-javascript-8230')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('main-jsx-javascript-8230')" title="Maximize"></button> </div> <span class="terminal__title">main.jsx</span> <button class="terminal__copy" onclick="terminalCopy('main-jsx-javascript-8230')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-main-jsx-javascript-8230">
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.jsx'
+
+createRoot(document.getElementById('root')).render(
+  &lt;StrictMode&gt;
+    &lt;App /&gt;
+  &lt;/StrictMode&gt;,
+)
+</pre> </div> <div class="terminal__overlay" id="overlay-main-jsx-javascript-8230" onclick="terminalOverlayClose('main-jsx-javascript-8230')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('main-jsx-javascript-8230')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('main-jsx-javascript-8230')" title="Restore"></button> </div> <span class="terminal__title">main.jsx</span> <button class="terminal__copy" onclick="terminalCopyModal('main-jsx-javascript-8230')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-main-jsx-javascript-8230" data-language="javascript">
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.jsx'
+
+createRoot(document.getElementById('root')).render(
+  &lt;StrictMode&gt;
+    &lt;App /&gt;
+  &lt;/StrictMode&gt;,
+)
+</pre> </div> </div> <p><br> And finally, the index.html which is standard in web projects.</p> <div class="terminal" data-language="browser" id="terminal-index-html-browser-10361"> <div class="terminal__header terminal__header--browser"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('index-html-browser-10361')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('index-html-browser-10361')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('index-html-browser-10361')" title="Maximize"></button> </div> <span class="terminal__title">index.html</span> <button class="terminal__copy" onclick="terminalCopy('index-html-browser-10361')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-index-html-browser-10361">
+&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8" /&gt;
+    &lt;link rel="icon" type="image/svg+xml" href="/favicon.svg" /&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+    &lt;title&gt;frontend&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id="root"&gt;&lt;/div&gt;
+    &lt;script type="module" src="/src/main.jsx"&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre> </div> <div class="terminal__overlay" id="overlay-index-html-browser-10361" onclick="terminalOverlayClose('index-html-browser-10361')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header terminal__header--browser"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('index-html-browser-10361')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('index-html-browser-10361')" title="Restore"></button> </div> <span class="terminal__title">index.html</span> <button class="terminal__copy" onclick="terminalCopyModal('index-html-browser-10361')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-index-html-browser-10361" data-language="browser">
+&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8" /&gt;
+    &lt;link rel="icon" type="image/svg+xml" href="/favicon.svg" /&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+    &lt;title&gt;frontend&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id="root"&gt;&lt;/div&gt;
+    &lt;script type="module" src="/src/main.jsx"&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre> </div> </div> <p><br> And now, hopefully, we are ready for the OSED. Thanks OffSec for the excellent exam.</p> <div class="row justify-content-sm-center"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/osedtutor/endlogo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="OSEDTutor" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> </article> </div> </div> <footer class="sticky-bottom mt-5" role="contentinfo"> <div class="container"> © Copyright 2026 Biscotti Diskette  ·  <a href="https://github.com/biscottidiskette" target="_blank" rel="external nofollow noopener">GitHub</a>  ·  <a href="https://app.hackthebox.eu/profile/biscottidiskette" target="_blank" rel="external nofollow noopener">HackTheBox</a>  ·  <a href="https://tryhackme.com/r/p/BiscottiDiskette" target="_blank" rel="external nofollow noopener">TryHackMe</a>  ·  <a href="/contact/">Contact</a> </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?70d799092f862ad98c7876aa47712e20"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-HL7MJBJN7X"></script> <script defer src="/assets/js/google-analytics-setup.js?1c5d3b199be7049d4732e15d2072d0b2"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> <script src="/assets/js/terminal.js?ec2a38fba85ea4751db97d30059cd1c5"></script> </body> </html>

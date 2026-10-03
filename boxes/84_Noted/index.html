@@ -1,0 +1,221 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <title>Noted</title> <meta name="description" content="Investigated Notepad++ artifacts after exfiltration attack."> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <meta name="author" content="Biscotti Diskette"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta property="og:type" content="website"> <meta property="og:title" content="Noted"> <meta property="og:description" content="Investigated Notepad++ artifacts after exfiltration attack."> <meta property="og:url" content="https://biscottidiskette.github.io/boxes/84_Noted/"> <meta property="og:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <meta property="og:site_name" content="Biscotti Diskette"> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:title" content="Noted"> <meta name="twitter:description" content="Investigated Notepad++ artifacts after exfiltration attack."> <meta name="twitter:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Biscotti Diskette",
+  "url": "https://biscottidiskette.github.io",
+  "sameAs": [
+    
+  ],
+  "jobTitle": "Cybersecurity Researcher",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Independent",
+    "url": "https://biscottidiskette.github.io"
+  },
+  "image": "https://biscottidiskette.github.io/assets/img/social-preview.png",
+  "description": "Investigated Notepad++ artifacts after exfiltration attack."
+}
+</script> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta http-equiv="Permissions-Policy" content="interest-cohort=()"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Noted | Biscotti Diskette </title> <meta name="author" content="Biscotti Diskette"> <meta name="description" content="Investigated Notepad++ artifacts after exfiltration attack."> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/frontpage/Logo3.png?4f879aeff848659581251777fe0ab074"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="stylesheet" href="/assets/css/terminal.css?bebbf314b8406d78caf98717f86a33c1"> <link rel="canonical" href="https://biscottidiskette.github.io/boxes/84_Noted/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> <title>Noted</title> <meta name="description" content="Investigated Notepad++ artifacts after exfiltration attack."> <meta name="keywords" content="cybersecurity, CTF, web security, reverse engineering, pentesting, Linux, Python, malware analysis, exploit development"> <meta name="author" content="Biscotti Diskette"> <meta name="google-site-verification" content="uA_65eRzkHXUyK5QY2Pz3N0D7u0dyMoAHD_SQtaPvVA"> <meta property="og:type" content="website"> <meta property="og:title" content="Noted"> <meta property="og:description" content="Investigated Notepad++ artifacts after exfiltration attack."> <meta property="og:url" content="https://biscottidiskette.github.io/boxes/84_Noted/"> <meta property="og:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <meta property="og:site_name" content="Biscotti Diskette"> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:title" content="Noted"> <meta name="twitter:description" content="Investigated Notepad++ artifacts after exfiltration attack."> <meta name="twitter:image" content="https://biscottidiskette.github.io/assets/img/social-preview.png"> <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Biscotti Diskette",
+  "url": "https://biscottidiskette.github.io",
+  "sameAs": [
+    
+  ],
+  "jobTitle": "Cybersecurity Researcher",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Independent",
+    "url": "https://biscottidiskette.github.io"
+  },
+  "image": "https://biscottidiskette.github.io/assets/img/social-preview.png",
+  "description": "Investigated Notepad++ artifacts after exfiltration attack."
+}
+</script> </head> <body class="fixed-top-nav sticky-bottom-footer"> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> Biscotti Diskette </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item active"> <a class="nav-link" href="/boxes/">boxes <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/certifications/">certs </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repos </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/contact/">contact </a> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">Noted</h1> <p class="post-description">Investigated Notepad++ artifacts after exfiltration attack.</p> </header> <article> <div class="row justify-content-sm-center"> <div class="col-sm-4 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/noted/logo.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="HTB Noted Logo" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <h2>Link</h2> <p><a href="https://app.hackthebox.com/sherlocks/Noted" rel="external nofollow noopener" target="_blank">Room Link</a></p> <p><br></p> <h2>Process</h2> <p><br> The CERT team notified us that they Noted an attack on Simon’s computer. Let’s dive right on in.</p> <p>The first task at hand is identifying the evironment. We can start this by idenifying the script that Simon used for AWS operations. If you review the config.xml, you will notice in Simon.stark’s Documents folder called Dev_Ops with a perl script called AWS objects migration.</p> <div class="terminal" data-language="xml" id="terminal-config-xml-xml-10565"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('config-xml-xml-10565')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('config-xml-xml-10565')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('config-xml-xml-10565')" title="Maximize"></button> </div> <span class="terminal__title">config.xml</span> <button class="terminal__copy" onclick="terminalCopy('config-xml-xml-10565')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-config-xml-xml-10565">
+
+&lt;snip&gt;
+
+&lt;History nbMaxFile="10" inSubMenu="no" customLength="-1"&gt;
+        &lt;File filename="C:\Program Files\Notepad++\change.log" /&gt;
+        &lt;File filename="C:\Users\Simon.stark\Documents\Internal-DesktopApp\Prototype-Internal_Login.cs" /&gt;
+        &lt;File filename="C:\Users\Simon.stark\Documents\Dev-WebServer-BetaProd\dev2prod_fileupload.php" /&gt;
+        &lt;File filename="C:\Users\Simon.stark\Documents\Internal-DesktopApp\App_init_validation.yml" /&gt;
+        &lt;File filename="C:\Users\Simon.stark\Documents\Dev_Ops\AWS_objects migration.pl" /&gt;
+    &lt;/History&gt;
+
+&lt;snip&gt;
+</pre> </div> <div class="terminal__overlay" id="overlay-config-xml-xml-10565" onclick="terminalOverlayClose('config-xml-xml-10565')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('config-xml-xml-10565')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('config-xml-xml-10565')" title="Restore"></button> </div> <span class="terminal__title">config.xml</span> <button class="terminal__copy" onclick="terminalCopyModal('config-xml-xml-10565')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-config-xml-xml-10565" data-language="xml">
+
+&lt;snip&gt;
+
+&lt;History nbMaxFile="10" inSubMenu="no" customLength="-1"&gt;
+        &lt;File filename="C:\Program Files\Notepad++\change.log" /&gt;
+        &lt;File filename="C:\Users\Simon.stark\Documents\Internal-DesktopApp\Prototype-Internal_Login.cs" /&gt;
+        &lt;File filename="C:\Users\Simon.stark\Documents\Dev-WebServer-BetaProd\dev2prod_fileupload.php" /&gt;
+        &lt;File filename="C:\Users\Simon.stark\Documents\Internal-DesktopApp\App_init_validation.yml" /&gt;
+        &lt;File filename="C:\Users\Simon.stark\Documents\Dev_Ops\AWS_objects migration.pl" /&gt;
+    &lt;/History&gt;
+
+&lt;snip&gt;
+</pre> </div> </div> <p><br> Simon had the tools to compile and run Java code so the attacker didn’t have to transfer any tools to the victim machine. But we should find the source file that was used. If we review the session.xml, we can see that there is a file called LootAndPurge.java. Looks like a good candidate.</p> <div class="terminal" data-language="xml" id="terminal-session-xml-xml-11671"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('session-xml-xml-11671')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('session-xml-xml-11671')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('session-xml-xml-11671')" title="Maximize"></button> </div> <span class="terminal__title">session.xml</span> <button class="terminal__copy" onclick="terminalCopy('session-xml-xml-11671')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-session-xml-xml-11671">
+
+&lt;snip&gt;
+
+&lt;File firstVisibleLine="21" xOffset="0" scrollWidth="848" startPos="1697" endPos="1697" selMode="0" offset="0" wrapCount="1" lang="Java" encoding="-1" userReadOnly="no" filename="C:\Users\Simon.stark\Desktop\LootAndPurge.java" backupFilePath="C:\Users\Simon.stark\AppData\Roaming\Notepad++\backup\LootAndPurge.java@2023-07-24_145332" originalFileLastModifTimestamp="-1354503710" originalFileLastModifTimestampHigh="31047188" tabColourId="-1" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="512" mapWrapIndentMode="-1" mapIsWrap="no" /&gt;
+
+&lt;snip&gt;
+
+</pre> </div> <div class="terminal__overlay" id="overlay-session-xml-xml-11671" onclick="terminalOverlayClose('session-xml-xml-11671')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('session-xml-xml-11671')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('session-xml-xml-11671')" title="Restore"></button> </div> <span class="terminal__title">session.xml</span> <button class="terminal__copy" onclick="terminalCopyModal('session-xml-xml-11671')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-session-xml-xml-11671" data-language="xml">
+
+&lt;snip&gt;
+
+&lt;File firstVisibleLine="21" xOffset="0" scrollWidth="848" startPos="1697" endPos="1697" selMode="0" offset="0" wrapCount="1" lang="Java" encoding="-1" userReadOnly="no" filename="C:\Users\Simon.stark\Desktop\LootAndPurge.java" backupFilePath="C:\Users\Simon.stark\AppData\Roaming\Notepad++\backup\LootAndPurge.java@2023-07-24_145332" originalFileLastModifTimestamp="-1354503710" originalFileLastModifTimestampHigh="31047188" tabColourId="-1" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="512" mapWrapIndentMode="-1" mapIsWrap="no" /&gt;
+
+&lt;snip&gt;
+
+</pre> </div> </div> <p><br> If we investigate the source file, we can get the name of the final archive.</p> <div class="terminal" data-language="java" id="terminal-java-java-4398"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('java-java-4398')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('java-java-4398')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('java-java-4398')" title="Maximize"></button> </div> <span class="terminal__title">java</span> <button class="terminal__copy" onclick="terminalCopy('java-java-4398')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-java-java-4398">
+
+&lt;snip&gt;HTTP/1.1 200 OK
+Content-Type: text/html
+
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;body&gt;&lt;h1&gt;Index&lt;/h1&gt;&lt;/body&gt;
+&lt;/html&gt;
+
+collectFiles(new File(desktopDirectory), extensions, collectedFiles);
+        
+        String zipFilePath = desktopDirectory + "Forela-Dev-Data.zip";
+        String password = "sdklY57BLghvyh5FJ#fion_7";
+        
+        createZipArchive(collectedFiles, zipFilePath, password);
+
+&lt;snip&gt;
+
+</pre> </div> <div class="terminal__overlay" id="overlay-java-java-4398" onclick="terminalOverlayClose('java-java-4398')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('java-java-4398')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('java-java-4398')" title="Restore"></button> </div> <span class="terminal__title">java</span> <button class="terminal__copy" onclick="terminalCopyModal('java-java-4398')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-java-java-4398" data-language="java">
+
+&lt;snip&gt;HTTP/1.1 200 OK
+Content-Type: text/html
+
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;body&gt;&lt;h1&gt;Index&lt;/h1&gt;&lt;/body&gt;
+&lt;/html&gt;
+
+collectFiles(new File(desktopDirectory), extensions, collectedFiles);
+        
+        String zipFilePath = desktopDirectory + "Forela-Dev-Data.zip";
+        String password = "sdklY57BLghvyh5FJ#fion_7";
+        
+        createZipArchive(collectedFiles, zipFilePath, password);
+
+&lt;snip&gt;
+
+</pre> </div> </div> <p><br> As a part of this investigation, we should probably also get the last modified time of that source file. The first thing that we need to do is get the originalFileLastModifTimestamp and the originalFileLastModifTimestampHigh file from the session.xml from earlier.</p> <div class="terminal" data-language="xml" id="terminal-session-xml-xml-11671"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('session-xml-xml-11671')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('session-xml-xml-11671')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('session-xml-xml-11671')" title="Maximize"></button> </div> <span class="terminal__title">session.xml</span> <button class="terminal__copy" onclick="terminalCopy('session-xml-xml-11671')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-session-xml-xml-11671">
+
+&lt;snip&gt;
+
+&lt;File firstVisibleLine="21" xOffset="0" scrollWidth="848" startPos="1697" endPos="1697" selMode="0" offset="0" wrapCount="1" lang="Java" encoding="-1" userReadOnly="no" filename="C:\Users\Simon.stark\Desktop\LootAndPurge.java" backupFilePath="C:\Users\Simon.stark\AppData\Roaming\Notepad++\backup\LootAndPurge.java@2023-07-24_145332" originalFileLastModifTimestamp="-1354503710" originalFileLastModifTimestampHigh="31047188" tabColourId="-1" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="512" mapWrapIndentMode="-1" mapIsWrap="no" /&gt;
+
+&lt;snip&gt;
+
+</pre> </div> <div class="terminal__overlay" id="overlay-session-xml-xml-11671" onclick="terminalOverlayClose('session-xml-xml-11671')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('session-xml-xml-11671')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('session-xml-xml-11671')" title="Restore"></button> </div> <span class="terminal__title">session.xml</span> <button class="terminal__copy" onclick="terminalCopyModal('session-xml-xml-11671')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-session-xml-xml-11671" data-language="xml">
+
+&lt;snip&gt;
+
+&lt;File firstVisibleLine="21" xOffset="0" scrollWidth="848" startPos="1697" endPos="1697" selMode="0" offset="0" wrapCount="1" lang="Java" encoding="-1" userReadOnly="no" filename="C:\Users\Simon.stark\Desktop\LootAndPurge.java" backupFilePath="C:\Users\Simon.stark\AppData\Roaming\Notepad++\backup\LootAndPurge.java@2023-07-24_145332" originalFileLastModifTimestamp="-1354503710" originalFileLastModifTimestampHigh="31047188" tabColourId="-1" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="512" mapWrapIndentMode="-1" mapIsWrap="no" /&gt;
+
+&lt;snip&gt;
+
+</pre> </div> </div> <p><br> After a significant amount of Googling, and trying to explain it to ChatGPT who kept telling me that it wasn’t possible, finally ChatGPT came up with a script to do the coversion for us.</p> <div class="terminal" data-language="python" id="terminal-convert-py-python-10256"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('convert-py-python-10256')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('convert-py-python-10256')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('convert-py-python-10256')" title="Maximize"></button> </div> <span class="terminal__title">convert.py</span> <button class="terminal__copy" onclick="terminalCopy('convert-py-python-10256')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-convert-py-python-10256">
+low_signed = -1354503710
+low = (low_signed + (1&lt;&lt;32)) &amp; 0xFFFFFFFF
+high = 31047188
+filetime = (high &lt;&lt; 32) | low
+import datetime
+unix_secs = (filetime / 10_000_000) - 11644473600
+print("UTC:", datetime.datetime.utcfromtimestamp(unix_secs).isoformat(" "))
+</pre> </div> <div class="terminal__overlay" id="overlay-convert-py-python-10256" onclick="terminalOverlayClose('convert-py-python-10256')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('convert-py-python-10256')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('convert-py-python-10256')" title="Restore"></button> </div> <span class="terminal__title">convert.py</span> <button class="terminal__copy" onclick="terminalCopyModal('convert-py-python-10256')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-convert-py-python-10256" data-language="python">
+low_signed = -1354503710
+low = (low_signed + (1&lt;&lt;32)) &amp; 0xFFFFFFFF
+high = 31047188
+filetime = (high &lt;&lt; 32) | low
+import datetime
+unix_secs = (filetime / 10_000_000) - 11644473600
+print("UTC:", datetime.datetime.utcfromtimestamp(unix_secs).isoformat(" "))
+</pre> </div> </div> <p><br> Running this code in a REPL will produce the following output.</p> <div class="terminal" data-language="bash" id="terminal-bash-bash-4278"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('bash-bash-4278')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('bash-bash-4278')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('bash-bash-4278')" title="Maximize"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopy('bash-bash-4278')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-bash-bash-4278">
+&lt;stdin&gt;:1: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+UTC: 2023-07-24 09:53:23.322723
+</pre> </div> <div class="terminal__overlay" id="overlay-bash-bash-4278" onclick="terminalOverlayClose('bash-bash-4278')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('bash-bash-4278')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('bash-bash-4278')" title="Restore"></button> </div> <span class="terminal__title">bash</span> <button class="terminal__copy" onclick="terminalCopyModal('bash-bash-4278')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-bash-bash-4278" data-language="bash">
+&lt;stdin&gt;:1: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+UTC: 2023-07-24 09:53:23.322723
+</pre> </div> </div> <p><br> If you are still frustrated, no worries at all. I have included some sources for further reading. Hopefully, these let the lightbulb click so to speak.</p> <ul> <li><a href="https://0xdf.gitlab.io/2024/06/13/htb-sherlock-noted.html" rel="external nofollow noopener" target="_blank">https://0xdf.gitlab.io/2024/06/13/htb-sherlock-noted.html</a></li> <li><a href="https://community.notepad-plus-plus.org/topic/22662/need-explanation-of-a-few-session-xml-parameters-values/7" rel="external nofollow noopener" target="_blank">https://community.notepad-plus-plus.org/topic/22662/need-explanation-of-a-few-session-xml-parameters-values/7</a></li> </ul> <p><br> If it makes you feel any better, the next two are chip shots after that one. We need to find the crypto wallet address for the attacker. Well, Simon mentioned a note that triggered this investigation. Let’s give it a look and see what it says. Looks like we have a link to a pastebin.</p> <div class="codebox"> <div class="codebox__header"> <span class="codebox__title">YOU_HAVE_BEEN_HACKED.txt</span> </div> <pre class="codebox__body">
+Hello
+
+This note is placed in your desktop and copied to other locations too. You have been hacked and your data has been deleted from your
+system. We made copies of your sensitive data and uploaded to our servers. The rule is simple
+
+                                                       YOU PAY US
+                                                           AND 
+                         WE DO NOT RELEASE YOUR COMPANY SECRETS TO PUBLIC AND RETURN YOUR DATA SAFELY TO YOU
+						 
+						 
+Failiure to oblige will result in immediate data leak to the public. 
+
+
+
+For detailed information and process , Visit any of the below links
+
+i)  https://pastebin.ai/bigbsy36to
+ii) https://pastebin.com/xmTkajd5
+iii) https://pastecode.io/s/0rqtutec
+</pre> </div> <p><br> Navigating to the pastebin in the note, reveals a promp for a password.</p> <div class="row justify-content-sm-center"> <div class="col-sm-8 mt-3 mt-md-0"> <figure> <picture> <img src="/assets/img/noted/passwordprompt.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="Password Prompt" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><br> If you remember back from when we reviewed that Java file, there was a password file indicated in that file. How convenient?</p> <div class="terminal" data-language="java" id="terminal-java-java-4297"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('java-java-4297')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('java-java-4297')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('java-java-4297')" title="Maximize"></button> </div> <span class="terminal__title">java</span> <button class="terminal__copy" onclick="terminalCopy('java-java-4297')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-java-java-4297">
+
+&lt;snip&gt;
+
+collectFiles(new File(desktopDirectory), extensions, collectedFiles);
+        
+        String zipFilePath = desktopDirectory + "Forela-Dev-Data.zip";
+        String password = "sdklY57BLghvyh5FJ#fion_7";
+        
+        createZipArchive(collectedFiles, zipFilePath, password);
+
+&lt;snip&gt;
+
+</pre> </div> <div class="terminal__overlay" id="overlay-java-java-4297" onclick="terminalOverlayClose('java-java-4297')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('java-java-4297')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('java-java-4297')" title="Restore"></button> </div> <span class="terminal__title">java</span> <button class="terminal__copy" onclick="terminalCopyModal('java-java-4297')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-java-java-4297" data-language="java">
+
+&lt;snip&gt;
+
+collectFiles(new File(desktopDirectory), extensions, collectedFiles);
+        
+        String zipFilePath = desktopDirectory + "Forela-Dev-Data.zip";
+        String password = "sdklY57BLghvyh5FJ#fion_7";
+        
+        createZipArchive(collectedFiles, zipFilePath, password);
+
+&lt;snip&gt;
+
+</pre> </div> </div> <p><br> The first thing to note is the Ethereum wallet ID. The second thing to note is the contact person if we run into any issues.</p> <div class="terminal" data-language="browser" id="terminal-https-pastebin-com-xmtkajd5-browser-29548"> <div class="terminal__header terminal__header--browser"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalClose('https-pastebin-com-xmtkajd5-browser-29548')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" onclick="terminalMinimize('https-pastebin-com-xmtkajd5-browser-29548')" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalMaximize('https-pastebin-com-xmtkajd5-browser-29548')" title="Maximize"></button> </div> <span class="terminal__title">https://pastebin.com/xmTkajd5</span> <button class="terminal__copy" onclick="terminalCopy('https-pastebin-com-xmtkajd5-browser-29548')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body" id="terminal-body-https-pastebin-com-xmtkajd5-browser-29548">
+If you are here then you have no other choice then to pay us. Your Sensitive DATA is in our hands and we WILL release it to PUBLIC by midnight if you don't pay us a ransom. 
+ 
+We want 50000 $ in ETH currency by midnight. This amount is very reasonable as we know FORELA is a multi million dollar company, but since we were able to extort small amount of data, this is our final offer. 
+ 
+Ethereum wallet : 0xca8fa8f0b631ecdb18cda619c4fc9d197c8affca
+ 
+Person of contact :  CyberJunkie@mail2torjgmxgexntbrmhvgluavhj7ouul5yar6ylbvjkxwqf6ixkwyd.onion
+</pre> </div> <div class="terminal__overlay" id="overlay-https-pastebin-com-xmtkajd5-browser-29548" onclick="terminalOverlayClose('https-pastebin-com-xmtkajd5-browser-29548')"> <div class="terminal__modal" onclick="event.stopPropagation()"> <div class="terminal__header terminal__header--browser"> <div class="terminal__controls"> <button class="terminal__dot terminal__dot--red" onclick="terminalOverlayClose('https-pastebin-com-xmtkajd5-browser-29548')" title="Close"></button> <button class="terminal__dot terminal__dot--yellow" title="Minimize"></button> <button class="terminal__dot terminal__dot--green" onclick="terminalOverlayClose('https-pastebin-com-xmtkajd5-browser-29548')" title="Restore"></button> </div> <span class="terminal__title">https://pastebin.com/xmTkajd5</span> <button class="terminal__copy" onclick="terminalCopyModal('https-pastebin-com-xmtkajd5-browser-29548')" title="Copy to clipboard"> <svg class="terminal__copy-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> <span class="terminal__copy-label">copy</span> </button> </div> <pre class="terminal__body terminal__body--modal" id="terminal-modal-body-https-pastebin-com-xmtkajd5-browser-29548" data-language="browser">
+If you are here then you have no other choice then to pay us. Your Sensitive DATA is in our hands and we WILL release it to PUBLIC by midnight if you don't pay us a ransom. 
+ 
+We want 50000 $ in ETH currency by midnight. This amount is very reasonable as we know FORELA is a multi million dollar company, but since we were able to extort small amount of data, this is our final offer. 
+ 
+Ethereum wallet : 0xca8fa8f0b631ecdb18cda619c4fc9d197c8affca
+ 
+Person of contact :  CyberJunkie@mail2torjgmxgexntbrmhvgluavhj7ouul5yar6ylbvjkxwqf6ixkwyd.onion
+</pre> </div> </div> <p><br> With that, we Noted all the answers to this Sherlock! I look forward to seeing you in the next one!</p> </article> </div> </div> <footer class="sticky-bottom mt-5" role="contentinfo"> <div class="container"> © Copyright 2026 Biscotti Diskette  ·  <a href="https://github.com/biscottidiskette" target="_blank" rel="external nofollow noopener">GitHub</a>  ·  <a href="https://app.hackthebox.eu/profile/biscottidiskette" target="_blank" rel="external nofollow noopener">HackTheBox</a>  ·  <a href="https://tryhackme.com/r/p/BiscottiDiskette" target="_blank" rel="external nofollow noopener">TryHackMe</a>  ·  <a href="/contact/">Contact</a> </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?70d799092f862ad98c7876aa47712e20"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-HL7MJBJN7X"></script> <script defer src="/assets/js/google-analytics-setup.js?1c5d3b199be7049d4732e15d2072d0b2"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> <script src="/assets/js/terminal.js?ec2a38fba85ea4751db97d30059cd1c5"></script> </body> </html>
