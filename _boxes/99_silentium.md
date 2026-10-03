@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Silentium
-description: Active challenge – details withheld per TOS
+description: Account take over into MCP RCE.
 img: 
 importance: 4
 category: HackTheBox
