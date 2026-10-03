@@ -6,7 +6,7 @@ description: All the certifications, badges, online courses, books that I have c
 nav: true
 nav_order: 3
 display_categories: [certification, badge, online course, book]
-subcategories: [red, blue, foundational, general]
+subcategories: [red, blue, purple, foundational, general]
 horizontal: false
 ---
 
