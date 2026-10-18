@@ -177,7 +177,7 @@ Disallow: /?q=user/logout
 {% include terminal.html language='browser' title='http://10.10.11.58/robots.txt' content=robotstxt %}
 
 <br />
-Run the CMS that we idenified through the searchsploit.  There is an authenticated RCE so it looks like we just need some creds.
+Run the CMS that we identified through the searchsploit.  There is an authenticated RCE so it looks like we just need some creds.
 
 {% capture searchsploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/dog]
@@ -195,7 +195,7 @@ Shellcodes: No Results
 {% include terminal.html language='bash' title='bash' content=searchsploit %}
 
 <br />
-Check the page for pontential usernames.  We find dogBackDropSystem which could be a possibility.
+Check the page for potential usernames.  We find dogBackDropSystem which could be a possibility.
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-8 mt-3 mt-md-0">
@@ -222,7 +222,7 @@ Try logging in with the dogBackDropSystem from earlier.
 </div>
 
 <br />
-Try logging in with the Anonymous from ealier.
+Try logging in with the Anonymous from earlier.
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-8 mt-3 mt-md-0">

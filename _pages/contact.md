@@ -2,7 +2,7 @@
 layout: page
 permalink: /contact/
 title: contact
-description: Feel free to send me a message!. 
+description: Feel free to send me a message! 
 nav: true
 nav_order: 6
 ---

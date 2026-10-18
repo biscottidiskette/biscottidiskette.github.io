@@ -165,7 +165,7 @@ Use msf-pattern_create to generate a pattern than can be used to determine the E
    content=patterncreate %}
 
 <br />
-Update the code to include the patter that was just created by the msf.
+Update the code to include the pattern that was just created by the msf.
 
 {% capture includejunk %}
 out = 'crash30000.m3u'
@@ -327,7 +327,7 @@ print('m3u File Created successfully\n')
    content=condensecode %}
 
 <br />
-Update the code to include all of the bad chars (exluding the \x00s) to determine the bad characters for the program.
+Update the code to include all of the bad chars (excluding the \x00s) to determine the bad characters for the program.
 
 {% capture badchars %}
 badchars = (

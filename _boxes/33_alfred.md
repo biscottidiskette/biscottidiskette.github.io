@@ -59,7 +59,7 @@ PORT     STATE SERVICE    VERSION
 {% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
-Run the nmap against all of the ports just incase there are any non-standard ports available.
+Run the nmap against all of the ports just in case there are any non-standard ports available.
 
 {% capture nmapfull %}
 ┌──(kali㉿kali)-[~/Documents/thm/alfred]
@@ -86,7 +86,7 @@ Check the Landing Page of the website.
 </div>
 
 <br />
-Let's try admin:admin as credentials because it is what I alsways try whenever I just want to see the login request.  It worked!  Neat.
+Let's try admin:admin as credentials because it is what I always try whenever I just want to see the login request.  It worked!  Neat.
 
 <div class="row justify-content-sm-center">
     <div class="col-sm mt-3 mt-md-0">

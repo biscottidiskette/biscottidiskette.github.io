@@ -208,7 +208,7 @@ james@10.10.167.104's password:
 {% include terminal.html language='bash' title='bash' content=trysshjames %}
 
 <br />
-Perform more research about the vulnerabilities associated with Joomla.  Apperently, we can abuse the template section.  So from the Extensions menu, rollover Templates, and Select Templates.
+Perform more research about the vulnerabilities associated with Joomla.  Apparently, we can abuse the template section.  So from the Extensions menu, rollover Templates, and Select Templates.
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-8 mt-3 mt-md-0">
@@ -337,7 +337,7 @@ Get a one-liner from the trusty revshells.
 <a href="https://www.revshells.com/">https://www.revshells.com/</a>
 
 <br />
-Paste the exploit one-line into the cmd paramter end execute.
+Paste the exploit one-line into the cmd parameter end execute.
 
 <div class="row justify-content-sm-center">
     <div class="col-sm mt-3 mt-md-0">

@@ -504,7 +504,7 @@ Choose the username.
 </div>
 
 <br />
-Choose a passowrd.  Click Next.  Re-enter the password.
+Choose a password.  Click Next.  Re-enter the password.
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-8 mt-3 mt-md-0">
@@ -531,7 +531,7 @@ Turn off all the tracking type of options.  Select Not Now for the Cortana optio
 </div>
 
 <br />
-What for it to finish installing and repeat the network option from above to turn the networking back on.  For the pop-up box click on all the continues and Coninue Without Data until it goes away.
+What for it to finish installing and repeat the network option from above to turn the networking back on.  For the pop-up box click on all the continues and Continue Without Data until it goes away.
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-8 mt-3 mt-md-0">
@@ -560,7 +560,7 @@ Download the Windows SDK installer so we can install WinDBG.  WinDBG is my debug
 <a href="https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/">https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/</a>
 
 <br />
-Launch the installler.  Choose all of the default options.  When you get to the install options, I usually just install everything.
+Launch the installer.  Choose all of the default options.  When you get to the install options, I usually just install everything.
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-8 mt-3 mt-md-0">

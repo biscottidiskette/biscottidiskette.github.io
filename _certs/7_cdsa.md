@@ -58,7 +58,7 @@ The first thing you learn is how to approach an alert without getting lost immed
 <br />
 ## Tips & Lessons Learned
 - **Document as you go:**  I know I said it in the PMRP but seriously.  This is important.
-- **Work on the report as you progress:**  Everytime I hit a breakpoint in the exam I worked on the report. That way it wasn't excruciating at the end.
+- **Work on the report as you progress:**  Every time I hit a breakpoint in the exam I worked on the report. That way it wasn't excruciating at the end.
 - **Remember where you are:**  You can only go forward or backwards in the timeline so keep a sense of where you are in it.
 - **Be thorough:**  You search one event code you could get 100 results and you need one specific record.  Be sharp.
 - **Breathe**  You are going to get lost.  The fun of event logs.  Stay calm.

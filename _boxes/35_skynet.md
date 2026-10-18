@@ -298,7 +298,7 @@ Check the squirrelmail directory that was indicated in the vulnchk scan.
 </div>
 
 <br />
-Attempt to login to the application.  We can use the milesdyson user from the SMB as the username.  We can also use the log1.txt as the password disctionary.  We will find that the first combo works (milesdyson:cyborg007haloterminator).  Note the serenakogan potential username.
+Attempt to login to the application.  We can use the milesdyson user from the SMB as the username.  We can also use the log1.txt as the password dictionary.  We will find that the first combo works (milesdyson:cyborg007haloterminator).  Note the serenakogan potential username.
 
 <div class="row justify-content-sm-center">
     <div class="col-sm mt-3 mt-md-0">

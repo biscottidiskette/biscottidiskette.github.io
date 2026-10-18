@@ -112,7 +112,7 @@ Check the landing page to see what it is.  Give it a little peek.
 </div>
 
 <br />
-And of cource, check the source code looking for something juicy.  I also checked the robots.txt but didn't take a screen-print.
+And of source, check the source code looking for something juicy.  I also checked the robots.txt but didn't take a screen-print.
 
 {% capture sourcecode %}
 <!DOCTYPE html>

@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Questionaire
+title: Questionnaire
 description: Took a pop quiz, hotshot.
 img: 
 importance: 5
@@ -11,7 +11,7 @@ related_publications: false
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-4 mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="/assets/img/questionaire/logo.png" title="HTB Questionaire" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="/assets/img/questionnaire/logo.png" title="HTB Questionnaire" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 
@@ -22,7 +22,7 @@ related_publications: false
 <h2>Process</h2>
 
 <br />
-Do you have time for a questionaire?  Well, I do so we can crush this challenge.
+Do you have time for a questionnaire?  Well, I do so we can crush this challenge.
 
 Try connecting to the IP:Port and see what it says.
 
@@ -214,7 +214,7 @@ It was at this point, we get another info text prompt for your reading pleasure.
 ◉  The first line declares a 0x20-byte buffer of characters and fills it with zeros.                    ◉                                                                                                                                  
 ◉  The second line calls 'fprintf()' to print a message to stdout.                                      ◉                                                                                                                                  
 ◉  Finally, the third line calls 'fgets()' to read 0x100 bytes from stdin and store them to the         ◉                                                                                                                                  
-◉  aformentioned buffer.                                                                                ◉                                                                                                                                  
+◉  aforementioned buffer.                                                                                ◉                                                                                                                                  
 ◉                                                                                                       ◉                                                                                                                                  
 ◉  Then, there is a custom 'gg()' function which calls the standard 'system()' function to print the    ◉                                                                                                                                  
 ◉  flag. This function is never called by default.                                                      ◉                                                                                                                                  

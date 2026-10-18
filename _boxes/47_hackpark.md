@@ -855,7 +855,7 @@ C:\Program Files (x86)\SystemScheduler\Events>
 {% include terminal.html language='cmd' title='cmd.exe' content=logs %}
 
 <br />
-Type the file and view the contents to get what the sceduler has been trying to run.
+Type the file and view the contents to get what the scheduler has been trying to run.
 
 {% capture viewlog %}
 C:\Program Files (x86)\SystemScheduler\Events>type 20198415519.INI_LOG.txt

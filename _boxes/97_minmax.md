@@ -22,7 +22,7 @@ related_publications: false
 <h2>Process</h2>
 
 <br/>
-I ain't affraid of ghosts.  Big or small.  Here we go with MinMax.
+I ain't afraid of ghosts.  Big or small.  Here we go with MinMax.
 
 Launch the programming interface.
 

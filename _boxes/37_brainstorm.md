@@ -100,7 +100,7 @@ local: essfunc.dll remote: essfunc.dll
 {% include terminal.html language='bash' title='bash' content=enumerateftp %}
 
 <br />
-Set-up a Windows machine run Windbg, with the narly extension, and tranfer the binary we found to the lab machine.
+Set-up a Windows machine run Windbg, with the narly extension, and transfer the binary we found to the lab machine.
 
 <div class="row justify-content-sm-center">
     <div class="col-sm mt-3 mt-md-0">

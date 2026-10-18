@@ -109,7 +109,7 @@ Use `rbenv install --list-all' to show all local versions.
    content=installrubyenv %}
 
 <br />
-Install the later version of ruby.  Please note, this is building from source so it will take a bit.  Set that version of ruby.  Check the verions of Ruby to ensure that the install completed successfully.
+Install the later version of ruby.  Please note, this is building from source so it will take a bit.  Set that version of ruby.  Check the versions of Ruby to ensure that the install completed successfully.
 
 {% capture viewversions %}
 rbenv install 3.4.1
@@ -136,7 +136,7 @@ rbenv rehash
    content=installbundler %}
 
 <br />
-Install Code or your favourite programming envirionment.
+Install Code or your favourite programming environment.
 
 {% capture installcode %}
 sudo snap install --classic code
@@ -208,7 +208,7 @@ Server address: http://127.0.0.1:4000
    title="bash"
    content=runjekyllserver %}
 <div class="col-sm mt-3 mt-md-0">
-    {% include figure.liquid loading="eager" path="assets/img/website/firstrun.png" title="The Intial Website" class="img-fluid rounded z-depth-1" %}
+    {% include figure.liquid loading="eager" path="assets/img/website/firstrun.png" title="The Initial Website" class="img-fluid rounded z-depth-1" %}
 </div>
 
 <br />
@@ -264,7 +264,7 @@ Save all of the changes that were made.  Rerun the server and check the change l
 
 <br />
 <h3>Create Collection</h3>
-Create a md file in the _pages folder.  Create a folder under the root folder with the same name as the pages file preceeded by an underscore.
+Create a md file in the _pages folder.  Create a folder under the root folder with the same name as the pages file preceded by an underscore.
 
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">

@@ -279,7 +279,7 @@ Get the first flag.
 {% endraw %}
 
 <br />
-Get the login request in the Network tab of the devloper's tools.  We can note the data parameters that we can send.  We can also not the phrase to check to determine if we have a valid username.
+Get the login request in the Network tab of the developer’s tools.  We can note the data parameters that we can send.  We can also not the phrase to check to determine if we have a valid username.
 
 <div class="row justify-content-sm-center">
     <div class="col-sm mt-3 mt-md-0">

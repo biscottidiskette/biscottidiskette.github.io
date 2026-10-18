@@ -309,7 +309,7 @@ View the full module info with the info, or info -d command.
 {% include terminal.html language='bash' title='bash' content=chooseprivescoption %}
 
 <br />
-Set the session to the session number from the meterpreter session that we established earlies.  Run the exploit.
+Set the session to the session number from the meterpreter session that we established earliest.  Run the exploit.
 
 {% capture setsession %}
 msf6 post(multi/recon/local_exploit_suggester) > set session 1

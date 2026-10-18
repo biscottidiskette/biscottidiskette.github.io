@@ -243,7 +243,7 @@ listening on [any] 443 ...
    content=startlistener %}
 
 <br />
-Download a copy to the local working folder.  Update the script as there is a format function attached to print funtion instead of the string inside the function.
+Download a copy to the local working folder.  Update the script as there is a format function attached to print function instead of the string inside the function.
 
 {% capture landingsource %}
 #!/usr/bin/env python

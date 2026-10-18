@@ -59,7 +59,7 @@ Nmap done: 1 IP address (1 host up) scanned in 21.23 seconds
 {% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
-Run nmap against all the ports to try and find any unsual services.
+Run nmap against all the ports to try and find any unusual services.
 
 {% capture nmapfull %}
 ┌──(kali㉿kali)-[~/Documents/htb/optimum]

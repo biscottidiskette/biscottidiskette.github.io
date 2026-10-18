@@ -208,7 +208,7 @@ Well, I was playing with KaliGPT and decided to ask it for help.  I decided to a
 <h3>Check List</h3>
 <ol>
     <li><h5>Pre-Phase: Assembly</h5></li>
-    <b>Goal: Get an understanding of Assebmly</b>
+    <b>Goal: Get an understanding of Assembly</b>
         <ul>
             <li>Online Class</li>
             &#x274F;&nbsp;&nbsp;TCM Security Released a course on Assembly<br />

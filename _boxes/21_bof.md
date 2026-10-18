@@ -219,7 +219,7 @@ with open('payload.bin','wb') as f:
 {% include terminal.html language='python' title='exploit_0x01.py' content=secondscript %}
 
 <br />
-Run it agin in gdb an notice that it is a clean run.
+Run it again in gdb an notice that it is a clean run.
 
 {% capture secondgdb %}
 ┌──(kali㉿kali)-[~/Documents/pwnable_kr]

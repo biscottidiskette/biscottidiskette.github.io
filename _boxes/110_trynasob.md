@@ -77,7 +77,7 @@ Let's try asking for context clues and maybe we can guess the code.
 </div>
 
 <br />
-Let's ask for a descryption key.
+Let's ask for a decryption key.
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-4 mt-3 mt-md-0">

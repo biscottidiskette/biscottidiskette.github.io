@@ -72,7 +72,7 @@ www.facebook.com
 </div>
 
 <br />
-Moving on, we are asked about the html used to send the stolen data.  We let us give app.js a peek.  The sendToServer seems like a promising method to figure out how the exension is sending data to the server.  In it, we see an img tag.  So, it appears to be appending an img tag with the src set with the malicious request and payload to the document.
+Moving on, we are asked about the html used to send the stolen data.  We let us give app.js a peek.  The sendToServer seems like a promising method to figure out how the extension is sending data to the server.  In it, we see an img tag.  So, it appears to be appending an img tag with the src set with the malicious request and payload to the document.
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-8 mt-3 mt-md-0">
@@ -127,11 +127,11 @@ Now we are tasked with finding the method used to exfiltrate credentials.  I wil
 </div>
 
 <br />
-We can get the enctyption algorith from the crypto.js file that we found the base64 answer.  It is also used in the app.js file.  Dealer's choice, I guess.
+We can get the enctyption algorithm from the crypto.js file that we found the base64 answer.  It is also used in the app.js file.  Dealer's choice, I guess.
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-8 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/fakegpt/aes.png" title="AES Encyption" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid path="assets/img/fakegpt/aes.png" title="AES Encryption" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 

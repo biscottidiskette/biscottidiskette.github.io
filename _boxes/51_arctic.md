@@ -677,4 +677,4 @@ Tunnel adapter Local Area Connection* 9:
 {% include terminal.html language='cmd' title='cmd.exe' content=rootflag %}
 
 <br />
-Looks like our juicy reflection was enough to crack the harsh Arctic.  Hopefully, you enjoyed the read.  Look forwared to seeing you in the next one.
+Looks like our juicy reflection was enough to crack the harsh Arctic.  Hopefully, you enjoyed the read.  Look forwarded to seeing you in the next one.

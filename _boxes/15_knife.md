@@ -257,7 +257,7 @@ $ /dev/shm/shell
    content=transferelf %}
 
 <br />
-Check the listener and catch the shell.  Run the whoami to confirm command execution.  Use the python to ugrade the shell.
+Check the listener and catch the shell.  Run the whoami to confirm command execution.  Use the python to upgrade the shell.
 
 {% capture catchshell %}
 ┌──(kali㉿kali)-[~/Documents/htb/knife]

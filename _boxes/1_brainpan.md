@@ -1009,7 +1009,7 @@ SYNOPSIS
 DESCRIPTION
        List  information  about  the FILEs (the current directory by default).
        Sort entries alphabetically if none of -cftuvSUX nor --sort  is  speci‐
-       fied.
+       field.
 
        Mandatory  arguments  to  long  options are mandatory for short options
        too.

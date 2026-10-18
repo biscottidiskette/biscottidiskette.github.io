@@ -345,7 +345,7 @@ Click the '?' icon to open a side-panel and get the Umbraco version.
 </div>
 
 <br />
-Run searchsploit for the Umbraco verion.
+Run searchsploit for the Umbraco version.
 
 {% capture searchsploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/remote]

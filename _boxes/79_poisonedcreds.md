@@ -42,11 +42,11 @@ Okay so the first thing that we had to do was spot a query that was mistype orig
 </div>
 
 <br />
-Next thing we have to identify is the rogue machine in the system.  So, shortly after the Name query request, we should see the Name query response giving up the rouge IP.
+Next thing we have to identify is the rogue machine in the system.  So, shortly after the Name query request, we should see the Name query response giving up the rogue IP.
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-8 mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="/assets/img/poisonedcreds/rougeip.png" title="Rouge IP" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="/assets/img/poisonedcreds/rougeip.png" title="Rogue IP" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 

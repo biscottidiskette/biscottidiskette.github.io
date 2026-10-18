@@ -279,7 +279,7 @@ Navigate to the shell that was just uploaded in the uploads folder.
 </div>
 
 <br />
-Check the listener and catch the shell.  Use python to updgrade the shell.
+Check the listener and catch the shell.  Use python to upgrade the shell.
 
 {% capture catchshell %}
 ┌──(kali㉿kali)-[~/Documents/htb/haircut]

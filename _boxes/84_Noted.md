@@ -24,7 +24,7 @@ related_publications: false
 <br />
 The CERT team notified us that they Noted an attack on Simon's computer.  Let's dive right on in.
 
-The first task at hand is identifying the evironment.  We can start this by idenifying the script that Simon used for AWS operations.  If you review the config.xml, you will notice in Simon.stark's Documents folder called Dev_Ops with a perl script called AWS objects migration.
+The first task at hand is identifying the environment.  We can start this by identifying the script that Simon used for AWS operations.  If you review the config.xml, you will notice in Simon.stark's Documents folder called Dev_Ops with a perl script called AWS objects migration.
 
 {% capture devopsfile %}
 
@@ -96,7 +96,7 @@ As a part of this investigation, we should probably also get the last modified t
 {% include terminal.html language='xml' title='session.xml' content=malfile %}
 
 <br />
-After a significant amount of Googling, and trying to explain it to ChatGPT who kept telling me that it wasn't possible, finally ChatGPT came up with a script to do the coversion for us.
+After a significant amount of Googling, and trying to explain it to ChatGPT who kept telling me that it wasn't possible, finally ChatGPT came up with a script to do the conversion for us.
 
 {% capture convpy %}
 low_signed = -1354503710

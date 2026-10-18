@@ -577,7 +577,7 @@ root@7ce659d667d7:~#
 {% include terminal.html language='bash' title='bash' content=catchshell %}
 
 <br />
-Dump the envrionment variables. Notice that there are credentials for a user named enzo there.
+Dump the environment variables. Notice that there are credentials for a user named enzo there.
 
 {% capture dumpenv %}
 root@7ce659d667d7:~# env

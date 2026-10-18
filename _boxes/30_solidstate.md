@@ -224,7 +224,7 @@ From: mailadmin@localhost
 Subject: New Hires access
 John, 
 
-Can you please restrict mindy's access until she gets read on to the program. Also make sure that you send her a tempory password to login to her accounts.
+Can you please restrict mindy's access until she gets read on to the program. Also make sure that you send her a temporary password to login to her accounts.
 
 Thank you in advance.
 
@@ -809,7 +809,7 @@ pty.spawn("/bin/bash")
 {% include terminal.html language='python' title='tmp.py' content=malwritetmppy %}
 
 <br />
-Now, I didn't see the tmp.py in the cron jobs or timers of linpeas.  It only appeared in the interesting files sections.  So, I will go on investigating the James installation in the opt folder, maybe find a trigger or credentials in a conf file, who knows..  While exploritizing, I keep an eye on my listener.  Unitl one time...hey, a shell!  Neat.
+Now, I didn't see the tmp.py in the cron jobs or timers of linpeas.  It only appeared in the interesting files sections.  So, I will go on investigating the James installation in the opt folder, maybe find a trigger or credentials in a conf file, who knows..  While exploritizing, I keep an eye on my listener.  Until one time...hey, a shell!  Neat.
 
 {% capture catchrootshell %}
 ┌──(kali㉿kali)-[~/Documents/htb/solidstate]

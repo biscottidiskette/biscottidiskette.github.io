@@ -181,7 +181,7 @@ Start msfconsole.  Note, the q means quiet mode.  It suppress the ascii art logo
    content=startmsf %}
 
 <br />
-Seach metasploit for ms17-010 for potential exploits.
+Search metasploit for ms17-010 for potential exploits.
 
 {% capture searchblue %}
 [msf](Jobs:0 Agents:0) >> search ms17-010

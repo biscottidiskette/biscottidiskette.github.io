@@ -77,7 +77,7 @@ Notice the vuln scripts says this machine is vulnerable to MS17-010.  Read the <
 </div>
 
 <br />
-Start msfvenom and use the q option to supress the ascii art.
+Start msfvenom and use the q option to suppress the ascii art.
 
 {% capture startmsfconsole %}
 ┌──(sec㉿kali)-[~]
@@ -371,7 +371,7 @@ LHOST => 10.4.119.29
    content=shelltometerlhost %}
 
 <br />
-Use sessions to get a list of the Active seesions for this metasploit run.
+Use sessions to get a list of the Active sessions for this metasploit run.
 
 {% capture getsessions %}
 msf6 post(multi/manage/shell_to_meterpreter) > sessions

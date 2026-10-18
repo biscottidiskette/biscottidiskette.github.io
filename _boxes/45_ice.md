@@ -67,7 +67,7 @@ PORT      STATE SERVICE      VERSION
 {% include terminal.html language='bash' title='bash' content=nmap %}
 
 <br />
-Start msfconsole in quiet mode to supress the ASCII art.
+Start msfconsole in quiet mode to suppress the ASCII art.
 
 {% capture msfconsolestart %}
 ┌──(kali㉿kali)-[~/Documents/thm/ice]

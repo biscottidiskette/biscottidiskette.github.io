@@ -99,7 +99,7 @@ Login with the credentials from the error page.
 </div>
 
 <br />
-Notice the section of the page to deploy a Java war secion.
+Notice the section of the page to deploy a Java war section.
 
 <div class="row justify-content-sm-center">
     <div class="col-sm mt-3 mt-md-0">

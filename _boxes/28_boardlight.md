@@ -101,7 +101,7 @@ Check the landing page that is being served on port 80.  Notice the domain at th
 </div>
 
 <br />
-Check out the source page for the page.  Might be hidden gems burried in there.
+Check out the source page for the page.  Might be hidden gems buried in there.
 
 {% capture landingsource %}
 <!DOCTYPE html>

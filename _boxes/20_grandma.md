@@ -185,7 +185,7 @@ c:\windows\system32\inetsrv>
 {% include terminal.html language='cmd' title='cmd.exe' content=windowsshell %}
 
 <br />
-Now...it was at this point that I was struggling with the compiled privelege escalation exploit.  It kept freezing my shell.  So, I decided to pivot to Meterpreter.  But I cut the struggle out for cleanliness.
+Now...it was at this point that I was struggling with the compiled privilege escalation exploit.  It kept freezing my shell.  So, I decided to pivot to Meterpreter.  But I cut the struggle out for cleanliness.
 
 <div class="info-box">
   https://github.com/erwinwildenburg/Offsec/blob/master/Exploits/Windows/Privilege%20Escalation/MS14-070.c

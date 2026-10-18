@@ -137,7 +137,7 @@ Research Node.js express framework that was listed in the nmap looking for an ex
 
 <div class="row justify-content-sm-center">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/celestial/exploitdb.png" title="Expoit-DB" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid path="assets/img/celestial/exploitdb.png" title="Exploit-DB" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <a href="https://www.exploit-db.com/docs/english/41289-exploiting-node.js-deserialization-bug-for-remote-code-execution.pdf">https://www.exploit-db.com/docs/english/41289-exploiting-node.js-deserialization-bug-for-remote-code-execution.pdf</a>
@@ -147,7 +147,7 @@ From the research, check the exploit listed in the PowerPoint.
 
 <div class="row justify-content-sm-center">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/celestial/exploit.png" title="Expoit" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid path="assets/img/celestial/exploit.png" title="Exploit" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <a href="https://github.com/ajinabraham/Node.Js-Security-Course/blob/master/nodejsshell.py">https://github.com/ajinabraham/Node.Js-Security-Course/blob/master/nodejsshell.py</a>
@@ -172,7 +172,7 @@ nodejsshell.py                                             100%[================
 {% include terminal.html language='bash' title='bash' content=downloadnodeshellpy %}
 
 <br />
-Run the exploit to generate teh reverse shell.
+Run the exploit to generate the reverse shell.
 
 {% capture runpythonexploit %}
 ┌──(kali㉿kali)-[~/Documents/htb/celestial]

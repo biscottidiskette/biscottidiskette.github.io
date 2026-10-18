@@ -47,7 +47,7 @@ PORT    STATE SERVICE      VERSION
    content=nmap %}
 
 <br />
-Run the vulnerability category of nmap scripts to run all of the scripts class as vuln.  Notice that the SMB server is vulnerable to MS08-067.  It is also vulnerabile to Enternal Blue (MS10-010).
+Run the vulnerability category of nmap scripts to run all of the scripts class as vuln.  Notice that the SMB server is vulnerable to MS08-067.  It is also vulnerabile to External Blue (MS10-010).
 
 {% capture vulnchk %}
 <snip>
@@ -100,7 +100,7 @@ Google the MS08-067 and find the following exploit on the GitHub.
 <a href="https://gist.github.com/jrmdev/5881544269408edde11335ea2b5438de">Jrmdev Gist</a>
 
 <br />
-Reviewing the exploit.  We need to install nclib for the best experience.  So, intall it.
+Reviewing the exploit.  We need to install nclib for the best experience.  So, install it.
 
 {% capture nclib %}
 └──╼ [★]$ pip install nclib
