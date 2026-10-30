@@ -7,6 +7,7 @@ importance: 2
 category: AI-Assisted Architecture
 subcategory: red
 related_publications: false
+og_image: "/assets/img/osedtutor/logo.png"
 ---
 
 <div class="row justify-content-sm-center">

@@ -7,6 +7,7 @@ importance: 4
 category: CyberDefenders
 team: Blue Team Labs
 related_publications: false
+og_image: "/assets/img/fakegpt/logo.png"
 ---
 
 <div class="row justify-content-sm-center">

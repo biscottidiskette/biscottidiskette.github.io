@@ -22,7 +22,7 @@ related_publications: false
 <h2>Process</h2>
 
 <br/>
-Time to jump two feet in the the Devvortex!
+Time to jump two feet in the Devvortex!
 
 Let's get the services running with good, ol' nmap.
 

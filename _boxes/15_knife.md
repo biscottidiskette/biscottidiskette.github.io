@@ -7,11 +7,12 @@ importance: 4
 category: HackTheBox
 team: Red Team Labs
 related_publications: false
+og_image: "/assets/img/knife/logo.png"
 ---
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-8 mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/knife/logo.png" title="HTB Knife Logo" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="/assets/img/knife/logo.png" title="HTB Knife Logo" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 

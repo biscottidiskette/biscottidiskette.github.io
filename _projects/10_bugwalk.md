@@ -9,6 +9,7 @@ subcategory: red
 featured: true
 featured_rank: 1
 related_publications: false
+og_image: "/assets/img/bugwalk/logo.png"
 ---
 
 <div class="row justify-content-sm-center">

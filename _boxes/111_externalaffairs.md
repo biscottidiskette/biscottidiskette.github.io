@@ -7,6 +7,7 @@ importance: 4
 category: HTB Challenges
 team: Red Team Labs
 related_publications: false
+og_image: "/assets/img/externalaffairs/logo.png"
 ---
 
 <div class="row justify-content-sm-center">
@@ -22,7 +23,7 @@ related_publications: false
 <h2>Process</h2>
 
 <br/>
-I have to get get out of here.  Time to get an exit visa!
+I have to get out of here.  Time to get an exit visa!
 
 The first attempt is attempting to suggesting that the request is already approved.
 

@@ -7,7 +7,14 @@ importance: 2
 category: Lab Setup
 subcategory: infrastructure
 related_publications: false
+og_image: "/assets/img/domain/logo.png"
 ---
+
+<div class="row justify-content-sm-center">
+    <div class="col-sm-4 mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="/assets/img/domain/logo.png" title="Domain Set-up" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
 
 <h2>Introduction</h2>
 I recently registered for Certified Red Team Professional (CRTP) course.  To aid in my studies, I decided to set-up a personal domain lab to play and test the different methodologies from the course.  

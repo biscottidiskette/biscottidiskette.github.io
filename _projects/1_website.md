@@ -7,7 +7,14 @@ importance: 4
 category: Personal
 subcategory: miscellaneous
 related_publications: false
+og_image: "/assets/img/website/logo.png"
 ---
+
+<div class="row justify-content-sm-center">
+    <div class="col-sm-4 mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="/assets/img/website/logo.png" title="Build a Website" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
 
 <h2>Introduction</h2>
 So, I decided to redo my portfolio.  I made the decision to go with GitHub Pages, Jekyll, with the Al-folio.  I had some growing pains getting everything set-up, probably because I could not be bothered to read the documentation.  

@@ -7,6 +7,7 @@ importance: 4
 category: Sherlocks
 team: Blue Team Labs
 related_publications: false
+og_image: "/assets/img/meerkat/logo.png"
 ---
 
 <div class="row justify-content-sm-center">
@@ -78,7 +79,7 @@ The first step to begin the incident response is to identify the program that is
 {% include terminal.html language='json' title='json' content=findsoftware %}
 
 <br />
-The next step is to identify the type of attack that we are are researching.  Since we know that this is a type of Brute Force, that is a good place to start.  We can check the MITRE for it and note the four types.
+The next step is to identify the type of attack that we are researching.  Since we know that this is a type of Brute Force, that is a good place to start.  We can check the MITRE for it and note the four types.
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-8 mt-3 mt-md-0">

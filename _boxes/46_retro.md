@@ -7,6 +7,7 @@ importance: 2
 category: TryHackMe
 team: Red Team Labs
 related_publications: false
+og_image: "/assets/img/retro/logo.jpg"
 ---
 
 <div class="row justify-content-sm-center">

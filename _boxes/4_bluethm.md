@@ -7,11 +7,12 @@ importance: 4
 category: TryHackMe
 team: Red Team Labs
 related_publications: false
+og_image: "/assets/img/blue/blue.gif"
 ---
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-4 mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/blue/blue.gif" title="THM Blue Logo" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="/assets/img/blue/blue.gif" title="THM Blue Logo" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 

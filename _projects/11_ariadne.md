@@ -7,6 +7,7 @@ importance: 2
 category: AI-Assisted Architecture
 subcategory: blue
 related_publications: false
+og_image: "/assets/img/ariadne/logo.png"
 ---
 
 <div class="row justify-content-sm-center">

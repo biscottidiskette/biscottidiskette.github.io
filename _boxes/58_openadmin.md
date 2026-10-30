@@ -7,6 +7,7 @@ importance: 4
 category: HackTheBox
 team: Red Team Labs
 related_publications: false
+og_image: "/assets/img/openadmin/logo.png"
 ---
 
 <div class="row justify-content-sm-center">

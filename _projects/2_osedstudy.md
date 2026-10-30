@@ -8,7 +8,14 @@ category: Personal
 subcategory: red
 status: paused
 related_publications: false
+og_image: "/assets/img/osedplan/logo.png"
 ---
+
+<div class="row justify-content-sm-center">
+    <div class="col-sm-4 mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="/assets/img/osedplan/logo.png" title="OSED Study Plan" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
 
 <h2>Introduction</h2>
 

@@ -7,6 +7,7 @@ importance: 3
 category: TryHackMe
 team: Red Team Labs
 related_publications: false
+og_image: "/assets/img/hackpark/logo.png"
 ---
 
 <div class="row justify-content-sm-center">

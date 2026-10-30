@@ -7,6 +7,7 @@ importance: 4
 category: CyberDefenders
 team: Blue Team Labs
 related_publications: false
+og_image: "/assets/img/oski/logo.png"
 ---
 
 <div class="row justify-content-sm-center">
@@ -80,7 +81,7 @@ Moving on to the any.run report, we can get the RC4 key.
 </div>
 
 <br />
-If we review the any.run run, we can get the MITRE framework Technique ID. If we click on the VPN.exe process, it will expose the Technique ID.
+If we review the any.run analysis, we can get the MITRE framework Technique ID. If we click on the VPN.exe process, it will expose the Technique ID.
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-8 mt-3 mt-md-0">

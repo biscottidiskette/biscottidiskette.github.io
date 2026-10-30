@@ -5,6 +5,7 @@ permalink: /tools/
 description: All the tools I use across my projects, labs, and certifications.
 nav: false
 nav_order: 3
+sitemap: false
 display_categories: [red, blue, malware/re, forensic/ir, automation/scripting, supporting tools]
 horizontal: false
 ---

@@ -7,6 +7,7 @@ importance: 4
 category: TryHackMe
 team: Red Team Labs
 related_publications: false
+og_image: "/assets/img/gamezone/logo.jpeg"
 ---
 
 <div class="row justify-content-sm-center">

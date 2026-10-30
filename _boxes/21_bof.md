@@ -7,11 +7,12 @@ importance: 4
 category: pwnable.kr
 team: Reverse Engineering Labs
 related_publications: false
+og_image: "/assets/img/bof/logo.png"
 ---
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-4 mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/bof/logo.png" title="Pwnable.kr Bof Logo" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="/assets/img/bof/logo.png" title="Pwnable.kr Bof Logo" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 
@@ -255,7 +256,7 @@ overflow me : Nah..
 {% include terminal.html language='bash' title='bash' content=secondgdb %}
 
 <br />
-Read the asm and notice that the gets gets called at `0x1234`.  Looking back at where the effective address gets loaded into eax.  The offset the will hold our manipulated will be `0x2c`.
+Read the asm and notice that the gets is called at `0x1234`.  Looking back at where the effective address gets loaded into eax.  The offset the will hold our manipulated value will be `0x2c`.
 
 {% capture firstoffset %}
     1230:       8d 45 d4                lea    eax,[ebp-0x2c]

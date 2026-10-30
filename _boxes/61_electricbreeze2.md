@@ -7,6 +7,7 @@ importance: 4
 category: Sherlocks
 team: Blue Team Labs
 related_publications: false
+og_image: "/assets/img/electricbreeze2/logo.png"
 ---
 
 <div class="row justify-content-sm-center">

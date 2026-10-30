@@ -7,7 +7,14 @@ importance: 2
 category: Lab Setup
 subcategory: infrastructure
 related_publications: false
+og_image: "/assets/img/boflab/logo.png"
 ---
+
+<div class="row justify-content-sm-center">
+    <div class="col-sm-4 mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="/assets/img/boflab/logo.png" title="Buffer Overflow Lab Set-up" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
 
 <h2>Introduction</h2>
 To be able to write the buffer overflow, you will need two machines.  One Linux machine that will serve as your attack machine.  There will also be a 32-bit Windows 10 machine that will be the victim machine.  You will also need to ensure that the machines sit on the same network so they can communicate with each other.  We will be using VirtualBox from Oracle to serve as our virtualization software.  

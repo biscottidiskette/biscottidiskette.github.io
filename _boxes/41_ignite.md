@@ -101,7 +101,7 @@ Check the /fuel directory that was mentioned in the robots.txt file.
 </div>
 
 <br />
-Searchsploit for the the fuel cms.
+Searchsploit for the fuel cms.
 
 {% capture searchsploit %}
 ┌──(kali㉿kali)-[~/Documents/thm/ignite]

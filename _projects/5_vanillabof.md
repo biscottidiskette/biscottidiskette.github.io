@@ -9,7 +9,14 @@ subcategory: red
 featured: true
 featured_rank: 3
 related_publications: false
+og_image: "/assets/img/vanillabof/logo.png"
 ---
+
+<div class="row justify-content-sm-center">
+    <div class="col-sm-4 mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="/assets/img/vanillabof/logo.png" title="Vanilla Buffer Overflows" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
 
 <h2>Introduction</h2>
 In preparation for the OSED, you have to start somewhere.  The starting point is always vanilla buffer overflow.  

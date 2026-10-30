@@ -7,6 +7,7 @@ importance: 4
 category: HTB Challenges
 team: Red Team Labs
 related_publications: false
+og_image: "/assets/img/credhunter/logo.png"
 ---
 
 <div class="row justify-content-sm-center">

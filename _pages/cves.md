@@ -5,6 +5,7 @@ permalink: /cves/
 description: A growing collection of CVEs I earned.
 nav: false
 nav_order: 7
+sitemap: false
 display_categories: [2025]
 horizontal: false
 ---

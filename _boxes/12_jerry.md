@@ -7,11 +7,12 @@ importance: 4
 category: HackTheBox
 team: Red Team Labs
 related_publications: false
+og_image: "/assets/img/jerry/logo.png"
 ---
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-8 mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/jerry/logo.png" title="HTB Jerry Logo" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="/assets/img/jerry/logo.png" title="HTB Jerry Logo" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 
@@ -81,7 +82,7 @@ Click on Manager App and try logging in with the prompt that appears.
 </div>
 
 <br />
-Read the 401 page and the the credentials that are listed in the example user.
+Read the 401 page and the credentials that are listed in the example user.
 
 <div class="row justify-content-sm-center">
     <div class="col-sm mt-3 mt-md-0">

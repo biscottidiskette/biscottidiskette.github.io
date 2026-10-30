@@ -7,11 +7,12 @@ importance: 3
 category: TryHackMe
 team: Red Team Labs
 related_publications: false
+og_image: "/assets/img/mrrobot/logo.png"
 ---
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-8 mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/mrrobot/logo.png" title="THM Mr. Robot Logo" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="/assets/img/mrrobot/logo.png" title="THM Mr. Robot Logo" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 

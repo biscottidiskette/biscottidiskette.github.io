@@ -7,11 +7,12 @@ importance: 3
 category: HackTheBox
 team: Red Team Labs
 related_publications: false
+og_image: "/assets/img/solidstate/logo.png"
 ---
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-8 mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/solidstate/logo.png" title="HTB SolidState Logo" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="/assets/img/solidstate/logo.png" title="HTB SolidState Logo" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 
@@ -709,7 +710,7 @@ Ok.  So, at this point, there is another exploit on exploit-db for the James ser
 <a href="https://www.exploit-db.com/exploits/50347">https://www.exploit-db.com/exploits/50347</a>
 
 <br />
-Researching the installation of the James server indicates the the recommended installation location is opt.  So, let's run ls -la against the opt folder.
+Researching the installation of the James server indicates the recommended installation location is opt.  So, let's run ls -la against the opt folder.
 
 {% capture lsopt %}
 ${debian_chroot:+($debian_chroot)}mindy@solidstate:/opt$ ls -la

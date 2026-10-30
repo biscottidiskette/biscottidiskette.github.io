@@ -7,6 +7,7 @@ importance: 4
 category: Sherlocks
 team: Blue Team Labs
 related_publications: false
+og_image: "/assets/img/bumblebee/logo.png"
 ---
 
 <div class="row justify-content-sm-center">
@@ -81,7 +82,7 @@ Copy the contents of the shell and use an online HTML prettier so the markdown i
 <a href="https://www.freeformatter.com/html-formatter.html#before-output">https://www.freeformatter.com/html-formatter.html#before-output</a>
 
 <br />
-With the prettied form, we can now easily identify the url (http://10.10.0.78/update.php) the form sends its data to to harvest credentials.
+With the prettied form, we can now easily identify the url (http://10.10.0.78/update.php) the form sends its data to harvest credentials.
 
 {% capture injectedhtml %}
 <snip>

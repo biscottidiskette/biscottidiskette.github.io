@@ -7,6 +7,7 @@ importance: 5
 category: HTB Challenges
 team: Red Team Labs
 related_publications: false
+og_image: "/assets/img/questionnaire/logo.png"
 ---
 
 <div class="row justify-content-sm-center">

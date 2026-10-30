@@ -7,6 +7,7 @@ importance: 2
 category: HackTheBox
 team: Red Team Labs
 related_publications: false
+og_image: "/assets/img/snapped/logo.png"
 ---
 
 <div class="row justify-content-sm-center">
@@ -22,9 +23,9 @@ related_publications: false
 <h2>Process</h2>
 
 <br/>
-Ready to try a hard box?  Let's see if can get something to snap!  
+Ready to try a hard box?  Let's see if we can get something to snap!  
 
-To get get started, as per the usual, let's started with a good ol' nmap.
+To get started, as per the usual, let's get started with a good ol' nmap.
 
 {% capture nmap %}
 └──╼ [★]$ sudo nmap -sC -sV -A -O -oN nmap 10.129.7.5

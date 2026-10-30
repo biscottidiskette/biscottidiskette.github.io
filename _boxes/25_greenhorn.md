@@ -7,11 +7,12 @@ importance: 4
 category: HackTheBox
 team: Red Team Labs
 related_publications: false
+og_image: "/assets/img/greenhorn/logo.png"
 ---
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-8 mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/greenhorn/logo.png" title="HTB GreenHorn Logo" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="/assets/img/greenhorn/logo.png" title="HTB GreenHorn Logo" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 
@@ -266,7 +267,7 @@ Create a test.php file the executes the phpinfo() function to test command execu
 {% include terminal.html language='php' title='test.php' content=testphp %}
 
 <br />
-When a exploit comes along, you must zip it.
+When an exploit comes along, you must zip it.
 
 {% capture zipphp %}
 ┌──(kali㉿kali)-[~/Documents/htb/greenhorn]

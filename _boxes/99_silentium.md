@@ -7,11 +7,12 @@ importance: 4
 category: HackTheBox
 team: Red Team Labs
 related_publications: false
+og_image: "/assets/img/silentium/logo.png"
 ---
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-4 mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/silentium/logo.png" title="HTB Silentium Logo" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="/assets/img/silentium/logo.png" title="HTB Silentium Logo" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 
@@ -433,7 +434,7 @@ Check the request in Burp so we can get a sense of the request.
 </div>
 
 <br />
-Create a bruter that uses all the emails that we identified identified earlier against the forgot password endpoint to identify a proper email.
+Create a bruter that uses all the emails that we identified earlier against the forgot password endpoint to identify a proper email.
 
 {% capture bruter %}
 import requests

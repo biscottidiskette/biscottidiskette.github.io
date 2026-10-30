@@ -7,6 +7,7 @@ importance: 4
 category: HackTheBox
 team: Red Team Labs
 related_publications: false
+og_image: "/assets/img/bank/logo.png"
 ---
 
 <div class="row justify-content-sm-center">
@@ -624,7 +625,7 @@ mysql:x:106:114:MySQL Server,,,:/nonexistent:/bin/false
 {% include terminal.html language='bash' title='bash' content=etcpasswd %}
 
 <br />
-Test su with teh database password.
+Test su with the database password.
 
 {% capture su %}
 www-data@bank:/var/www/bank/inc$ su
