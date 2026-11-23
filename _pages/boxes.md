@@ -10,7 +10,7 @@ teams: [Red Team Labs, Blue Team Labs, Reverse Engineering Labs]
 ---
 
 <p style="font-size: 1rem; color: #d1d5db; line-height: 1.6; margin-bottom: 1.25rem;">
-Hands-on security challenges spanning offensive and defensive domains, each with detailed write-ups covering methodology, tooling, and lessons learned. <strong style="color: #f0f0f0;">Purple team focus:</strong> analyzing red team challenges as an attacker (exploitation, privilege escalation) and blue team challenges as a responder (threat hunting, timeline analysis, IOC extraction).
+Hands-on security challenges spanning offensive and defensive domains, each with detailed write-ups covering methodology, tooling, and lessons learned. <strong style="color: #f0f0f0;">Purple team focus:</strong> analyzing red team challenges as an attacker (exploitation, privilege escalation), blue team challenges as a responder (threat hunting, timeline analysis, IOC extraction), and reverse engineering challenges (exploitation, malware analysis).
 </p>
 
 <style>

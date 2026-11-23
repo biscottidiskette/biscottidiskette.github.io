@@ -11,7 +11,7 @@ horizontal: false
 ---
 
 <p style="font-size: 1rem; color: #d1d5db; line-height: 1.6; margin-bottom: 1.25rem;">
-  Personal projects spanning red team tooling, blue team infrastructure, and detection 
+  Personal projects spanning ai, red team tooling, blue team infrastructure, exploit development, and detection 
   engineering, each with documentation, lessons learned, and practical applications.
   <strong style="color: #f0f0f0;">Purple team focus:</strong> bridging offensive techniques 
   with defensive detection capabilities.

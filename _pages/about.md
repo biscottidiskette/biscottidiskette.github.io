@@ -19,7 +19,7 @@ social: false # includes social icons at the bottom of the page
 
 Ahoy hoy.
 
-Four years breaking into systems professionally will change how you think about defending them. That's the lens I bring to security engineering. Offensive background, defensive execution.
+Four years breaking into systems professionally will change how you think about defending them. That's the lens I took when I changed to security engineering. Offensive background, defensive execution.  The call is strong to see how far you can go.  So, back to the red team to continue seeing where the path will take me.
 
 OSCP, COAE, and PMRP certified. Currently working with C. The labs, projects, and writeups below speak louder than this page will.
 
@@ -28,10 +28,10 @@ When I'm not at the terminal I'm at the gym training Muay Thai or butchering the
 {% include terminal.html language="bash" title="biscotti@diskette:~" content="cat profile.json
 {
   \"handle\":       \"Biscotti Diskette\",
-  \"role\":         \"Information Security Engineer\",
+  \"role\":         \"Red Team Operator\",
   \"clearance\":    [\"OSCP\", \"Sec+\", \"PMRP\", \"CDSA\", \"COAE\", \"CWES\", \"CJCA\"],
-  \"background\":   \"Pentester → Blue Team\",
-  \"current_focus\":\"Security Engineering | Exploit Dev | Malware Analysis\"
+  \"background\":   \"Pentester → Blue Team → Red Team\",
+  \"current_focus\":\"Exploit Dev | AI | Malware Analysis\"
 }" %}
 
 [Projects](/projects/)&nbsp;·&nbsp;[Labs](/boxes/)&nbsp;·&nbsp;[Certs](/certifications/)&nbsp;·&nbsp;[Blog](/blog/)&nbsp;·&nbsp;[Contact](/contact/)
